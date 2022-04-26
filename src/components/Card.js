@@ -1,11 +1,13 @@
 import React from 'react';
+import styled from "styled-components";
 
-const Card = () => {
+const Card = (props) => {
   return (
     <div>
-      listpage 카드
+      
     </div>
   );
 };
 
 export default Card;
+
