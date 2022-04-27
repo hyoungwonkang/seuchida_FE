@@ -8,7 +8,7 @@ const Redirect = (props) => {
   let code = new URL(window.location.href).searchParams.get('code');
 
   useEffect(() => {
-    dispatch(userActions.KakaoLogin(code));
+    dispatch(userActions.kakaoLogin(code));
   }, []);
 };
 
