@@ -26,7 +26,7 @@ const ReviewCard = () => {
         </BottomBox>
       </LocSports>
     </Container>
-  );
+  ); 
 };
 
 export default ReviewCard;
