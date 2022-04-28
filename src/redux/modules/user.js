@@ -28,7 +28,7 @@ const kakaoLogin = (code) => {
 
         localStorage.setItem('token', token); //token을 local에 저장합니다
 
-        dispatch(logIn());
+        dispatch(logIn(token));
         console.log('로그인 확인');
         history.replace('/signupdone'); //토큰을 받았고 로그인됬으니 메인으로 전환합니다
       })
@@ -45,8 +45,7 @@ export default handleActions(
   {
     [LOG_IN]: (state, action) =>
       produce(state, (draft) => {
-        console.log(state);
-        draft.user = action;
+        draft.token = action.payload.user; // action.payload.user.token은 안 되어서 .user로 draft.token 함.
         draft.is_login = true;
       }),
   },
