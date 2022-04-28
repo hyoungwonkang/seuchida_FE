@@ -1,15 +1,13 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { history } from "../../redux/configStore";
-import { actionCreators as userActions } from "../../redux/modules/user";
-import { actionCreators as imageActions } from "../../redux/modules/image";
 import DatePicker from "react-datepicker";
 import { ko } from "date-fns/esm/locale";
 import { getYear, getMonth } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
+import { Link } from "react-router-dom";
 
-const AddProfile = () => {
+const AddProfile = (props) => {
   const _ = require("lodash");
   const years = _.range(1950, getYear(new Date()) + 1, 1);
   const months = [
@@ -26,11 +24,11 @@ const AddProfile = () => {
     "11월",
     "12월",
   ];
-  const fileInput = React.useRef();
-  const dispatch = useDispatch();
 
-  const preview = useSelector((state) => state.image.preview);
+  const address = props.location.state?.address;
 
+  const [preview, setPreview] = useState();
+  const [profile, setProfile] = useState();
   const [nickName, setNickName] = useState();
   const [gender, setGender] = useState();
   const [birthday, setBirthday] = useState();
@@ -43,51 +41,19 @@ const AddProfile = () => {
   //   console.log(e.target.value);
   // };
 
+  const selectImage = (e) => {
+    setPreview(window.webkitURL.createObjectURL(e.target.files[0]));
+    setProfile(window.webkitURL.createObjectURL(e.target.files[0]));
+  };
+
   const selectNickName = (e) => {
     setNickName(e.target.value);
-    console.log(e.target.value);
   };
   const selectGender = (e) => {
     setGender(e.target.value);
-    console.log(e.target.value);
   };
   const selectContent = (e) => {
     setContent(e.target.value);
-  };
-
-  const selectFile = (e) => {
-    const reader = new FileReader();
-    const file = fileInput.current.files[0];
-
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      dispatch(imageActions.setPreview(reader.result));
-    };
-  };
-
-  const addProfile = () => {
-    if (!fileInput.current || fileInput.current.files.length === 0) {
-      window.alert("파일을 선택해주세요!");
-      return;
-    }
-    const file = fileInput.current.files[0];
-    console.log(file);
-
-    const formData = new FormData();
-
-    formData.append("userProfile", file);
-    formData.append("nickName", nickName);
-    formData.append("gender", gender);
-    formData.append("birthday", birthday);
-    formData.append("content", content);
-    console.log("formData", formData);
-
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ", " + pair[1]);
-    }
-
-    dispatch(userActions.signupDB(formData));
-    history.push("/category");
   };
 
   return (
@@ -99,7 +65,13 @@ const AddProfile = () => {
       ></img>
       <div className="fileupload">
         <label htmlFor="image">+</label>
-        <input type="file" id="image" ref={fileInput} onChange={selectFile} />
+        <input
+          type="file"
+          id="image"
+          onChange={(e) => {
+            selectImage(e);
+          }}
+        />
       </div>
       <input type="text" placeholder="닉네임" onChange={selectNickName} />
       <div className="Second">
@@ -107,8 +79,8 @@ const AddProfile = () => {
           <option value="남성">남성</option>
           <option value="여성">여성</option>
         </select>
-        <div>
-          <DatePicker //달력
+        <div className="calendarBox">
+          <DatePicker
             className="calendar"
             renderCustomHeader={({
               date,
@@ -178,7 +150,20 @@ const AddProfile = () => {
         placeholder="당신에 대해 조심 더 알려주세요!"
         onChange={selectContent}
       />
-      <Next onClick={addProfile}>다음</Next>
+      <Link
+        to={{
+          pathname: "/category",
+          state: { profile, nickName, gender, birthday, content, address },
+        }}
+      >
+        <Next
+          onClick={() => {
+            history.push("/category");
+          }}
+        >
+          다음
+        </Next>
+      </Link>
     </TotBox>
   );
 };
@@ -229,10 +214,6 @@ const TotBox = styled.div`
   }
   .Second select {
     width: 100px;
-  }
-  calendar {
-    width: 220px;
-    margin-left: 30px;
   }
 `;
 

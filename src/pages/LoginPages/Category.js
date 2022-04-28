@@ -1,11 +1,19 @@
-import { current } from "immer";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { history } from "../../redux/configStore";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../../redux/modules/user";
 
-const Category = () => {
+const Category = (props) => {
+  const get = props.location.state;
+  console.log(get);
+  const nickName = get?.nickName;
+  const gender = get?.gender;
+  const birthday = get?.birthday;
+  const content = get?.content;
+  const address = get?.address;
+  const profile = get?.profile;
+
   const CategoryList = [
     { id: 0, data: "자전거", checked: false },
     { id: 1, data: "배드민턴", checked: false },
@@ -41,7 +49,6 @@ const Category = () => {
   const _userInterest = (checked, item) => {
     if (checked) {
       if (userInterest.length <= 2) {
-        //최대 몇개까지 고르게 할까??
         setUserInterest([...userInterest, item]);
       } else {
         window.alert("최대 3개까지 선택 가능합니다:)");
@@ -52,9 +59,18 @@ const Category = () => {
   };
 
   const addProfile = () => {
-    dispatch(userActions.signupDB(userInterest));
-    console.log(userInterest);
-    history.push("/done");
+    dispatch(
+      userActions.signupDB(
+        profile,
+        nickName,
+        gender,
+        birthday,
+        content,
+        address,
+        userInterest
+      )
+    );
+    history.push("/main");
   };
 
   return (

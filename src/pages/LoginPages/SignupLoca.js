@@ -3,12 +3,10 @@ import { Map, MapMarker } from "react-kakao-maps-sdk";
 import styled from "styled-components";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { actionCreators as userActions } from "../../redux/modules/user";
+import { Link } from "react-router-dom";
 
 const SignupLoca = () => {
   const history = useHistory();
-  const dispatch = useDispatch();
   const [address, setAddress] = useState();
   const [state, setState] = useState({
     center: {
@@ -39,14 +37,14 @@ const SignupLoca = () => {
               `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lng}&y=${lat}&input_coord=WGS84`,
               {
                 headers: {
-                  Authorization: "KakaoAK 6b1dc7559108279aacbea1614bb2fcc1",
+                  Authorization: "KakaoAK 5498cafd5af35c66b35808e2b9e12971",
                 },
               }
             )
             .then((res) => {
               const location = res.data.documents[0].address; //내 현 위치의 주소
               const result = location.address_name;
-              // console.log(result);
+              console.log(res);
               setAddress(result); //input에 지소 띄우기
             });
         },
@@ -66,12 +64,6 @@ const SignupLoca = () => {
         isLoading: false,
       }));
     }
-  };
-
-  const addProfile = () => {
-    dispatch(userActions.signupDB(address));
-    console.log(address);
-    history.push("/addprofile");
   };
 
   return (
@@ -113,7 +105,20 @@ const SignupLoca = () => {
         <Btn onClick={FindLoca}>동네 인증</Btn>
       </Box>
 
-      <Next onClick={addProfile}>다음</Next>
+      <Link
+        to={{
+          // pathname: "/addprofile",
+          state: { address },
+        }}
+      >
+        <Next
+          onClick={() => {
+            history.push("/addprofile");
+          }}
+        >
+          다음
+        </Next>
+      </Link>
     </TotBox>
   );
 };

@@ -11,17 +11,10 @@ const signupDone = () => {
       </h2>
       <Next
         onClick={() => {
-          history.push("/main");
+          history.push("/signuploca");
         }}
       >
         내 동네 설정하고 시작하기
-      </Next>
-      <Next
-        onClick={() => {
-          history.push("/main");
-        }}
-      >
-        그냥 둘러보기
       </Next>
     </Box>
   );

@@ -10,7 +10,6 @@ import AddProfile from "../pages/LoginPages/AddProfile";
 import Category from "../pages/LoginPages/Category";
 import SignupDone from "../pages/LoginPages/SignupDone";
 import Time from "../components/Time";
-import Calendar from "../components/Calendar";
 import Done from "../pages/LoginPages/Done";
 
 function App() {
@@ -22,7 +21,6 @@ function App() {
           <Route path="/signuploca" exact component={SignupLoca} />
           <Route path="/addprofile" exact component={AddProfile} />
           <Route path="/time" exact component={Time} />
-          <Route path="/calendar" exact component={Calendar} />
           <Route path="/category" exact component={Category} />
           <Route path="/signupdone" exact component={SignupDone} />
           <Route path="/done" exact component={Done} />

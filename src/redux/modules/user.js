@@ -24,26 +24,37 @@ const initialState = {
 //Middleware
 
 //addProfile
-const signupDB = (formData, userInterest, address) => {
+const signupDB = (
+  profile,
+  nickName,
+  gender,
+  birthday,
+  content,
+  address,
+  userInterest
+) => {
   return function (dispatch, getState, { history }) {
     axios({
       method: "post",
       url: "",
       data: JSON.stringify({
+        nickName: nickName,
+        birthday: birthday,
+        gender: gender,
+        userContent: content,
+        userProfile: profile,
         userInterest: userInterest,
         address: address,
       }),
-      formData,
       headers: {
         "Content-Type": `multipart/form-data;`,
       },
     })
       .then((res) => {
         console.log(res);
-        history.push("/signupdone");
       })
       .catch((error) => {
-        console.log("회원가입이 되지 않았습니다.", error);
+        console.log("회원가입 실패", error);
       });
   };
 };
