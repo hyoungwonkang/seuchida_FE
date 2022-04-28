@@ -1,11 +1,62 @@
-import React from 'react';
-
+import React from "react";
+import { Card } from "../components/index";
+import styled from "styled-components";
+import FooterMenu from "../shared/FooterMenu";
+import gBack from "../shared/ImgBox/gBack.png"
 const PostList = () => {
   return (
-    <div>
-      8번 Card 전체 리스트
-    </div>
+    <>
+      <Header>
+    <Gback><img src={gBack}/></Gback>
+        <HeadContents>
+
+    <div> 서울시 강남구</div>
+
+        </HeadContents>
+      </Header>
+
+      <ListBox>
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+       
+        <Card />
+      </ListBox>
+      <FooterMenu/>
+      
+    </>
   );
 };
 
 export default PostList;
+
+const Header = styled.div`
+  top: 0;
+  position: fixed;
+  background-color: white;
+  width: 100%;
+  height: 100px;
+  padding: 24px 0px 0px 24px;
+  border-bottom: 1px solid #e9e9e9; ;
+  
+`;
+
+const Gback = styled.div`
+
+
+`
+const HeadContents = styled.div`
+margin-top: 24px;
+font-size: 20px;
+font-weight: bold;
+`;
+
+const ListBox = styled.div`
+  margin-top: 120px;
+ 
+
+`;

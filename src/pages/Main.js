@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { Card, LCslider } from "../components/index";
+import { Card, LCslider, RCslider, ECslider } from "../components/index";
 import FooterMenu from "../shared/FooterMenu";
-import RCslider from "../components/RCslider";
+
 const Main = () => {
   return (
     <>
@@ -11,37 +11,40 @@ const Main = () => {
         <TopLive>
           <WellcomeBox>
             <Wellcome>
-              <User>user_name</User>님<br />
+              user_name님
+              <br />
               방금 개설된 가까운 <br />
-              운동 매칭이에요!
+              <Sports>배드민턴</Sports> 매칭이에요!
             </Wellcome>
           </WellcomeBox>
           <LCslider />
         </TopLive>
-        {/* 여기여기 붙어라 */}
-        <ListBox>
-          <TitleBox>
-            <Title>여기여기 붙어라</Title> <Title>&gt;</Title>
-          </TitleBox>
-          <CardBox>
-            <Card />
-          </CardBox>
-          <CardBox>
-            <Card />
-          </CardBox>
 
-          <CardBox>
-            <Card />
-          </CardBox>
-        </ListBox>
-        {/* 스친 운동 한줄평 */}
-        <ReviewBox>
+         {/* 스친 운동 한줄평 */}
+         <ReviewBox>
           <TitleBox>
             <Title>스친 운동 한줄평</Title> <Title>&gt;</Title>
           </TitleBox>
-        
-            <RCslider /> 
+
+          <RCslider />
         </ReviewBox>
+     
+        {/* 여기여기 붙어라 */}
+          <TitleBox>
+            <Title>여기여기 붙어라</Title> <Title>&gt;</Title>
+          </TitleBox>
+        <ListBox>
+          <CardBox>
+            <Card MainCard />
+          </CardBox>
+          <CardBox>
+            <Card MainCard />
+          </CardBox>
+          <CardBox>
+            <Card MainCard />
+          </CardBox>
+        </ListBox>
+       
         {/* 푸터 */}
         <FooterMenu />
       </Container>
@@ -67,7 +70,7 @@ const WellcomeBox = styled.div`
   padding: 40px;
 `;
 
-const User = styled.div`
+const Sports = styled.div`
   display: inline;
   color: #222222;
 `;
@@ -78,12 +81,25 @@ const Wellcome = styled.div`
 
 // --라이브 카드
 
+//참여한 운동매칭
+const EndBox = styled.div`
+background-color : white
+
+`;
+
 // 여기여기 붙어라
 
-const ListBox = styled.section``;
+const ListBox = styled.section`
+background-color: white;
+padding-bottom: 28px;
+
+
+
+`;
 
 const CardBox = styled.div`
-  margin-top: 8px;
+  justify-content: center;
+  display: flex;
 `;
 const TitleBox = styled.div`
   justify-content: space-between;
@@ -96,10 +112,10 @@ const Title = styled.div`
   font-weight: 700;
   padding: 25px;
 `;
-//-- 여기여기 붙어라 
+//-- 여기여기 붙어라
 
 // 스친 운동 한줄평
 
 const ReviewBox = styled.section`
-background-color: white;
-`
+  background-color: white;
+`;
