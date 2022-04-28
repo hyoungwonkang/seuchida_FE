@@ -94,6 +94,7 @@ const MainContainer = styled.section`
   width: 342px;
   height: 214px;
   margin-bottom: 14px;
+
 `;
 
 const Container = styled.section`

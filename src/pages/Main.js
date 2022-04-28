@@ -23,7 +23,7 @@ const Main = () => {
          {/* 스친 운동 한줄평 */}
          <ReviewBox>
           <TitleBox>
-            <Title>스친 운동 한줄평</Title> <Title>&gt;</Title>
+            <Title>스친 운동 후기</Title> <Title>&gt;</Title>
           </TitleBox>
 
           <RCslider />
@@ -46,8 +46,8 @@ const Main = () => {
         </ListBox>
        
         {/* 푸터 */}
-        <FooterMenu />
       </Container>
+        <FooterMenu />
     </>
   );
 };
@@ -60,8 +60,8 @@ const Container = styled.section`
 
 //라이브 카드
 const TopLive = styled.section`
-  max-height: 80vh;
-  min-height: 535px;
+  max-height: 60vh;
+  min-height: 500px;
 `;
 
 const WellcomeBox = styled.div`
@@ -91,7 +91,7 @@ background-color : white
 
 const ListBox = styled.section`
 background-color: white;
-padding-bottom: 28px;
+padding-bottom: 80px;
 
 
 

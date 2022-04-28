@@ -11,14 +11,24 @@ const LiveCard = (props) => {
               <SmallFont>마크</SmallFont>
               <SmallFont>500m</SmallFont>
             </Location>
-            <SmallFont>1분전</SmallFont>
+           
           </LocaTime>
 
           {/* 카드 속 내용 */}
           <Title>배드민턴 칠 사람!</Title>
           <Desc>근처 근린공원에서 같이 배드민턴 쳐요~</Desc>
+          
+          
           <Line />
+          
+          
+          
+          <LocaTime >
           <SmallFont>여/21세</SmallFont>
+          <SmallFont>1분전</SmallFont>
+          </LocaTime>
+        
+        
         </Box>
       </Container>
     </>
@@ -30,9 +40,9 @@ export default LiveCard;
 const Container = styled.section`
   padding: 15px;
   max-width: 250px;
-  width: 55vw;
-  border: 1px solid #e9e9e9;
-  height: 200px;
+  width: 224px;
+  border: 3px solid black;
+  height: 179px;
   margin: 20px;
   font-size: 14px;
   border-radius: 25px;
@@ -41,6 +51,8 @@ const Container = styled.section`
   align-items: center;
   display: flex;
 `;
+
+
 const Profile = styled.div`
   position: absolute;
   width: 65px;

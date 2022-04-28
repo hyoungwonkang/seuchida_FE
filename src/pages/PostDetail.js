@@ -7,6 +7,7 @@ const PostDetail = () => {
     <>
       <Header>
         <img src={gBack} />
+      
       </Header>
       <Container>
         <ProfileBox>
@@ -17,12 +18,12 @@ const PostDetail = () => {
           </User>
         </ProfileBox>
 
-        <Card DetailCard />
+        <Card DetailCard  />
 
-        <div>
+        <LiveBox>
           <div> 참여중인 운동 메이트 2/3</div>
           <div> 프로필 </div>
-        </div>
+        </LiveBox>
 
         <KakaoMap />
 
@@ -73,12 +74,15 @@ const Header = styled.div`
 
 const ButtonBox = styled.div`
   height: 91px;
-  border-top: 2px solid black;
-  padding: 10px 24px 0px 24px;
+  border-top: 2px solid E3E3E3;
+  align-items: center;
+  display: flex;
+  justify-content: center;
   bottom: 0;
   position: fixed;
   z-index: 3;
   background-color: white;
+  width: 100%;
 `;
 const ChatButton = styled.button`
   width: 333.5px;
@@ -88,4 +92,10 @@ const ChatButton = styled.button`
   color: white;
   font-size: 18px;
   font-weight: bold;
+  
 `;
+
+const LiveBox = styled.div`
+padding: 24px
+
+`

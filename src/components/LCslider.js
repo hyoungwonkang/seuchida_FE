@@ -17,7 +17,7 @@ export default class LCslider extends Component {
     };
     return (
       <div>
-        <Slider {...settings} style={{height:"285px"}}>
+        <Slider {...settings} style={{height:"260px"}}>
           <LiveCard >
             <h3>1</h3>
           </LiveCard>

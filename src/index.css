@@ -14,4 +14,6 @@ code {
 
 *{
   font-family: Noto Sans ;
+  color : #191919;
+  letter-spacing : -1.4px !important;
 }
