@@ -25,6 +25,7 @@ height: 60px;
 border-top: 1px solid #e9e9e9;
 width: 100%;
 background-color: white;
+max-width: 420px;
 
 `
 

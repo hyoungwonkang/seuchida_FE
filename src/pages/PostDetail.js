@@ -1,16 +1,55 @@
-import React from 'react';
-import styled from 'styled-components'
-import { Card } from '../components/index';
+import React from "react";
+import styled from "styled-components";
+import { Card, KakaoMap } from "../components/index";
+import gBack from "../shared/ImgBox/gBack.png";
 const PostDetail = () => {
   return (
     <>
-      <Profile src="https://t1.daumcdn.net/cfile/tistory/212E043B5815E35605"></Profile>
-      <Card/>
+      <Header>
+        <img src={gBack} />
+      </Header>
+      <Container>
+        <ProfileBox>
+          <Profile src="https://t1.daumcdn.net/cfile/tistory/212E043B5815E35605"></Profile>
+          <User>
+            <div>김미미</div>
+            <div> 여/21세</div>
+          </User>
+        </ProfileBox>
+
+        <Card DetailCard />
+
+        <div>
+          <div> 참여중인 운동 메이트 2/3</div>
+          <div> 프로필 </div>
+        </div>
+
+        <KakaoMap />
+
+        <ButtonBox>
+          <ChatButton>채팅하기</ChatButton>
+        </ButtonBox>
+      </Container>
     </>
   );
 };
 
 export default PostDetail;
+
+const Container = styled.div`
+  padding-top: 70px;
+`;
+
+const ProfileBox = styled.div`
+  padding: 0px 24px 24px 24px;
+  display: flex;
+  flex-direction: row;
+`;
+const User = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
 
 const Profile = styled.div`
   width: 60px;
@@ -20,7 +59,33 @@ const Profile = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  margin-top: 15px;
-  margin-right: 5px;
+  margin-right: 12px;
 `;
 
+const Header = styled.div`
+  top: 0;
+  position: fixed;
+  background-color: white;
+  width: 100%;
+  height: 40px;
+  padding: 24px 0px 0px 24px;
+`;
+
+const ButtonBox = styled.div`
+  height: 91px;
+  border-top: 2px solid black;
+  padding: 10px 24px 0px 24px;
+  bottom: 0;
+  position: fixed;
+  z-index: 3;
+  background-color: white;
+`;
+const ChatButton = styled.button`
+  width: 333.5px;
+  height: 62.5px;
+  background-color: #b0b0b0;
+  border: none;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+`;

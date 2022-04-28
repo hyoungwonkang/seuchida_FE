@@ -19,15 +19,16 @@ const Main = () => {
           </WellcomeBox>
           <LCslider />
         </TopLive>
-        {/* 참여한 운동매칭 */}
-        <TitleBox>
-          <Title>참여한 운동매칭</Title> <Title>&gt;</Title>
-        </TitleBox>
 
-        <EndBox>
-          <ECslider />
-        </EndBox>
+         {/* 스친 운동 한줄평 */}
+         <ReviewBox>
+          <TitleBox>
+            <Title>스친 운동 한줄평</Title> <Title>&gt;</Title>
+          </TitleBox>
 
+          <RCslider />
+        </ReviewBox>
+     
         {/* 여기여기 붙어라 */}
           <TitleBox>
             <Title>여기여기 붙어라</Title> <Title>&gt;</Title>
@@ -43,14 +44,7 @@ const Main = () => {
             <Card MainCard />
           </CardBox>
         </ListBox>
-        {/* 스친 운동 한줄평 */}
-        <ReviewBox>
-          <TitleBox>
-            <Title>스친 운동 한줄평</Title> <Title>&gt;</Title>
-          </TitleBox>
-
-          <RCslider />
-        </ReviewBox>
+       
         {/* 푸터 */}
         <FooterMenu />
       </Container>

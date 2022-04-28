@@ -2,15 +2,16 @@ import React from "react";
 import { Card } from "../components/index";
 import styled from "styled-components";
 import FooterMenu from "../shared/FooterMenu";
+import gBack from "../shared/ImgBox/gBack.png"
 const PostList = () => {
   return (
     <>
       <Header>
-    <div> 뒤로 가기 버튼</div>
+    <Gback><img src={gBack}/></Gback>
         <HeadContents>
 
     <div> 서울시 강남구</div>
-    <div> 필터</div>
+
         </HeadContents>
       </Header>
 
@@ -22,15 +23,7 @@ const PostList = () => {
         <Card />
         <Card />
         <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+       
         <Card />
       </ListBox>
       <FooterMenu/>
@@ -46,16 +39,24 @@ const Header = styled.div`
   position: fixed;
   background-color: white;
   width: 100%;
-  height: 80px;
+  height: 100px;
+  padding: 24px 0px 0px 24px;
   border-bottom: 1px solid #e9e9e9; ;
   
 `;
+
+const Gback = styled.div`
+
+
+`
 const HeadContents = styled.div`
-  justify-content: space-between;
-  display: flex;
-  padding: 24px  24px 0px 24px;
+margin-top: 24px;
+font-size: 20px;
+font-weight: bold;
 `;
 
 const ListBox = styled.div`
-  margin-top: 80px;
+  margin-top: 120px;
+ 
+
 `;
