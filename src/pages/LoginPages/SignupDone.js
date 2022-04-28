@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 const SignupDone = () => {
   const history = useHistory();
+
   return (
     <>
       <Container>
@@ -15,16 +16,13 @@ const SignupDone = () => {
             내 동네를 설정하고 <br /> 가장 가까운 운동메이트를 찾아보세요!
           </SubTitle>
         </SignupHead>
-        <KakaoButton>
-          <A href=''>내 동네 설정하고 시작하기</A>
-        </KakaoButton>
-        <JustButton
+        <KakaoButton
           onClick={() => {
-            history.push('/main');
+            history.push('/signuploca');
           }}
         >
-          그냥 둘러볼게요!
-        </JustButton>
+          <p style={{ color: 'white' }}>내 동네 설정하고 시작하기</p>
+        </KakaoButton>
       </Container>
     </>
   );
@@ -65,22 +63,6 @@ const KakaoButton = styled.button`
   width: 350px;
   border: none;
   font-size: 19px;
-  padding: 20px 50px;
-  font-weight: 700;
-  cursor: pointer;
-`;
-
-const A = styled.a`
-  text-decoration-line: none;
-  color: white;
-`;
-
-const JustButton = styled.button`
-  background: #e5e5e5;
-  width: 350px;
-  border: 1px solid black;
-  font-size: 19px;
-  margin: 5px 0px 0px 0px;
   padding: 20px 50px;
   font-weight: 700;
   cursor: pointer;
