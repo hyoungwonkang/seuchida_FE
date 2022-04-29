@@ -20,7 +20,7 @@ const SignupLoca = () => {
   const FindLoca = () => {
     if (navigator.geolocation) {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-      navigator.geolocation.getCurrentPosition(
+      navigator.geolocation.watchPosition(
         (pos) => {
           const lat = pos.coords.latitude; // 위도
           const lng = pos.coords.longitude; // 경도
