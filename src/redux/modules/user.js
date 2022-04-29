@@ -7,6 +7,8 @@ import axios from 'axios';
 
 //Actions
 const LOG_IN = 'LOG_IN';
+const LOG_OUT = 'LOG_OUT';
+const GET_USER = 'GET_USER';
 
 //Action Creators
 
@@ -39,8 +41,9 @@ const kakaoLogin = (code) => {
         console.log('카카오로그인 에러', err);
         window.alert('로그인에 실패했습니다');
         history.replace('/login'); //로그인 실패 시 로그인 화면으로 돌아갑니다
-})
-
+      });
+  };
+};
 //Middleware
 
 //addProfile
@@ -55,8 +58,8 @@ const signupDB = (
 ) => {
   return function (dispatch, getState, { history }) {
     axios({
-      method: "post",
-      url: "",
+      method: 'post',
+      url: '',
       data: JSON.stringify({
         nickName: nickName,
         birthday: birthday,
@@ -67,14 +70,14 @@ const signupDB = (
         address: address,
       }),
       headers: {
-        "Content-Type": `multipart/form-data;`,
+        'Content-Type': `multipart/form-data;`,
       },
     })
       .then((res) => {
         console.log(res);
       })
       .catch((error) => {
-        console.log("회원가입 실패", error);
+        console.log('회원가입 실패', error);
       });
   };
 };
