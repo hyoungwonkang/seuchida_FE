@@ -73,8 +73,8 @@ const SignupLoca = () => {
         center={state.center}
         style={{
           // 지도의 크기
-          width: "80vw",
-          height: "40vh",
+          width: "300px",
+          height: "300px",
           margin: "auto",
         }}
         level={3} // 지도의 확대 레벨
@@ -124,16 +124,16 @@ const SignupLoca = () => {
 };
 
 const TotBox = styled.div`
-  width: 80%;
+  width: 300px;
   height: 100%;
-  margin: auto;
+  /* margin: auto; */
 `;
 
 const MsgBox = styled.div`
   padding: 5px;
 `;
 const Box = styled.div`
-  width: 80vw;
+  width: 300px;
   height: 10vh;
   margin-top: 3%;
   display: flex;
@@ -142,19 +142,18 @@ const Box = styled.div`
   align-items: center;
   border-radius: 10px;
 `;
-
 const Input = styled.input`
-  width: 55vw;
-  height: 5.2vh;
+  width: 230px;
+  height: 45px;
 `;
-
 const Btn = styled.button`
-  width: 20vw;
-  height: 6vh;
+  width: 50px;
+  height: 50px;
 `;
 const Next = styled.button`
-  width: 350px;
+  width: 300px;
   height: 45px;
+  margin: auto;
   margin-top: 10%;
   border: none;
   background: gray;
