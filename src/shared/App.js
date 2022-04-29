@@ -1,24 +1,24 @@
-import React from "react";
-import styled from "styled-components";
-import { Route } from "react-router-dom";
-import { ConnectedRouter } from "connected-react-router";
-import { history } from "../redux/configStore";
+import React from 'react';
+import styled from 'styled-components';
+import { Route } from 'react-router-dom';
+import { ConnectedRouter } from 'connected-react-router';
+import { history } from '../redux/configStore';
 
-import Login from "../pages/LoginPages/Login";
-import Main from "../pages/Main";
-import Redirect from "./Redirect";
-import SignupDone from "../pages/LoginPages/SignupDone";
-import SignupLoca from "../pages/LoginPages/SignupLoca";
-import AddProfile from "../pages/LoginPages/AddProfile";
-import PostList from "../pages/PostList";
-import PostDetail from "../pages/PostDetail";
-import Map from "../pages/Map";
-import MyPage from "../pages/MyPage";
-import FooterMenu from "../shared/FooterMenu";
-import Category from "../pages/LoginPages/Category";
-import Time from "../components/Time";
-import Done from "../pages/LoginPages/Done";
-import axios from "axios";
+import Login from '../pages/LoginPages/Login';
+import Main from '../pages/Main';
+import Redirect from './Redirect';
+import SignupDone from '../pages/LoginPages/SignupDone';
+import SignupLoca from '../pages/LoginPages/SignupLoca';
+import AddProfile from '../pages/LoginPages/AddProfile';
+import PostList from '../pages/PostList';
+import PostDetail from '../pages/PostDetail';
+import Map from '../pages/Map';
+import MyPage from '../pages/MyPage';
+import FooterMenu from '../shared/FooterMenu';
+import Category from '../pages/LoginPages/Category';
+import Time from '../components/Time';
+import Done from '../pages/LoginPages/Done';
+import axios from 'axios';
 
 function App() {
   // const [address, setAddress] = useState();

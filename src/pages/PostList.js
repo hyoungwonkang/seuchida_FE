@@ -1,17 +1,17 @@
-import React from "react";
-import { Card } from "../components/index";
-import styled from "styled-components";
-import FooterMenu from "../shared/FooterMenu";
-import gBack from "../shared/ImgBox/gBack.png"
+import React from 'react';
+import { Card } from '../components/index';
+import styled from 'styled-components';
+import FooterMenu from '../shared/FooterMenu';
+import gBack from '../shared/ImgBox/gBack.png';
 const PostList = () => {
   return (
     <>
       <Header>
-    <Gback><img src={gBack}/></Gback>
+        <Gback>
+          <img src={gBack} />
+        </Gback>
         <HeadContents>
-
-    <div> 서울시 강남구</div>
-
+          <div> 서울시 강남구</div>
         </HeadContents>
       </Header>
 
@@ -23,11 +23,10 @@ const PostList = () => {
         <Card />
         <Card />
         <Card />
-       
+
         <Card />
       </ListBox>
-      <FooterMenu/>
-      
+      <FooterMenu />
     </>
   );
 };
@@ -42,21 +41,15 @@ const Header = styled.div`
   height: 100px;
   padding: 24px 0px 0px 24px;
   border-bottom: 1px solid #e9e9e9; ;
-  
 `;
 
-const Gback = styled.div`
-
-
-`
+const Gback = styled.div``;
 const HeadContents = styled.div`
-margin-top: 24px;
-font-size: 20px;
-font-weight: bold;
+  margin-top: 24px;
+  font-size: 20px;
+  font-weight: bold;
 `;
 
 const ListBox = styled.div`
   margin-top: 120px;
- 
-
 `;
