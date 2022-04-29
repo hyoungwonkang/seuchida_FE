@@ -1,6 +1,6 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
+import React from "react";
+import { useHistory } from "react-router-dom";
+import styled from "styled-components";
 
 const SignupDone = () => {
   const history = useHistory();
@@ -18,10 +18,10 @@ const SignupDone = () => {
         </SignupHead>
         <KakaoButton
           onClick={() => {
-            history.push('/signuploca');
+            history.push("/signuploca");
           }}
         >
-          <p style={{ color: 'white' }}>내 동네 설정하고 시작하기</p>
+          <p style={{ color: "white" }}>내 동네 설정하고 시작하기</p>
         </KakaoButton>
       </Container>
     </>
