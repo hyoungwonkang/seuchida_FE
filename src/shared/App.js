@@ -105,5 +105,5 @@ export default App;
 const Container = styled.div`
   width: 100%;
   max-width: 420px;
-  min-height: 100vh;
+  
 `;
