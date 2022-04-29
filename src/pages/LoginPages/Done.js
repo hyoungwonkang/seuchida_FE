@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import { history } from "../../redux/configStore";
+import React from 'react';
+import styled from 'styled-components';
+import { history } from '../../redux/configStore';
 
 const Done = () => {
   return (
@@ -11,7 +11,7 @@ const Done = () => {
       </h2>
       <Next
         onClick={() => {
-          history.push("/main");
+          history.push('/main');
         }}
       >
         확인
