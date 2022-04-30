@@ -7,7 +7,6 @@ const PostDetail = () => {
     <>
       <Header>
         <img src={gBack} />
-      
       </Header>
       <Container>
         <ProfileBox>
@@ -18,7 +17,7 @@ const PostDetail = () => {
           </User>
         </ProfileBox>
 
-        <Card DetailCard  />
+        <Card DetailCard />
 
         <LiveBox>
           <div> 참여중인 운동 메이트 2/3</div>
@@ -92,10 +91,8 @@ const ChatButton = styled.button`
   color: white;
   font-size: 18px;
   font-weight: bold;
-  
 `;
 
 const LiveBox = styled.div`
-padding: 24px
-
-`
+  padding: 24px;
+`;

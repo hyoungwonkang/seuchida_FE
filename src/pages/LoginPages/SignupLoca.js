@@ -20,7 +20,7 @@ const SignupLoca = () => {
   const FindLoca = () => {
     if (navigator.geolocation) {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-      navigator.geolocation.watchPosition(
+      navigator.geolocation.getCurrentPosition(
         (pos) => {
           const lat = pos.coords.latitude; // 위도
           const lng = pos.coords.longitude; // 경도
@@ -43,8 +43,8 @@ const SignupLoca = () => {
             )
             .then((res) => {
               const location = res.data.documents[0].address; //내 현 위치의 주소
-              const result = location.address_name;
-              console.log(res);
+              const result = `${location.region_1depth_name} ${location.region_2depth_name}`;
+              // console.log(result);
               setAddress(result); //input에 지소 띄우기
             });
         },

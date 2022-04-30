@@ -1,21 +1,18 @@
 import { createAction, handleActions } from "redux-actions";
-import { produce } from "immer"; 
-import axios from 'axios';
+import { produce } from "immer";
+import axios from "axios";
 
 //Action
 const SET_POST = "SET_POST";
 
-
 //Action Creators
 const setPost = createAction(SET_POST, (post_list) => ({ post_list }));
-
 
 //initialState
 
 const initialState = {
   list: [],
 };
-
 
 const getPostDB = (postId) => {
   return async function (dispatch, getState) {
@@ -27,16 +24,13 @@ const getPostDB = (postId) => {
           // authorization: `Bearer ${token}`,
         },
       }).then((response) => {
-        
         dispatch(setPost(response.data));
-        
       });
     } catch (err) {
       console.log(err);
     }
   };
 };
-
 
 export default handleActions(
   {
@@ -48,11 +42,9 @@ export default handleActions(
   initialState
 );
 
-
 const actionCreators = {
   setPost,
   getPostDB,
-  
 };
 
 export { actionCreators };

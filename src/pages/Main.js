@@ -20,19 +20,19 @@ const Main = () => {
           <LCslider />
         </TopLive>
 
-         {/* 스친 운동 한줄평 */}
-         <ReviewBox>
+        {/* 스친 운동 한줄평 */}
+        <ReviewBox>
           <TitleBox>
             <Title>스친 운동 후기</Title> <Title>&gt;</Title>
           </TitleBox>
 
           <RCslider />
         </ReviewBox>
-     
+
         {/* 여기여기 붙어라 */}
-          <TitleBox>
-            <Title>여기여기 붙어라</Title> <Title>&gt;</Title>
-          </TitleBox>
+        <TitleBox>
+          <Title>여기여기 붙어라</Title> <Title>&gt;</Title>
+        </TitleBox>
         <ListBox>
           <CardBox>
             <Card MainCard />
@@ -44,10 +44,10 @@ const Main = () => {
             <Card MainCard />
           </CardBox>
         </ListBox>
-       
+
         {/* 푸터 */}
       </Container>
-        <FooterMenu />
+      <FooterMenu />
     </>
   );
 };
@@ -83,18 +83,14 @@ const Wellcome = styled.div`
 
 //참여한 운동매칭
 const EndBox = styled.div`
-background-color : white
-
+  background-color: white;
 `;
 
 // 여기여기 붙어라
 
 const ListBox = styled.section`
-background-color: white;
-padding-bottom: 80px;
-
-
-
+  background-color: white;
+  padding-bottom: 80px;
 `;
 
 const CardBox = styled.div`
