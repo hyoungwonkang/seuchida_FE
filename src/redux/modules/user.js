@@ -12,7 +12,7 @@ const GET_USER = 'GET_USER';
 
 //Action Creators
 
-const logIn = createAction(LOG_IN, (user) => ({ user }));
+const logIn = createAction(LOG_IN, (token, user) => ({ token, user }));
 const logOut = createAction(LOG_OUT, (user) => ({ user }));
 const getUser = createAction(GET_USER, (user) => ({ user }));
 
@@ -30,6 +30,8 @@ const kakaoLogin = (code) => {
         console.log(res); //토큰 넘어오는 것 확인합니다
 
         const token = res.data.user.token;
+        const userInfo = res.data.user.userInfo;
+        console.log(userInfo);
 
         // decode the logged in user
         function parseJwt(token) {
@@ -47,9 +49,13 @@ const kakaoLogin = (code) => {
 
         localStorage.setItem('token', token); //token을 local에 저장합니다
 
-        dispatch(logIn(decode_token));
+        dispatch(logIn(decode_token, userInfo));
         console.log('로그인 확인');
-        history.replace('/signupdone'); //토큰을 받았고 로그인됬으니 메인으로 전환합니다
+        if (userInfo && token) {
+          history.replace('/main'); //유저프로필을 확인하였으니 메인으로 전환합니다
+        } else {
+          history.replace('/signupdone'); //토큰 받았고 로그인됬으니 으로 전환합니다
+        }
       })
       .catch((err) => {
         console.log('카카오로그인 에러', err);
@@ -103,10 +109,12 @@ export default handleActions(
   {
     [LOG_IN]: (state, action) =>
       produce(state, (draft) => {
-        draft.token = action.payload.user;
+        draft.token = action.payload.token;
+        draft.userInfo = action.payload.user;
         // draft.token = action.payload.user; // action.payload.user.token은 안 되어서 .user로 draft.token 함.
         draft.is_login = true;
         console.log(draft.token);
+        console.log(draft.userInfo);
       }),
     [LOG_OUT]: (state, action) => produce(state, (draft) => {}),
     [GET_USER]: (state, action) => produce(state, (draft) => {}),
