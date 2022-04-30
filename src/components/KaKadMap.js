@@ -3,7 +3,13 @@ import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import styled from 'styled-components';
 
 function KakaoMap({ MainMap , UserLoca }) {
-console.log(UserLoca)
+  if(MainMap){
+  
+  }
+
+
+
+
 
   if (MainMap) {
     return (

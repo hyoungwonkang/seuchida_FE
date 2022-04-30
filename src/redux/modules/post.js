@@ -2,6 +2,10 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer"; 
 import axios from 'axios';
 
+
+
+const token = localStorage.getItem("token");
+
 //Action
 const SET_POST = "SET_POST";
 
@@ -18,17 +22,18 @@ const initialState = {
 
 
 const getPostDB = (postId) => {
+  
   return async function (dispatch, getState) {
     try {
       await axios({
         method: "get",
-        url: `http://52.78.211.107/api/postDetail/${postId}`,
+        url: `https://seuchidaback2.shop/api/postList`,
         headers: {
-          // authorization: `Bearer ${token}`,
+          authorization: `Bearer ${token}`,
         },
       }).then((response) => {
-        
-        dispatch(setPost(response.data));
+        console.log(response)
+        // dispatch(setPost(response.data));
         
       });
     } catch (err) {

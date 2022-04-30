@@ -48,7 +48,7 @@ const Map = () => {
     }
   }, [])
 
- console.log(state.center)
+
  let UserLoca = state.center
 
   return (

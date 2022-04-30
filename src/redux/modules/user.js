@@ -25,7 +25,7 @@ const initialState = {
 const kakaoLogin = (code) => {
   return async function (dispatch, getState, { history }) {
     await axios
-      .get(`http://3.35.16.227/oauth/callback/kakao?code=${code}`)
+      .get(`https://seuchidaback2.shop/oauth/callback/kakao?code=${code}`)
       .then((res) => {
         console.log(res); //토큰 넘어오는 것 확인합니다
 
