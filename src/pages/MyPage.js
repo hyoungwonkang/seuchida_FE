@@ -63,7 +63,7 @@ const MyPage = () => {
   );
 };
 
-export default MyPage;
+export default  MyPage;
 
 const Wrap = styled.section`
   background-color: #f0f0f0;

@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
-import { Card, KakaoMap } from "../components/index";
-import gBack from "../shared/ImgBox/gBack.png";
+import React from 'react';
+import styled from 'styled-components';
+import { Card, KakaoMap } from '../components/index';
+import gBack from '../shared/ImgBox/gBack.png';
 const PostDetail = () => {
   return (
     <>
