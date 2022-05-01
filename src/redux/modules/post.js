@@ -1,13 +1,11 @@
-import { createAction, handleActions } from "redux-actions";
-import { produce } from "immer";
-import axios from "axios";
+import { createAction, handleActions } from 'redux-actions';
+import { produce } from 'immer';
+import axios from 'axios';
 
-
-
-const token = localStorage.getItem("token");
+const token = localStorage.getItem('token');
 
 //Action
-const SET_POST = "SET_POST";
+const SET_POST = 'SET_POST';
 
 //Action Creators
 const setPost = createAction(SET_POST, (post_list) => ({ post_list }));
@@ -19,23 +17,17 @@ const initialState = {
 };
 
 const getPostDB = (postId) => {
-  
   return async function (dispatch, getState) {
     try {
       await axios({
-        method: "get",
+        method: 'get',
         url: `https://seuchidaback2.shop/api/postList`,
         headers: {
           authorization: `Bearer ${token}`,
         },
       }).then((response) => {
-<<<<<<< HEAD
-        dispatch(setPost(response.data));
-=======
-        console.log(response)
+        console.log(response);
         // dispatch(setPost(response.data));
-        
->>>>>>> 225ad7c1ca4139f1888020ef4db5b151cfafb0f4
       });
     } catch (err) {
       console.log(err);
