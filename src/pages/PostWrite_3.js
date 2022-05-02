@@ -36,7 +36,7 @@ const PostWrite_3 = (props) => {
   ];
 
   const [datemate, setDatemate] = useState();
-
+  console.log(datemate);
   return (
     <Container>
       날짜
