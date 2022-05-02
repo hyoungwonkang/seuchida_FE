@@ -7,6 +7,9 @@ import { KakaoMap } from '../components';
 
 
 const Map = () => {
+
+
+
   const [state, setState] = React.useState({
     center: {
       lat: 33.450701,
@@ -16,7 +19,7 @@ const Map = () => {
     isLoading: true,
   })
 
-  React.useEffect(() => {
+  React.useEffect(() => { //갱신으로 수정해야됨
     if (navigator.geolocation) {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
       navigator.geolocation.getCurrentPosition(
