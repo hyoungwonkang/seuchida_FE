@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { Map, MapMarker } from "react-kakao-maps-sdk";
-import styled from "styled-components";
-import axios from "axios";
-import { useHistory } from "react-router-dom";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { Map, MapMarker } from 'react-kakao-maps-sdk';
+import styled from 'styled-components';
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const SignupLoca = () => {
   const history = useHistory();
@@ -16,7 +16,7 @@ const SignupLoca = () => {
     errMsg: null,
     isLoading: true,
   });
-
+  console.log(state);
   const FindLoca = () => {
     if (navigator.geolocation) {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
@@ -37,14 +37,14 @@ const SignupLoca = () => {
               `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lng}&y=${lat}&input_coord=WGS84`,
               {
                 headers: {
-                  Authorization: "KakaoAK 5498cafd5af35c66b35808e2b9e12971",
+                  Authorization: 'KakaoAK 5498cafd5af35c66b35808e2b9e12971',
                 },
               }
             )
             .then((res) => {
               const location = res.data.documents[0].address; //내 현 위치의 주소
               const result = `${location.region_1depth_name} ${location.region_2depth_name}`;
-              // console.log(result);
+              console.log(typeof location);
               setAddress(result); //input에 지소 띄우기
             });
         },
@@ -60,7 +60,7 @@ const SignupLoca = () => {
       // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
       setState((prev) => ({
         ...prev,
-        errMsg: "geolocation을 사용할수 없어요..",
+        errMsg: 'geolocation을 사용할수 없어요..',
         isLoading: false,
       }));
     }
@@ -69,13 +69,13 @@ const SignupLoca = () => {
   return (
     <TotBox>
       <Map // 지도를 표시할 Container
-        id="map"
+        id='map'
         center={state.center}
         style={{
           // 지도의 크기
-          width: "300px",
-          height: "300px",
-          margin: "auto",
+          width: '300px',
+          height: '300px',
+          margin: 'auto',
         }}
         level={3} // 지도의 확대 레벨
       >
@@ -83,23 +83,23 @@ const SignupLoca = () => {
           <MapMarker
             position={state.center}
             image={{
-              src: "https://ifh.cc/g/NcBFMY.png", // 마커이미지의 주소입니다
+              src: 'https://ifh.cc/g/NcBFMY.png', // 마커이미지의 주소입니다
               size: {
                 width: 40,
                 height: 40,
               },
             }}
           >
-            <MsgBox>{state.errMsg ? state.errMsg : "내 위치"}</MsgBox>
+            <MsgBox>{state.errMsg ? state.errMsg : '내 위치'}</MsgBox>
           </MapMarker>
         )}
       </Map>
 
       <Box>
         <Input
-          value={address || ""}
-          placeholder="아래 버튼을 통해 동네를 설정해 주세요."
-          type="text"
+          value={address || ''}
+          placeholder='아래 버튼을 통해 동네를 설정해 주세요.'
+          type='text'
           onChange={(e) => console.log(e.target.value)}
         />
         <Btn onClick={FindLoca}>동네 인증</Btn>
@@ -113,7 +113,7 @@ const SignupLoca = () => {
       >
         <Next
           onClick={() => {
-            history.push("/addprofile");
+            history.push('/addprofile');
           }}
         >
           다음

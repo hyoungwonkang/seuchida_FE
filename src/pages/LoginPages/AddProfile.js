@@ -1,28 +1,28 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { history } from "../../redux/configStore";
-import DatePicker from "react-datepicker";
-import { ko } from "date-fns/esm/locale";
-import { getYear, getMonth } from "date-fns";
-import "react-datepicker/dist/react-datepicker.css";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { history } from '../../redux/configStore';
+import DatePicker from 'react-datepicker';
+import { ko } from 'date-fns/esm/locale';
+import { getYear, getMonth } from 'date-fns';
+import 'react-datepicker/dist/react-datepicker.css';
+import { Link } from 'react-router-dom';
 
 const AddProfile = (props) => {
-  const _ = require("lodash");
+  const _ = require('lodash');
   const years = _.range(1950, getYear(new Date()) + 1, 1);
   const months = [
-    "1월",
-    "2월",
-    "3월",
-    "4월",
-    "5월",
-    "6월",
-    "7월",
-    "8월",
-    "9월",
-    "10월",
-    "11월",
-    "12월",
+    '1월',
+    '2월',
+    '3월',
+    '4월',
+    '5월',
+    '6월',
+    '7월',
+    '8월',
+    '9월',
+    '10월',
+    '11월',
+    '12월',
   ];
 
   const address = props.location.state?.address;
@@ -60,28 +60,28 @@ const AddProfile = (props) => {
     <TotBox>
       <h3>프로필 작성</h3>
       <img
-        alt="profile"
-        src={preview ? preview : "https://ifh.cc/g/SCJaxK.png"}
+        alt='profile'
+        src={preview ? preview : 'https://ifh.cc/g/SCJaxK.png'}
       ></img>
-      <div className="fileupload">
-        <label htmlFor="image">+</label>
+      <div className='fileupload'>
+        <label htmlFor='image'>+</label>
         <input
-          type="file"
-          id="image"
+          type='file'
+          id='image'
           onChange={(e) => {
             selectImage(e);
           }}
         />
       </div>
-      <input type="text" placeholder="닉네임" onChange={selectNickName} />
-      <div className="Second">
-        <select onChange={selectGender} placeholder="성별">
-          <option value="남성">남성</option>
-          <option value="여성">여성</option>
+      <input type='text' placeholder='닉네임' onChange={selectNickName} />
+      <div className='Second'>
+        <select onChange={selectGender} placeholder='성별'>
+          <option value='남성'>남성</option>
+          <option value='여성'>여성</option>
         </select>
-        <div className="calendarBox">
+        <div className='calendarBox'>
           <DatePicker
-            className="calendar"
+            className='calendar'
             renderCustomHeader={({
               date,
               changeYear,
@@ -94,15 +94,15 @@ const AddProfile = (props) => {
               <div
                 style={{
                   margin: 10,
-                  display: "flex",
-                  justifyContent: "center",
+                  display: 'flex',
+                  justifyContent: 'center',
                 }}
               >
                 <button
                   onClick={decreaseMonth}
                   disabled={prevMonthButtonDisabled}
                 >
-                  {"<"}
+                  {'<'}
                 </button>
                 <select
                   value={getYear(date)}
@@ -132,33 +132,33 @@ const AddProfile = (props) => {
                   onClick={increaseMonth}
                   disabled={nextMonthButtonDisabled}
                 >
-                  {">"}
+                  {'>'}
                 </button>
               </div>
             )}
             selected={birthday}
-            dateFormat={"yyyy-MM-dd"}
+            dateFormat={'yyyy-MM-dd'}
             locale={ko}
-            placeholderText="생일을 입력해 주세요!"
+            placeholderText='생일을 입력해 주세요!'
             onChange={(date) => setBirthday(date)}
           />
         </div>
       </div>
 
       <Content
-        type="text"
-        placeholder="당신에 대해 조심 더 알려주세요!"
+        type='text'
+        placeholder='당신에 대해 조심 더 알려주세요!'
         onChange={selectContent}
       />
       <Link
         to={{
-          pathname: "/category",
+          pathname: '/category',
           state: { profile, nickName, gender, birthday, content, address },
         }}
       >
         <Next
           onClick={() => {
-            history.push("/category");
+            history.push('/category');
           }}
         >
           다음

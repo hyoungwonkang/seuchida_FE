@@ -2,13 +2,13 @@ import React from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import styled from 'styled-components';
 
-function KakaoMap({ MainMap , UserLoca }) {
+function KakaoMap({ MainMap, UserLoca }) {
   // if(MainMap){
   //   function getDistance(lat1,lng1,lat2,lng2) {
   //     function deg2rad(deg) {
   //         return deg * (Math.PI/180)
   //     }
-  
+
   //     var R = 6371; // Radius of the earth in km
   //     var dLat = deg2rad(lat2-lat1);  // deg2rad below
   //     var dLon = deg2rad(lng2-lng1);
@@ -19,10 +19,6 @@ function KakaoMap({ MainMap , UserLoca }) {
   // }
   // }
 
-
-
-
-
   if (MainMap) {
     return (
       <Map
@@ -30,7 +26,9 @@ function KakaoMap({ MainMap , UserLoca }) {
         style={{ width: '100%', height: '600px' }}
         level={3}
       >
-        <MapMarker position={{ lat:  UserLoca.lat, lng: UserLoca.lng }}></MapMarker>
+        <MapMarker
+          position={{ lat: UserLoca.lat, lng: UserLoca.lng }}
+        ></MapMarker>
       </Map>
     );
   }
@@ -53,8 +51,5 @@ function KakaoMap({ MainMap , UserLoca }) {
 const DetailMap = styled.div`
   padding: 0px 24px 130px 24px;
 `;
-
-
-
 
 export default KakaoMap;
