@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components'
 import FooterMenu from '../shared/FooterMenu';
 import { KakaoMap } from '../components';
-
+import {useDispatch} from "react-redux"
 
 
 
@@ -22,7 +22,7 @@ const Map = () => {
   React.useEffect(() => { //갱신으로 수정해야됨
     if (navigator.geolocation) {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-      navigator.geolocation.getCurrentPosition(
+      navigator.geolocation.watchPosition(
         (position) => {
           setState((prev) => ({
             ...prev,

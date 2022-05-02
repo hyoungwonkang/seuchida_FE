@@ -21,7 +21,7 @@ const initialState = {
   },
 };
 
-const getPostDB = (postId) => {
+const getMainDB = (postId) => {
   return async function (dispatch, getState) {
     try {
       await axios({
@@ -39,7 +39,7 @@ const getPostDB = (postId) => {
     }
   };
 };
-const getnearPostDB = (postId) => {
+const getPostlistDB = (postId) => {
   return async function (dispatch, getState) {
     try {
       await axios({
@@ -58,6 +58,16 @@ const getnearPostDB = (postId) => {
   };
 };
 
+
+
+
+
+
+
+
+
+
+
 export default handleActions(
   {
     [SET_POST]: (state, action) =>
@@ -70,8 +80,8 @@ export default handleActions(
 
 const actionCreators = {
   setPost,
-  getPostDB,
-  getnearPostDB,
+  getMainDB,
+  getPostlistDB,
 };
 
 export { actionCreators };
