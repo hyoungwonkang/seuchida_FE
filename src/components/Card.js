@@ -75,9 +75,7 @@ const Card = ({ MainCard, DetailCard, post_list }) => {
 
         <div>
           <Join>
-            {DetailCard ? (
-            null
-            ) : (
+            {DetailCard ? null : (
               <ProfileBox>
                 {post?.nowMember.map((m ,i) =>{
                     return <Profile src={m.memberImg} key={i}  />
@@ -102,7 +100,6 @@ const MainContainer = styled.section`
   width: 342px;
   height: 214px;
   margin-bottom: 14px;
-
 `;
 
 const Container = styled.section`

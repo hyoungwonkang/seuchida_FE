@@ -1,6 +1,6 @@
-import React from 'react';
-import { Map, MapMarker } from 'react-kakao-maps-sdk';
-import styled from 'styled-components';
+import React from "react";
+import { Map, MapMarker } from "react-kakao-maps-sdk";
+import styled from "styled-components";
 
 function KakaoMap({ MainMap, UserLoca }) {
   // if(MainMap){
@@ -23,7 +23,7 @@ function KakaoMap({ MainMap, UserLoca }) {
     return (
       <Map
         center={{ lat: UserLoca.lat, lng: UserLoca.lng }}
-        style={{ width: '100%', height: '600px' }}
+        style={{ width: "100%", height: "600px" }}
         level={3}
       >
         <MapMarker
@@ -38,7 +38,7 @@ function KakaoMap({ MainMap, UserLoca }) {
       <DetailMap>
         <Map
           center={{ lat: 33.5563, lng: 126.79581 }}
-          style={{ width: '100%', height: '200px' }}
+          style={{ width: "100%", height: "200px" }}
           level={3}
         >
           <MapMarker position={{ lat: 33.5563, lng: 126.79581 }}></MapMarker>

@@ -1,34 +1,38 @@
 import React from "react";
 import styled from "styled-components";
+import { Image } from "../elements/Index";
+
 const LiveCard = (props) => {
   return (
     <>
       <Container>
         <Box>
-          <Profile src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg" />
+          <Profile>
+            <Image
+              shape="circle"
+              src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg"
+              size={65}
+              margin="0px 0px 0px 70px"
+            />
+          </Profile>
+
           <LocaTime>
             <Location>
               <SmallFont>마크</SmallFont>
               <SmallFont>500m</SmallFont>
             </Location>
-           
           </LocaTime>
 
           {/* 카드 속 내용 */}
           <Title>배드민턴 칠 사람!</Title>
           <Desc>근처 근린공원에서 같이 배드민턴 쳐요~</Desc>
-          
-          
+
           <Line />
-          
-          
-          
-          <LocaTime >
-          <SmallFont>여/21세</SmallFont>
-          <SmallFont>1분전</SmallFont>
+
+          <LocaTime>
+            <SmallFont>여/21세</SmallFont>
+            <SmallFont>1분전</SmallFont>
           </LocaTime>
-        
-        
         </Box>
       </Container>
     </>
@@ -52,26 +56,26 @@ const Container = styled.section`
   display: flex;
 `;
 
-
 const Profile = styled.div`
   position: absolute;
-  width: 65px;
-  height: 65px;
-  border-radius: 65px;
-  z-index: 3;
-  background-color: white;
-  margin-left: 60px;
+  /* width: 65px; */
+  /* height: 65px; */
+  /* border-radius: 65px; */
+  /* z-index: 3; */
+  /* background-color: white; */
+  /* margin-left: 60px; */
   top: 0px;
-  background-image: url(${(props) => props.src});
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
+  /* background-image: url(${(props) => props.src}); */
+  /* background-size: cover; */
+  /* background-repeat: no-repeat; */
+  /* background-position: center; */
 `;
 
 const LocaTime = styled.div`
   justify-content: space-between;
   display: flex;
 `;
+
 const Location = styled.div`
   display: flex;
   flex-direction: row;

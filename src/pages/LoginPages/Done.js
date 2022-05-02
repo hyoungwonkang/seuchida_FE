@@ -1,6 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
-import { history } from '../../redux/configStore';
+import React from "react";
+import styled from "styled-components";
+import { history } from "../../redux/configStore";
+import { Button } from "../../elements/Index";
 
 const Done = () => {
   return (
@@ -9,13 +10,13 @@ const Done = () => {
         프로필 작성이 <br />
         완료되었어요:)
       </h2>
-      <Next
+      <Button
         onClick={() => {
-          history.push('/main');
+          history.push("/main");
         }}
       >
         확인
-      </Next>
+      </Button>
     </Box>
   );
 };
