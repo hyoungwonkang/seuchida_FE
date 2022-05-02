@@ -1,7 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-const Card = ({ MainCard, DetailCard }) => {
+const Card = ({ MainCard, DetailCard, post_list }) => {
+ 
+  
+  const post = post_list[0]
+ console.log(post)
   if (MainCard) {
     return (
       <>
@@ -10,17 +14,17 @@ const Card = ({ MainCard, DetailCard }) => {
             <TextBox>
               <div style={{ marginBottom: "6px" }}>
                 <BoldTitle>· 모집중</BoldTitle>
-                <span>게시글 제목</span>
+                <span>{post?.postTitle}</span>
               </div>
 
               <div style={{ margin: "10px 0px" }}>
-                <StatusBox>모두 참여 가능</StatusBox>
+                <StatusBox>{post?.gender}</StatusBox>
                 <StatusBox>오늘</StatusBox>
-                <StatusBox>2/3명 참여</StatusBox>
+                <StatusBox>{post?.nowMember.length}/{`${post?.maxMember}명`} 참여</StatusBox>
               </div>
 
               <div>
-                <Desc>수림님은 근린공원에서 배드민턴이 매우 치고싶다...</Desc>
+                <Desc>{post?.postDesc}</Desc>
               </div>
             </TextBox>
 
@@ -32,9 +36,13 @@ const Card = ({ MainCard, DetailCard }) => {
                 }}
               >
                 <ProfileBox>
-                  <Profile src="https://cdn.gukjenews.com/news/photo/202201/2388626_2381760_1339.jpg" />
-                  <Profile src="https://cdn.gukjenews.com/news/photo/202201/2388626_2381760_1339.jpg" />
-                  <Profile src="https://cdn.gukjenews.com/news/photo/202201/2388626_2381760_1339.jpg" />
+                  {post?.nowMember.map((m ,i) =>{
+                    return <Profile src={m.memberImg} key={i}  />
+                  })}
+                  
+                  
+                  {/* <Profile src="https://cdn.gukjenews.com/news/photo/202201/2388626_2381760_1339.jpg" /> */}
+                  
                 </ProfileBox>
                 <SmallFont>500m 떨어짐| 1분전</SmallFont>
               </Join>
@@ -50,19 +58,18 @@ const Card = ({ MainCard, DetailCard }) => {
       <TextBox>
         <div style={{ marginBottom: "12px" }}>
           <BoldTitle>· 모집중</BoldTitle>
-          <span>게시글 제목</span>
+          <span>{post?.postTitle}</span>
         </div>
 
         <div>
-          <StatusBox>모두참여가능</StatusBox>
+          <StatusBox>{post?.gender}</StatusBox>
           <StatusBox>오늘</StatusBox>
-          <StatusBox>2/3명 참여</StatusBox>
+          <StatusBox>{post?.nowMember.length}/{`${post?.maxMember}명`} 참여</StatusBox>
         </div>
 
         <DescBox>
           <Desc>
-            근린공원에서 같이 배드민턴 쳐요~ 아예 생 초보분들도 같이 즐기면서
-            치면 좋아요!
+          {post?.postDesc}
           </Desc>
         </DescBox>
 
@@ -72,9 +79,10 @@ const Card = ({ MainCard, DetailCard }) => {
             null
             ) : (
               <ProfileBox>
-                <Profile src="https://cdn.gukjenews.com/news/photo/202201/2388626_2381760_1339.jpg" />
-                <Profile src="https://cdn.gukjenews.com/news/photo/202201/2388626_2381760_1339.jpg" />
-                <Profile src="https://cdn.gukjenews.com/news/photo/202201/2388626_2381760_1339.jpg" />
+                {post?.nowMember.map((m ,i) =>{
+                    return <Profile src={m.memberImg} key={i}  />
+                  })}
+                  
               </ProfileBox>
             )}
 
