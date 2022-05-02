@@ -4,13 +4,82 @@ import { Card, LCslider, RCslider, ECslider } from '../components/index';
 import FooterMenu from '../shared/FooterMenu';
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
+import { actionCreators as userActions } from "../redux/modules/user";
 const Main = () => {
- 
-
+const catepost = useSelector((state)=> state.post.list.caPost)
+const post_list = useSelector((state)=> state.post.list.nearPost)
 const dispatch = useDispatch()
+
+
+
+function getDistance(lat1, lon1, lat2, lon2, unit) {
+	if ((lat1 === lat2) && (lon1 === lon2)) {
+		return 0;
+	}
+	else {
+		var radlat1 = Math.PI * lat1/180;
+		var radlat2 = Math.PI * lat2/180;
+		var theta = lon1-lon2;
+		var radtheta = Math.PI * theta/180;
+		var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+		if (dist > 1) {
+			dist = 1;
+		}
+		dist = Math.acos(dist);
+		dist = dist * 180/Math.PI;
+		dist = dist * 60 * 1.1515;
+		if (unit==="K") { dist = dist * 1.609344 }
+		if (unit==="N") { dist = dist * 0.8684 }
+		return dist;
+	}
+}
+  
+
+
+  const [state, setState] = React.useState({
+    center: {
+      lat: 33.450701,
+      lng: 126.570667,
+    },
+    errMsg: null,
+    isLoading: true,
+  })
+
+console.log(catepost)
 React.useEffect(() =>{
+  if (navigator.geolocation) {
+    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setState((prev) => ({
+          ...prev,
+          center: {
+            lat: position.coords.latitude, // 위도
+            lng: position.coords.longitude, // 경도
+          },
+          isLoading: false,
+        }))
+      },
+      (err) => {
+        setState((prev) => ({
+          ...prev,
+          errMsg: err.message,
+          isLoading: false,
+        }))
+      }
+    )
+  } else {
+    // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+    setState((prev) => ({
+      ...prev,
+      errMsg: "geolocation을 사용할수 없어요..",
+      isLoading: false,
+    }))
+  }
   dispatch(postActions.getPostDB())
-})
+  // dispatch(userActions.getUser(state.state))
+},[])
+
 
   return (
     <>
@@ -43,13 +112,7 @@ React.useEffect(() =>{
         </TitleBox>
         <ListBox>
           <CardBox>
-            <Card MainCard />
-          </CardBox>
-          <CardBox>
-            <Card MainCard />
-          </CardBox>
-          <CardBox>
-            <Card MainCard />
+            <Card MainCard post_list={post_list}/>
           </CardBox>
         </ListBox>
 
