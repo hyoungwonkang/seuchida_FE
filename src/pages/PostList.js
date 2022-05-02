@@ -4,14 +4,14 @@ import styled from 'styled-components';
 import FooterMenu from '../shared/FooterMenu';
 import gBack from '../shared/ImgBox/gBack.png';
 import { useSelector, useDispatch } from "react-redux";
-import { actionCreators as postActions } from "../redux/modules/post";
+import post, { actionCreators as postActions } from "../redux/modules/post";
 const PostList = () => {
   const dispatch = useDispatch()
   const post_list = useSelector((state)=> state.post.list.nearPosts)
   console.log(post_list)
   React.useEffect(() =>{
 
-    dispatch(postActions.getnearPostDB())
+    dispatch(postActions.getPostlistDB())
     // dispatch(userActions.getUser(state.state))
   },[])
   
@@ -29,7 +29,12 @@ const PostList = () => {
       </Header>
 
       <ListBox>
-        <Card post_list={post_list}/>
+          {post_list.map((p,i) => {
+            return (
+              <Card {...p} key={p.id}/>
+            )
+          })} 
+       
 
       </ListBox>
       <FooterMenu />
@@ -57,5 +62,5 @@ const HeadContents = styled.div`
 `;
 
 const ListBox = styled.div`
-  margin-top: 120px;
+  margin: 120px 0px 80px 0px;
 `;

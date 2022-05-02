@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import styled from "styled-components";
 import { Route } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
@@ -23,8 +23,18 @@ import PostWrite_1 from "../pages/PostWrite_1";
 import PostWrite_2 from "../pages/PostWrite_2";
 import PostWrite_3 from "../pages/PostWrite_3";
 import axios from "axios";
+import {useDispatch} from "react-redux"
+import { actionCreators as userActions } from "../redux/modules/user";
 
 function App() {
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   if (localStorage.getItem('token')) {
+  //     dispatch(userActions.isLoginDB());
+  //   }
+  // }, []);
+
+
   return (
     <>
       <Container>

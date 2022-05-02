@@ -64,18 +64,25 @@ const Category = (props) => {
   };
 
   const addProfile = () => {
-    dispatch(
-      userActions.signupDB(
-        profile,
-        nickName,
-        gender,
-        age,
-        content,
-        address,
-        userInterest
-      )
-    );
-    // history.push("/main");
+    // if (!fileInput.current || fileInput.current.files.length === 0) {
+    //   window.alert("이미지파일을 등록해주세요!");
+    //   return;
+    // }
+    // const file = fileInput.current.files[0];
+
+    const formData = new FormData();
+    formData.append("userImg", profile);
+    formData.append("nickName", nickName);
+    formData.append("userGender", gender);
+    formData.append("userAge", age);
+    formData.append("userContent", content);
+    formData.append("address", address);
+    formData.append("userInterest", userInterest);
+    // console.log("formData", formData);
+    // for (var pair of formData.entries()) {
+    //   console.log(pair[0] + ", " + pair[1]);
+    // }
+    dispatch(userActions.signupDB(formData));
   };
 
   // const addProfile = () => {
@@ -114,7 +121,7 @@ const Category = (props) => {
             </div>
           );
         })}
-        <Button onClick={addProfile}>다음</Button>
+        <Button _onClick={addProfile}>다음</Button>
       </CateBox>
     </div> //+; 스트링으로 변환
   );

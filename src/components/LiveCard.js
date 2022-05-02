@@ -3,6 +3,36 @@ import styled from "styled-components";
 import { Image } from "../elements/Index";
 
 const LiveCard = (props) => {
+  const Livepost = props
+  function getDistance(lat1, lon1, lat2, lon2, unit) {
+    if (lat1 === lat2 && lon1 === lon2) {
+      return 0;
+    } else {
+      var radlat1 = (Math.PI * lat1) / 180;
+      var radlat2 = (Math.PI * lat2) / 180;
+      var theta = lon1 - lon2;
+      var radtheta = (Math.PI * theta) / 180;
+      var dist =
+        Math.sin(radlat1) * Math.sin(radlat2) +
+        Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+      if (dist > 1) {
+        dist = 1;
+      }
+      dist = Math.acos(dist);
+      dist = (dist * 180) / Math.PI;
+      dist = dist * 60 * 1.1515;
+      if (unit === "K") {
+        dist = dist * 1.609344;
+      }
+      if (unit === "N") {
+        dist = dist * 0.8684;
+      }
+      return dist;
+    }
+  }
+  
+  let distance = getDistance(props.center.lat, props.center.lng, props.latitude, props.longitude, "K").toFixed(1)
+
   return (
     <>
       <Container>
@@ -10,27 +40,26 @@ const LiveCard = (props) => {
           <Profile>
             <Image
               shape="circle"
-              src="https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg"
-              size={65}
-              margin="0px 0px 0px 70px"
+              src={Livepost?.userImg}
+              size={60}
+              margin="0px 0px 0px 60px"
             />
           </Profile>
 
+          {/* 카드 속 내용 */}
+          <Location>
+            <Title style={{marginRight :"8px"}}>· {Livepost?.status===true? '모집중': '모집완료'}</Title>
+            <Title>제목 받아야됨</Title>
+          </Location>
+
+          <Desc>{Livepost?.postDesc}</Desc>
+
           <LocaTime>
             <Location>
-              <SmallFont>마크</SmallFont>
-              <SmallFont>500m</SmallFont>
+              <SmallFont style={{marginRight:"3px"}}>마크</SmallFont>
+              <SmallFont>{distance} km</SmallFont>
             </Location>
-          </LocaTime>
 
-          {/* 카드 속 내용 */}
-          <Title>배드민턴 칠 사람!</Title>
-          <Desc>근처 근린공원에서 같이 배드민턴 쳐요~</Desc>
-
-          <Line />
-
-          <LocaTime>
-            <SmallFont>여/21세</SmallFont>
             <SmallFont>1분전</SmallFont>
           </LocaTime>
         </Box>
@@ -42,16 +71,17 @@ const LiveCard = (props) => {
 export default LiveCard;
 
 const Container = styled.section`
-  padding: 15px;
+  
   max-width: 250px;
   width: 224px;
-  border: 3px solid black;
-  height: 179px;
-  margin: 20px;
+  /* border: 1px solid rgba(208, 208, 208, 1); */
+  height: 168px;
+  margin: 15px;
+  margin-top: 30px;
   font-size: 14px;
-  border-radius: 25px;
+  border-radius: 12px;
   background-color: white;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   display: flex;
 `;
@@ -61,7 +91,7 @@ const Profile = styled.div`
   /* width: 65px; */
   /* height: 65px; */
   /* border-radius: 65px; */
-  /* z-index: 3; */
+  z-index: 99;
   /* background-color: white; */
   /* margin-left: 60px; */
   top: 0px;
@@ -74,6 +104,7 @@ const Profile = styled.div`
 const LocaTime = styled.div`
   justify-content: space-between;
   display: flex;
+  margin-top: 20px;
 `;
 
 const Location = styled.div`
@@ -83,8 +114,10 @@ const Location = styled.div`
 
 const Box = styled.div`
   /* border: 1px solid black; */
-  margin-top: 6px;
-  padding: 15px;
+  margin-top:20px;
+  padding: 20px;
+  width: 100%;
+ 
 `;
 
 const SmallFont = styled.div`
@@ -95,11 +128,13 @@ const SmallFont = styled.div`
 const Title = styled.div`
   font-size: 16px;
   font-weight: 800;
-  padding: 16px 0px;
+  padding: 8px 0px;
 `;
 
 const Desc = styled.div`
   font-size: 14px;
+  min-width: 50px;
+  min-height: 40px;
 `;
 
 const Line = styled.div`
