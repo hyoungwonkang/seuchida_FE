@@ -25,15 +25,16 @@ import PostWrite_1 from '../pages/PostWrite_1';
 import PostWrite_2 from '../pages/PostWrite_2';
 import PostWrite_3 from '../pages/PostWrite_3';
 import PostWrite_4 from '../pages/PostWrite_4';
+import PostDone from '../pages/PostDone';
 
 function App() {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    if (localStorage.getItem('token')) {
-      dispatch(userActions.isLoginDB());
-    }
-    console.log('토큰이 있을 시 isLogin으로 요청합니다.');
-  }, []);
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   if (localStorage.getItem('token')) {
+  //     dispatch(userActions.isLoginDB());
+  //   }
+  //   console.log('토큰이 있을 시 isLogin으로 요청합니다.');
+  // }, []);
 
   return (
     <>
@@ -57,6 +58,7 @@ function App() {
           <Route path='/postwrite2' exact component={PostWrite_2} />
           <Route path='/postwrite3' exact component={PostWrite_3} />
           <Route path='/postwrite4' exact component={PostWrite_4} />
+          <Route path='/postdone' exact component={PostDone} />
         </ConnectedRouter>
         <FooterMenu />
       </Container>

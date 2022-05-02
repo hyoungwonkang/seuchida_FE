@@ -37,7 +37,6 @@ const kakaoLogin = (code) => {
 
         const token = res.data.user.token;
         const userInfo = res.data.user.userInfo;
-        console.log(userInfo);
 
         // decode the logged in user
         function parseJwt(token) {
@@ -51,16 +50,16 @@ const kakaoLogin = (code) => {
 
         // loggedin user
         const decode_token = parseJwt(token);
-        console.log(decode_token);
 
         localStorage.setItem('token', token); //token을 local에 저장합니다
 
         dispatch(logIn(decode_token, userInfo));
         console.log('로그인 확인');
-        if (userInfo && token) {
-          history.replace('/main'); //유저프로필을 확인하였으니 메인으로 전환합니다
+
+        if (!userInfo.userInterest[0]) {
+          history.replace('/signuploca');
         } else {
-          history.replace('/signupdone'); //토큰 받았고 로그인됬으니 으로 전환합니다
+          history.replace('/main'); //토큰 받았고 로그인됬으니 메인으로 전환합니다
         }
       })
       .catch((err) => {
@@ -85,7 +84,6 @@ const signupDB = (formData) => {
       },
     })
       .then((res) => {
-        console.log(res);
         console.log('회원가입 성공');
         history.push('/main');
       })

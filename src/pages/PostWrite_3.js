@@ -18,8 +18,6 @@ const PostWrite_3 = (props) => {
   const postCategory = props.location.state.postCategory;
   const postTitle = props.location.state.postTitle;
   const postDesc = props.location.state.postDesc;
-  const state = props.location.state;
-  console.log(state);
 
   //날짜
   const _ = require('lodash');
@@ -125,7 +123,7 @@ const PostWrite_3 = (props) => {
           onChange={(date) => setDatemate(date)}
         />
       </div>
-      시간 return (
+      시간
       <div className='Test'>
         <input
           value={`${valueGroups?.AmPm} ${valueGroups?.Hour}:${valueGroups?.Minute}`}
@@ -139,7 +137,7 @@ const PostWrite_3 = (props) => {
       </div>
       <Link
         to={{
-          // pathname: '/postwrite4',
+          pathname: '/postwrite4',
           state: {
             datemate,
             valueGroups,

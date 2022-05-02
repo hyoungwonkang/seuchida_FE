@@ -48,7 +48,11 @@ const PostWrite_1 = (props) => {
         <Link
           to={{
             // pathname: '/postwrite2',
-            state: { postTitle, postDesc, postCategory },
+            state: {
+              postTitle,
+              postDesc,
+              postCategory,
+            },
           }}
         >
           <Next

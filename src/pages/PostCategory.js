@@ -87,7 +87,7 @@ const PostCategory = (prop) => {
           })}
           <Link
             to={{
-              pathname: '/postwrite1',
+              // pathname: '/postwrite1',
               state: { postCategory },
             }}
           >
