@@ -50,11 +50,9 @@ const MyPage = () => {
           <ECslider />
         </EndCardBox>
 
-        <div> 
-        <div> 내가 쓴 글</div>
-        <div> 내가 쓴 후기</div>
-
-
+        <div>
+          <div> 내가 쓴 글</div>
+          <div> 내가 쓴 후기</div>
         </div>
       </Wrap>
 
@@ -63,18 +61,17 @@ const MyPage = () => {
   );
 };
 
-export default  MyPage;
+export default MyPage;
 
 const Wrap = styled.section`
   background-color: #f0f0f0;
 `;
 
 const EndCardBox = styled.div`
-background-color: white;
-padding :24px;
-margin-top: 20px;
-`
-
+  background-color: white;
+  padding: 24px;
+  margin-top: 20px;
+`;
 
 const ProfileContainer = styled.section`
   height: 369px;
@@ -123,6 +120,7 @@ const ImgName = styled.div`
 const Level = styled.div`
   margin-right: 4px;
 `;
+
 const UserName = styled.div`
   font-size: 24px;
   font-weight: bold;

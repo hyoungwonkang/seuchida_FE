@@ -1,45 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useSelector } from "react";
 import styled from "styled-components";
 import { history } from "../../redux/configStore";
-import DatePicker from "react-datepicker";
-import { ko } from "date-fns/esm/locale";
-import { getYear, getMonth } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
+import { Grid, Button, Image, Text, Input } from "../../elements/Index";
 
 const AddProfile = (props) => {
-  const _ = require("lodash");
-  const years = _.range(1950, getYear(new Date()) + 1, 1);
-  const months = [
-    "1월",
-    "2월",
-    "3월",
-    "4월",
-    "5월",
-    "6월",
-    "7월",
-    "8월",
-    "9월",
-    "10월",
-    "11월",
-    "12월",
-  ];
-
   const address = props.location.state?.address;
+
+  // const userInfo = useSelector((state) => state.user?.userInfo);
 
   const [preview, setPreview] = useState();
   const [profile, setProfile] = useState();
+  // userInfo.useImg?  userInfo.userImg : ""
   const [nickName, setNickName] = useState();
+  // userInfo.nickname?  userInfo.nickname : ""
   const [gender, setGender] = useState();
-  const [birthday, setBirthday] = useState();
+  // userInfo.userGender?  userInfo.userGender : ""
+  const [age, setAge] = useState();
+  // userInfo.userAge?  userInfo.userAge : ""
   const [content, setContent] = useState();
-
-  // const selectOptions = (e) => {
-  //   setNickName(e.target.value);
-  //   setGender(e.target.value);
-  //   setContent(e.target.value);
-  //   console.log(e.target.value);
-  // };
+  // userInfo.userContent?  userInfo.userContent : ""
 
   const selectImage = (e) => {
     setPreview(window.webkitURL.createObjectURL(e.target.files[0]));
@@ -52,149 +33,118 @@ const AddProfile = (props) => {
   const selectGender = (e) => {
     setGender(e.target.value);
   };
+  const selectAge = (e) => {
+    setAge(e.target.value);
+  };
   const selectContent = (e) => {
     setContent(e.target.value);
   };
 
+  // React.useEffect(() => {
+  //   //Didupdate
+  //   setNickName(userInfo.nickName);
+  //   setGender(userInfo.userGender);
+  //   setAge(userInfo.userAge);
+  //   setContent(userInfo.userContent);
+  // }, [userInfo]);
+
   return (
-    <TotBox>
-      <h3>프로필 작성</h3>
-      <img
-        alt="profile"
-        src={preview ? preview : "https://ifh.cc/g/SCJaxK.png"}
-      ></img>
-      <div className="fileupload">
-        <label htmlFor="image">+</label>
-        <input
-          type="file"
-          id="image"
-          onChange={(e) => {
-            selectImage(e);
-          }}
+    <Grid>
+      <Text size="20px" bold>
+        프로필 작성하기
+      </Text>
+      <Grid padding="60px" column bg="green">
+        <Image
+          size={80}
+          alt="profile"
+          src={preview ? preview : "https://ifh.cc/g/SCJaxK.png"}
+          // src={userInfo.userImg? userInfouserImg: preview ? preview : "https://ifh.cc/g/SCJaxK.png"}
         />
-      </div>
-      <input type="text" placeholder="닉네임" onChange={selectNickName} />
-      <div className="Second">
-        <select onChange={selectGender} placeholder="성별">
-          <option value="남성">남성</option>
-          <option value="여성">여성</option>
-        </select>
-        <div className="calendarBox">
-          <DatePicker
-            className="calendar"
-            renderCustomHeader={({
-              date,
-              changeYear,
-              changeMonth,
-              decreaseMonth,
-              increaseMonth,
-              prevMonthButtonDisabled,
-              nextMonthButtonDisabled,
-            }) => (
-              <div
-                style={{
-                  margin: 10,
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              >
-                <button
-                  onClick={decreaseMonth}
-                  disabled={prevMonthButtonDisabled}
-                >
-                  {"<"}
-                </button>
-                <select
-                  value={getYear(date)}
-                  onChange={({ target: { value } }) => changeYear(value)}
-                >
-                  {years.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-
-                <select
-                  value={months[getMonth(date)]}
-                  onChange={({ target: { value } }) =>
-                    changeMonth(months.indexOf(value))
-                  }
-                >
-                  {months.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-
-                <button
-                  onClick={increaseMonth}
-                  disabled={nextMonthButtonDisabled}
-                >
-                  {">"}
-                </button>
-              </div>
-            )}
-            selected={birthday}
-            dateFormat={"yyyy-MM-dd"}
-            locale={ko}
-            placeholderText="생일을 입력해 주세요!"
-            onChange={(date) => setBirthday(date)}
+        <FileUpload>
+          <label htmlFor="image">+</label>
+          <input
+            type="file"
+            id="image"
+            onChange={(e) => {
+              selectImage(e);
+            }}
           />
-        </div>
-      </div>
+        </FileUpload>
+        <Input
+          type="text"
+          placeholder="닉네임"
+          onChange={selectNickName}
+          // value={nickName || ""}
+        />
+        <Grid row padding="0px 60px">
+          <select onChange={selectGender} placeholder="성별">
+            <option value="남성">남성</option>
+            <option value="여성">여성</option>
+          </select>
+          <div className="calendarBox">
+            <input
+              type="text"
+              placeholder="나이"
+              onChange={selectAge}
+              // value={age || ""}
+            />
+          </div>
+        </Grid>
 
-      <Content
-        type="text"
-        placeholder="당신에 대해 조심 더 알려주세요!"
-        onChange={selectContent}
-      />
-      <Link
-        to={{
-          pathname: "/category",
-          state: { profile, nickName, gender, birthday, content, address },
-        }}
-      >
-        <Next
-          onClick={() => {
-            history.push("/category");
+        <Input
+          multiLine
+          type="text"
+          placeholder="당신에 대해 조심 더 알려주세요!"
+          onChange={selectContent}
+          // value={content || ""}
+        />
+        <Link
+          to={{
+            pathname: "/category",
+            state: { profile, nickName, gender, age, content, address },
           }}
         >
-          다음
-        </Next>
-      </Link>
-    </TotBox>
+          <Button
+            onClick={() => {
+              history.push("/category");
+            }}
+          >
+            다음
+          </Button>
+        </Link>
+      </Grid>
+    </Grid>
   );
 };
 
-const TotBox = styled.div`
-  width: 100%;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  img {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-  }
-
-  .fileupload label {
+// const Grid = styled.div`
+//   width: 100%;
+//   height: auto;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+//   img {
+//     width: 80px;
+//     height: 80px;
+//     border-radius: 50%;
+//   }
+const FileUpload = styled.div`
+  label {
     display: inline-block;
-    width: 50px;
-    height: 50px;
+    width: 32px;
+    height: 32px;
     text-align: center;
     line-height: 50px;
     font-size: 16px;
     font-weight: normal;
-    background: #ddd;
+    background: gray;
     color: white;
     cursor: pointer;
     border-radius: 50%;
   }
-  .fileupload input {
+
+  input {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -204,29 +154,24 @@ const TotBox = styled.div`
     clip: rect(0, 0, 0, 0);
     border: 0;
   }
-  .Second {
-    width: 357px;
-    align-items: row;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .Second select {
-    width: 100px;
-  }
 `;
+
+//   .Second {
+//     width: 357px;
+//     align-items: row;
+//     display: flex;
+//     flex-direction: row;
+//     justify-content: space-between;
+//     align-items: center;
+//   }
+//   .Second select {
+//     width: 100px;
+//   }
+// `;
 
 const Content = styled.input`
   width: 350px;
   height: 150px;
 `;
 
-const Next = styled.button`
-  width: 350px;
-  height: 45px;
-  margin-top: 10%;
-  border: none;
-  background: gray;
-`;
 export default AddProfile;

@@ -4,22 +4,29 @@ import { produce } from "immer";
 
 //Axios
 import axios from "axios";
+import { CALL_HISTORY_METHOD } from "connected-react-router";
 
 //Actions
 const LOG_IN = "LOG_IN";
 const LOG_OUT = "LOG_OUT";
 const GET_USER = "GET_USER";
+const EDIT_USER = "EDIT_USER";
 
 //Action Creators
 
 const logIn = createAction(LOG_IN, (user) => ({ user }));
 const logOut = createAction(LOG_OUT, (user) => ({ user }));
 const getUser = createAction(GET_USER, (user) => ({ user }));
+const editUser = createAction(EDIT_USER, (userInfo, userInterest) => ({
+  userInfo,
+  userInterest,
+}));
 
 //initialState (default props 같은 것, 기본값)
 const initialState = {
   user: "",
   is_login: false,
+  userInfo: "",
 };
 
 const kakaoLogin = (code) => {
@@ -51,7 +58,7 @@ const signupDB = (
   profile,
   nickName,
   gender,
-  birthday,
+  age,
   content,
   address,
   userInterest
@@ -62,10 +69,10 @@ const signupDB = (
       url: "https://seuchidaback2.shop/oauth/signup",
       data: JSON.stringify({
         nickName: nickName,
-        birthday: birthday,
-        gender: gender,
+        userAge: age,
+        userGender: gender,
         userContent: content,
-        userProfile: profile,
+        userImg: profile,
         userInterest: userInterest,
         address: address,
       }),
@@ -77,12 +84,78 @@ const signupDB = (
       .then((res) => {
         console.log(res);
         console.log("회원가입 성공");
+        history.push("/main");
       })
       .catch((error) => {
         console.log("회원가입 실패", error);
       });
   };
 };
+
+// const signupDB = (
+//   userInfo,
+//   userInterest
+// ) => {
+//   return function (dispatch, getState, { history }) {
+//     axios({
+//       method: "post",
+//       url: "https://seuchidaback2.shop/oauth/signup",
+//       data: JSON.stringify({
+//         nickName: userInfo.nickName,
+//         userAge: userInfo.age,
+//         userGender: userInfo.gender,
+//         userContent: userInfo.content,
+//         userImage: userInfo.profile,
+//         address: userInfo.address,
+//         userInterest: userInterest,
+//       }),
+//       headers: {
+//         Authorization: `Bearer ${localStorage.getItem("token")}`,
+//         "Content-Type": `application/json`,
+//       },
+//     })
+//       .then((res) => {
+//         console.log(res);
+//         console.log("회원가입 성공");
+//         history.push("/main");
+//       })
+//       .catch((error) => {
+//         console.log("회원가입 실패", error);
+//       });
+//   };
+// };
+
+// //editProfile
+// const editUserDB = (userInfo, userInterest) => {
+//   return function (dispatch, getState, { history }) {
+//     axios({
+//       method: "post",
+//       url: "https://seuchidaback2.shop/oauth/signup",
+//       data: JSON.stringify({
+//         nickName: userInfo.nickName,
+//         userAge: userInfo.age,
+//         userGender: userInfo.gender,
+//         userContent: userInfo.content,
+//         userImg: userInfo.profile,
+//         address: userInfo.address,
+//         userInterest: userInterest,
+//       }),
+//       headers: {
+//         Authorization: `Bearer ${localStorage.getItem("token")}`,
+//         "Content-Type": `application/json`,
+//       },
+//     })
+//       .then((res) => {
+//         console.log(res);
+//         dispatch(editUser(userInfo, userInterest))
+//         console.log("유저 정보 수정 성공");
+//         history.replace("/mypage");
+//       })
+//       .catch((error) => {
+//         console.log("유저 정보 실패", error);
+//       });
+//   };
+// };
 
 //reducer
 export default handleActions(
@@ -94,6 +167,10 @@ export default handleActions(
       }),
     [LOG_OUT]: (state, action) => produce(state, (draft) => {}),
     [GET_USER]: (state, action) => produce(state, (draft) => {}),
+    // [EDIT_USER]: (state, action) =>
+    //   produce(state, (draft) => {
+    //     draft.userInfo = { ...draft.userInfo, ...action.payload.userInfo }; //갈아끼워줘라
+    //   }),
   },
   initialState
 );
@@ -105,6 +182,7 @@ const actionCreators = {
   logOut,
   getUser,
   signupDB,
+  // editUserDB,
 };
 
 export { actionCreators };

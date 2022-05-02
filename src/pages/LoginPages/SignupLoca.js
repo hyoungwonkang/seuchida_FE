@@ -4,10 +4,12 @@ import styled from "styled-components";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { Grid, Button, Text, Image } from "../../elements/Index";
 
 const SignupLoca = () => {
   const history = useHistory();
   const [address, setAddress] = useState();
+  const [fullAddress, setFullAddress] = useState();
   const [state, setState] = useState({
     center: {
       lat: 33.450701,
@@ -44,7 +46,8 @@ const SignupLoca = () => {
             .then((res) => {
               const location = res.data.documents[0].address; //내 현 위치의 주소
               const result = `${location.region_1depth_name} ${location.region_2depth_name}`;
-              // console.log(result);
+              // console.log(res);
+              setFullAddress(location.address_name);
               setAddress(result); //input에 지소 띄우기
             });
         },
@@ -67,7 +70,13 @@ const SignupLoca = () => {
   };
 
   return (
-    <TotBox>
+    <Grid column margin="40px auto">
+      <Grid row padding="0px 60px 0px 60px ">
+        <Image src="https://ifh.cc/g/NcBFMY.png" size={20} />
+        <Text>동네인증</Text>
+        <Text>{fullAddress}</Text>
+      </Grid>
+
       <Map // 지도를 표시할 Container
         id="map"
         center={state.center}
@@ -95,68 +104,30 @@ const SignupLoca = () => {
         )}
       </Map>
 
-      <Box>
-        <Input
-          value={address || ""}
-          placeholder="아래 버튼을 통해 동네를 설정해 주세요."
-          type="text"
-          onChange={(e) => console.log(e.target.value)}
-        />
-        <Btn onClick={FindLoca}>동네 인증</Btn>
-      </Box>
+      <Button _onClick={FindLoca} margin="30px auto 5px auto">
+        동네 인증
+      </Button>
 
       <Link
         to={{
-          // pathname: "/addprofile",
+          pathname: "/addprofile",
           state: { address },
         }}
       >
-        <Next
+        <Button
           onClick={() => {
             history.push("/addprofile");
           }}
         >
           다음
-        </Next>
+        </Button>
       </Link>
-    </TotBox>
+    </Grid>
   );
 };
 
-const TotBox = styled.div`
-  width: 300px;
-  height: 100%;
-  /* margin: auto; */
-`;
-
 const MsgBox = styled.div`
   padding: 5px;
-`;
-const Box = styled.div`
-  width: 300px;
-  height: 10vh;
-  margin-top: 3%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 10px;
-`;
-const Input = styled.input`
-  width: 230px;
-  height: 45px;
-`;
-const Btn = styled.button`
-  width: 50px;
-  height: 50px;
-`;
-const Next = styled.button`
-  width: 300px;
-  height: 45px;
-  margin: auto;
-  margin-top: 10%;
-  border: none;
-  background: gray;
 `;
 
 export default SignupLoca;

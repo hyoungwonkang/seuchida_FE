@@ -3,21 +3,22 @@ import styled from "styled-components";
 import { history } from "../../redux/configStore";
 import { useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../../redux/modules/user";
+import { Button } from "../../elements/Index";
 
 const Category = (props) => {
   const get = props.location.state;
   console.log(get);
   const nickName = get?.nickName;
   const gender = get?.gender;
-  const birthday = get?.birthday;
+  const age = get?.age;
   const content = get?.content;
   const address = get?.address;
   const profile = get?.profile;
 
   const CategoryList = [
-    { id: 0, data: "자전거", checked: false },
-    { id: 1, data: "배드민턴", checked: false },
-    { id: 2, data: "골프", checked: false },
+    { id: 0, data: "자전거" },
+    { id: 1, data: "배드민턴" },
+    { id: 2, data: "골프" },
     { id: 3, data: "볼링" },
     { id: 4, data: "테니스/스쿼시" },
     { id: 5, data: "탁구" },
@@ -43,7 +44,11 @@ const Category = (props) => {
 
   const dispatch = useDispatch();
   // 데이터를 넣을 빈배열
+
+  // const getUserInterest = useSelector((state) => state.user?.userInfo.userInterest);
+  // const userInfo = { nickName, gender, age, content, address, profile };
   const [userInterest, setUserInterest] = useState([]);
+  // getUserInterest?  getUserInterest : ""
   // onChange함수를 사용하여 이벤트 감지, 필요한 값 받아오기
 
   const _userInterest = (checked, item) => {
@@ -64,14 +69,23 @@ const Category = (props) => {
         profile,
         nickName,
         gender,
-        birthday,
+        age,
         content,
         address,
         userInterest
       )
     );
-    history.push("/main");
+    // history.push("/main");
   };
+
+  // const addProfile = () => {
+  //   dispatch(userActions.signupDB(userInfo, userInterest));
+  //   // history.push("/main");
+  // };
+
+  // const editUser = () => {
+  //   dispatch(userActions.editUserDB(formData));
+  // };
 
   return (
     <div>
@@ -85,6 +99,7 @@ const Category = (props) => {
                 id={item.id}
                 type="checkbox"
                 value={item.data}
+                // value={getUserInterest? getUserInterest : item.data}
                 onChange={(e) => {
                   _userInterest(e.target.checked, e.target.value);
                 }}
@@ -99,9 +114,9 @@ const Category = (props) => {
             </div>
           );
         })}
-        <Next onClick={addProfile}>다음</Next>
+        <Button onClick={addProfile}>다음</Button>
       </CateBox>
-    </div>
+    </div> //+; 스트링으로 변환
   );
 };
 
@@ -130,11 +145,5 @@ const Cate = styled.div`
   font-size: 20px;
   background: ${(props) => (props.color ? "lightgreen" : "white")};
 `;
-const Next = styled.button`
-  width: 350px;
-  height: 45px;
-  margin-top: 10%;
-  border: none;
-  background: gray;
-`;
+
 export default Category;

@@ -1,16 +1,16 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Card, LCslider, RCslider, ECslider } from '../components/index';
-import FooterMenu from '../shared/FooterMenu';
+import React from "react";
+import styled from "styled-components";
+import { Card, LCslider, RCslider, ECslider } from "../components/index";
+import FooterMenu from "../shared/FooterMenu";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
-const Main = () => {
- 
+import { history } from "../redux/configStore";
 
-const dispatch = useDispatch()
-React.useEffect(() =>{
-  dispatch(postActions.getPostDB())
-})
+const Main = () => {
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    dispatch(postActions.getPostDB());
+  });
 
   return (
     <>
@@ -39,7 +39,14 @@ React.useEffect(() =>{
 
         {/* 여기여기 붙어라 */}
         <TitleBox>
-          <Title>여기여기 붙어라</Title> <Title>&gt;</Title>
+          <Title>여기여기 붙어라</Title>{" "}
+          <Title
+            onClick={() => {
+              history.push("/postdetail");
+            }}
+          >
+            &gt;
+          </Title>
         </TitleBox>
         <ListBox>
           <CardBox>

@@ -1,16 +1,39 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Card, KakaoMap } from '../components/index';
-import gBack from '../shared/ImgBox/gBack.png';
+import React from "react";
+import styled from "styled-components";
+import { Card, KakaoMap } from "../components/index";
+import gBack from "../shared/ImgBox/gBack.png";
+import Modal from "../components/Modal/Modal"; //모달 창
+import ModalPortal from "../components/Modal/Portal"; //모달 포탈
+import { Image } from "../elements/Index";
+
 const PostDetail = () => {
+  const [modalOn, setModalOn] = React.useState(false);
+
+  const openModal = (e) => {
+    e.stopPropagation();
+    setModalOn(true);
+  };
+
+  const closeModal = (e) => {
+    setModalOn(false);
+  };
+
   return (
     <>
-      <Header>
+      <Header onClick={closeModal}>
         <img src={gBack} />
+        {/* <h2>여기여기 붙어라</h2> */}
       </Header>
-      <Container>
+      <Container onClick={closeModal}>
         <ProfileBox>
-          <Profile src="https://t1.daumcdn.net/cfile/tistory/212E043B5815E35605"></Profile>
+          <Image
+            shape="circle"
+            src="https://t1.daumcdn.net/cfile/tistory/212E043B5815E35605"
+            size={60}
+            _onClick={openModal}
+          />
+          <ModalPortal>{modalOn && <Modal />}</ModalPortal>
+
           <User>
             <div>김미미</div>
             <div> 여/21세</div>
@@ -20,8 +43,25 @@ const PostDetail = () => {
         <Card DetailCard />
 
         <LiveBox>
-          <div> 참여중인 운동 메이트 2/3</div>
-          <div> 프로필 </div>
+          <div> 참여중인 운동 메이트 2/3 </div>
+          <div className="otherProfile">
+            <Image
+              shape="circle"
+              src="https://t1.daumcdn.net/cfile/tistory/212E043B5815E35605"
+              size={40}
+              margin="3px"
+              _onClick={openModal}
+            />
+            <ModalPortal>{modalOn && <Modal />}</ModalPortal>
+            <Image
+              shape="circle"
+              src="https://t1.daumcdn.net/cfile/tistory/212E043B5815E35605"
+              size={40}
+              margin="3px"
+              _onClick={openModal}
+            />
+            <ModalPortal>{modalOn && <Modal />}</ModalPortal>
+          </div>
         </LiveBox>
 
         <KakaoMap />
@@ -45,6 +85,7 @@ const ProfileBox = styled.div`
   display: flex;
   flex-direction: row;
 `;
+
 const User = styled.div`
   display: flex;
   flex-direction: column;
@@ -62,6 +103,17 @@ const Profile = styled.div`
   margin-right: 12px;
 `;
 
+const OtherProfile = styled.div`
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+  background-image: url(${(props) => props.src});
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-right: 12px;
+`;
+
 const Header = styled.div`
   top: 0;
   position: fixed;
@@ -69,6 +121,8 @@ const Header = styled.div`
   width: 100%;
   height: 40px;
   padding: 24px 0px 0px 24px;
+  display: flex;
+  flex-direction: row;
 `;
 
 const ButtonBox = styled.div`
@@ -95,4 +149,10 @@ const ChatButton = styled.button`
 
 const LiveBox = styled.div`
   padding: 24px;
+
+  .otherProfile {
+    display: flex;
+    flex-direction: row;
+    margin-top: 16px;
+  }
 `;

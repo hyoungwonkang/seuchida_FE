@@ -68,9 +68,7 @@ const Card = ({ MainCard, DetailCard }) => {
 
         <div>
           <Join>
-            {DetailCard ? (
-            null
-            ) : (
+            {DetailCard ? null : (
               <ProfileBox>
                 <Profile src="https://cdn.gukjenews.com/news/photo/202201/2388626_2381760_1339.jpg" />
                 <Profile src="https://cdn.gukjenews.com/news/photo/202201/2388626_2381760_1339.jpg" />
@@ -94,7 +92,6 @@ const MainContainer = styled.section`
   width: 342px;
   height: 214px;
   margin-bottom: 14px;
-
 `;
 
 const Container = styled.section`
