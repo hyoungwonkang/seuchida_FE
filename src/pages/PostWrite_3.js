@@ -6,6 +6,9 @@ import { ko } from 'date-fns/esm/locale';
 import { getYear, getMonth } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Link, useHistory } from 'react-router-dom';
+import Time from '../components/Time';
+import { Button } from '../elements/Index';
+import Picker from 'react-mobile-picker-scroll';
 
 const PostWrite_3 = (props) => {
   const history = useHistory();
@@ -18,6 +21,7 @@ const PostWrite_3 = (props) => {
   const state = props.location.state;
   console.log(state);
 
+  //날짜
   const _ = require('lodash');
   const years = _.range(1950, getYear(new Date()) + 1, 1);
   const months = [
@@ -37,8 +41,26 @@ const PostWrite_3 = (props) => {
 
   const [datemate, setDatemate] = useState();
   console.log(datemate);
+
+  //시간
+  const [optionGroups] = React.useState({
+    AmPm: ['오전', '오후'],
+    Hour: ['12', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'],
+    Minute: ['00', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55'],
+  });
+  const [valueGroups, setvalueGroups] = React.useState({
+    AmPm: '오전',
+    Hour: '12',
+    Minute: '00',
+  });
+
+  const handleChange = (name, value) => {
+    setvalueGroups({ ...valueGroups, [name]: value });
+  };
+
   return (
-    <Container>
+    <>
+      {/* <Container> */}
       날짜
       <div className='calendarBox'>
         <DatePicker
@@ -103,8 +125,43 @@ const PostWrite_3 = (props) => {
           onChange={(date) => setDatemate(date)}
         />
       </div>
-      시간
-    </Container>
+      시간 return (
+      <div className='Test'>
+        <input
+          value={`${valueGroups?.AmPm} ${valueGroups?.Hour}:${valueGroups?.Minute}`}
+        />
+
+        <Picker
+          optionGroups={optionGroups}
+          valueGroups={valueGroups}
+          onChange={handleChange}
+        />
+      </div>
+      <Link
+        to={{
+          // pathname: '/postwrite4',
+          state: {
+            datemate,
+            valueGroups,
+            maxMember,
+            memberGender,
+            memberAge,
+            postCategory,
+            postTitle,
+            postDesc,
+          },
+        }}
+      >
+        <Button
+          _onClick={() => {
+            history.push('/postwrite4');
+          }}
+        >
+          다음
+        </Button>
+      </Link>
+      {/* </Container> */}
+    </>
   );
 };
 

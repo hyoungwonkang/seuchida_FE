@@ -1,11 +1,12 @@
-import React, { useState, useSelector } from "react";
-import styled from "styled-components";
-import { history } from "../../redux/configStore";
-import "react-datepicker/dist/react-datepicker.css";
-import { Link } from "react-router-dom";
-import { Grid, Button, Image, Text, Input } from "../../elements/Index";
+import React, { useState, useSelector } from 'react';
+import styled from 'styled-components';
+import { history } from '../../redux/configStore';
+import 'react-datepicker/dist/react-datepicker.css';
+import { Link } from 'react-router-dom';
+import { Grid, Button, Image, Text, Input } from '../../elements/Index';
 
 const AddProfile = (props) => {
+  // const fileInput = React.useRef();
   const address = props.location.state?.address;
 
   // const userInfo = useSelector((state) => state.user?.userInfo);
@@ -22,9 +23,12 @@ const AddProfile = (props) => {
   const [content, setContent] = useState();
   // userInfo.userContent?  userInfo.userContent : ""
 
-  const selectImage = (e) => {
+  const selectPreview = (e) => {
     setPreview(window.webkitURL.createObjectURL(e.target.files[0]));
-    setProfile(window.webkitURL.createObjectURL(e.target.files[0]));
+  };
+
+  const selectImage = (e) => {
+    setProfile(e.target.files[0]);
   };
 
   const selectNickName = (e) => {
@@ -50,63 +54,63 @@ const AddProfile = (props) => {
 
   return (
     <Grid>
-      <Text size="20px" bold>
+      <Text size='20px' bold>
         프로필 작성하기
       </Text>
-      <Grid padding="60px" column bg="green">
+      <Grid padding='60px' column bg='green'>
         <Image
           size={80}
-          alt="profile"
-          src={preview ? preview : "https://ifh.cc/g/SCJaxK.png"}
+          alt='profile'
+          src={preview ? preview : 'https://ifh.cc/g/SCJaxK.png'}
           // src={userInfo.userImg? userInfouserImg: preview ? preview : "https://ifh.cc/g/SCJaxK.png"}
         />
         <FileUpload>
-          <label htmlFor="image">+</label>
+          <label htmlFor='image'>+</label>
           <input
-            type="file"
-            id="image"
+            type='file'
+            id='image'
             onChange={(e) => {
+              selectPreview(e);
               selectImage(e);
             }}
           />
         </FileUpload>
-        <Input
-          type="text"
-          placeholder="닉네임"
+        <input
+          type='text'
+          placeholder='닉네임'
           onChange={selectNickName}
           // value={nickName || ""}
         />
-        <Grid row padding="0px 60px">
-          <select onChange={selectGender} placeholder="성별">
-            <option value="남성">남성</option>
-            <option value="여성">여성</option>
+        <Grid row padding='0px 60px'>
+          <select onChange={selectGender} placeholder='성별'>
+            <option value='남성'>남성</option>
+            <option value='여성'>여성</option>
           </select>
-          <div className="calendarBox">
+          <div className='calendarBox'>
             <input
-              type="text"
-              placeholder="나이"
+              type='text'
+              placeholder='나이'
               onChange={selectAge}
               // value={age || ""}
             />
           </div>
         </Grid>
 
-        <Input
-          multiLine
-          type="text"
-          placeholder="당신에 대해 조심 더 알려주세요!"
+        <input
+          type='text'
+          placeholder='당신에 대해 조금 더 알려주세요!'
           onChange={selectContent}
           // value={content || ""}
         />
         <Link
           to={{
-            pathname: "/category",
+            pathname: '/category',
             state: { profile, nickName, gender, age, content, address },
           }}
         >
           <Button
             onClick={() => {
-              history.push("/category");
+              history.push('/category');
             }}
           >
             다음
@@ -117,18 +121,6 @@ const AddProfile = (props) => {
   );
 };
 
-// const Grid = styled.div`
-//   width: 100%;
-//   height: auto;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   align-items: center;
-//   img {
-//     width: 80px;
-//     height: 80px;
-//     border-radius: 50%;
-//   }
 const FileUpload = styled.div`
   label {
     display: inline-block;

@@ -9,7 +9,6 @@ const PostWrite_2 = (props) => {
   const postCategory = props.location.state.postCategory;
   const postTitle = props.location.state.postTitle;
   const postDesc = props.location.state.postDesc;
-  console.log(postCategory);
 
   //인원
   const [maxMember, setMaxMember] = useState(0);
@@ -89,7 +88,7 @@ const PostWrite_2 = (props) => {
         </AgeBox>
         <Link
           to={{
-            pathname: '/postwrite3',
+            // pathname: '/postwrite3',
             state: {
               maxMember,
               memberGender,
