@@ -5,10 +5,15 @@ import gBack from "../shared/ImgBox/gBack.png";
 import Modal from "../components/Modal/Modal"; //모달 창
 import ModalPortal from "../components/Modal/Portal"; //모달 포탈
 import { Image } from "../elements/Index";
+import {useDispatch,useSelector } from "react-redux"
+import{ actionCreators as postActions } from "../redux/modules/post";
+
 
 const PostDetail = () => {
+  const dispatch = useDispatch()
+  const post = useSelector((state)=> state.post.list.post)
+  console.log(post)
   const [modalOn, setModalOn] = React.useState(false);
-
   const openModal = (e) => {
     e.stopPropagation();
     setModalOn(true);
@@ -17,6 +22,21 @@ const PostDetail = () => {
   const closeModal = (e) => {
     setModalOn(false);
   };
+
+  const [state, setState] = React.useState({
+    center: {
+      lat: 33.450701,
+      lng: 126.570667,
+    },
+    errMsg: null,
+    isLoading: true,
+  });
+
+  React.useEffect(()=>{
+
+    dispatch(postActions.getOnePostDB('627073829849a9b92456e4ca'))
+  },[])
+
 
   return (
     <>
@@ -27,6 +47,7 @@ const PostDetail = () => {
       <Container onClick={closeModal}>
         <ProfileBox>
           <Image
+          margin="0px 15px 0px 0px"
             shape="circle"
             src="https://t1.daumcdn.net/cfile/tistory/212E043B5815E35605"
             size={60}
@@ -35,17 +56,18 @@ const PostDetail = () => {
           <ModalPortal>{modalOn && <Modal />}</ModalPortal>
 
           <User>
-            <div>김미미</div>
-            <div> 여/21세</div>
+            <Master>김미미</Master>
+            <div style={{color:"rgba(120, 120, 120, 1)"}}> 여/21세</div>
           </User>
         </ProfileBox>
 
-        <Card DetailCard />
+        <Card DetailCard center={state.center} {...post}/>
 
         <LiveBox>
           <div> 참여중인 운동 메이트 2/3 </div>
           <div className="otherProfile">
             <Image
+            
               shape="circle"
               src="https://t1.daumcdn.net/cfile/tistory/212E043B5815E35605"
               size={40}
@@ -81,7 +103,7 @@ const Container = styled.div`
 `;
 
 const ProfileBox = styled.div`
-  padding: 0px 24px 24px 24px;
+  padding: 24px 24px 24px 24px;
   display: flex;
   flex-direction: row;
 `;
@@ -92,27 +114,10 @@ const User = styled.div`
   justify-content: center;
 `;
 
-const Profile = styled.div`
-  width: 60px;
-  height: 60px;
-  border-radius: 60px;
-  background-image: url(${(props) => props.src});
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  margin-right: 12px;
-`;
+const Master = styled.div`
+font-weight: bold;
 
-const OtherProfile = styled.div`
-  width: 30px;
-  height: 30px;
-  border-radius: 30px;
-  background-image: url(${(props) => props.src});
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  margin-right: 12px;
-`;
+`
 
 const Header = styled.div`
   top: 0;
@@ -138,13 +143,14 @@ const ButtonBox = styled.div`
   width: 100%;
 `;
 const ChatButton = styled.button`
-  width: 333.5px;
-  height: 62.5px;
+  width: 342px;
+  height: 54px;
   background-color: #b0b0b0;
   border: none;
   color: white;
   font-size: 18px;
   font-weight: bold;
+  border-radius: 5px;
 `;
 
 const LiveBox = styled.div`

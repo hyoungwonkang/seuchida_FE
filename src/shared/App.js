@@ -14,7 +14,6 @@ import PostList from "../pages/PostList";
 import PostDetail from "../pages/PostDetail";
 import Map from "../pages/Map";
 import MyPage from "../pages/MyPage";
-import FooterMenu from "../shared/FooterMenu";
 import Category from "../pages/LoginPages/Category";
 import Time from "../components/Time";
 import Done from "../pages/LoginPages/Done";
@@ -57,7 +56,6 @@ function App() {
           <Route path="/postwrite2" exact component={PostWrite_2} />
           <Route path="/postwrite3" exact component={PostWrite_3} />
         </ConnectedRouter>
-        <FooterMenu />
       </Container>
     </>
   );

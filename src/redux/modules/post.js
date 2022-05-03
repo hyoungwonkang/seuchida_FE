@@ -18,10 +18,11 @@ const initialState = {
     caPost: [],
     nearPost: [],
     nearPosts: [],
+    post:[],
   },
 };
 
-const getMainDB = (postId) => {
+const getMainDB = () => {
   return async function (dispatch, getState) {
     try {
       await axios({
@@ -39,12 +40,32 @@ const getMainDB = (postId) => {
     }
   };
 };
-const getPostlistDB = (postId) => {
+const getPostlistDB = () => {
   return async function (dispatch, getState) {
     try {
       await axios({
         method: "get",
         url: `https://seuchidaback2.shop/api/nearPostList`,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }).then((response) => {
+        console.log(response);
+        dispatch(setPost(response.data));
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+
+const getOnePostDB = (postId) => {
+  return async function (dispatch, getState) {
+    try {
+      await axios({
+        method: "get",
+        url: `https://seuchidaback2.shop/api/postDetail/${postId}`,
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -82,6 +103,7 @@ const actionCreators = {
   setPost,
   getMainDB,
   getPostlistDB,
+  getOnePostDB,
 };
 
 export { actionCreators };

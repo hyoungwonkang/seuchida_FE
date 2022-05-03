@@ -5,7 +5,7 @@ import FooterMenu from "../shared/FooterMenu";
 import { useSelector, useDispatch } from "react-redux";
 import post, { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as userActions } from "../redux/modules/user";
-import { history } from "../redux/configStore";
+
 const Main = () => {
   const catepost = useSelector((state) => state.post.list.caPost);
   const post_list = useSelector((state) => state.post.list.nearPost);
@@ -83,7 +83,7 @@ const Main = () => {
 
         {/* 여기여기 붙어라 */}
         <TitleBox>
-          <Title onClick={()=> history.push('/postlist')}>여기여기 붙어라</Title>
+          <Title >여기여기 붙어라</Title>
           <Title
             onClick={() => {
               // history.push("/postdetail");
