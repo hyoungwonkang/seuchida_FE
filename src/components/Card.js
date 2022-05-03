@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const Card =(props) => {
 const { MainCard, DetailCard, center} = props
-
+console.log(props)
 function getDistance(lat1, lon1, lat2, lon2, unit) {
   if (lat1 === lat2 && lon1 === lon2) {
     return 0;
@@ -73,6 +73,65 @@ let distance = getDistance(center.lat, center.lng, props.latitude, props.longitu
     );
   }
 
+ if(DetailCard) return (
+    <Container style={{border:"none"}}>
+        <TitleBox style={{background:"white", borderDisplay:"none"}}>
+          <BoldTitle>
+            · {props?.status === true ? "모집중" : "모집완료"}
+          </BoldTitle>
+          <BoldTitle>{props?.postTitle}</BoldTitle>
+        </TitleBox>
+    
+    
+    
+    
+      <TextBoxList>
+
+      <DescBox style={{margin:"0px 0px"}}>
+          <Desc>{props?.postDesc}</Desc>
+        </DescBox>
+        
+        <Join>
+          <div> </div>
+    
+
+            <SmallFont>{distance} km 떨어짐 | 1분전</SmallFont>
+          </Join>
+
+      <Status style={{background:"#F8F8F8", height: "120px"}}> 
+         
+         
+          <StatusIcon>
+          
+            <span>콘</span> <StatusBox>{props?.spot}</StatusBox>
+          </StatusIcon>
+          <StatusIcon>
+          
+            <span>콘</span> <StatusBox>{props?.postCategory}</StatusBox>
+          </StatusIcon>
+          <StatusIcon>
+            <span>콘</span>
+            <StatusBox>{props?.datemate}</StatusBox>
+          </StatusIcon>
+          <StatusIcon>
+            <span>콘</span>
+            <StatusBox>
+              {props?.memberGender}, {props?.memberAge}세
+            </StatusBox>        
+          </StatusIcon>
+        </Status>
+
+     
+  
+    
+      </TextBoxList>
+    </Container>
+  );
+
+
+
+
+
   return (
     <Container>
         <TitleBox>
@@ -86,7 +145,7 @@ let distance = getDistance(center.lat, center.lng, props.latitude, props.longitu
     
     
       <TextBoxList>
-      <Status> 
+      <Status  > 
           <StatusIcon>
           
             <span>콘</span> <StatusBox>{props?.postCategory}</StatusBox>
@@ -109,14 +168,14 @@ let distance = getDistance(center.lat, center.lng, props.latitude, props.longitu
 
         <div>
           <Join>
-            {DetailCard ? null : (
+          
               <ProfileBox>
                <Profile src={props?.userImg}/>
                <SmallFont style={{marginLeft:"8px"}}>{props?.nickName}</SmallFont>
               </ProfileBox>
-            )}
+    
 
-            <SmallFont>500m 떨어짐| 1분전</SmallFont>
+            <SmallFont>{distance} km 떨어짐 | 1분전</SmallFont>
           </Join>
         </div>
       </TextBoxList>
@@ -176,7 +235,7 @@ const DescBox = styled.div`
 const Join = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 5px 24px 8px 24px;
+  padding: 5px 24px 12px 24px;
 `;
 
 const ProfileBox = styled.div`
