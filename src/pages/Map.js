@@ -3,11 +3,11 @@ import styled from 'styled-components'
 import FooterMenu from '../shared/FooterMenu';
 import { KakaoMap } from '../components';
 import {useDispatch} from "react-redux"
-
+import axios from 'axios';
 
 
 const Map = () => {
-
+  const token = localStorage.getItem("token");
 
 
   const [state, setState] = React.useState({
@@ -18,8 +18,19 @@ const Map = () => {
     errMsg: null,
     isLoading: true,
   })
-
+  const [post , setPost] = React.useState(null)
   React.useEffect(() => { //갱신으로 수정해야됨
+    axios({
+      method: "get",
+      url: `https://seuchidabackend.shop/api/nearPostList`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    }).then((response) => {
+      // console.log(response.data.nearPosts);
+      setPost(response.data.nearPosts)
+    });
+
     if (navigator.geolocation) {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
       navigator.geolocation.watchPosition(
@@ -47,6 +58,8 @@ const Map = () => {
         ...prev,
         errMsg: "geolocation을 사용할수 없어요..",
         isLoading: false,
+
+        
       }))
     }
   }, [])
@@ -61,7 +74,7 @@ const Map = () => {
     
     </Header>
     <div style={{marginTop:"128px", }}>
-<KakaoMap MainMap UserLoca ={UserLoca} /></div>
+<KakaoMap MainMap UserLoca ={UserLoca} post={post}/></div>
 <FooterMenu/>
     </>
   );
