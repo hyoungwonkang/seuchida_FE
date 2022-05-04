@@ -31,7 +31,7 @@ const initialState = {
 const kakaoLogin = (code) => {
   return async function (dispatch, getState, { history }) {
     await axios
-      .get(`https://seuchidaback2.shop/oauth/callback/kakao?code=${code}`)
+      .get(`https://seuchidabackend.shop/oauth/callback/kakao?code=${code}`)
       .then((res) => {
         const token = res.data.user.token;
         const userInfo = res.data.user.userInfo;
@@ -75,7 +75,7 @@ const signupDB = (formData) => {
   return function (dispatch, getState, { history }) {
     axios({
       method: 'post',
-      url: 'https://seuchidaback2.shop/oauth/signup',
+      url: 'https://seuchidabackend.shop/oauth/signup',
       data: formData,
       headers: {
         'Content-Type': `multipart/form-data;`,
@@ -96,7 +96,7 @@ const isLoginDB = () => {
   return (dispatch, getState, { history }) => {
     axios({
       method: 'get',
-      url: 'https://seuchidaback2.shop/api/myPage',
+      url: 'https://seuchidabackend.shop/api/myPage',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': `application/json`,

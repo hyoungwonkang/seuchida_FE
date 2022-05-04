@@ -21,17 +21,10 @@ import PostCategory from "../pages/PostCategory";
 import PostWrite_1 from "../pages/PostWrite_1";
 import PostWrite_2 from "../pages/PostWrite_2";
 import PostWrite_3 from "../pages/PostWrite_3";
-import axios from "axios";
-import {useDispatch} from "react-redux"
-import { actionCreators as userActions } from "../redux/modules/user";
+import ReviewList from "../pages/ReviewList";
 
 function App() {
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   if (localStorage.getItem('token')) {
-  //     dispatch(userActions.isLoginDB());
-  //   }
-  // }, []);
+
 
 
   return (
@@ -46,6 +39,7 @@ function App() {
           <Route path="/addprofile" exact component={AddProfile} />
           <Route path="/postlist" exact component={PostList} />
           <Route path="/postdetail" exact component={PostDetail} />
+          <Route path="/ReviewList" exact component={ReviewList} />
           <Route path="/mypage" exact component={MyPage} />
           <Route path="/map" exact component={Map} />
           <Route path="/time" exact component={Time} />

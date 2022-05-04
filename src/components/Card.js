@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 const Card =(props) => {
 const { MainCard, DetailCard, center} = props
-console.log(props)
 function getDistance(lat1, lon1, lat2, lon2, unit) {
   if (lat1 === lat2 && lon1 === lon2) {
     return 0;
@@ -40,7 +39,7 @@ let distance = getDistance(center.lat, center.lng, props.latitude, props.longitu
         <MainContainer>
           <div>
             <TextBox style={{paddingBottom:"5px"}}>
-              <div style={{ marginBottom: "6px" }}>
+              <div style={{ marginBottom: "0px" }}>
                 <BoldTitle>
                   · {props?.status === true ? "모집중" : "모집완료"}
                 </BoldTitle>
@@ -61,7 +60,7 @@ let distance = getDistance(center.lat, center.lng, props.latitude, props.longitu
               >
                 <ProfileBox>
                   {props?.nowMember.map((m, i) => {
-                    return <Profile src={m.memberImg} key={m.memberId} />;
+                    return <Profile ket={m.id}src={m.memberImg} key={m.memberId} />;
                   })}
                 </ProfileBox>
                 <SmallFont>{distance} km 떨어짐 | 1분전</SmallFont>
@@ -76,10 +75,10 @@ let distance = getDistance(center.lat, center.lng, props.latitude, props.longitu
  if(DetailCard) return (
     <Container style={{border:"none"}}>
         <TitleBox style={{background:"white", borderDisplay:"none"}}>
-          <BoldTitle>
+          <BoldTitle style={{fontSize:"20px"}}>
             · {props?.status === true ? "모집중" : "모집완료"}
           </BoldTitle>
-          <BoldTitle>{props?.postTitle}</BoldTitle>
+          <BoldTitle style={{fontSize:"20px"}}>{props?.postTitle}</BoldTitle>
         </TitleBox>
     
     
@@ -95,7 +94,7 @@ let distance = getDistance(center.lat, center.lng, props.latitude, props.longitu
           <div> </div>
     
 
-            <SmallFont>{distance} km 떨어짐 | 1분전</SmallFont>
+            <SmallFont>{distance} km 떨어짐 | {props.createdAt}</SmallFont>
           </Join>
 
       <Status style={{background:"#F8F8F8", height: "120px"}}> 
@@ -214,7 +213,7 @@ padding: 0px 24px;
 const Desc = styled.div`
   font-size: 17px;
   padding-top: 4px;
-  height: 50px;
+  height: 60px;
 `;
 
 const Status = styled.div`
