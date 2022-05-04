@@ -1,38 +1,23 @@
 import React from "react";
-import styled from "styled-components";
-import { history } from "../../redux/configStore";
-import { Button } from "../../elements/Index";
+import { Grid, Text } from "../../elements/Index";
+import FooterMenu from "../../shared/FooterMenu";
 
 const Done = () => {
   return (
-    <Box>
-      <h2>
+    <Grid column margin="200px 0px">
+      <Text size="24px">
         프로필 작성이 <br />
         완료되었어요:)
-      </h2>
-      <Button
-        onClick={() => {
-          history.push("/main");
-        }}
-      >
-        확인
-      </Button>
-    </Box>
+      </Text>
+      <Text size="16px" color="gray" margin="0px 0px 5px 0px ">
+        나의 가장 가까운 스친을
+      </Text>
+      <Text size="16px" color="gray" margin="0px">
+        찾으러 떠나 볼까요?
+      </Text>
+      <FooterMenu next path="/main" text="다음" />
+    </Grid>
   );
 };
-const Box = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-const Next = styled.button`
-  width: 350px;
-  height: 45px;
-  margin-top: 10%;
-  border: none;
-  background: gray;
-`;
+
 export default Done;

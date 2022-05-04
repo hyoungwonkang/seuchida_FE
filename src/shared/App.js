@@ -47,7 +47,6 @@ function App() {
           <Route path="/postwrite2" exact component={PostWrite_2} />
           <Route path="/postwrite3" exact component={PostWrite_3} />
         </ConnectedRouter>
-        <FooterMenu />
       </Container>
     </>
   );

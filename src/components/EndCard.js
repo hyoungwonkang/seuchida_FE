@@ -1,25 +1,19 @@
 import React from "react";
 import styled from "styled-components";
+import { Grid, Image, Text } from "../elements/Index";
+
 const EndCard = () => {
   return (
     <>
-      <Container>
-        <Box>
-          <Flex 플렉스 스페이스 비트윈>
-            <div>점 모집</div>
-            <div>
-              <span>사람콘</span>현황
-            </div>
-          </Flex>
-          <Desc>
-
-     내용 
-
-          </Desc>
-
-          <div>후기완료</div>
-        </Box>
-      </Container>
+      <Grid
+        border="1px solid gray"
+        width="342px"
+        height="168px"
+        br="12px"
+        padding="20x"
+      >
+        <Text> * 모집완료</Text>
+      </Grid>
     </>
   );
 };
@@ -41,12 +35,10 @@ const Box = styled.div`
 `;
 
 const Flex = styled.div`
-display: flex;
-justify-content: space-between;
-
-`
+  display: flex;
+  justify-content: space-between;
+`;
 
 const Desc = styled.div`
-padding: 15px 0px;
-
-`
+  padding: 15px 0px;
+`;

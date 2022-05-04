@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 const Grid = (props) => {
   const {
-    is_flex,
     width,
     margin,
     padding,
@@ -16,11 +15,13 @@ const Grid = (props) => {
     height,
     border,
     br,
+    brbottom,
+    bottom,
+    right,
+    position,
   } = props;
-  // console.log(children)
 
   const styles = {
-    is_flex: is_flex,
     column: column,
     row: row,
     width: width,
@@ -32,6 +33,10 @@ const Grid = (props) => {
     height: height,
     border: border,
     br: br,
+    brbottom: brbottom,
+    bottom: bottom,
+    right: right,
+    position: position,
   };
 
   return (
@@ -45,7 +50,6 @@ const Grid = (props) => {
 
 Grid.defaultProps = {
   chidren: null,
-  is_flex: false,
   width: "100%",
   height: "100%",
   padding: false,
@@ -55,31 +59,37 @@ Grid.defaultProps = {
   _onClick: () => {},
   column: false,
   row: false,
+  bottom: false,
+  right: false,
+  position: false,
 };
 
 const GridBox = styled.div`
-  width: 420px;
+  width: 390px;
+  width: ${(props) => props.width};
   height: ${(props) => props.height};
   box-sizing: border-box; //총 넓이에 padding과 border를 포함하는가? //yes
   ${(props) => (props.padding ? `padding: ${props.padding};` : "")}
   ${(props) => (props.margin ? `margin: ${props.margin};` : "")}
   ${(props) => (props.bg ? `background-color: ${props.bg};` : "")}
   ${(props) =>
-    props.is_flex
-      ? `display: flex; align-items: center; justify-content: space-between; `
-      : ""}
-  ${(props) =>
     props.column
       ? `display: flex; flex-direction: column; align-items: center; justify-content: space-between;`
       : ""}
   ${(props) =>
     props.row
-      ? `display: flex; flex-direction: row; align-items: center; justify-content: space-between;`
+      ? `display: flex; flex-direction: row; align-items: center; justify-content: center;`
       : ""}
   ${(props) => (props.center ? `text-align: center` : "")}
-
   border: ${(props) => props.border};
-  ${(props) => (props.br ? `border-radius: 25px` : "")}
+  border-radius: ${(props) => props.br};
+  ${(props) =>
+    props.brbottom
+      ? `border-bottom-left-radius: 20px; border-bottom-right-radius: 20px`
+      : ""}
+  ${(props) => (props.bottom ? `bottom: 0px` : "")}
+  ${(props) => (props.right ? `right: 0px` : "")}
+  ${(props) => (props.position ? `position: fixed` : "")}
 `;
 
 export default Grid;

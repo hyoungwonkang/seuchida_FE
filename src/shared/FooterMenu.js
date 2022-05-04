@@ -1,8 +1,26 @@
 import React from "react";
 import styled from "styled-components";
 import { history } from "../redux/configStore";
+import { Button } from "../elements/Index";
 
 const FooterMenu = (props) => {
+  console.log(props);
+  const { next } = props;
+  if (next) {
+    return (
+      <Btn>
+        <Button
+          _onClick={() => {
+            history.push(props.path);
+            props.event();
+          }}
+        >
+          {props.text}
+        </Button>
+      </Btn>
+    );
+  }
+
   return (
     <Container>
       <MenuBox>
@@ -72,4 +90,20 @@ const Menu = styled.div`
   font-size: 16px;
   color: #787878;
   cursor: pointer;
+`;
+
+const Btn = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 100px;
+  border-top: 1px solid #e9e9e9;
+  width: 390px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  background-color: white;
+  width: 390px;
+  z-index: 5;
 `;

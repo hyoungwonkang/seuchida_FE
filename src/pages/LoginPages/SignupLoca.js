@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import styled from "styled-components";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { Grid, Button, Text, Image } from "../../elements/Index";
+import { Grid, Text, Image } from "../../elements/Index";
+import GoBack from "../../components/GoBack";
+import FooterMenu from "../../shared/FooterMenu";
 
 const SignupLoca = () => {
-  const history = useHistory();
   const [address, setAddress] = useState();
   const [fullAddress, setFullAddress] = useState();
   const [state, setState] = useState({
@@ -19,7 +19,7 @@ const SignupLoca = () => {
     isLoading: true,
   });
 
-  const FindLoca = () => {
+  React.useEffect(() => {
     if (navigator.geolocation) {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
       navigator.geolocation.getCurrentPosition(
@@ -67,61 +67,56 @@ const SignupLoca = () => {
         isLoading: false,
       }));
     }
-  };
+  }, []);
 
   return (
-    <Grid column margin="40px auto">
-      <Grid row padding="0px 60px 0px 60px">
-        <Image src="https://ifh.cc/g/NcBFMY.png" size={20} />
-        <Text>동네인증</Text>
-        <Text>{fullAddress}</Text>
-      </Grid>
+    <Grid column height="700px">
+      <GoBack text="동네 설정하기" path="/signupdone" />
+      <Grid height="auto" column margin="auto">
+        <Grid row padding="0px 30px" height="auto">
+          <Image src="https://ifh.cc/g/NcBFMY.png" size={16} />
+          <Text size="16px" margin="0px 60px 0px 0px">
+            나의 동네
+          </Text>
+          <Text size="16px">{fullAddress}</Text>
+        </Grid>
 
-      <Map // 지도를 표시할 Container
-        id="map"
-        center={state.center}
-        style={{
-          // 지도의 크기
-          width: "300px",
-          height: "300px",
-          margin: "auto",
-        }}
-        level={3} // 지도의 확대 레벨
-      >
-        {!state.isLoading && (
-          <MapMarker
-            position={state.center}
-            image={{
-              src: "https://ifh.cc/g/NcBFMY.png", // 마커이미지의 주소입니다
-              size: {
-                width: 40,
-                height: 40,
-              },
-            }}
-          >
-            <MsgBox>{state.errMsg ? state.errMsg : "내 위치"}</MsgBox>
-          </MapMarker>
-        )}
-      </Map>
-
-      <Button _onClick={FindLoca} margin="30px auto 5px auto">
-        동네 인증
-      </Button>
-
-      <Link
-        to={{
-          pathname: "/addprofile",
-          state: { address },
-        }}
-      >
-        <Button
-          onClick={() => {
-            history.push("/addprofile");
+        <Map // 지도를 표시할 Container
+          id="map"
+          center={state.center}
+          style={{
+            width: "337px",
+            height: "311px",
+            margin: "0px 0px 300px 0px",
           }}
+          level={3} // 지도의 확대 레벨
         >
-          다음
-        </Button>
-      </Link>
+          {!state.isLoading && (
+            <MapMarker
+              position={state.center}
+              image={{
+                src: "https://ifh.cc/g/NcBFMY.png", // 마커이미지의 주소입니다
+                size: {
+                  width: 40,
+                  height: 40,
+                },
+              }}
+            >
+              <MsgBox>{state.errMsg ? state.errMsg : "내 위치"}</MsgBox>
+            </MapMarker>
+          )}
+        </Map>
+
+        <Link
+          to={{
+            pathname: "/addprofile",
+            state: { address },
+          }}
+          style={{ textDecoration: "none" }}
+        >
+          <FooterMenu next path="/addprofile" text="다음" />
+        </Link>
+      </Grid>
     </Grid>
   );
 };

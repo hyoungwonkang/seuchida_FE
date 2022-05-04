@@ -2,13 +2,14 @@ import styled from "styled-components";
 import React from "react";
 
 const Image = (props) => {
-  const { shape, src, size, margin, _onClick } = props;
+  const { shape, src, size, margin, _onClick, position } = props;
 
   const styles = {
     src: src,
     size: size,
     margin: margin,
     onClick: _onClick,
+    position: position,
   };
 
   if (shape === "circle") {
@@ -67,6 +68,7 @@ const ImageDefault = styled.div`
   height: var(--size);
   background-image: url("${(props) => props.src}");
   background-size: cover;
+  position: ${(props) => props.position};
 `;
 
 export default Image;
