@@ -31,7 +31,7 @@ const initialState = {
 const kakaoLogin = (code) => {
   return async function (dispatch, getState, { history }) {
     await axios
-      .get(`https://seuchidaback2.shop/oauth/callback/kakao?code=${code}`)
+      .get(`https://seuchidabackend.shop/oauth/callback/kakao?code=${code}`)
       .then((res) => {
         console.log(res); //토큰 넘어오는 것 확인합니다
 
@@ -76,7 +76,7 @@ const signupDB = (formData) => {
   return function (dispatch, getState, { history }) {
     axios({
       method: 'post',
-      url: 'https://seuchidaback2.shop/oauth/signup',
+      url: 'https://seuchidabackend.shop/oauth/signup',
       data: formData,
       headers: {
         'Content-Type': `multipart/form-data;`,

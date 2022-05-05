@@ -1,10 +1,10 @@
-import React from "react";
-import styled from "styled-components";
-import { Card, LCslider, RCslider, ECslider } from "../components/index";
-import FooterMenu from "../shared/FooterMenu";
-import { useSelector, useDispatch } from "react-redux";
-import { actionCreators as postActions } from "../redux/modules/post";
-import { actionCreators as userActions } from "../redux/modules/user";
+import React from 'react';
+import styled from 'styled-components';
+import { Card, LCslider, RCslider, ECslider } from '../components/index';
+import FooterMenu from '../shared/FooterMenu';
+import { useSelector, useDispatch } from 'react-redux';
+import { actionCreators as postActions } from '../redux/modules/post';
+import { actionCreators as userActions } from '../redux/modules/user';
 const Main = () => {
   const catepost = useSelector((state) => state.post.list.caPost);
   const post_list = useSelector((state) => state.post.list.nearPost);
@@ -27,10 +27,10 @@ const Main = () => {
       dist = Math.acos(dist);
       dist = (dist * 180) / Math.PI;
       dist = dist * 60 * 1.1515;
-      if (unit === "K") {
+      if (unit === 'K') {
         dist = dist * 1.609344;
       }
-      if (unit === "N") {
+      if (unit === 'N') {
         dist = dist * 0.8684;
       }
       return dist;
@@ -73,7 +73,7 @@ const Main = () => {
       // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
       setState((prev) => ({
         ...prev,
-        errMsg: "geolocation을 사용할수 없어요..",
+        errMsg: 'geolocation을 사용할수 없어요..',
         isLoading: false,
       }));
     }
@@ -108,7 +108,7 @@ const Main = () => {
 
         {/* 여기여기 붙어라 */}
         <TitleBox>
-          <Title>여기여기 붙어라</Title>{" "}
+          <Title>여기여기 붙어라</Title>{' '}
           <Title
             onClick={() => {
               // history.push("/postdetail");

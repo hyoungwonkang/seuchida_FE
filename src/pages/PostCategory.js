@@ -4,6 +4,7 @@ import { history } from '../redux/configStore';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import gBack from '../shared/ImgBox/gBack.png';
+import FooterMenu from '../shared/FooterMenu';
 
 const PostCategory = (prop) => {
   const CategoryList = [
@@ -91,13 +92,7 @@ const PostCategory = (prop) => {
               state: { postCategory },
             }}
           >
-            <Next
-              onClick={() => {
-                history.push('/postwrite1');
-              }}
-            >
-              다음
-            </Next>
+            <FooterMenu next path='/postwrite1' text='다음' />
           </Link>
         </CateBox>
       </Container>
