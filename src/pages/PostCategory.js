@@ -50,7 +50,6 @@ const PostCategory = (prop) => {
   };
 
   const postCategory = postCate.toString();
-  console.log(postCategory);
 
   return (
     <>

@@ -91,7 +91,10 @@ const PostWrite_4 = (props) => {
                 result[0].address.region_1depth_name +
                 ' ' +
                 result[0].address.region_2depth_name;
-              var spot = result[0].address.address_name;
+              var spot = result[0].road_address?.building_name
+                ? result[0].road_address.building_name
+                : result[0].address.address_name;
+
               let content =
                 '<div class="bAddr">' +
                 '<span class="title">약속 장소</span>' +

@@ -49,17 +49,17 @@ const PostWrite_3 = (props) => {
     );
   };
 
-  console.log(address);
-  console.log(datemate);
-  console.log(latitude);
-  console.log(longitude);
-  console.log(maxMember);
-  console.log(memberAge);
-  console.log(memberGender);
-  console.log(postCategory);
-  console.log(postDesc);
-  console.log(postTitle);
-  console.log(spot);
+  // console.log(address);
+  // console.log(datemate);
+  // console.log(latitude);
+  // console.log(longitude);
+  // console.log(maxMember);
+  // console.log(memberAge);
+  // console.log(memberGender);
+  // console.log(postCategory);
+  // console.log(postDesc);
+  // console.log(postTitle);
+  // console.log(spot);
 
   return (
     <>
