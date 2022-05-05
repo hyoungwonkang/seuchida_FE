@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { actionCreators as postActions } from '../redux/modules/post';
-import { useDispatch } from 'react-redux';
-import { Button, Text } from '../elements/Index';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button, Text, Grid } from '../elements/Index';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import FooterMenu from '../shared/FooterMenu';
 import axios from 'axios';
+import { FaMapMarkerAlt } from 'react-icons/fa';
 
 // 지도에서 위치찍어서 포스트 올리기!
 const PostWrite_4 = (props) => {
@@ -25,25 +26,24 @@ const PostWrite_4 = (props) => {
   });
 
   //검색
-  const [locationObj, setLocationObj] = useState({});
-  let fullAddress = '서울송파구방이동';
-  axios
-    .get(
-      `https://dapi.kakao.com/v2/local/search/keyword.json?y=37.514322572335935&x=127.06283102249932&radius=1000`,
-      {
-        headers: { Authorization: 'KakaoAK 5498cafd5af35c66b35808e2b9e12971' },
-      }
-    )
-    .then((res) => {
-      const location = res.data.documents[0];
-      setLocationObj({
-        si: location.address.region_1depth_name,
-        gu: location.address.region_2depth_name,
-        dong: location.address.region_3depth_name,
-        locationX: location.address.x,
-        locationY: location.address.y,
-      });
-    });
+  // const [locationObj, setLocationObj] = useState({});
+  // axios
+  //   .get(
+  //     `https://dapi.kakao.com/v2/local/search/keyword.json?y=37.514322572335935&x=127.06283102249932&radius=1000`,
+  //     {
+  //       headers: { Authorization: 'KakaoAK 5498cafd5af35c66b35808e2b9e12971' },
+  //     }
+  //   )
+  //   .then((res) => {
+  //     const location = res.data.documents[0];
+  //     setLocationObj({
+  //       si: location.address.region_1depth_name,
+  //       gu: location.address.region_2depth_name,
+  //       dong: location.address.region_3depth_name,
+  //       locationX: location.address.x,
+  //       locationY: location.address.y,
+  //     });
+  //   });
 
   useEffect(() => {
     // GeoLocation을 이용해서 접속 위치를 얻어옵니다
@@ -144,27 +144,42 @@ const PostWrite_4 = (props) => {
     });
   }, []);
 
+  const getSpot = useSelector((state) => state.post?.post_map);
+  const spot = getSpot?.post_map?.spot;
+
   return (
-    <>
-      <Container>
-        <div>
-          <Text>{locationObj.si}</Text>
-          <Text>{locationObj.gu}</Text>
-          <Text>{locationObj.dong}</Text>
-        </div>
-        현재위치
-        <div
-          id='map'
-          // center={state.center}
-          style={{
-            width: '100%',
-            height: '400px',
-            // margin: '50px auto',
-          }}
-        ></div>
-        <FooterMenu next path='/postwrite3' text='확인' />
-      </Container>
-    </>
+    <Grid>
+      {/* <div>
+        <Text>{locationObj.si}</Text>
+        <Text>{locationObj.gu}</Text>
+        <Text>{locationObj.dong}</Text>
+      </div> */}
+      <Grid
+        row
+        height='auto'
+        padding='12px 24px 12px 0px'
+        justify='space-between'
+      >
+        {' '}
+        <Grid row margin='0px 0px 0px 24px'>
+          <FaMapMarkerAlt />
+          <Text margin='0px 12px' size='16px'>
+            현재위치
+          </Text>
+        </Grid>
+        <div>{spot}</div>
+      </Grid>
+      <div
+        id='map'
+        // center={state.center}
+        style={{
+          width: '100%',
+          height: '500px',
+          margin: '12px 0px',
+        }}
+      ></div>
+      <FooterMenu next path='/postwrite3' text='확인' />
+    </Grid>
   );
 };
 

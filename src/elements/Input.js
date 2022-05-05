@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-import { Text, Grid } from "./Index";
+import { Text, Grid } from './Index';
 
 const Input = (props) => {
   const {
@@ -20,6 +20,7 @@ const Input = (props) => {
     height,
     wd,
     bg,
+    margin,
   } = props;
 
   const styles = {
@@ -37,12 +38,13 @@ const Input = (props) => {
     value,
     wd,
     bg,
+    margin,
   };
   //플레이스홀더, 라벨속성 지정가능, onChange:_onChange로 지정
   if (multiLine) {
     return (
       <Grid>
-        {label && <Text margin="0px">{label}</Text>}
+        {label && <Text margin='0px'>{label}</Text>}
         <ElTextarea {...styles} rows={10}></ElTextarea>
       </Grid>
     );
@@ -59,7 +61,7 @@ const Input = (props) => {
   return (
     <React.Fragment>
       {/* <Grid> */}
-      {label && <Text margin="0px">{label}</Text>}
+      {label && <Text margin='0px'>{label}</Text>}
       <ElInput {...styles} />
       {/* </Grid> */}
     </React.Fragment>
@@ -67,16 +69,17 @@ const Input = (props) => {
 };
 
 Input.defaultProps = {
-  width: "390px",
+  width: '390px',
   multiLine: false,
   label: false,
-  placeholder: "텍스트를 입력해주세요.",
-  type: "text",
-  value: "",
+  placeholder: '텍스트를 입력해주세요.',
+  type: 'text',
+  value: '',
   _onChange: () => {},
   keyUp: () => {},
   keyPress: () => {},
   bold: false,
+  margin: false,
 };
 
 const ElTextarea = styled.textarea`
@@ -98,7 +101,7 @@ const ElInput = styled.input`
   ${(
     props //성별/나이 input 창
   ) =>
-    props.wd ? `width: 213px; background: white; border: 1px solid #ddd;` : ""};
+    props.wd ? `width: 213px; background: white; border: 1px solid #ddd;` : ''};
   height: ${(props) => props.height};
   padding: 12px 4px;
   box-sizing: border-box;
