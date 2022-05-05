@@ -1,15 +1,31 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import gBack from '../shared/ImgBox/gBack.png';
+import React, { useState } from "react";
+import styled from "styled-components";
+import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
+import gBack from "../shared/ImgBox/gBack.png";
+import FooterMenu from "../shared/FooterMenu";
+import { useDispatch } from "react-redux";
+import { actionCreators as postActions } from "../redux/modules/post";
+import { Button } from "../elements/Index";
 
 const PostWrite_2 = (props) => {
+  const dispatch = useDispatch();
   const history = useHistory();
   const postCategory = props.location.state.postCategory;
   const postTitle = props.location.state.postTitle;
   const postDesc = props.location.state.postDesc;
-
+  const addContents = () => {
+    dispatch(
+      postActions.postContents(
+        memberAge,
+        memberGender,
+        maxMember,
+        postCategory,
+        postTitle,
+        postDesc
+      )
+    );
+  };
 
   //인원
   const [maxMember, setMaxMember] = useState(0);
@@ -18,7 +34,7 @@ const PostWrite_2 = (props) => {
     setMaxMember(maxMember + 1);
     if (maxMember > 29) {
       setMaxMember(maxMember);
-      alert('제한인원은 30명까지 입니다.');
+      alert("제한인원은 30명까지 입니다.");
     }
   };
 
@@ -26,17 +42,34 @@ const PostWrite_2 = (props) => {
     setMaxMember(maxMember - 1);
     if (maxMember < 1) {
       setMaxMember(maxMember);
-      alert('잘못된 입력입니다.');
+      alert("잘못된 입력입니다.");
     }
   };
 
   //성별
-  const [memberGender, setMemberGender] = useState('');
-
+  const [memberGender, setMemberGender] = useState("");
 
   //나이
-  const [memberAge, setMemberAge] = useState('');
+  let [memberAge, setMemberAge] = useState({});
 
+  //'직접입력' 시 나이를 조합합니다.
+  const [member, setMember] = useState({
+    fage: "",
+    lage: "",
+  });
+  let combine_member = member.fage + "~" + member.lage + "세";
+
+  const handleChange = (e) => {
+    setMember({
+      ...member,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // '직접입력' 시 조합된 나이로 보내줍니다.
+  if (combine_member.length > 2) {
+    memberAge = combine_member;
+  }
 
   return (
     <>
@@ -60,14 +93,14 @@ const PostWrite_2 = (props) => {
               setMemberGender(e.target.value);
             }}
             style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              width: '100%',
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
             }}
           >
-            <input type='radio' name='state' value='누구나' /> 누구나
-            <input type='radio' name='state' value='여성만' /> 여성만
-            <input type='radio' name='state' value='남성만' /> 남성만
+            <input type="radio" name="state" value="누구나" /> 누구나
+            <input type="radio" name="state" value="여성만" /> 여성만
+            <input type="radio" name="state" value="남성만" /> 남성만
           </form>
         </GenderBox>
         <AgeBox>
@@ -77,19 +110,42 @@ const PostWrite_2 = (props) => {
               setMemberAge(e.target.value);
             }}
             style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              width: '100%',
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
             }}
           >
-            <input type='radio' name='state' value='누구나' /> 누구나
-            <input type='radio' name='state' /> 직접입력
-            <input type='text' name='state' />
+            <input type="radio" name="state" value="누구나" /> 누구나
+            <input
+              type="radio"
+              name="state"
+              value={member.fage + member.lage}
+            />{" "}
+            직접입력
+            {/* <input type='text' name='state' /> */}
+            <label>
+              <input
+                type="text"
+                name="fage"
+                value={member.fage}
+                onChange={handleChange}
+              />
+            </label>
+            {"~"}
+            <label>
+              <input
+                type="text"
+                name="lage"
+                value={member.lage}
+                onChange={handleChange}
+              />
+            </label>
+            {"세"}
           </form>
         </AgeBox>
-        <Link
+        {/* <Link
           to={{
-            pathname: '/postwrite3',
+            // pathname: '/postwrite3',
             state: {
               maxMember,
               memberGender,
@@ -99,17 +155,16 @@ const PostWrite_2 = (props) => {
               postDesc,
             },
           }}
-        >
-          <Next
-            onClick={() => {
-              maxMember < 2
-                ? alert('인원을 2명 이상 설정해 주세요')
-                : history.push('/postwrite3');
-            }}
-          >
-            다음
-          </Next>
-        </Link>
+        > */}
+        {/* <FooterMenu
+          next
+          path='/postwrite3'
+          text='다음'
+          onClick={addContents}
+          event={maxMember < 2 ? alert('인원을 2명 이상 설정해 주세요') : ''}
+        /> */}
+        <Button _onClick={addContents}>다음</Button>
+        {/* </Link> */}
       </Container>
     </>
   );

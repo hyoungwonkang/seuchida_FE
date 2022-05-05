@@ -16,20 +16,34 @@ const Input = (props) => {
     chatName,
     bold,
     size,
+    width,
+    height,
+    wd,
+    bg,
   } = props;
+
+  const styles = {
+    placeholder,
+    onChange: _onChange,
+    type,
+    multiLine,
+    keyUp,
+    keyPress,
+    chatName,
+    bold,
+    size,
+    width,
+    height,
+    value,
+    wd,
+    bg,
+  };
   //플레이스홀더, 라벨속성 지정가능, onChange:_onChange로 지정
   if (multiLine) {
     return (
       <Grid>
         {label && <Text margin="0px">{label}</Text>}
-        <ElTextarea
-          bold={bold}
-          size={size}
-          rows={10}
-          value={value}
-          placeholder={placeholder}
-          onChange={_onChange}
-        ></ElTextarea>
+        <ElTextarea {...styles} rows={10}></ElTextarea>
       </Grid>
     );
   }
@@ -37,30 +51,23 @@ const Input = (props) => {
   if (chatName) {
     return (
       <Grid>
-        <ElChatName placeholder={placeholder} onChange={_onChange} />
+        <ElChatName {...styles} />
       </Grid>
     );
   }
 
   return (
     <React.Fragment>
-      <Grid>
-        {label && <Text margin="0px">{label}</Text>}
-        <ElInput
-          bold={bold}
-          size={size}
-          type={type}
-          placeholder={placeholder}
-          onChange={_onChange}
-          onKeyUp={keyUp}
-          onKeyPress={keyPress}
-        />
-      </Grid>
+      {/* <Grid> */}
+      {label && <Text margin="0px">{label}</Text>}
+      <ElInput {...styles} />
+      {/* </Grid> */}
     </React.Fragment>
   );
 };
 
 Input.defaultProps = {
+  width: "390px",
   multiLine: false,
   label: false,
   placeholder: "텍스트를 입력해주세요.",
@@ -70,37 +77,42 @@ Input.defaultProps = {
   keyUp: () => {},
   keyPress: () => {},
   bold: false,
-  size: false,
 };
 
 const ElTextarea = styled.textarea`
   border: 1px solid #212121;
-  width: 100%;
+  width: ${(props) => props.width};
   padding: 12px 4px;
   box-sizing: border-box;
   font-size: ${(props) => props.size};
   font-weight: ${(props) => props.bold};
-  font-family: "Jal_Haru";
 `;
 
+//기본 Input
 const ElInput = styled.input`
-  border: 1px solid #212121;
-  width: 100%;
+  border: none;
+  border-radius: 5px;
+  background: #ddd;
+  max-width: 390px;
+  width: 342px;
+  ${(
+    props //성별/나이 input 창
+  ) =>
+    props.wd ? `width: 213px; background: white; border: 1px solid #ddd;` : ""};
+  height: ${(props) => props.height};
   padding: 12px 4px;
   box-sizing: border-box;
   font-size: ${(props) => props.size};
   font-weight: ${(props) => props.bold};
-  font-family: "Jal_Haru";
 `;
 
 const ElChatName = styled.input`
   border: 1px solid #212121;
-  width: 100px;
+  width: ${(props) => props.width};
   padding: 12px 4px;
   box-sizing: border-box;
   font-size: ${(props) => props.size};
   font-weight: ${(props) => props.bold};
-  font-family: "Jal_Haru";
 `;
 
 export default Input;

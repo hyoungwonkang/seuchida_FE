@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { history } from "../../redux/configStore";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as userActions } from "../../redux/modules/user";
-import { Button } from "../../elements/Index";
+import GoBack from "../../components/GoBack";
+import { Grid, Text } from "../../elements/Index";
+import FooterMenu from "../../shared/FooterMenu";
 
 const Category = (props) => {
   const get = props.location.state;
@@ -42,33 +43,36 @@ const Category = (props) => {
   ];
 
   const dispatch = useDispatch();
-  // 데이터를 넣을 빈배열
 
-  // const getUserInterest = useSelector((state) => state.user?.userInfo.userInterest);
-  // const userInfo = { nickName, gender, age, content, address, profile };
+  const userInfo = useSelector((state) => state.user.userInfo);
+  const edit = useSelector((state) => state.user?.userInfo.userImg);
+
+  const is_edit = edit ? true : false;
+
+  React.useEffect(() => {
+    dispatch(userActions.isLoginDB());
+  }, []);
+
+  React.useEffect(() => {
+    setUserInterest(userInfo?.userInterest);
+  }, [userInfo]);
+
   const [userInterest, setUserInterest] = useState([]);
-  // getUserInterest?  getUserInterest : ""
-  // onChange함수를 사용하여 이벤트 감지, 필요한 값 받아오기
+  // console.log(userInterest);
 
   const _userInterest = (checked, item) => {
     if (checked) {
-      if (userInterest.length <= 2) {
+      if (userInterest?.length <= 2) {
         setUserInterest([...userInterest, item]);
       } else {
         window.alert("최대 3개까지 선택 가능합니다:)");
       }
     } else if (!checked) {
-      setUserInterest(userInterest.filter((el) => el !== item));
+      setUserInterest(userInterest?.filter((el) => el !== item));
     }
   };
 
   const addProfile = () => {
-    // if (!fileInput.current || fileInput.current.files.length === 0) {
-    //   window.alert("이미지파일을 등록해주세요!");
-    //   return;
-    // }
-    // const file = fileInput.current.files[0];
-
     const formData = new FormData();
     formData.append("userImg", profile);
     formData.append("nickName", nickName);
@@ -76,55 +80,82 @@ const Category = (props) => {
     formData.append("userAge", age);
     formData.append("userContent", content);
     formData.append("address", address);
-    formData.append("userInterest", userInterest);
-    // console.log("formData", formData);
-    // for (var pair of formData.entries()) {
-    //   console.log(pair[0] + ", " + pair[1]);
-    // }
+    console.log("formData", formData);
+    for (var i = 0; i < userInterest.length; i++) {
+      formData.append("userInterest[]", userInterest[i]);
+      // console.log(userInterest[i]);
+    }
+    console.log(userInterest);
+    for (var pair of formData.entries()) {
+      console.log(pair[0] + ", " + pair[1]);
+    }
     dispatch(userActions.signupDB(formData));
   };
 
-  // const addProfile = () => {
-  //   dispatch(userActions.signupDB(userInfo, userInterest));
-  //   // history.push("/main");
-  // };
-
-  // const editUser = () => {
-  //   dispatch(userActions.editUserDB(formData));
-  // };
+  const editProfile = () => {
+    const formData = new FormData();
+    formData.append("newUserImg", profile);
+    formData.append("nickName", nickName);
+    formData.append("userGender", gender);
+    formData.append("userAge", age);
+    formData.append("userContent", content);
+    formData.append("address", address);
+    console.log("formData", formData);
+    for (var i = 0; i < userInterest.length; i++) {
+      formData.append("userInterest[]", userInterest[i]);
+    }
+    console.log(userInterest);
+    for (var pair of formData.entries()) {
+      console.log(pair[0] + ", " + pair[1]);
+    }
+    dispatch(userActions.editUserDB(formData));
+  };
 
   return (
-    <div>
-      <h3>상세 관심사 선택</h3>
-      <CateBox>
-        {CategoryList.map((item) => {
-          // console.log(item);
-          return (
-            <div key={item.id}>
-              <input
-                id={item.id}
-                type="checkbox"
-                value={item.data}
-                // value={getUserInterest? getUserInterest : item.data}
-                onChange={(e) => {
-                  _userInterest(e.target.checked, e.target.value);
-                }}
-                //배열에 data가 있으면 true, 없으면 false
-                checked={userInterest.includes(item.data) ? true : false}
-              />
-              <label htmlFor={item.id}>
-                <Cate color={+userInterest.includes(item.data)}>
-                  {item.data}
-                </Cate>
-              </label>
-            </div>
-          );
-        })}
-        <Button _onClick={addProfile}>다음</Button>
-      </CateBox>
-    </div> //+; 스트링으로 변환
+    <Grid>
+      <GoBack text="상세 관심사 선택" path="/addprofile" />
+      <Text margin="0px 0px 0px 30px" size="24px">
+        관심있는 운동을 <br />
+        알려주세요:)
+      </Text>
+      <Text margin="12px 0px 28px 30px" size="16px" color="gray">
+        내 관심사에 딱 맞는 맞춤형 모임을 추천해 드려요
+      </Text>
+      <Grid height="auto" column margin="auto">
+        <CateBox>
+          {CategoryList.map((item) => {
+            return (
+              <div key={item.id}>
+                <input
+                  id={item.id}
+                  type="checkbox"
+                  value={item.data}
+                  onChange={(e) => {
+                    _userInterest(e.target.checked, e.target.value);
+                  }}
+                  //배열에 data가 있으면 true, 없으면 false
+                  checked={userInterest?.includes(item.data) ? true : false}
+                />
+                <label htmlFor={item.id}>
+                  <Cate color={userInterest?.includes(item.data)}>
+                    {item.data}
+                  </Cate>
+                </label>
+              </div>
+            );
+          })}
+          {is_edit ? (
+            <FooterMenu next path="/mypage" text="수정" event={editProfile} />
+          ) : (
+            <FooterMenu next path="/main" text="다음" event={addProfile} />
+          )}
+        </CateBox>
+      </Grid>
+    </Grid>
   );
 };
+
+export default Category;
 
 const CateBox = styled.div`
   width: 90%;
@@ -149,7 +180,6 @@ const Cate = styled.div`
   border: 1px solid #ddd;
   border-radius: 30px;
   font-size: 20px;
-  background: ${(props) => (props.color ? "lightgreen" : "white")};
+  background: ${(props) => (props.color ? "#013676" : "white")};
+  color: ${(props) => (props.color ? "white" : "black")};
 `;
-
-export default Category;

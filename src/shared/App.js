@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Route } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
@@ -21,12 +21,12 @@ import PostCategory from "../pages/PostCategory";
 import PostWrite_1 from "../pages/PostWrite_1";
 import PostWrite_2 from "../pages/PostWrite_2";
 import PostWrite_3 from "../pages/PostWrite_3";
+import PostWrite_4 from "../pages/PostWrite_4";
+import PostDone from "../pages/PostDone";
 import ReviewList from "../pages/ReviewList";
+import ReviewWrite from "../pages/ReviewWrite";
 
 function App() {
-
-
-
   return (
     <>
       <Container>
@@ -41,6 +41,7 @@ function App() {
           <Route path="/postdetail/:postId" exact component={PostDetail} />
           <Route path="/ReviewList" exact component={ReviewList} />
           <Route path="/mypage" exact component={MyPage} />
+          <Route path="/reviewwrite" exact component={ReviewWrite} />
           <Route path="/map" exact component={Map} />
           <Route path="/time" exact component={Time} />
           <Route path="/category" exact component={Category} />
@@ -49,6 +50,8 @@ function App() {
           <Route path="/postwrite1" exact component={PostWrite_1} />
           <Route path="/postwrite2" exact component={PostWrite_2} />
           <Route path="/postwrite3" exact component={PostWrite_3} />
+          <Route path="/postwrite4" exact component={PostWrite_4} />
+          <Route path="/postdone" exact component={PostDone} />
         </ConnectedRouter>
       </Container>
     </>
