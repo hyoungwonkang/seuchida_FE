@@ -5,6 +5,7 @@ import FooterMenu from '../shared/FooterMenu';
 import gBack from '../shared/ImgBox/gBack.png';
 import { useSelector, useDispatch } from "react-redux";
 import post, { actionCreators as postActions } from "../redux/modules/post";
+import { history } from '../redux/configStore';
 const PostList = () => {
   const dispatch = useDispatch()
   const post_list = useSelector((state)=> state.post.list.nearPosts)
@@ -67,7 +68,9 @@ const PostList = () => {
       <ListBox>
           {post_list.map((p,i) => {
             return (
-              <Card {...p} key={p.id} center={state.center}/>
+              <Card {...p} key={p.id} center={state.center} _onClick={()=>{
+                history.push(`/postdetail/${p._id}`)
+              }}/>
             )
           })} 
        

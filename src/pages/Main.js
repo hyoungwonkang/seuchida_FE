@@ -5,6 +5,7 @@ import FooterMenu from "../shared/FooterMenu";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as userActions } from "../redux/modules/user";
+import { history } from "../redux/configStore";
 
 const Main = () => {
   const catepost = useSelector((state) => state.post.list.caPost);
@@ -69,7 +70,7 @@ const Main = () => {
               <Sports>배드민턴</Sports> 매칭이에요!
             </Wellcome>
           </WellcomeBox>
-          <LCslider catepost={catepost}  center={state.center} />
+          <LCslider catepost={catepost}  center={state.center}  />
         </TopLive>
 
         {/* 스친 운동 한줄평 */}
@@ -82,12 +83,10 @@ const Main = () => {
         </ReviewBox>
 
         {/* 여기여기 붙어라 */}
-        <TitleBox>
+        <TitleBox >
           <Title >여기여기 붙어라</Title>
           <Title
-            onClick={() => {
-              // history.push("/postdetail");
-            }}
+          
           >
             &gt;
           </Title>
@@ -96,7 +95,13 @@ const Main = () => {
           <CardBox>
             {post_list?.map((p, l) => {
               return (
-                <Card MainCard {...p} key={p.id} center={state.center} />
+                <Card MainCard {...p} key={p.id} center={state.center}
+                
+                _onClick={()=>{
+                  history.push(`/postdetail/${p._id}`)
+                  
+                }}
+                 />
               );
             })}
           </CardBox>

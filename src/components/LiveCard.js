@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Image } from "../elements/Index";
-
+import { history } from "../redux/configStore";
 const LiveCard = (props) => {
   const Livepost = props
   function getDistance(lat1, lon1, lat2, lon2, unit) {
@@ -35,7 +35,7 @@ const LiveCard = (props) => {
 
   return (
     <>
-      <Container>
+      <Container onClick={()=>history.push(`/postdetail/${Livepost._id}`)} >
         <Box>
           <Profile>
             <Image

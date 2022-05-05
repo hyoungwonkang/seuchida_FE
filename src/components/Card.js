@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 const Card =(props) => {
-const { MainCard, DetailCard, center} = props
+const { MainCard, DetailCard, center, _onClick} = props
+
 function getDistance(lat1, lon1, lat2, lon2, unit) {
   if (lat1 === lat2 && lon1 === lon2) {
     return 0;
@@ -36,8 +37,8 @@ let distance = getDistance(center.lat, center.lng, props.latitude, props.longitu
   if (MainCard) {
     return (
       <>
-        <MainContainer>
-          <div>
+        <MainContainer  >
+          <div onClick={_onClick}>
             <TextBox style={{paddingBottom:"5px"}}>
               <div style={{ marginBottom: "0px" }}>
                 <BoldTitle>
@@ -73,7 +74,7 @@ let distance = getDistance(center.lat, center.lng, props.latitude, props.longitu
   }
 
  if(DetailCard) return (
-    <Container style={{border:"none"}}>
+    <Container style={{border:"none"}} >
         <TitleBox style={{background:"white", borderDisplay:"none"}}>
           <BoldTitle style={{fontSize:"20px"}}>
             · {props?.status === true ? "모집중" : "모집완료"}
@@ -115,7 +116,7 @@ let distance = getDistance(center.lat, center.lng, props.latitude, props.longitu
           <StatusIcon>
             <span>콘</span>
             <StatusBox>
-              {props?.memberGender}, {props?.memberAge}세
+              {props?.memberGender}, {props?.memberAge}
             </StatusBox>        
           </StatusIcon>
         </Status>
@@ -132,7 +133,7 @@ let distance = getDistance(center.lat, center.lng, props.latitude, props.longitu
 
 
   return (
-    <Container>
+    <Container onClick={_onClick}>
         <TitleBox>
           <BoldTitle>
             · {props?.status === true ? "모집중" : "모집완료"}
@@ -190,6 +191,8 @@ const MainContainer = styled.section`
   width: 342px;
   height: 168px;
   margin-bottom: 14px;
+  cursor: pointer;
+  z-index:3;
 `;
 
 const Container = styled.section`
@@ -198,6 +201,7 @@ const Container = styled.section`
   background-color: white;
   border-top: 1px solid #e9e9e9;
   border-bottom: 1px solid #e9e9e9;
+  cursor: pointer;
 `;
 
 const TitleBox = styled.div`

@@ -11,11 +11,12 @@ function RCslider (props) {
       speed: 500,
       slidesToShow: 2,
       slidesToScroll: 1,
-      variableWidth: true
+      variableWidth: true,
+     
     }
     return (
  
-        <Slider {...settings} style={{padding:"0px 15px", height:"240px"}}>
+        <Slider {...settings} style={{padding:"0px 15px", height:"240px", }}>
          {review.map((review, index) =>{
             return (
             <ReviewCard review ={review} key={review._id}></ReviewCard>

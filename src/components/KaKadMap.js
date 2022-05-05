@@ -3,9 +3,10 @@ import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
 import styled from "styled-components";
 
 function KakaoMap(props) {
-  const { MainMap, UserLoca, post } = props;
+  const { MainMap, UserLoca, post} = props;
   const [isOpen, setIsOpen] = React.useState(false);
-  const [isClicked, setIsClicked] = React.useState();
+  const [selectedMarker, setSeleteMarker] = React.useState()
+
 
   if (MainMap) {
     return (
@@ -23,9 +24,13 @@ function KakaoMap(props) {
               key={position._id}
               position={{ lat: position.latitude, lng: position.longitude }}
               onClick={() => setIsOpen(true)}
+              name ={index}
             />
-
-            {isOpen && (
+              
+              
+              
+              
+               {isOpen &&(
               <CustomOverlayMap
                 position={{ lat: position.latitude, lng: position.longitude }}
               >
@@ -37,6 +42,8 @@ function KakaoMap(props) {
                 </Box>
               </CustomOverlayMap>
             )}
+
+         
           </>
         ))}
       </Map>
@@ -57,8 +64,21 @@ function KakaoMap(props) {
         </Map>
       </DetailMap>
     </>
+
+
+
   );
+ 
 }
+
+
+
+  
+
+
+
+
+
 
 const DetailMap = styled.div`
   padding: 0px 24px 130px 24px;

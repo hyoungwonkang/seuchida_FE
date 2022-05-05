@@ -7,13 +7,17 @@ import ModalPortal from "../components/Modal/Portal"; //모달 포탈
 import { Image } from "../elements/Index";
 import {useDispatch,useSelector } from "react-redux"
 import{ actionCreators as postActions } from "../redux/modules/post";
+import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 
-const PostDetail = () => {
+const PostDetail = (props) => {
   const dispatch = useDispatch()
   const [modalOn, setModalOn] = React.useState(false);
   const [post , setPost] = React.useState(null)
   const token = localStorage.getItem("token")
+  const params = useParams()
+
+
   const openModal = (e) => {
     e.stopPropagation();
     setModalOn(true);
@@ -65,7 +69,7 @@ const PostDetail = () => {
     }
     axios({
       method: "get",
-      url: `https://seuchidabackend.shop/api/postDetail/${'62711d78fa6f6ac47a9666a2'}`,
+      url: `https://seuchidabackend.shop/api/postDetail/${params.postId}`,
       headers: {
         authorization: `Bearer ${token}`,
       },

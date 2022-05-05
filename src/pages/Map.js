@@ -8,7 +8,7 @@ import axios from 'axios';
 
 const Map = () => {
   const token = localStorage.getItem("token");
-
+  const [isOpen , setIsOpen] = React.useState(false)
 
   const [state, setState] = React.useState({
     center: {
@@ -74,7 +74,10 @@ const Map = () => {
     
     </Header>
     <div style={{marginTop:"128px", }}>
+      <button onClick={()=>setIsOpen(true)}>sdsaqwqewqe</button>
+      {isOpen && <Modal>awefawefwaef</Modal>}
 <KakaoMap MainMap UserLoca ={UserLoca} post={post}/></div>
+
 <FooterMenu/>
     </>
   );
@@ -99,4 +102,18 @@ font-size: 28px;
 font-weight: bold;
 margin-top: 12px;
 `
+const Modal = styled.div`
+width: 100%;
+height: 350px;
+position: fixed;
+z-index: 3333;
+background-color: green;
+bottom: 80px;
+transition: all 600ms cubic-bezier(0.86, 0, 0.07, 1);
 
+`
+
+const OpenModal = styled.div`
+
+
+`

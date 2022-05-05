@@ -38,7 +38,7 @@ function App() {
           <Route path="/signuploca" exact component={SignupLoca} />
           <Route path="/addprofile" exact component={AddProfile} />
           <Route path="/postlist" exact component={PostList} />
-          <Route path="/postdetail" exact component={PostDetail} />
+          <Route path="/postdetail/:postId" exact component={PostDetail} />
           <Route path="/ReviewList" exact component={ReviewList} />
           <Route path="/mypage" exact component={MyPage} />
           <Route path="/map" exact component={Map} />
