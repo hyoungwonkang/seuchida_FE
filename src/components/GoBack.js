@@ -5,14 +5,14 @@ import { Grid, Text } from "../elements/Index";
 
 const GoBack = (props) => {
   return (
-    <Grid row padding="20px 40px">
+    <Grid row padding="20px">
       <IoIosArrowBack
         size={32}
         onClick={() => {
-          history.goBack();
+          history.push(props.path);
         }}
       />
-      <Text size="20px" position margin="0px 0px 0px 50px">
+      <Text size="20px" position margin="0px 0px 0px 40px">
         {props.text}
       </Text>
     </Grid>

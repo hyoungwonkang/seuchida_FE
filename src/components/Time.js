@@ -15,14 +15,14 @@ const Time = () => {
   //   return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
   // };
   const [optionGroups] = React.useState({
-    AmPm: ['오전', '오후'],
-    Hour: ['12', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'],
-    Minute: ['00', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55'],
+    AmPm: ["오전", "오후"],
+    Hour: ["12", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"],
+    Minute: ["00", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"],
   });
   const [valueGroups, setvalueGroups] = React.useState({
-    AmPm: '오전',
-    Hour: '12',
-    Minute: '00',
+    AmPm: "오전",
+    Hour: "12",
+    Minute: "00",
   });
 
   const handleChange = (name, value) => {
@@ -30,9 +30,12 @@ const Time = () => {
   };
 
   return (
-    <div className='Test'>
+    <div className="Test">
       <input
-        value={`${valueGroups?.AmPm} ${valueGroups?.Hour}:${valueGroups?.Minute}`}
+        value={
+          `${valueGroups?.AmPm} ${valueGroups?.Hour}:${valueGroups?.Minute}` ||
+          ""
+        }
       />
       <Link
         to={{

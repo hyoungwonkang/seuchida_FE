@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const Grid = (props) => {
   const {
@@ -52,8 +52,8 @@ const Grid = (props) => {
 
 Grid.defaultProps = {
   chidren: null,
-  width: '100%',
-  height: '100%',
+  width: "100%",
+  height: "100%",
   padding: false,
   margin: false,
   bg: false,
@@ -71,26 +71,26 @@ const GridBox = styled.div`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   box-sizing: border-box; //총 넓이에 padding과 border를 포함하는가? //yes
-  ${(props) => (props.padding ? `padding: ${props.padding};` : '')}
-  ${(props) => (props.margin ? `margin: ${props.margin};` : '')}
-  ${(props) => (props.bg ? `background-color: ${props.bg};` : '')}
+  ${(props) => (props.padding ? `padding: ${props.padding};` : "")}
+  ${(props) => (props.margin ? `margin: ${props.margin};` : "")}
+  ${(props) => (props.bg ? `background-color: ${props.bg};` : "")}
   ${(props) =>
     props.column
       ? `display: flex; flex-direction: column; align-items: center; justify-content: space-between;`
-      : ''}
+      : ""}
       ${(props) =>
-    props.row ? `display: flex; flex-direction: row; align-items: center;` : ''}
+    props.row ? `display: flex; flex-direction: row; align-items: center;` : ""}
   justify-content: ${(props) => props.justify};
-  ${(props) => (props.center ? `text-align: center` : '')}
+  ${(props) => (props.center ? `text-align: center` : "")}
   border: ${(props) => props.border};
   border-radius: ${(props) => props.br};
   ${(props) =>
     props.brbottom
       ? `border-bottom-left-radius: 20px; border-bottom-right-radius: 20px`
-      : ''}
-  ${(props) => (props.bottom ? `bottom: 0px` : '')}
-  ${(props) => (props.right ? `right: 0px` : '')}
-  ${(props) => (props.position ? `position: fixed` : '')}
+      : ""}
+  ${(props) => (props.bottom ? `bottom: 0px` : "")}
+  ${(props) => (props.right ? `right: 0px` : "")}
+  ${(props) => (props.position ? `position: fixed` : "")}
 `;
 
 export default Grid;

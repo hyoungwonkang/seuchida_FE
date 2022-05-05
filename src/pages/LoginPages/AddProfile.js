@@ -1,27 +1,42 @@
-import React, { useState, useSelector } from 'react';
-import styled from 'styled-components';
-import { history } from '../../redux/configStore';
-import 'react-datepicker/dist/react-datepicker.css';
-import { Link } from 'react-router-dom';
-import { Grid, Button, Image, Text, Input } from '../../elements/Index';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
+import "react-datepicker/dist/react-datepicker.css";
+import { Link } from "react-router-dom";
+import { Grid, Image, Input } from "../../elements/Index";
+import { actionCreators as userActions } from "../../redux/modules/user";
+import FooterMenu from "../../shared/FooterMenu";
+import GoBack from "../../components/GoBack";
+import { AiFillPlusCircle } from "react-icons/ai";
 
 const AddProfile = (props) => {
-  // const fileInput = React.useRef();
+  const dispatch = useDispatch();
   const address = props.location.state?.address;
 
-  // const userInfo = useSelector((state) => state.user?.userInfo);
+  React.useEffect(() => {
+    dispatch(userActions.isLoginDB());
+  }, []);
 
-  const [preview, setPreview] = useState();
-  const [profile, setProfile] = useState();
-  // userInfo.useImg?  userInfo.userImg : ""
-  const [nickName, setNickName] = useState();
-  // userInfo.nickname?  userInfo.nickname : ""
-  const [gender, setGender] = useState('남성');
-  // userInfo.userGender?  userInfo.userGender : ""
-  const [age, setAge] = useState();
-  // userInfo.userAge?  userInfo.userAge : ""
-  const [content, setContent] = useState();
-  // userInfo.userContent?  userInfo.userContent : ""
+  const userInfo = useSelector((state) => state.user?.userInfo);
+  const edit = useSelector((state) => state.user?.userInfo.userImg);
+  console.log(edit);
+  const is_edit = edit ? true : false;
+
+  React.useEffect(() => {
+    // setPreview(userInfo?.userImg);
+    setProfile(userInfo?.userImg);
+    setNickName(userInfo?.nickName);
+    setGender(userInfo?.userGender);
+    setAge(userInfo?.userAge);
+    setContent(userInfo?.userContent);
+  }, [userInfo]);
+
+  const [preview, setPreview] = useState("");
+  const [profile, setProfile] = useState("");
+  const [nickName, setNickName] = useState("");
+  const [gender, setGender] = useState("");
+  const [age, setAge] = useState("");
+  const [content, setContent] = useState("");
 
   const selectPreview = (e) => {
     setPreview(window.webkitURL.createObjectURL(e.target.files[0]));
@@ -34,6 +49,7 @@ const AddProfile = (props) => {
   const selectNickName = (e) => {
     setNickName(e.target.value);
   };
+
   const selectGender = (e) => {
     setGender(e.target.value);
   };
@@ -44,98 +60,109 @@ const AddProfile = (props) => {
     setContent(e.target.value);
   };
 
-  // React.useEffect(() => {
-  //   //Didupdate
-  //   setNickName(userInfo.nickName);
-  //   setGender(userInfo.userGender);
-  //   setAge(userInfo.userAge);
-  //   setContent(userInfo.userContent);
-  // }, [userInfo]);
+  const alert = () => {
+    if (nickName === "") {
+      window.alert("닉네임 입력해");
+    }
+  };
 
   return (
     <Grid>
-      <Text size='20px' bold>
-        프로필 작성하기
-      </Text>
-      <Grid padding='60px' column bg='green'>
-        <Image
-          size={80}
-          alt='profile'
-          src={preview ? preview : 'https://ifh.cc/g/SCJaxK.png'}
-          // src={userInfo.userImg? userInfouserImg: preview ? preview : "https://ifh.cc/g/SCJaxK.png"}
-        />
-        <FileUpload>
-          <label htmlFor='image'>+</label>
-          <input
-            type='file'
-            id='image'
-            onChange={(e) => {
-              selectPreview(e);
-              selectImage(e);
-            }}
-          />
-        </FileUpload>
-        <input
-          type='text'
-          placeholder='닉네임'
-          onChange={selectNickName}
-          // value={nickName || ""}
-        />
-        <Grid row padding='0px 60px'>
-          <select onChange={selectGender} placeholder='성별'>
-            <option value='남성'>남성</option>
-            <option value='여성'>여성</option>
-          </select>
-          <div className='calendarBox'>
-            <input
-              type='text'
-              placeholder='나이'
-              onChange={selectAge}
-              // value={age || ""}
-            />
-          </div>
-        </Grid>
+      {is_edit ? (
+        <GoBack text="프로필 수정" path="/signuploca" />
+      ) : (
+        <GoBack text="프로필 작성" path="/signuploca" />
+      )}
 
-        <input
-          type='text'
-          placeholder='당신에 대해 조금 더 알려주세요!'
-          onChange={selectContent}
-          // value={content || ""}
-        />
-        <Link
-          to={{
-            pathname: '/category',
-            state: { profile, nickName, gender, age, content, address },
-          }}
-        >
-          <Button
-            onClick={() => {
-              history.push('/category');
+      <Grid column height="650px">
+        <Grid height="auto" column margin="30px 0px">
+          <Image
+            size={80}
+            position="relative"
+            alt="profile"
+            src={
+              preview
+                ? preview
+                : is_edit
+                ? userInfo.userImg
+                : "https://ifh.cc/g/SCJaxK.png"
+            }
+          />
+          <FileUpload>
+            <label htmlFor="image">
+              <AiFillPlusCircle size={32} />
+            </label>
+            <input
+              type="file"
+              id="image"
+              onChange={(e) => {
+                selectPreview(e);
+                selectImage(e);
+              }}
+            />
+          </FileUpload>
+          <Input
+            height="56px"
+            type="text"
+            placeholder="닉네임"
+            _onChange={selectNickName}
+            value={nickName || ""}
+          />
+          <Option>
+            <select onChange={selectGender} defaultValue="default">
+              <option className="title" value="default" disabled>
+                {userInfo.userGender ? userInfo.userGender : "성별"}
+              </option>
+              <option value="남성">남성</option>
+              <option value="여성">여성</option>
+            </select>
+
+            <div className="calendarBox">
+              <Input
+                wd
+                height="56px"
+                type="text"
+                placeholder="나이"
+                _onChange={selectAge}
+                value={age || ""}
+              />
+            </div>
+          </Option>
+
+          <Input
+            height="160px"
+            margin="0px 0px 100px 0px"
+            type="text"
+            placeholder="당신에 대해 조금 더 알려주세요!"
+            _onChange={selectContent}
+            value={content || ""}
+          />
+          <Link
+            to={{
+              pathname: "/category",
+              state: { profile, nickName, gender, age, content, address },
             }}
           >
-            다음
-          </Button>
-        </Link>
+            <FooterMenu
+              next
+              path="/category"
+              text="다음"
+              // event={(nickName = "" ? window.alert("닉네임 입력해") : "")}
+            />
+          </Link>
+        </Grid>
       </Grid>
     </Grid>
   );
 };
 
 const FileUpload = styled.div`
+  margin: 0px 0px 50px 0px;
   label {
-    display: inline-block;
-    width: 32px;
-    height: 32px;
-    text-align: center;
-    line-height: 50px;
-    font-size: 16px;
-    font-weight: normal;
-    background: gray;
-    color: white;
-    cursor: pointer;
-    border-radius: 50%;
+    position: absolute;
+    top: 150px;
+    right: 150px;
   }
-
   input {
     position: absolute;
     width: 1px;
@@ -147,23 +174,29 @@ const FileUpload = styled.div`
     border: 0;
   }
 `;
+const Option = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 342px;
+  height: 56px;
+  margin: 10px 0px;
 
-//   .Second {
-//     width: 357px;
-//     align-items: row;
-//     display: flex;
-//     flex-direction: row;
-//     justify-content: space-between;
-//     align-items: center;
-//   }
-//   .Second select {
-//     width: 100px;
-//   }
-// `;
-
-const Content = styled.input`
-  width: 350px;
-  height: 150px;
+  select {
+    width: 122px;
+    height: 56px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+  .age {
+    width: 213px;
+    height: 56px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+  .title[value="default"][disabled] {
+    display: none;
+  }
 `;
 
 export default AddProfile;

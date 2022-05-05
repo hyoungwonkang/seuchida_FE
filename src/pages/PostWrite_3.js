@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { history } from '../redux/configStore';
-import 'react-datepicker/dist/react-datepicker.css';
-import { Link, useHistory } from 'react-router-dom';
-import { Button } from '../elements/Index';
-import { useSelector } from 'react-redux';
-import { actionCreators as postActions } from '../redux/modules/post';
-import { useDispatch } from 'react-redux';
-import FooterMenu from '../shared/FooterMenu';
-import DateTimePicker from 'react-datetime-picker';
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import { history } from "../redux/configStore";
+import "react-datepicker/dist/react-datepicker.css";
+import { Link, useHistory } from "react-router-dom";
+import { Button } from "../elements/Index";
+import { useSelector } from "react-redux";
+import { actionCreators as postActions } from "../redux/modules/post";
+import { useDispatch } from "react-redux";
+import FooterMenu from "../shared/FooterMenu";
+// import DateTimePicker from "react-datetime-picker";
 
 const PostWrite_3 = (props) => {
   const history = useHistory();
@@ -66,12 +66,12 @@ const PostWrite_3 = (props) => {
       <Container>
         날짜 및 시간
         <div>
-          <DateTimePicker onChange={setDatemate} value={datemate} />
+          {/* <DateTimePicker onChange={setDatemate} value={datemate} /> */}
         </div>
         장소
         <div>{spot}</div>
         <Button _onClick={addPost}>확인</Button>
-        <FooterMenu next path='/postwrite4' text='다음' />
+        <FooterMenu next path="/postwrite4" text="다음" />
         {/* <FooterMenu next _onClick={addPost} text='확인' /> */}
       </Container>
     </>

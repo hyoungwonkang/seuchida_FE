@@ -1,14 +1,14 @@
-import React from 'react';
-import { Card } from '../components/index';
-import styled from 'styled-components';
-import FooterMenu from '../shared/FooterMenu';
-import gBack from '../shared/ImgBox/gBack.png';
+import React from "react";
+import { Card } from "../components/index";
+import styled from "styled-components";
+import FooterMenu from "../shared/FooterMenu";
+import gBack from "../shared/ImgBox/gBack.png";
 import { useSelector, useDispatch } from "react-redux";
 import post, { actionCreators as postActions } from "../redux/modules/post";
-import { history } from '../redux/configStore';
+import { history } from "../redux/configStore";
 const PostList = () => {
-  const dispatch = useDispatch()
-  const post_list = useSelector((state)=> state.post.list.nearPosts)
+  const dispatch = useDispatch();
+  const post_list = useSelector((state) => state.post.list.nearPosts);
   const [state, setState] = React.useState({
     center: {
       lat: 33.450701,
@@ -18,7 +18,7 @@ const PostList = () => {
     isLoading: true,
   });
 
-  React.useEffect(() =>{
+  React.useEffect(() => {
     if (navigator.geolocation) {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
       navigator.geolocation.getCurrentPosition(
@@ -48,11 +48,9 @@ const PostList = () => {
         isLoading: false,
       }));
     }
-    dispatch(postActions.getPostlistDB())
+    dispatch(postActions.getPostlistDB());
     // dispatch(userActions.getUser(state.state))
-  },[])
-  
-
+  }, []);
 
   return (
     <>
@@ -66,15 +64,18 @@ const PostList = () => {
       </Header>
 
       <ListBox>
-          {post_list.map((p,i) => {
-            return (
-              <Card {...p} key={p.id} center={state.center} _onClick={()=>{
-                history.push(`/postdetail/${p._id}`)
-              }}/>
-            )
-          })} 
-       
-
+        {post_list.map((p, i) => {
+          return (
+            <Card
+              {...p}
+              key={p.id}
+              center={state.center}
+              _onClick={() => {
+                history.push(`/postdetail/${p._id}`);
+              }}
+            />
+          );
+        })}
       </ListBox>
       <FooterMenu />
     </>

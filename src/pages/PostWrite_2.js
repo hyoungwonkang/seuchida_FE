@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import gBack from '../shared/ImgBox/gBack.png';
-import FooterMenu from '../shared/FooterMenu';
-import { useDispatch } from 'react-redux';
-import { actionCreators as postActions } from '../redux/modules/post';
-import { Button } from '../elements/Index';
+import React, { useState } from "react";
+import styled from "styled-components";
+import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
+import gBack from "../shared/ImgBox/gBack.png";
+import FooterMenu from "../shared/FooterMenu";
+import { useDispatch } from "react-redux";
+import { actionCreators as postActions } from "../redux/modules/post";
+import { Button } from "../elements/Index";
 
 const PostWrite_2 = (props) => {
   const dispatch = useDispatch();
@@ -34,7 +34,7 @@ const PostWrite_2 = (props) => {
     setMaxMember(maxMember + 1);
     if (maxMember > 29) {
       setMaxMember(maxMember);
-      alert('제한인원은 30명까지 입니다.');
+      alert("제한인원은 30명까지 입니다.");
     }
   };
 
@@ -42,22 +42,22 @@ const PostWrite_2 = (props) => {
     setMaxMember(maxMember - 1);
     if (maxMember < 1) {
       setMaxMember(maxMember);
-      alert('잘못된 입력입니다.');
+      alert("잘못된 입력입니다.");
     }
   };
 
   //성별
-  const [memberGender, setMemberGender] = useState('');
+  const [memberGender, setMemberGender] = useState("");
 
   //나이
   let [memberAge, setMemberAge] = useState({});
 
   //'직접입력' 시 나이를 조합합니다.
   const [member, setMember] = useState({
-    fage: '',
-    lage: '',
+    fage: "",
+    lage: "",
   });
-  let combine_member = member.fage + '~' + member.lage + '세';
+  let combine_member = member.fage + "~" + member.lage + "세";
 
   const handleChange = (e) => {
     setMember({
@@ -93,14 +93,14 @@ const PostWrite_2 = (props) => {
               setMemberGender(e.target.value);
             }}
             style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              width: '100%',
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
             }}
           >
-            <input type='radio' name='state' value='누구나' /> 누구나
-            <input type='radio' name='state' value='여성만' /> 여성만
-            <input type='radio' name='state' value='남성만' /> 남성만
+            <input type="radio" name="state" value="누구나" /> 누구나
+            <input type="radio" name="state" value="여성만" /> 여성만
+            <input type="radio" name="state" value="남성만" /> 남성만
           </form>
         </GenderBox>
         <AgeBox>
@@ -110,37 +110,37 @@ const PostWrite_2 = (props) => {
               setMemberAge(e.target.value);
             }}
             style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              width: '100%',
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
             }}
           >
-            <input type='radio' name='state' value='누구나' /> 누구나
+            <input type="radio" name="state" value="누구나" /> 누구나
             <input
-              type='radio'
-              name='state'
+              type="radio"
+              name="state"
               value={member.fage + member.lage}
-            />{' '}
+            />{" "}
             직접입력
             {/* <input type='text' name='state' /> */}
             <label>
               <input
-                type='text'
-                name='fage'
+                type="text"
+                name="fage"
                 value={member.fage}
                 onChange={handleChange}
               />
             </label>
-            {'~'}
+            {"~"}
             <label>
               <input
-                type='text'
-                name='lage'
+                type="text"
+                name="lage"
                 value={member.lage}
                 onChange={handleChange}
               />
             </label>
-            {'세'}
+            {"세"}
           </form>
         </AgeBox>
         {/* <Link
