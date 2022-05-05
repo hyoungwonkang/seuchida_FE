@@ -16,7 +16,7 @@ const PostWrite_3 = (props) => {
   const postTitle = props.location.state.postTitle;
   const postDesc = props.location.state.postDesc;
   const state = props.location.state;
-  console.log(state);
+  
 
   const _ = require('lodash');
   const years = _.range(1950, getYear(new Date()) + 1, 1);
@@ -36,7 +36,7 @@ const PostWrite_3 = (props) => {
   ];
 
   const [datemate, setDatemate] = useState();
-  console.log(datemate);
+
   return (
     <Container>
       날짜

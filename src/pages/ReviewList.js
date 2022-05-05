@@ -9,7 +9,6 @@ import { actionCreators as postActions } from "../redux/modules/post";
 
 const ReviewList = () => {
   const review_list = useSelector(state => state.post.review)
-  console.log(review_list)
   const dispatch = useDispatch()
   const [modalOn, setModalOn] = React.useState(false);
   const openModal = (e) => {

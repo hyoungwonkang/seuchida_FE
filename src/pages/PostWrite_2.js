@@ -9,7 +9,7 @@ const PostWrite_2 = (props) => {
   const postCategory = props.location.state.postCategory;
   const postTitle = props.location.state.postTitle;
   const postDesc = props.location.state.postDesc;
-  console.log(postCategory);
+
 
   //인원
   const [maxMember, setMaxMember] = useState(0);
@@ -32,11 +32,11 @@ const PostWrite_2 = (props) => {
 
   //성별
   const [memberGender, setMemberGender] = useState('');
-  console.log(memberGender);
+
 
   //나이
   const [memberAge, setMemberAge] = useState('');
-  console.log(memberAge);
+
 
   return (
     <>
