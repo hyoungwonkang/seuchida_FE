@@ -7,7 +7,6 @@ import { Button } from "../../elements/Index";
 
 const Category = (props) => {
   const get = props.location.state;
-  console.log(get);
   const nickName = get?.nickName;
   const gender = get?.gender;
   const age = get?.age;
