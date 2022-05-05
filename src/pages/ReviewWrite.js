@@ -47,7 +47,6 @@ const ReviewWrite = () => {
     //   formData.append("userInterest[]", userInterest[i]);
     //   console.log(userInterest[i]);
     // }
-    // console.log(userInterest);
     // for (var pair of formData.entries()) {
     //   console.log(pair[0] + ", " + pair[1]);
     // }
