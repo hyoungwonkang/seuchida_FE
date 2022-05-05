@@ -6,8 +6,19 @@ import { Link } from "react-router-dom";
 import { Grid, Text, Image } from "../../elements/Index";
 import GoBack from "../../components/GoBack";
 import FooterMenu from "../../shared/FooterMenu";
+import { useDispatch, useSelector } from "react-redux";
+import { actionCreators as userActions } from "../../redux/modules/user";
 
 const SignupLoca = () => {
+  const dispatch = useDispatch();
+  const edit = useSelector((state) => state.user?.userInfo.userImg);
+
+  const is_edit = edit ? true : false;
+
+  React.useEffect(() => {
+    dispatch(userActions.isLoginDB());
+  }, []);
+
   const [address, setAddress] = useState();
   const [fullAddress, setFullAddress] = useState();
   const [state, setState] = useState({
@@ -71,7 +82,11 @@ const SignupLoca = () => {
 
   return (
     <Grid column height="700px">
-      <GoBack text="동네 설정하기" path="/signupdone" />
+      {is_edit ? (
+        <GoBack text="동네 설정하기" path="/mypage" />
+      ) : (
+        <GoBack text="동네 설정하기" path="/signupdone" />
+      )}
       <Grid height="auto" column margin="auto">
         <Grid row padding="0px 30px" height="auto">
           <Image src="https://ifh.cc/g/NcBFMY.png" size={16} />
@@ -114,7 +129,7 @@ const SignupLoca = () => {
           }}
           style={{ textDecoration: "none" }}
         >
-          <FooterMenu next path="/addprofile" text="다음" />
+          <FooterMenu next path="/addprofile" text="다음" event="null" />
         </Link>
       </Grid>
     </Grid>

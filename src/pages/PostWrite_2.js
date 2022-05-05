@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import gBack from '../shared/ImgBox/gBack.png';
+import React, { useState } from "react";
+import styled from "styled-components";
+import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
+import gBack from "../shared/ImgBox/gBack.png";
 
 const PostWrite_2 = (props) => {
   const history = useHistory();
   const postCategory = props.location.state.postCategory;
   const postTitle = props.location.state.postTitle;
   const postDesc = props.location.state.postDesc;
-  console.log(postCategory);
 
   //인원
   const [maxMember, setMaxMember] = useState(0);
@@ -18,7 +17,7 @@ const PostWrite_2 = (props) => {
     setMaxMember(maxMember + 1);
     if (maxMember > 29) {
       setMaxMember(maxMember);
-      alert('제한인원은 30명까지 입니다.');
+      alert("제한인원은 30명까지 입니다.");
     }
   };
 
@@ -26,17 +25,15 @@ const PostWrite_2 = (props) => {
     setMaxMember(maxMember - 1);
     if (maxMember < 1) {
       setMaxMember(maxMember);
-      alert('잘못된 입력입니다.');
+      alert("잘못된 입력입니다.");
     }
   };
 
   //성별
-  const [memberGender, setMemberGender] = useState('');
-  console.log(memberGender);
+  const [memberGender, setMemberGender] = useState("");
 
   //나이
-  const [memberAge, setMemberAge] = useState('');
-  console.log(memberAge);
+  const [memberAge, setMemberAge] = useState("");
 
   return (
     <>
@@ -60,14 +57,14 @@ const PostWrite_2 = (props) => {
               setMemberGender(e.target.value);
             }}
             style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              width: '100%',
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
             }}
           >
-            <input type='radio' name='state' value='누구나' /> 누구나
-            <input type='radio' name='state' value='여성만' /> 여성만
-            <input type='radio' name='state' value='남성만' /> 남성만
+            <input type="radio" name="state" value="누구나" /> 누구나
+            <input type="radio" name="state" value="여성만" /> 여성만
+            <input type="radio" name="state" value="남성만" /> 남성만
           </form>
         </GenderBox>
         <AgeBox>
@@ -77,19 +74,19 @@ const PostWrite_2 = (props) => {
               setMemberAge(e.target.value);
             }}
             style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              width: '100%',
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
             }}
           >
-            <input type='radio' name='state' value='누구나' /> 누구나
-            <input type='radio' name='state' /> 직접입력
-            <input type='text' name='state' />
+            <input type="radio" name="state" value="누구나" /> 누구나
+            <input type="radio" name="state" /> 직접입력
+            <input type="text" name="state" />
           </form>
         </AgeBox>
         <Link
           to={{
-            pathname: '/postwrite3',
+            pathname: "/postwrite3",
             state: {
               maxMember,
               memberGender,
@@ -103,8 +100,8 @@ const PostWrite_2 = (props) => {
           <Next
             onClick={() => {
               maxMember < 2
-                ? alert('인원을 2명 이상 설정해 주세요')
-                : history.push('/postwrite3');
+                ? alert("인원을 2명 이상 설정해 주세요")
+                : history.push("/postwrite3");
             }}
           >
             다음

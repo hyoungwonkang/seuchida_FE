@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { history } from '../redux/configStore';
-import DatePicker from 'react-datepicker';
-import { ko } from 'date-fns/esm/locale';
-import { getYear, getMonth } from 'date-fns';
-import 'react-datepicker/dist/react-datepicker.css';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useState } from "react";
+import styled from "styled-components";
+import { history } from "../redux/configStore";
+import DatePicker from "react-datepicker";
+import { ko } from "date-fns/esm/locale";
+import { getYear, getMonth } from "date-fns";
+import "react-datepicker/dist/react-datepicker.css";
+import { Link, useHistory } from "react-router-dom";
 
 const PostWrite_3 = (props) => {
   const history = useHistory();
@@ -16,33 +16,32 @@ const PostWrite_3 = (props) => {
   const postTitle = props.location.state.postTitle;
   const postDesc = props.location.state.postDesc;
   const state = props.location.state;
-  console.log(state);
 
-  const _ = require('lodash');
+  const _ = require("lodash");
   const years = _.range(1950, getYear(new Date()) + 1, 1);
   const months = [
-    '1월',
-    '2월',
-    '3월',
-    '4월',
-    '5월',
-    '6월',
-    '7월',
-    '8월',
-    '9월',
-    '10월',
-    '11월',
-    '12월',
+    "1월",
+    "2월",
+    "3월",
+    "4월",
+    "5월",
+    "6월",
+    "7월",
+    "8월",
+    "9월",
+    "10월",
+    "11월",
+    "12월",
   ];
 
   const [datemate, setDatemate] = useState();
-  console.log(datemate);
+
   return (
     <Container>
       날짜
-      <div className='calendarBox'>
+      <div className="calendarBox">
         <DatePicker
-          className='calendar'
+          className="calendar"
           renderCustomHeader={({
             date,
             changeYear,
@@ -55,15 +54,15 @@ const PostWrite_3 = (props) => {
             <div
               style={{
                 margin: 10,
-                display: 'flex',
-                justifyContent: 'center',
+                display: "flex",
+                justifyContent: "center",
               }}
             >
               <button
                 onClick={decreaseMonth}
                 disabled={prevMonthButtonDisabled}
               >
-                {'<'}
+                {"<"}
               </button>
               <select
                 value={getYear(date)}
@@ -93,12 +92,12 @@ const PostWrite_3 = (props) => {
                 onClick={increaseMonth}
                 disabled={nextMonthButtonDisabled}
               >
-                {'>'}
+                {">"}
               </button>
             </div>
           )}
           selected={datemate}
-          dateFormat={'yyyy-MM-dd'}
+          dateFormat={"yyyy-MM-dd"}
           locale={ko}
           onChange={(date) => setDatemate(date)}
         />

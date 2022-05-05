@@ -14,7 +14,7 @@ export default class ECslider extends Component {
       variableWidth: true,
     };
     return (
-      <Slider {...settings} style={{ height: "168px" }}>
+      <Slider {...settings} style={{ height: "180px", margin: "0px" }}>
         <EndCard>
           <h3>1</h3>
         </EndCard>

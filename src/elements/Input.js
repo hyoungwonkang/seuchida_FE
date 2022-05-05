@@ -88,13 +88,16 @@ const ElTextarea = styled.textarea`
   font-weight: ${(props) => props.bold};
 `;
 
+//기본 Input
 const ElInput = styled.input`
   border: none;
   border-radius: 5px;
   background: #ddd;
   max-width: 390px;
   width: 342px;
-  ${(props) =>
+  ${(
+    props //성별/나이 input 창
+  ) =>
     props.wd ? `width: 213px; background: white; border: 1px solid #ddd;` : ""};
   height: ${(props) => props.height};
   padding: 12px 4px;

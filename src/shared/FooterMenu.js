@@ -4,7 +4,7 @@ import { history } from "../redux/configStore";
 import { Button } from "../elements/Index";
 
 const FooterMenu = (props) => {
-  console.log(props);
+  // console.log(props);
   const { next } = props;
   if (next) {
     return (

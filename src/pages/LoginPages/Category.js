@@ -8,6 +8,7 @@ import FooterMenu from "../../shared/FooterMenu";
 
 const Category = (props) => {
   const get = props.location.state;
+  console.log(get);
   const nickName = get?.nickName;
   const gender = get?.gender;
   const age = get?.age;
@@ -45,7 +46,9 @@ const Category = (props) => {
   const dispatch = useDispatch();
 
   const userInfo = useSelector((state) => state.user.userInfo);
-  const is_edit = userInfo ? true : false;
+  const edit = useSelector((state) => state.user?.userInfo.userImg);
+
+  const is_edit = edit ? true : false;
 
   React.useEffect(() => {
     dispatch(userActions.isLoginDB());
@@ -56,7 +59,7 @@ const Category = (props) => {
   }, [userInfo]);
 
   const [userInterest, setUserInterest] = useState([]);
-  console.log(userInterest);
+  // console.log(userInterest);
 
   const _userInterest = (checked, item) => {
     if (checked) {
@@ -71,12 +74,6 @@ const Category = (props) => {
   };
 
   const addProfile = () => {
-    // if (!fileInput.current || fileInput.current.files.length === 0) {
-    //   window.alert("이미지파일을 등록해주세요!");
-    //   return;
-    // }
-    // const file = fileInput.current.files[0];
-
     const formData = new FormData();
     formData.append("userImg", profile);
     formData.append("nickName", nickName);
@@ -87,7 +84,7 @@ const Category = (props) => {
     console.log("formData", formData);
     for (var i = 0; i < userInterest.length; i++) {
       formData.append("userInterest[]", userInterest[i]);
-      console.log(userInterest[i]);
+      // console.log(userInterest[i]);
     }
     console.log(userInterest);
     for (var pair of formData.entries()) {
@@ -98,7 +95,7 @@ const Category = (props) => {
 
   const editProfile = () => {
     const formData = new FormData();
-    formData.append("userImg", profile);
+    formData.append("newUserImg", profile);
     formData.append("nickName", nickName);
     formData.append("userGender", gender);
     formData.append("userAge", age);
@@ -107,7 +104,6 @@ const Category = (props) => {
     console.log("formData", formData);
     for (var i = 0; i < userInterest.length; i++) {
       formData.append("userInterest[]", userInterest[i]);
-      console.log(userInterest[i]);
     }
     console.log(userInterest);
     for (var pair of formData.entries()) {
@@ -135,7 +131,6 @@ const Category = (props) => {
                   id={item.id}
                   type="checkbox"
                   value={item.data}
-                  // value={userInterest || item.data}
                   onChange={(e) => {
                     _userInterest(e.target.checked, e.target.value);
                   }}

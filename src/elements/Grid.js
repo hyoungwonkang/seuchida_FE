@@ -19,6 +19,7 @@ const Grid = (props) => {
     bottom,
     right,
     position,
+    justify,
   } = props;
 
   const styles = {
@@ -37,6 +38,7 @@ const Grid = (props) => {
     bottom: bottom,
     right: right,
     position: position,
+    justify: justify,
   };
 
   return (
@@ -76,10 +78,9 @@ const GridBox = styled.div`
     props.column
       ? `display: flex; flex-direction: column; align-items: center; justify-content: space-between;`
       : ""}
-  ${(props) =>
-    props.row
-      ? `display: flex; flex-direction: row; align-items: center; justify-content: center;`
-      : ""}
+      ${(props) =>
+    props.row ? `display: flex; flex-direction: row; align-items: center;` : ""}
+  justify-content: ${(props) => props.justify};
   ${(props) => (props.center ? `text-align: center` : "")}
   border: ${(props) => props.border};
   border-radius: ${(props) => props.br};

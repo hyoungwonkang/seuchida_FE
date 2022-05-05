@@ -1,21 +1,17 @@
-import React from 'react';
-import { Card } from '../components/index';
-import styled from 'styled-components';
-import FooterMenu from '../shared/FooterMenu';
-import gBack from '../shared/ImgBox/gBack.png';
+import React from "react";
+import { Card } from "../components/index";
+import styled from "styled-components";
+import FooterMenu from "../shared/FooterMenu";
+import gBack from "../shared/ImgBox/gBack.png";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 const PostList = () => {
-  const dispatch = useDispatch()
-  const post_list = useSelector((state)=> state.post.list.nearPosts)
-  console.log(post_list)
-  React.useEffect(() =>{
-
-    dispatch(postActions.getnearPostDB())
+  const dispatch = useDispatch();
+  const post_list = useSelector((state) => state.post.list.nearPosts);
+  React.useEffect(() => {
+    dispatch(postActions.getnearPostDB());
     // dispatch(userActions.getUser(state.state))
-  },[])
-  
-
+  }, []);
 
   return (
     <>
@@ -29,8 +25,7 @@ const PostList = () => {
       </Header>
 
       <ListBox>
-        <Card post_list={post_list}/>
-
+        <Card post_list={post_list} />
       </ListBox>
       <FooterMenu />
     </>

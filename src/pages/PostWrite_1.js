@@ -1,17 +1,16 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import gBack from '../shared/ImgBox/gBack.png';
+import React, { useState } from "react";
+import styled from "styled-components";
+import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
+import gBack from "../shared/ImgBox/gBack.png";
 
 const PostWrite_1 = (props) => {
   const history = useHistory();
   const postCategory = props.location.state.postCategory;
-  console.log(postCategory);
 
   //제목과 설명 state
-  const [postTitle, setPostTitle] = useState('');
-  const [postDesc, setPostDesc] = useState('');
+  const [postTitle, setPostTitle] = useState("");
+  const [postDesc, setPostDesc] = useState("");
   const selectPostTitle = (e) => {
     setPostTitle(e.target.value);
   };
@@ -31,29 +30,29 @@ const PostWrite_1 = (props) => {
         </HeadWarp>
         <Title>제목</Title>
         <TitleInput
-          type='textarea'
+          type="textarea"
           value={postTitle}
-          maxLength='60'
+          maxLength="60"
           onChange={selectPostTitle}
-          placeholder='어떤 활동을 같이하고 싶나요?'
+          placeholder="어떤 활동을 같이하고 싶나요?"
         />
         <Desc>설명</Desc>
         <TitleInput
-          type='textarea'
+          type="textarea"
           value={postDesc}
-          maxLength='200'
+          maxLength="200"
           onChange={selectPostDesc}
-          placeholder='스친과 함께하고 싶은 운동에 대해 설명해주세요.'
+          placeholder="스친과 함께하고 싶은 운동에 대해 설명해주세요."
         />
         <Link
           to={{
-            pathname: '/postwrite2',
+            pathname: "/postwrite2",
             state: { postTitle, postDesc, postCategory },
           }}
         >
           <Next
             onClick={() => {
-              history.push('/postwrite2');
+              history.push("/postwrite2");
             }}
           >
             다음

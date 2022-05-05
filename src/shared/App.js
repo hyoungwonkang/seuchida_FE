@@ -14,7 +14,6 @@ import PostList from "../pages/PostList";
 import PostDetail from "../pages/PostDetail";
 import Map from "../pages/Map";
 import MyPage from "../pages/MyPage";
-import FooterMenu from "../shared/FooterMenu";
 import Category from "../pages/LoginPages/Category";
 import Time from "../components/Time";
 import Done from "../pages/LoginPages/Done";
@@ -22,7 +21,7 @@ import PostCategory from "../pages/PostCategory";
 import PostWrite_1 from "../pages/PostWrite_1";
 import PostWrite_2 from "../pages/PostWrite_2";
 import PostWrite_3 from "../pages/PostWrite_3";
-import axios from "axios";
+import ReviewWrite from "../pages/ReviewWrite";
 
 function App() {
   return (
@@ -38,6 +37,7 @@ function App() {
           <Route path="/postlist" exact component={PostList} />
           <Route path="/postdetail" exact component={PostDetail} />
           <Route path="/mypage" exact component={MyPage} />
+          <Route path="/reviewwrite" exact component={ReviewWrite} />
           <Route path="/map" exact component={Map} />
           <Route path="/time" exact component={Time} />
           <Route path="/category" exact component={Category} />

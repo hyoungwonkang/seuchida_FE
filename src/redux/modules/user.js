@@ -107,7 +107,7 @@ const isLoginDB = () => {
       .then((res) => {
         console.log("isLogin 확인", res);
         const userInfo = res.data.myPage[0];
-        console.log(userInfo);
+        // console.log(userInfo);
         dispatch(getUser(userInfo));
       })
       .catch((err) => {

@@ -23,7 +23,7 @@ const Text = (props) => {
     color,
     size,
     textIndent,
-    _onClick,
+    onClick: _onClick,
     margin,
     width,
     height,

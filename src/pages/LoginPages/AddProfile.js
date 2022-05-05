@@ -18,10 +18,12 @@ const AddProfile = (props) => {
   }, []);
 
   const userInfo = useSelector((state) => state.user?.userInfo);
-  const is_edit = userInfo ? true : false;
-  console.log(is_edit);
+  const edit = useSelector((state) => state.user?.userInfo.userImg);
+  console.log(edit);
+  const is_edit = edit ? true : false;
 
   React.useEffect(() => {
+    // setPreview(userInfo?.userImg);
     setProfile(userInfo?.userImg);
     setNickName(userInfo?.nickName);
     setGender(userInfo?.userGender);
@@ -121,7 +123,7 @@ const AddProfile = (props) => {
                 height="56px"
                 type="text"
                 placeholder="나이"
-                onChange={selectAge}
+                _onChange={selectAge}
                 value={age || ""}
               />
             </div>
@@ -143,7 +145,7 @@ const AddProfile = (props) => {
           >
             <FooterMenu
               next
-              path="/addprofile"
+              path="/category"
               text="다음"
               // event={(nickName = "" ? window.alert("닉네임 입력해") : "")}
             />
