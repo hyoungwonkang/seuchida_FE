@@ -1,14 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 import LiveCard from "./LiveCard";
 
-export default class LCslider extends Component {
-  render() {
+function LCslider(props) {
+  const post = props.catepost
+  
     const settings = {
       className: "slider variable-width",
-      dots: true,
       infinite: true,
       centerMode: true,
       slidesToShow: 1,
@@ -17,8 +17,15 @@ export default class LCslider extends Component {
     };
     return (
       <div>
-        <Slider {...settings} style={{height:"260px"}}>
-          <LiveCard >
+        <Slider {...settings} style={{height:"250px"}}>
+         {post?.map((p, i) => {
+             if(i<6)return(
+             <LiveCard {...p} key={p.id} center ={props.center} _onClick={props._onClick}/>
+           )
+         }) }
+         
+         
+          {/* <LiveCard >
             <h3>1</h3>
           </LiveCard>
           <LiveCard>
@@ -35,10 +42,13 @@ export default class LCslider extends Component {
           </LiveCard>
           <LiveCard>
             <h3>6</h3>
-          </LiveCard>
+          </LiveCard> */}
           
         </Slider>
       </div>
     );
-  }
+  
 }
+
+
+export default LCslider;

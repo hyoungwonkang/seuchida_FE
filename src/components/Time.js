@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-// import Picker from "react-mobile-picker-scroll";
+import Picker from 'react-mobile-picker-scroll';
+import { Link } from 'react-router-dom';
 
 const Time = () => {
   // const range = (start, end) => {
@@ -33,11 +34,18 @@ const Time = () => {
       <input
         value={`${valueGroups?.AmPm} ${valueGroups?.Hour}:${valueGroups?.Minute}`}
       />
-      {/* <Picker
-        optionGroups={optionGroups}
-        valueGroups={valueGroups}
-        onChange={handleChange}
-      /> */}
+      <Link
+        to={{
+          pathname: '/postwrite4',
+          state: { valueGroups },
+        }}
+      >
+        <Picker
+          optionGroups={optionGroups}
+          valueGroups={valueGroups}
+          onChange={handleChange}
+        />
+      </Link>
     </div>
   );
 };
