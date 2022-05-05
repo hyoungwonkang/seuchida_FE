@@ -19,7 +19,6 @@ const setContents = createAction(SET_CONTENTS, (post) => ({ post }));
 const deletePost = createAction(DELETE_POST, (post) => ({ post }));
 
 //initialState
-
 const initialState = {
   list: {
     allReviews: [],
