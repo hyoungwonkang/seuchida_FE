@@ -7,7 +7,6 @@ import gBack from '../shared/ImgBox/gBack.png';
 const PostWrite_1 = (props) => {
   const history = useHistory();
   const postCategory = props.location.state.postCategory;
-  console.log(postCategory);
 
   //제목과 설명 state
   const [postTitle, setPostTitle] = useState('');

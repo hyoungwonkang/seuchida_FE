@@ -6,27 +6,34 @@ const token = localStorage.getItem("token");
 
 //Action
 const SET_POST = "SET_POST";
+const SET_REVIEW = "SET_REVIEW";
+
+
 
 //Action Creators
 const setPost = createAction(SET_POST, (post_list) => ({ post_list }));
+const setReview = createAction(SET_REVIEW, (review_list) => ({ review_list }));
+
 
 //initialState
 
 const initialState = {
   list: {
-    allReviews: [],
+    filterRe:[],
     caPost: [],
     nearPost: [],
     nearPosts: [],
+    post:[],
   },
+  review:[]
 };
 
-const getPostDB = (postId) => {
+const getMainDB = () => {
   return async function (dispatch, getState) {
     try {
       await axios({
         method: "get",
-        url: `https://seuchidaback2.shop/api/postList`,
+        url: `https://seuchidabackend.shop/api/postList`,
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -39,12 +46,12 @@ const getPostDB = (postId) => {
     }
   };
 };
-const getnearPostDB = (postId) => {
+const getPostlistDB = () => {
   return async function (dispatch, getState) {
     try {
       await axios({
         method: "get",
-        url: `https://seuchidaback2.shop/api/nearPostList`,
+        url: `https://seuchidabackend.shop/api/nearPostList`,
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -57,6 +64,32 @@ const getnearPostDB = (postId) => {
     }
   };
 };
+
+const getReviewlistDB = () => {
+  return async function (dispatch, getState) {
+
+    try {
+      await axios({
+        method: "get",
+        url: `https://seuchidabackend.shop/api/review`,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }).then((response) => {
+        console.log(response);
+        dispatch(setReview(response.data));
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+
+
+
+
+
 
 export default handleActions(
   {
@@ -64,14 +97,21 @@ export default handleActions(
       produce(state, (draft) => {
         draft.list = action.payload.post_list;
       }),
+    [SET_REVIEW]: (state, action) =>
+      produce(state, (draft) => {
+        draft.review = action.payload.review_list;
+      }),
   },
+
   initialState
 );
 
 const actionCreators = {
   setPost,
-  getPostDB,
-  getnearPostDB,
+  getMainDB,
+  getPostlistDB,
+  getReviewlistDB,
+
 };
 
 export { actionCreators };

@@ -1,50 +1,70 @@
 import React from "react";
 import styled from "styled-components";
 
-const Card = ({ MainCard, DetailCard, post_list }) => {
- 
-  
-  const post = post_list[0]
- console.log(post)
+const Card =(props) => {
+const { MainCard, DetailCard, center, _onClick} = props
+
+function getDistance(lat1, lon1, lat2, lon2, unit) {
+  if (lat1 === lat2 && lon1 === lon2) {
+    return 0;
+  } else {
+    var radlat1 = (Math.PI * lat1) / 180;
+    var radlat2 = (Math.PI * lat2) / 180;
+    var theta = lon1 - lon2;
+    var radtheta = (Math.PI * theta) / 180;
+    var dist =
+      Math.sin(radlat1) * Math.sin(radlat2) +
+      Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+    if (dist > 1) {
+      dist = 1;
+    }
+    dist = Math.acos(dist);
+    dist = (dist * 180) / Math.PI;
+    dist = dist * 60 * 1.1515;
+    if (unit === "K") {
+      dist = dist * 1.609344;
+    }
+    if (unit === "N") {
+      dist = dist * 0.8684;
+    }
+    return dist;
+  }
+}
+
+let distance = getDistance(center.lat, center.lng, props.latitude, props.longitude, "K").toFixed(1)
+
+
   if (MainCard) {
     return (
       <>
-        <MainContainer>
-          <div>
-            <TextBox>
-              <div style={{ marginBottom: "6px" }}>
-                <BoldTitle>· 모집중</BoldTitle>
-                <span>{post?.postTitle}</span>
-              </div>
-
-              <div style={{ margin: "10px 0px" }}>
-                <StatusBox>{post?.gender}</StatusBox>
-                <StatusBox>오늘</StatusBox>
-                <StatusBox>{post?.nowMember.length}/{`${post?.maxMember}명`} 참여</StatusBox>
+        <MainContainer  >
+          <div onClick={_onClick}>
+            <TextBox style={{paddingBottom:"5px"}}>
+              <div style={{ marginBottom: "0px" }}>
+                <BoldTitle>
+                  · {props?.status === true ? "모집중" : "모집완료"}
+                </BoldTitle>
+                <BoldTitle>{props?.postTitle}</BoldTitle>
               </div>
 
               <div>
-                <Desc>{post?.postDesc}</Desc>
+                <Desc>{props?.postDesc} </Desc>
               </div>
             </TextBox>
 
             <div>
               <Join
                 style={{
-                  borderTop: "1px solid #E0E0E0",
-                  justifyContent: "space-around",
+                  justifyContent: "space-between",
+                  padding: "0px 24px",
                 }}
               >
                 <ProfileBox>
-                  {post?.nowMember.map((m ,i) =>{
-                    return <Profile src={m.memberImg} key={i}  />
+                  {props?.nowMember.map((m, i) => {
+                    return <Profile ket={m.id}src={m.memberImg} key={m.memberId} />;
                   })}
-                  
-                  
-                  {/* <Profile src="https://cdn.gukjenews.com/news/photo/202201/2388626_2381760_1339.jpg" /> */}
-                  
                 </ProfileBox>
-                <SmallFont>500m 떨어짐| 1분전</SmallFont>
+                <SmallFont>{distance} km 떨어짐 | 1분전</SmallFont>
               </Join>
             </div>
           </div>
@@ -53,41 +73,112 @@ const Card = ({ MainCard, DetailCard, post_list }) => {
     );
   }
 
-  return (
-    <Container>
-      <TextBox>
-        <div style={{ marginBottom: "12px" }}>
-          <BoldTitle>· 모집중</BoldTitle>
-          <span>{post?.postTitle}</span>
-        </div>
+ if(DetailCard) return (
+    <Container style={{border:"none"}} >
+        <TitleBox style={{background:"white", borderDisplay:"none"}}>
+          <BoldTitle style={{fontSize:"20px"}}>
+            · {props?.status === true ? "모집중" : "모집완료"}
+          </BoldTitle>
+          <BoldTitle style={{fontSize:"20px"}}>{props?.postTitle}</BoldTitle>
+        </TitleBox>
+    
+    
+    
+    
+      <TextBoxList>
 
-        <div>
-          <StatusBox>{post?.gender}</StatusBox>
-          <StatusBox>오늘</StatusBox>
-          <StatusBox>{post?.nowMember.length}/{`${post?.maxMember}명`} 참여</StatusBox>
-        </div>
+      <DescBox style={{margin:"0px 0px"}}>
+          <Desc>{props?.postDesc}</Desc>
+        </DescBox>
+        
+        <Join>
+          <div> </div>
+    
+
+            <SmallFont>{distance} km 떨어짐 | {props.createdAt}</SmallFont>
+          </Join>
+
+      <Status style={{background:"#F8F8F8", height: "120px"}}> 
+         
+         
+          <StatusIcon>
+          
+            <span>콘</span> <StatusBox>{props?.spot}</StatusBox>
+          </StatusIcon>
+          <StatusIcon>
+          
+            <span>콘</span> <StatusBox>{props?.postCategory}</StatusBox>
+          </StatusIcon>
+          <StatusIcon>
+            <span>콘</span>
+            <StatusBox>{props?.datemate}</StatusBox>
+          </StatusIcon>
+          <StatusIcon>
+            <span>콘</span>
+            <StatusBox>
+              {props?.memberGender}, {props?.memberAge}
+            </StatusBox>        
+          </StatusIcon>
+        </Status>
+
+     
+  
+    
+      </TextBoxList>
+    </Container>
+  );
+
+
+
+
+
+  return (
+    <Container onClick={_onClick}>
+        <TitleBox>
+          <BoldTitle>
+            · {props?.status === true ? "모집중" : "모집완료"}
+          </BoldTitle>
+          <BoldTitle>{props?.postTitle}</BoldTitle>
+        </TitleBox>
+    
+    
+    
+    
+      <TextBoxList>
+      <Status  > 
+          <StatusIcon>
+          
+            <span>콘</span> <StatusBox>{props?.postCategory}</StatusBox>
+          </StatusIcon>
+          <StatusIcon>
+            <span>콘</span>
+            <StatusBox>{props?.datemate}</StatusBox>
+          </StatusIcon>
+          <StatusIcon>
+            <span>콘</span>
+            <StatusBox>
+              {props?.memberGender}, {props?.memberAge}세
+            </StatusBox>        
+          </StatusIcon>
+        </Status>
 
         <DescBox>
-          <Desc>
-          {post?.postDesc}
-          </Desc>
+          <Desc>{props?.postDesc}</Desc>
         </DescBox>
 
         <div>
           <Join>
-            {DetailCard ? null : (
+          
               <ProfileBox>
-                {post?.nowMember.map((m ,i) =>{
-                    return <Profile src={m.memberImg} key={i}  />
-                  })}
-                  
+               <Profile src={props?.userImg}/>
+               <SmallFont style={{marginLeft:"8px"}}>{props?.nickName}</SmallFont>
               </ProfileBox>
-            )}
+    
 
-            <SmallFont>500m 떨어짐| 1분전</SmallFont>
+            <SmallFont>{distance} km 떨어짐 | 1분전</SmallFont>
           </Join>
         </div>
-      </TextBox>
+      </TextBoxList>
     </Container>
   );
 };
@@ -98,8 +189,10 @@ const MainContainer = styled.section`
   border: 1px solid #e0e0e0;
   border-radius: 10px;
   width: 342px;
-  height: 214px;
+  height: 168px;
   margin-bottom: 14px;
+  cursor: pointer;
+  z-index:3;
 `;
 
 const Container = styled.section`
@@ -108,23 +201,52 @@ const Container = styled.section`
   background-color: white;
   border-top: 1px solid #e9e9e9;
   border-bottom: 1px solid #e9e9e9;
+  cursor: pointer;
 `;
+
+const TitleBox = styled.div`
+background-color:  #e9e9e9;
+width: 100%;
+height: 46px;
+align-items: center;
+display: flex;
+padding: 0px 24px;
+`
+
 
 const Desc = styled.div`
   font-size: 17px;
   padding-top: 4px;
+  height: 60px;
+`;
+
+const Status = styled.div`
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid  #e9e9e9;
+  padding : 0px 24px ;
+  height: 92px;
+  justify-content: center;
 `;
 
 const DescBox = styled.div`
   margin: 12px 0px;
+  min-height: 48px;
+  padding :0px 24px;
 `;
 
 const Join = styled.div`
   display: flex;
   justify-content: space-between;
+  padding: 5px 24px 12px 24px;
 `;
 
 const ProfileBox = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const StatusIcon = styled.div`
   display: flex;
   flex-direction: row;
 `;
@@ -137,12 +259,16 @@ const Profile = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  margin-top: 10px;
+  margin-top: 5px;
   margin-right: 5px;
 `;
 
 const TextBox = styled.div`
   padding: 20px 24px 24px 24px;
+  align-items: center;
+`;
+const TextBoxList = styled.div`
+
   align-items: center;
 `;
 
@@ -154,12 +280,8 @@ const BoldTitle = styled.span`
 `;
 
 const StatusBox = styled.span`
-  background-color: #e5e5e5;
-  border-radius: 30px;
-  margin-right: 8px;
-  padding: 6px 10px;
-  font-size: 12px;
-  height: 26px;
+  font-size: 14px;
+  margin-left: 8px;
 `;
 
 const SmallFont = styled.div`

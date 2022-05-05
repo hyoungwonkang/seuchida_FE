@@ -33,7 +33,7 @@ const Image = (props) => {
 
 Image.defaultProps = {
   shape: "circle",
-  src: "https://ifh.cc/g/AOA4Wq.jpg",
+  src: "",
   size: 36,
   _onClick: () => {},
 };

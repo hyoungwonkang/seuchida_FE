@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { Grid, Button, Image, Text, Input } from "../../elements/Index";
 
 const AddProfile = (props) => {
+  // const fileInput = React.useRef();
   const address = props.location.state?.address;
 
   // const userInfo = useSelector((state) => state.user?.userInfo);
@@ -15,16 +16,19 @@ const AddProfile = (props) => {
   // userInfo.useImg?  userInfo.userImg : ""
   const [nickName, setNickName] = useState();
   // userInfo.nickname?  userInfo.nickname : ""
-  const [gender, setGender] = useState();
+  const [gender, setGender] = useState('남성');
   // userInfo.userGender?  userInfo.userGender : ""
   const [age, setAge] = useState();
   // userInfo.userAge?  userInfo.userAge : ""
   const [content, setContent] = useState();
   // userInfo.userContent?  userInfo.userContent : ""
 
-  const selectImage = (e) => {
+  const selectPreview = (e) => {
     setPreview(window.webkitURL.createObjectURL(e.target.files[0]));
-    setProfile(window.webkitURL.createObjectURL(e.target.files[0]));
+  };
+
+  const selectImage = (e) => {
+    setProfile(e.target.files[0]);
   };
 
   const selectNickName = (e) => {
@@ -66,11 +70,12 @@ const AddProfile = (props) => {
             type="file"
             id="image"
             onChange={(e) => {
+              selectPreview(e);
               selectImage(e);
             }}
           />
         </FileUpload>
-        <Input
+        <input
           type="text"
           placeholder="닉네임"
           onChange={selectNickName}
@@ -91,10 +96,9 @@ const AddProfile = (props) => {
           </div>
         </Grid>
 
-        <Input
-          multiLine
+        <input
           type="text"
-          placeholder="당신에 대해 조심 더 알려주세요!"
+          placeholder="당신에 대해 조금 더 알려주세요!"
           onChange={selectContent}
           // value={content || ""}
         />
@@ -117,18 +121,6 @@ const AddProfile = (props) => {
   );
 };
 
-// const Grid = styled.div`
-//   width: 100%;
-//   height: auto;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   align-items: center;
-//   img {
-//     width: 80px;
-//     height: 80px;
-//     border-radius: 50%;
-//   }
 const FileUpload = styled.div`
   label {
     display: inline-block;
