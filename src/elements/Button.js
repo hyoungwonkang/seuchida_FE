@@ -1,5 +1,6 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
+import { StyleSheetConsumer } from 'styled-components';
 
 const Button = (props) => {
   const {
@@ -14,6 +15,7 @@ const Button = (props) => {
     border,
     right,
     bold,
+    bg,
   } = props;
 
   if (is_float) {
@@ -38,6 +40,7 @@ const Button = (props) => {
     border: border,
     bold: bold,
     right: right,
+    bg: bg,
   };
 
   return (
@@ -55,23 +58,25 @@ Button.defaultProps = {
   _onClick: () => {},
   is_float: false,
   margin: false,
-  width: "100%",
-  padding: "12px 0px",
+  width: '100%',
+  padding: '12px 0px',
   border: false,
+  bg: false,
 };
 
 const ElButton = styled.button`
   width: 342px;
   height: 54px;
-  background-color: #b0b0b0;
-  color: #212121;
+  background: #b0b0b0;
+  ${(props) => (props.bg ? `background: #FDE333` : '')};
+  color: white;
   font-weight: bold;
   padding: ${(props) => props.padding};
   box-sizing: border-box;
   border: none;
   border-radius: 5px;
-  ${(props) => (props.margin ? `margin: ${props.margin};` : "")}
-  ${(props) => (props.right ? `float: right` : "")} /* &:hover {
+  ${(props) => (props.margin ? `margin: ${props.margin};` : '')}
+  ${(props) => (props.right ? `float: right` : '')} /* &:hover {
     box-shadow: 0px 0px 5px 0px gray;
   }
   font-family: "Cafe24Ohsquareair"; */
@@ -92,10 +97,10 @@ const FloatButton = styled.button`
   vertical-align: middle;
   border: none;
   border-radius: 50px;
-  &:hover {
+  /* &:hover {
     box-shadow: 0px 0px 5px 0px gray;
   }
-  font-family: "Cafe24Ohsquareair";
+  font-family: "Cafe24Ohsquareair"; */
 `;
 
 const DeleteButton = styled.button`
@@ -113,10 +118,10 @@ const DeleteButton = styled.button`
   vertical-align: middle;
   border: none;
   border-radius: 50x;
-  &:hover {
+  /* &:hover {
     box-shadow: 0px 0px 5px 0px gray;
   }
-  font-family: "Cafe24Ohsquareair";
+  font-family: "Cafe24Ohsquareair"; */
 `;
 
 export default Button;

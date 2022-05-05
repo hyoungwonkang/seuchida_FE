@@ -1,16 +1,16 @@
-import React from "react";
-import styled from "styled-components";
-import { Card, LCslider, RCslider, ECslider } from "../components/index";
-import FooterMenu from "../shared/FooterMenu";
-import { useSelector, useDispatch } from "react-redux";
-import { actionCreators as postActions } from "../redux/modules/post";
-import { actionCreators as userActions } from "../redux/modules/user";
-import { history } from "../redux/configStore";
+import React from 'react';
+import styled from 'styled-components';
+import { Card, LCslider, RCslider, ECslider } from '../components/index';
+import FooterMenu from '../shared/FooterMenu';
+import { useSelector, useDispatch } from 'react-redux';
+import { actionCreators as postActions } from '../redux/modules/post';
+import { actionCreators as userActions } from '../redux/modules/user';
+import { history } from '../redux/configStore';
 
 const Main = () => {
   const catepost = useSelector((state) => state.post.list.caPost);
   const post_list = useSelector((state) => state.post.list.nearPost);
-  const review = useSelector((state) => state.post.list.filterRe)
+  const review = useSelector((state) => state.post.list.filterRe);
   const dispatch = useDispatch();
   const [state, setState] = React.useState({
     center: {
@@ -47,15 +47,13 @@ const Main = () => {
       // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
       setState((prev) => ({
         ...prev,
-        errMsg: "geolocation을 사용할수 없어요..",
+        errMsg: 'geolocation을 사용할수 없어요..',
         isLoading: false,
       }));
     }
     dispatch(postActions.getMainDB());
     // dispatch(userActions.getUser(state.state))
   }, []);
-
-
 
   return (
     <>
@@ -70,7 +68,7 @@ const Main = () => {
               <Sports>배드민턴</Sports> 매칭이에요!
             </Wellcome>
           </WellcomeBox>
-          <LCslider catepost={catepost}  center={state.center}  />
+          <LCslider catepost={catepost} center={state.center} />
         </TopLive>
 
         {/* 스친 운동 한줄평 */}
@@ -83,25 +81,23 @@ const Main = () => {
         </ReviewBox>
 
         {/* 여기여기 붙어라 */}
-        <TitleBox >
-          <Title >여기여기 붙어라</Title>
-          <Title
-          
-          >
-            &gt;
-          </Title>
+        <TitleBox>
+          <Title>여기여기 붙어라</Title>
+          <Title>&gt;</Title>
         </TitleBox>
         <ListBox>
           <CardBox>
             {post_list?.map((p, l) => {
               return (
-                <Card MainCard {...p} key={p.id} center={state.center}
-                
-                _onClick={()=>{
-                  history.push(`/postdetail/${p._id}`)
-                  
-                }}
-                 />
+                <Card
+                  MainCard
+                  {...p}
+                  key={p.id}
+                  center={state.center}
+                  _onClick={() => {
+                    history.push(`/postdetail/${p._id}`);
+                  }}
+                />
               );
             })}
           </CardBox>
@@ -156,7 +152,7 @@ const ListBox = styled.section`
 `;
 
 const CardBox = styled.div`
-align-items: center;
+  align-items: center;
   display: flex;
   flex-direction: column;
 `;

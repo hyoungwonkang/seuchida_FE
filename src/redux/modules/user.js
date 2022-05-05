@@ -35,7 +35,6 @@ const kakaoLogin = (code) => {
       .then((res) => {
         const token = res.data.user.token;
         const userInfo = res.data.user.userInfo;
-      
         // decode the logged in user
         function parseJwt(token) {
           if (!token) {
@@ -49,12 +48,10 @@ const kakaoLogin = (code) => {
         // loggedin user
         const decode_token = parseJwt(token);
 
-
         localStorage.setItem('token', token); //token을 local에 저장합니다
 
         dispatch(logIn(decode_token, userInfo));
         console.log('로그인 확인');
-        console.log(userInfo);
         if (!userInfo.userInterest[0]) {
           history.replace('/signuploca');
         } else {
