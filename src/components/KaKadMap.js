@@ -65,6 +65,7 @@ const Box = styled.div`
   width: 150px;
   height: 100px;
   border-radius: 12px;
+  z-index: 30;
 `;
 const Close = styled.button``;
 

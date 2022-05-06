@@ -76,7 +76,7 @@ const Main = () => {
         {/* 스친 운동 한줄평 */}
         <ReviewBox>
           <TitleBox onClick={() => {window.location.href = '/reviewlist';}}>
-            <Title>스친 운동 후기</Title> <Title>&gt;</Title>
+            <Title>함께한 스친들의 후기</Title> <Title>&gt;</Title>
           </TitleBox>
 
           <RCslider review={review} />
@@ -124,21 +124,24 @@ const Container = styled.section`
 const TopLive = styled.section`
   max-height: 60vh;
   min-height: 450px;
+  background-color: #F8F8FA;
 `;
 
 const WellcomeBox = styled.div`
   font-size: 24px;
-  font-weight: 700;
-  padding: 40px 24px 40px 24px;
+ 
+  padding: 40px 24px 30px 24px;
+  background-color: #0ED88B;
 `;
 
 const Sports = styled.div`
   display: inline;
-  color: #222222;
+  color: #FFFFFF;
+  font-weight: bold;
 `;
 
 const Wellcome = styled.div`
-  color: rgba(123, 123, 123, 1);
+  color: #FFFFFF;
 `;
 
 // --라이브 카드
@@ -165,6 +168,7 @@ const TitleBox = styled.div`
   display: flex;
   background-color: white;
   z-index: 20;
+  margin-bottom: -9px;
 `;
 
 const Title = styled.div`

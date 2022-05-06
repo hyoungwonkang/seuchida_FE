@@ -50,7 +50,7 @@ const LiveCard = (props) => {
 
           {/* 카드 속 내용 */}
           <Location>
-            <Title style={{marginRight :"8px"}}>· {Livepost?.status===true? '모집중': '모집완료'}</Title>
+            <Title style={{marginRight :"8px", color:"#FF6B52"}}>· {Livepost?.status===true? '모집중': '모집완료'}</Title>
             <Title style={{width:"110px"}}>{Livepost?.postTitle}</Title>
           </Location>
 
@@ -76,10 +76,10 @@ const Container = styled.section`
   
   max-width: 250px;
   width: 224px;
-  /* border: 1px solid rgba(208, 208, 208, 1); */
+  border: 2px solid #E6E6E6;
   height: 168px;
   margin: 15px;
-  margin-top: 30px;
+  margin-top: 65px;
   font-size: 14px;
   border-radius: 12px;
   background-color: white;
@@ -97,7 +97,7 @@ const Profile = styled.div`
   z-index: 99;
   /* background-color: white; */
   /* margin-left: 60px; */
-  top: 0px;
+  top: 35px;
   /* background-image: url(${(props) => props.src}); */
   /* background-size: cover; */
   /* background-repeat: no-repeat; */
