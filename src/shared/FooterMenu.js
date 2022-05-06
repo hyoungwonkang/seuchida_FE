@@ -13,7 +13,10 @@ const FooterMenu = (props) => {
           _onClick={() => {
             history.push(props.path);
             props.event();
+            
           }}
+          
+          margin={"12px 0px 0px 0px"}
         >
           {props.text}
         </Button>
@@ -104,6 +107,7 @@ const Btn = styled.div`
   align-items: center;
   margin: auto;
   background-color: white;
-  width: 390px;
+  min-width: 390px;
+  box-shadow: 0px -2px 4px 2.5px #ddd;
   z-index: 5;
 `;

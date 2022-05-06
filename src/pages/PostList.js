@@ -54,9 +54,12 @@ const PostList = () => {
 
   return (
     <>
+    
       <Header>
         <Gback>
-          <img src={gBack} />
+          <img src={gBack} onClick={()=>{
+            window.location.href = '/main';
+          }}/>
         </Gback>
         <HeadContents>
           <div> 서울시 강남구</div>

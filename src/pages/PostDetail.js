@@ -9,7 +9,7 @@ import {useDispatch,useSelector } from "react-redux"
 import{ actionCreators as postActions } from "../redux/modules/post";
 import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
-
+import FooterMenu from "../shared/FooterMenu";
 const PostDetail = (props) => {
   const dispatch = useDispatch()
   const [modalOn, setModalOn] = React.useState(false);
@@ -129,7 +129,7 @@ const PostDetail = (props) => {
             <KakaoMap {...post}/>
 
         <ButtonBox>
-          <ChatButton>채팅하기</ChatButton>
+          <FooterMenu next text={"참여하기"}></FooterMenu>
         </ButtonBox>
       </Container>
     </>

@@ -11,6 +11,7 @@ const Main = () => {
   const catepost = useSelector((state) => state.post.list.caPost);
   const post_list = useSelector((state) => state.post.list.nearPost);
   const review = useSelector((state) => state.post.list.filterRe);
+  const user = useSelector((state)=> state.user)
   const dispatch = useDispatch();
   const [state, setState] = React.useState({
     center: {
@@ -51,6 +52,7 @@ const Main = () => {
         isLoading: false,
       }));
     }
+    dispatch(userActions.isLoginDB());
     dispatch(postActions.getMainDB());
     // dispatch(userActions.getUser(state.state))
   }, []);
@@ -62,7 +64,7 @@ const Main = () => {
         <TopLive>
           <WellcomeBox>
             <Wellcome>
-              user_name님
+             {user.userInfo.nickName}님
               <br />
               방금 개설된 가까운 <br />
               <Sports>배드민턴</Sports> 매칭이에요!
@@ -73,7 +75,7 @@ const Main = () => {
 
         {/* 스친 운동 한줄평 */}
         <ReviewBox>
-          <TitleBox>
+          <TitleBox onClick={() => {window.location.href = '/reviewlist';}}>
             <Title>스친 운동 후기</Title> <Title>&gt;</Title>
           </TitleBox>
 
@@ -81,7 +83,9 @@ const Main = () => {
         </ReviewBox>
 
         {/* 여기여기 붙어라 */}
-        <TitleBox>
+        <TitleBox onClick={() => {
+                    history.push(`/postlist`);
+                  }}>
           <Title>여기여기 붙어라</Title>
           <Title>&gt;</Title>
         </TitleBox>
@@ -160,6 +164,7 @@ const TitleBox = styled.div`
   justify-content: space-between;
   display: flex;
   background-color: white;
+  z-index: 20;
 `;
 
 const Title = styled.div`

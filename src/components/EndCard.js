@@ -29,7 +29,7 @@ const EndCard = () => {
 
         <Text size="16px">
           근린공원에서 같이 배드민턴 쳐요~ 초보자분들도 열정있게 치시면
-          참여가능!{" "}
+          참여가능!
         </Text>
         <Grid row height="auto" padding="5px">
           <Image
@@ -50,7 +50,7 @@ const EndCard = () => {
             _onClick={() => history.push("/reviewwrite")}
           >
             <FaPen size={14} onClick={() => history.push("/reviewwrite")} />
-            후기 작성하기{" "}
+            후기 작성하기
           </Text>
         </Grid>
       </Grid>
