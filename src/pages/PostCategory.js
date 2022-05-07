@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { history } from '../redux/configStore';
-import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import gBack from '../shared/ImgBox/gBack.png';
 import FooterMenu from '../shared/FooterMenu';
 import { Grid, Text } from '../elements/Index';
 import GoBack from '../components/GoBack';
@@ -55,12 +52,12 @@ const PostCategory = (prop) => {
 
   return (
     <Grid>
-      <GoBack text='모임 만들기' path='/' />
+      <GoBack text='모임 만들기' path='/main' />
       <Text margin='0px 0px 10px 30px' size='24px'>
         함께하고 싶은 <br />
         운동을 선택해주세요
       </Text>
-      <Grid height='auto' column margin='auto'>
+      <Grid height='auto' column margin='24px 0px 0px 0px'>
         <CateBox>
           {CategoryList.map((item) => {
             // console.log(item);
@@ -114,12 +111,12 @@ const CateBox = styled.div`
 const Cate = styled.div`
   width: auto;
   height: 30px;
-  margin: 5px;
-  padding: 5px 12px;
+  margin: 4px;
+  padding: 4px 12px;
   text-align: center;
   border: 1px solid #ddd;
   border-radius: 30px;
-  font-size: 20px;
+  font-size: 16px;
   background: ${(props) => (props.color ? 'lightgreen' : 'white')};
 `;
 

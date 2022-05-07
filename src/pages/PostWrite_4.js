@@ -7,13 +7,25 @@ import styled from 'styled-components';
 import FooterMenu from '../shared/FooterMenu';
 import axios from 'axios';
 import { FaMapMarkerAlt } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 // 지도에서 위치찍어서 포스트 올리기!
 const PostWrite_4 = (props) => {
   const history = useHistory();
-  const dispatch = useDispatch();
+
+  const memberAge = props?.location?.state?.memberAge;
+  const memberGender = props?.location?.state?.memberGender;
+  const maxMember = props?.location?.state?.maxMember;
+  const postCategory = props?.location?.state?.postCategory;
+  const postTitle = props?.location?.state?.postTitle;
+  const postDesc = props?.location?.state?.postDesc;
 
   const { kakao } = window;
+
+  const [address, setAddress] = useState();
+  const [spot, setSpot] = useState();
+  const [latitude, setLatitude] = useState();
+  const [longitude, setLongitude] = useState();
 
   //지도
   const [state, setState] = useState({
@@ -87,11 +99,11 @@ const PostWrite_4 = (props) => {
                 : '';
               detailAddr +=
                 '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
-              var address =
+              var home =
                 result[0].address.region_1depth_name +
                 ' ' +
                 result[0].address.region_2depth_name;
-              var spot = result[0].road_address?.building_name
+              var town = result[0].road_address?.building_name
                 ? result[0].road_address.building_name
                 : result[0].address.address_name;
 
@@ -102,19 +114,18 @@ const PostWrite_4 = (props) => {
                 '</div>';
               // 마커를 클릭한 위치에 표시합니다
               // console.log(lat, lng);
-              var latitude = mouseEvent.latLng.Ma;
-              var longitude = mouseEvent.latLng.La;
+              var la = mouseEvent.latLng.Ma;
+              var lo = mouseEvent.latLng.La;
               marker.setPosition(mouseEvent.latLng);
               marker.setMap(map);
 
               // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
               infowindow.setContent(content);
               infowindow.open(map, marker);
-              if (spot) {
-                dispatch(
-                  postActions.postMap(address, spot, latitude, longitude)
-                );
-              }
+              setAddress(home); //state값 넘겨주기
+              setSpot(town);
+              setLatitude(la);
+              setLongitude(lo);
             }
           }
         );
@@ -144,11 +155,9 @@ const PostWrite_4 = (props) => {
     });
   }, []);
 
-  const getSpot = useSelector((state) => state.post?.post_map);
-  const spot = getSpot?.post_map?.spot;
-
   return (
     <Grid>
+      {/* 검색 */}
       {/* <div>
         <Text>{locationObj.si}</Text>
         <Text>{locationObj.gu}</Text>
@@ -156,6 +165,7 @@ const PostWrite_4 = (props) => {
       </div> */}
       <Grid
         row
+        margin='12px 0px'
         height='auto'
         padding='12px 24px 12px 0px'
         justify='space-between'
@@ -167,7 +177,7 @@ const PostWrite_4 = (props) => {
             현재위치
           </Text>
         </Grid>
-        <div>{spot}</div>
+        {spot}
       </Grid>
       <div
         id='map'
@@ -175,21 +185,30 @@ const PostWrite_4 = (props) => {
         style={{
           width: '100%',
           height: '500px',
-          margin: '12px 0px',
+          margin: '20px 0px',
         }}
       ></div>
-      <FooterMenu next path='/postwrite3' text='확인' />
+      <Link
+        to={{
+          pathname: '/postwrite3',
+          state: {
+            maxMember,
+            memberAge,
+            memberGender,
+            postCategory,
+            postDesc,
+            postTitle,
+            address,
+            latitude,
+            longitude,
+            spot,
+          },
+        }}
+      >
+        <FooterMenu next path='/postwrite3' text='확인' />
+      </Link>
     </Grid>
   );
 };
-
-const Container = styled.section`
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 0px 0px 0px 0px;
-`;
 
 export default PostWrite_4;

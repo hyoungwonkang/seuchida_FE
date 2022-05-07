@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import gBack from '../shared/ImgBox/gBack.png';
 import FooterMenu from '../shared/FooterMenu';
 import { Grid, Text, Input } from '../elements/Index';
 import GoBack from '../components/GoBack';
+import ProgressPage from '../components/ProgressPage';
 
 const PostWrite_1 = (props) => {
-  const history = useHistory();
-  const postCategory = props.location.state.postCategory;
+  const postCategory = props?.location?.state?.postCategory;
 
   //제목과 설명 state
   const [postTitle, setPostTitle] = useState('');
@@ -22,14 +20,22 @@ const PostWrite_1 = (props) => {
     setPostDesc(e.target.value);
   };
 
+  //프로그레스바
+  let count = 0;
+  if (postTitle.length > 0) {
+    count++;
+  }
+
   return (
     <Grid>
       <GoBack text='모임 만들기' path='/postcategory' />
-
+      <ProgressBar>
+        <HighLight width={(count / 3) * 100 + '%'} />
+      </ProgressBar>
       <Text margin='0px 0px 0px 24px' size='16px'>
         제목
       </Text>
-      <Grid padding='0px 0px 28px 24px'>
+      <Grid padding='8px 0px 28px 24px'>
         <Input
           type='textarea'
           value={postTitle}
@@ -41,8 +47,9 @@ const PostWrite_1 = (props) => {
       <Text margin='0px 0px 0px 24px' size='16px'>
         설명
       </Text>
-      <Grid padding='0px 0px 0px 24px'>
+      <Grid padding='8px 0px 0px 24px'>
         <Input
+          multiline
           height='160px'
           type='textarea'
           value={postDesc}
@@ -67,39 +74,19 @@ const PostWrite_1 = (props) => {
   );
 };
 
-const Container = styled.section`
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 0px 0px 0px 0px;
+const ProgressBar = styled.div`
+  background: #eee;
+  width: 85%;
+  height: 4.5px;
+  margin-left: 28px;
+  margin-bottom: 28px;
 `;
 
-const HeadWarp = styled.div`
-  display: flex;
-  align-items: left;
-  flex-direction: row;
-`;
-const Gback = styled.div``;
-
-const HeadTitle = styled.h1`
-  font-size: 20px;
-  font-weight: 700;
-`;
-
-const Title = styled.div``;
-
-const TitleInput = styled.input``;
-
-const Desc = styled.div``;
-
-const Next = styled.button`
-  width: 350px;
-  height: 45px;
-  margin-top: 10%;
-  border: none;
-  background: gray;
+const HighLight = styled.div`
+  background: black;
+  transition: 1s;
+  width: ${(props) => props.width};
+  height: 4.5px;
 `;
 
 export default PostWrite_1;

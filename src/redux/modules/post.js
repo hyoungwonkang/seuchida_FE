@@ -8,16 +8,12 @@ const token = localStorage.getItem('token');
 const SET_POST = 'SET_POST';
 const SET_REVIEW = 'SET_REVIEW';
 const ADD_POST = 'ADD_POST';
-const SET_MAP = 'SET_MAP';
-const SET_CONTENTS = 'SET_CONTENTS';
 const DELETE_POST = 'DELETE_POST';
 
 //Action Creators
 const setReview = createAction(SET_REVIEW, (review_list) => ({ review_list }));
 const setPost = createAction(SET_POST, (post_list) => ({ post_list }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
-const setMap = createAction(SET_MAP, (map) => ({ map }));
-const setContents = createAction(SET_CONTENTS, (post) => ({ post }));
 const deletePost = createAction(DELETE_POST, (post) => ({ post }));
 
 //initialState
@@ -115,6 +111,7 @@ const getMainDB = () => {
     }
   };
 };
+
 const getPostlistDB = () => {
   return async function (dispatch, getState) {
     try {
@@ -153,46 +150,6 @@ const getReviewlistDB = () => {
   };
 };
 
-const postMap = (address, spot, latitude, longitude) => {
-  return function (dispatch, getState, { history }) {
-    const _post = {
-      ...initialState,
-      post_map: {
-        address: address,
-        spot: spot,
-        latitude: latitude,
-        longitude: longitude,
-      },
-    };
-    dispatch(setMap(_post));
-  };
-};
-
-const postContents = (
-  memberAge,
-  memberGender,
-  maxMember,
-  postCategory,
-  postTitle,
-  postDesc
-) => {
-  return function (dispatch, getState, { history }) {
-    const _post = {
-      ...initialState,
-      post_contents: {
-        memberAge: memberAge,
-        memberGender: memberGender,
-        maxMember: maxMember,
-        postCategory: postCategory,
-        postTitle: postTitle,
-        postDesc: postDesc,
-      },
-    };
-    dispatch(setContents(_post));
-    history.push('/postwrite3');
-  };
-};
-
 const deletePostDB = (postId) => {
   return async function (dispatch, getState, { history }) {
     await axios({
@@ -227,14 +184,6 @@ export default handleActions(
       produce(state, (draft) => {
         draft.list = action.payload.post;
       }),
-    [SET_MAP]: (state, action) =>
-      produce(state, (draft) => {
-        draft.post_map = action.payload.map;
-      }),
-    [SET_CONTENTS]: (state, action) =>
-      produce(state, (draft) => {
-        draft.post_contents = action.payload.post;
-      }),
     [DELETE_POST]: (state, action) =>
       produce(state, (draft) => {
         let list = draft.list.posts.filter(
@@ -255,12 +204,8 @@ const actionCreators = {
 
   addPost,
   addPostDB,
-  setMap,
-  postMap,
   deletePost,
   deletePostDB,
-  postContents,
-  setContents,
 };
 
 export { actionCreators };
