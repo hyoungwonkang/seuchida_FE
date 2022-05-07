@@ -21,7 +21,7 @@ const Main = () => {
     errMsg: null,
     isLoading: true,
   });
-
+  console.log(catepost);
   React.useEffect(() => {
     if (navigator.geolocation) {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
