@@ -140,15 +140,14 @@ export default handleActions(
         draft.token = action.payload.token;
         draft.userInfo = action.payload.user;
         draft.is_login = true;
-        console.log(draft.token);
-        console.log(draft.userInfo);
+
       }),
     [LOG_OUT]: (state, action) => produce(state, (draft) => {}),
     [GET_USER]: (state, action) =>
       produce(state, (draft) => {
         draft.is_login = true;
         draft.userInfo = action.payload.userInfo;
-        // console.log(action.payload.userInfo);
+
       }),
     [EDIT_USER]: (state, action) =>
       produce(state, (draft) => {

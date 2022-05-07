@@ -11,6 +11,7 @@ const Main = () => {
   const catepost = useSelector((state) => state.post.list.caPost);
   const post_list = useSelector((state) => state.post.list.nearPost);
   const review = useSelector((state) => state.post.list.filterRe);
+  const user = useSelector((state)=> state.user)
   const dispatch = useDispatch();
   const [state, setState] = React.useState({
     center: {
@@ -20,7 +21,7 @@ const Main = () => {
     errMsg: null,
     isLoading: true,
   });
-
+  console.log(catepost);
   React.useEffect(() => {
     if (navigator.geolocation) {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
@@ -51,6 +52,7 @@ const Main = () => {
         isLoading: false,
       }));
     }
+    dispatch(userActions.isLoginDB());
     dispatch(postActions.getMainDB());
     // dispatch(userActions.getUser(state.state))
   }, []);
@@ -62,7 +64,7 @@ const Main = () => {
         <TopLive>
           <WellcomeBox>
             <Wellcome>
-              user_name님
+             {user.userInfo.nickName}님
               <br />
               방금 개설된 가까운 <br />
               <Sports>배드민턴</Sports> 매칭이에요!
@@ -73,15 +75,17 @@ const Main = () => {
 
         {/* 스친 운동 한줄평 */}
         <ReviewBox>
-          <TitleBox>
-            <Title>스친 운동 후기</Title> <Title>&gt;</Title>
+          <TitleBox onClick={() => {window.location.href = '/reviewlist';}}>
+            <Title>함께한 스친들의 후기</Title> <Title>&gt;</Title>
           </TitleBox>
 
           <RCslider review={review} />
         </ReviewBox>
 
         {/* 여기여기 붙어라 */}
-        <TitleBox>
+        <TitleBox onClick={() => {
+                    history.push(`/postlist`);
+                  }}>
           <Title>여기여기 붙어라</Title>
           <Title>&gt;</Title>
         </TitleBox>
@@ -120,21 +124,24 @@ const Container = styled.section`
 const TopLive = styled.section`
   max-height: 60vh;
   min-height: 450px;
+  background-color: #F8F8FA;
 `;
 
 const WellcomeBox = styled.div`
   font-size: 24px;
-  font-weight: 700;
-  padding: 40px 24px 40px 24px;
+ 
+  padding: 40px 24px 30px 24px;
+  background-color: #0ED88B;
 `;
 
 const Sports = styled.div`
   display: inline;
-  color: #222222;
+  color: #FFFFFF;
+  font-weight: bold;
 `;
 
 const Wellcome = styled.div`
-  color: rgba(123, 123, 123, 1);
+  color: #FFFFFF;
 `;
 
 // --라이브 카드
@@ -160,6 +167,8 @@ const TitleBox = styled.div`
   justify-content: space-between;
   display: flex;
   background-color: white;
+  z-index: 20;
+  margin-bottom: -9px;
 `;
 
 const Title = styled.div`

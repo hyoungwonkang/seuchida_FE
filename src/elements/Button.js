@@ -66,7 +66,7 @@ Button.defaultProps = {
 const ElButton = styled.button`
   width: 342px;
   height: 54px;
-  background: #b0b0b0;
+  background: #5796F7;
   ${(props) => (props.bg ? `background: #FDE333` : "")};
   color: white;
   font-weight: bold;
