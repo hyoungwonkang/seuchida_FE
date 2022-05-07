@@ -1,21 +1,26 @@
-import React from 'react';
-import styled from 'styled-components';
-import { history } from '../redux/configStore';
-import { Button } from '../elements/Index';
+import React from "react";
+import styled from "styled-components";
+import { history } from "../redux/configStore";
+import { Button } from "../elements/Index";
 
 const FooterMenu = (props) => {
-  // console.log(props);
   const { next } = props;
+  //다음 버튼
   if (next) {
     return (
       <Btn>
         <Button
           _onClick={() => {
-            history.push(props.path);
-            props.event();
-            
+            if (props.path) {
+              history.push(props.path);
+            }
+            if (props.event) {
+              return props.event();
+            }
+            if (props.state) {
+              return props.state();
+            }
           }}
-          
           margin={"12px 0px 0px 0px"}
         >
           {props.text}
@@ -29,35 +34,35 @@ const FooterMenu = (props) => {
       <MenuBox>
         <Menu
           onClick={() => {
-            history.push('/main');
+            history.push("/main");
           }}
         >
           홈
         </Menu>
         <Menu
           onClick={() => {
-            history.push('/map');
+            history.push("/map");
           }}
         >
           내주변
         </Menu>
         <Menu
           onClick={() => {
-            history.push('/challenge');
+            history.push("/challenge");
           }}
         >
           챌린지
         </Menu>
         <Menu
           onClick={() => {
-            history.push('/chat');
+            history.push("/chat");
           }}
         >
           채팅
         </Menu>
         <Menu
           onClick={() => {
-            history.push('/mypage');
+            history.push("/mypage");
           }}
         >
           마이페이지

@@ -11,6 +11,8 @@ import { AiFillPlusCircle } from "react-icons/ai";
 
 const AddProfile = (props) => {
   const dispatch = useDispatch();
+
+  //SignupLoca에서 받아온 address값
   const address = props.location.state?.address;
 
   React.useEffect(() => {
@@ -19,11 +21,9 @@ const AddProfile = (props) => {
 
   const userInfo = useSelector((state) => state.user?.userInfo);
   const edit = useSelector((state) => state.user?.userInfo.userImg);
-  console.log(edit);
   const is_edit = edit ? true : false;
 
   React.useEffect(() => {
-    // setPreview(userInfo?.userImg);
     setProfile(userInfo?.userImg);
     setNickName(userInfo?.nickName);
     setGender(userInfo?.userGender);
@@ -43,6 +43,9 @@ const AddProfile = (props) => {
   };
 
   const selectImage = (e) => {
+    if (!e.target.file) {
+      setProfile(userInfo?.userImg);
+    }
     setProfile(e.target.files[0]);
   };
 
@@ -60,9 +63,22 @@ const AddProfile = (props) => {
     setContent(e.target.value);
   };
 
+  //빈값 유효성 검사
   const alert = () => {
-    if (nickName === "") {
-      window.alert("닉네임 입력해");
+    if (profile === undefined) {
+      window.alert("프로필을 선택해 주세요:)");
+    }
+    if (nickName === undefined) {
+      window.alert("닉네임을 입력해 주세요:)");
+    }
+    if (gender === undefined) {
+      window.alert("성별을 입력해 주세요:)");
+    }
+    if (age === undefined) {
+      window.alert("나이를 입력해 주세요:)");
+    }
+    if (content === undefined) {
+      window.alert("자기소개를 입력해 주세요:)");
     }
   };
 
@@ -76,6 +92,7 @@ const AddProfile = (props) => {
 
       <Grid column height="650px">
         <Grid height="auto" column margin="30px 0px">
+          {/* 프로필 이미지 */}
           <Image
             size={80}
             position="relative"
@@ -101,6 +118,8 @@ const AddProfile = (props) => {
               }}
             />
           </FileUpload>
+
+          {/* 닉네임 */}
           <Input
             height="56px"
             type="text"
@@ -108,6 +127,8 @@ const AddProfile = (props) => {
             _onChange={selectNickName}
             value={nickName || ""}
           />
+
+          {/* 성별 */}
           <Option>
             <select onChange={selectGender} defaultValue="default">
               <option className="title" value="default" disabled>
@@ -117,6 +138,7 @@ const AddProfile = (props) => {
               <option value="여성">여성</option>
             </select>
 
+            {/* 나이 */}
             <div className="calendarBox">
               <Input
                 wd
@@ -129,26 +151,25 @@ const AddProfile = (props) => {
             </div>
           </Option>
 
+          {/* 자기소개 한 줄 */}
           <Input
+            multiLine
             height="160px"
-            margin="0px 0px 100px 0px"
+            margin="0px 0px 100px 100px"
             type="text"
             placeholder="당신에 대해 조금 더 알려주세요!"
             _onChange={selectContent}
             value={content || ""}
           />
+
+          {/* 푸터 */}
           <Link
             to={{
               pathname: "/category",
               state: { profile, nickName, gender, age, content, address },
             }}
           >
-            <FooterMenu
-              next
-              path="/category"
-              text="다음"
-              // event={(nickName = "" ? window.alert("닉네임 입력해") : "")}
-            />
+            <FooterMenu next path="/category" text="다음" state={alert} />
           </Link>
         </Grid>
       </Grid>

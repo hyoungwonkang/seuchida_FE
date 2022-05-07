@@ -5,18 +5,17 @@ import gBack from "../shared/ImgBox/gBack.png";
 import Modal from "../components/Modal/Modal"; //모달 창
 import ModalPortal from "../components/Modal/Portal"; //모달 포탈
 import { Image } from "../elements/Index";
-import {useDispatch,useSelector } from "react-redux"
-import{ actionCreators as postActions } from "../redux/modules/post";
+import { useDispatch, useSelector } from "react-redux";
+import { actionCreators as postActions } from "../redux/modules/post";
 import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 import FooterMenu from "../shared/FooterMenu";
 const PostDetail = (props) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [modalOn, setModalOn] = React.useState(false);
-  const [post , setPost] = React.useState(null)
-  const token = localStorage.getItem("token")
-  const params = useParams()
-
+  const [post, setPost] = React.useState(null);
+  const token = localStorage.getItem("token");
+  const params = useParams();
 
   const openModal = (e) => {
     e.stopPropagation();
@@ -27,17 +26,33 @@ const PostDetail = (props) => {
     setModalOn(false);
   };
 
-  const [state, setState] = React.useState({
-        center: {
-          lat: 33.450701,
-          lng: 126.570667,
-        },
-        errMsg: null,
-        isLoading: true,
-      });
-    
+  const userId = useSelector((state) => state.user.userInfo.userId);
+  console.log(userId);
+  const postOwner = useSelector((state) => state.post.list.nearPosts);
+  console.log(postOwner);
 
-  React.useEffect(()=>{
+  const isMe = userId === postOwner ? true : false;
+  console.log(isMe);
+
+  // const deleteArticle = () => {
+  //   const result = window.confirm("정말 삭제하시겠습니까?");
+  //   if (result === true) {
+  //     dispatch(articleActions.deleteArticleDB(articleNumber));
+  //   } else {
+  //     return;
+  //   }
+  // };
+
+  const [state, setState] = React.useState({
+    center: {
+      lat: 33.450701,
+      lng: 126.570667,
+    },
+    errMsg: null,
+    isLoading: true,
+  });
+
+  React.useEffect(() => {
     if (navigator.geolocation) {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
       navigator.geolocation.getCurrentPosition(
@@ -74,13 +89,11 @@ const PostDetail = (props) => {
         authorization: `Bearer ${token}`,
       },
     }).then((response) => {
-   setPost(response.data.post)
+      setPost(response.data.post);
     });
-    
-  },[])
+  }, []);
 
-  
-  if(!post) return
+  if (!post) return;
   return (
     <>
       <Header onClick={closeModal}>
@@ -90,7 +103,7 @@ const PostDetail = (props) => {
       <Container onClick={closeModal}>
         <ProfileBox>
           <Image
-          margin="0px 15px 0px 0px"
+            margin="0px 15px 0px 0px"
             shape="circle"
             src={post.userImg}
             size={60}
@@ -100,33 +113,38 @@ const PostDetail = (props) => {
 
           <User>
             <Master>{post.nickName}</Master>
-            <div style={{color:"rgba(120, 120, 120, 1)"}}> {post.userGender}/{post.userAge}세</div>
+            <div style={{ color: "rgba(120, 120, 120, 1)" }}>
+              {" "}
+              {post.userGender}/{post.userAge}세
+            </div>
           </User>
         </ProfileBox>
 
-        <Card DetailCard center={state.center} {...post}/>
+        <Card DetailCard center={state.center} {...post} />
 
         <LiveBox>
-          <div style={{fontWeight:"700 bold"}}> 참여중인 운동 메이트 {post?.nowMember?.length}/{post?.maxMember} </div>
+          <div style={{ fontWeight: "700 bold" }}>
+            {" "}
+            참여중인 운동 메이트 {post?.nowMember?.length}/{post?.maxMember}{" "}
+          </div>
           <div className="otherProfile">
             {post?.nowMember?.map((m, i) => {
               return (
-               <div   key={m._id}>
-                <Image
-            
-              shape="circle"
-              src={m.memberImg}
-              size={40}
-              margin="3px"
-              _onClick={openModal}
-            />
-            <ModalPortal >{modalOn && <Modal />}</ModalPortal></div>
-              )
+                <div key={m._id}>
+                  <Image
+                    shape="circle"
+                    src={m.memberImg}
+                    size={40}
+                    margin="3px"
+                    _onClick={openModal}
+                  />
+                  <ModalPortal>{modalOn && <Modal />}</ModalPortal>
+                </div>
+              );
             })}
-       
           </div>
         </LiveBox>
-            <KakaoMap {...post}/>
+        <KakaoMap {...post} />
 
         <ButtonBox>
           <FooterMenu next text={"참여하기"}></FooterMenu>
@@ -155,9 +173,8 @@ const User = styled.div`
 `;
 
 const Master = styled.div`
-font-weight: bold;
-
-`
+  font-weight: bold;
+`;
 
 const Header = styled.div`
   top: 0;
