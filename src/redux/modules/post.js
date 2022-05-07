@@ -26,22 +26,6 @@ const initialState = {
     post: [],
   },
   review: [],
-
-  post_map: {
-    address: '',
-    spot: '',
-    latitude: '',
-    longitude: '',
-  },
-
-  post_contents: {
-    memberAge: '',
-    memberGender: '',
-    maxMember: '',
-    postCategory: '',
-    postTitle: '',
-    postDesc: '',
-  },
 };
 
 const addPostDB = (
@@ -100,7 +84,7 @@ const getMainDB = () => {
         method: 'get',
         url: `https://seuchidabackend.shop/api/postList`,
         headers: {
-          authorization:  `Bearer ${localStorage.getItem('token')}`,
+          authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       }).then((response) => {
         console.log(response);
