@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { BiDumbbell } from 'react-icons/bi';
 import { AiFillCalendar } from 'react-icons/ai';
 import { FaPen } from 'react-icons/fa';
+import { MdPlace } from 'react-icons/md';
 
 
 
@@ -95,7 +96,7 @@ let distance = getDistance(center.lat, center.lng, props.latitude, props.longitu
       <TextBoxList>
 
       <DescBox style={{margin:"0px 0px"}}>
-          <Desc>{props?.postDesc}</Desc>
+          <DetailDesc>{props?.postDesc}</DetailDesc>
         </DescBox>
         
         <Join>
@@ -110,18 +111,18 @@ let distance = getDistance(center.lat, center.lng, props.latitude, props.longitu
          
           <StatusIcon>
           
-            <span>콘</span> <StatusBox>{props?.spot}</StatusBox>
+            <span ><MdPlace color="#787878"/></span> <StatusBox>{props?.spot}</StatusBox>
           </StatusIcon>
           <StatusIcon>
           
-            <span>콘</span> <StatusBox>{props?.postCategory}</StatusBox>
+          <span><BiDumbbell color="#787878"/></span><StatusBox>{props?.postCategory}</StatusBox>
           </StatusIcon>
           <StatusIcon>
-            <span>콘</span>
+          <span><AiFillCalendar color="#787878"/></span>
             <StatusBox>{props?.datemate}</StatusBox>
           </StatusIcon>
           <StatusIcon>
-            <span>콘</span>
+          <span><FaPen color="#787878" size="14px"/></span>
             <StatusBox>
               {props?.memberGender}, {props?.memberAge}
             </StatusBox>        
@@ -225,6 +226,11 @@ const Desc = styled.div`
   font-size: 17px;
   padding-top: 4px;
   height: 60px;
+`;
+const DetailDesc = styled.div`
+  font-size: 17px;
+  padding-top: 4px;
+  min-height: 60px;
 `;
 const ListDesc = styled.div`
   font-size: 17px;
