@@ -20,7 +20,7 @@ const Login = (props) => {
           bg
           margin="131px 0px 8px 0px"
           _onClick={() => {
-            history.push("/main");
+            window.location.href = '/main';
           }}
         >
           <A href={KAKAO_AUTH_URL}>카카오 로그인</A>

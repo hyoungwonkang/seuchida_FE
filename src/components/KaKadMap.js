@@ -1,11 +1,12 @@
 import React from "react";
 import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
 import styled from "styled-components";
-
+import { useMap } from "react-kakao-maps-sdk";
 function KakaoMap(props) {
   const { MainMap, UserLoca, post} = props;
   const [isOpen, setIsOpen] = React.useState(false);
   const [selectedMarker, setSeleteMarker] = React.useState()
+
 
 
   if (MainMap) {
@@ -20,30 +21,7 @@ function KakaoMap(props) {
         ></MapMarker>
         {post?.map((position, index) => (
           <>
-            <MapMarker
-              key={position._id}
-              position={{ lat: position.latitude, lng: position.longitude }}
-              onClick={() => setIsOpen(true)}
-              name ={index}
-            />
-              
-              
-              
-              
-               {isOpen &&(
-              <CustomOverlayMap
-                position={{ lat: position.latitude, lng: position.longitude }}
-              >
-                <Box>
-                  {position.spot}
-                  <Close className="close" onClick={() => setIsOpen(false)}>
-                    X
-                  </Close>
-                </Box>
-              </CustomOverlayMap>
-            )}
-
-         
+              <EventMarkerContainer {...position}/>
           </>
         ))}
       </Map>
@@ -73,12 +51,7 @@ function KakaoMap(props) {
 
 
 
-  
-
-
-
-
-
+export default KakaoMap;
 
 const DetailMap = styled.div`
   padding: 0px 24px 130px 24px;
@@ -91,7 +64,32 @@ const Box = styled.div`
   background-color: white;
   width: 150px;
   height: 100px;
+  border-radius: 12px;
+  z-index: 30;
 `;
 const Close = styled.button``;
 
-export default KakaoMap;
+
+const EventMarkerContainer = ({latitude, longitude,  _id ,spot}) => {
+  const [isclick, setIsClicked] = React.useState(false)
+  return (
+    <>
+     <MapMarker 
+              key={_id}
+              position={{ lat:latitude, lng:longitude }}
+              onClick={() => setIsClicked(true)}  
+            />
+  <CustomOverlayMap
+      position={{lat:latitude, lng:longitude}} // 마커를 표시할 위치
+        
+    >         
+               { isclick&& <Box>
+                  {spot}
+                  <Close className="close" onClick={() => setIsClicked(false)}>
+                    X
+                  </Close>
+                </Box>}
+            
+    </CustomOverlayMap></>
+  )
+}

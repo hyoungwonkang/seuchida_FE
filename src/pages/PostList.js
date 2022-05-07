@@ -54,12 +54,15 @@ const PostList = () => {
 
   return (
     <>
+    
       <Header>
         <Gback>
-          <img src={gBack} />
+          <img src={gBack} onClick={()=>{
+            window.location.href = '/main';
+          }}/>
         </Gback>
         <HeadContents>
-          <div> 서울시 강남구</div>
+          <div> 여기여기 붙어라</div>
         </HeadContents>
       </Header>
 
@@ -89,18 +92,20 @@ const Header = styled.div`
   position: fixed;
   background-color: white;
   width: 100%;
-  height: 100px;
+  height: 40px;
   padding: 24px 0px 0px 24px;
-  border-bottom: 1px solid #e9e9e9; ;
+  border-bottom: 1px solid #e9e9e9; 
+  display: flex;
+  flex-direction: row;
 `;
 
 const Gback = styled.div``;
 const HeadContents = styled.div`
-  margin-top: 24px;
   font-size: 20px;
   font-weight: bold;
+  margin-left: 20px;
 `;
 
 const ListBox = styled.div`
-  margin: 120px 0px 80px 0px;
+  margin: 64px 0px 80px 0px;
 `;

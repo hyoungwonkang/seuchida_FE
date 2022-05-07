@@ -104,7 +104,7 @@ const getMainDB = () => {
         method: 'get',
         url: `https://seuchidabackend.shop/api/postList`,
         headers: {
-          authorization: `Bearer ${token}`,
+          authorization:  `Bearer ${localStorage.getItem('token')}`,
         },
       }).then((response) => {
         console.log(response);

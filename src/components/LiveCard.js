@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { Image } from "../elements/Index";
 import { history } from "../redux/configStore";
+import place from "../shared/ImgBox/place.png";
+
 const LiveCard = (props) => {
   const Livepost = props
   function getDistance(lat1, lon1, lat2, lon2, unit) {
@@ -48,15 +50,15 @@ const LiveCard = (props) => {
 
           {/* 카드 속 내용 */}
           <Location>
-            <Title style={{marginRight :"8px"}}>· {Livepost?.status===true? '모집중': '모집완료'}</Title>
-            <Title>제목 받아야됨</Title>
+            <Title style={{marginRight :"8px", color:"#FF6B52"}}>· {Livepost?.status===true? '모집중': '모집완료'}</Title>
+            <Title style={{width:"110px"}}>{Livepost?.postTitle}</Title>
           </Location>
 
           <Desc>{Livepost?.postDesc}</Desc>
 
           <LocaTime>
             <Location>
-              <SmallFont style={{marginRight:"3px"}}>마크</SmallFont>
+              <SmallFont style= {{marginRight:"8px"}}><img src={place}/></SmallFont>
               <SmallFont>{distance} km</SmallFont>
             </Location>
 
@@ -74,16 +76,17 @@ const Container = styled.section`
   
   max-width: 250px;
   width: 224px;
-  /* border: 1px solid rgba(208, 208, 208, 1); */
+  border: 2px solid #E6E6E6;
   height: 168px;
   margin: 15px;
-  margin-top: 30px;
+  margin-top: 65px;
   font-size: 14px;
   border-radius: 12px;
   background-color: white;
   /* justify-content: center; */
   align-items: center;
   display: flex;
+ 
 `;
 
 const Profile = styled.div`
@@ -94,7 +97,7 @@ const Profile = styled.div`
   z-index: 99;
   /* background-color: white; */
   /* margin-left: 60px; */
-  top: 0px;
+  top: 35px;
   /* background-image: url(${(props) => props.src}); */
   /* background-size: cover; */
   /* background-repeat: no-repeat; */
@@ -117,24 +120,38 @@ const Box = styled.div`
   margin-top:20px;
   padding: 20px;
   width: 100%;
+  
  
 `;
 
 const SmallFont = styled.div`
   color: #787878;
-  font-size: 12px;
+  font-size: 14px;
+
 `;
 
 const Title = styled.div`
   font-size: 16px;
   font-weight: 800;
   padding: 8px 0px;
+  overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+ 
 `;
 
 const Desc = styled.div`
   font-size: 14px;
-  min-width: 50px;
+  width: 180px;
   min-height: 40px;
+  overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* 라인수 */
+    -webkit-box-orient: vertical;
+    word-wrap:break-word; 
+    line-height: 1.4em;
+    height: 2.4em;
 `;
 
 const Line = styled.div`
