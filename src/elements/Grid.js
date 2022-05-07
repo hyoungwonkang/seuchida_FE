@@ -14,6 +14,7 @@ const Grid = (props) => {
     row,
     height,
     border,
+    border_bottom,
     br,
     brbottom,
     bottom,
@@ -33,6 +34,7 @@ const Grid = (props) => {
     _onClick: _onClick,
     height: height,
     border: border,
+    border_bottom,
     br: br,
     brbottom: brbottom,
     bottom: bottom,
@@ -83,6 +85,7 @@ const GridBox = styled.div`
   justify-content: ${(props) => props.justify};
   ${(props) => (props.center ? `text-align: center` : "")}
   border: ${(props) => props.border};
+  border-bottom: ${(props) => props.border_bottom};
   border-radius: ${(props) => props.br};
   ${(props) =>
     props.brbottom

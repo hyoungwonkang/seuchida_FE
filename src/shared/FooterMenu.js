@@ -4,15 +4,22 @@ import { history } from "../redux/configStore";
 import { Button } from "../elements/Index";
 
 const FooterMenu = (props) => {
-  // console.log(props);
   const { next } = props;
+  //다음 버튼
   if (next) {
     return (
       <Btn>
         <Button
           _onClick={() => {
-            history.push(props.path);
-            props.event();
+            if (props.path) {
+              history.push(props.path);
+            }
+            if (props.event) {
+              return props.event();
+            }
+            if (props.state) {
+              return props.state();
+            }
           }}
         >
           {props.text}

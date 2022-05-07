@@ -52,7 +52,7 @@ const kakaoLogin = (code) => {
         dispatch(logIn(decode_token, userInfo));
         console.log("로그인 확인");
         if (!userInfo.userInterest[0]) {
-          history.replace("/signuploca");
+          history.replace("/signupdone");
         } else {
           history.replace("/main"); //토큰 받았고 로그인됬으니 메인으로 전환합니다
         }
@@ -80,7 +80,7 @@ const signupDB = (formData) => {
     })
       .then((res) => {
         console.log("회원가입 성공");
-        history.push("/main");
+        window.location.href = "/done";
       })
       .catch((error) => {
         console.log("회원가입 실패", error);
@@ -121,10 +121,9 @@ const editUserDB = (formData) => {
       },
     })
       .then((res) => {
-        console.log(res);
         dispatch(editUser(formData));
         console.log("프로필 수정 성공");
-        history.push("/main");
+        window.location.href = "/mypage";
       })
       .catch((error) => {
         console.log("프로필 수정 실패", error);
@@ -140,19 +139,16 @@ export default handleActions(
         draft.token = action.payload.token;
         draft.userInfo = action.payload.user;
         draft.is_login = true;
-        console.log(draft.token);
-        console.log(draft.userInfo);
       }),
     [LOG_OUT]: (state, action) => produce(state, (draft) => {}),
     [GET_USER]: (state, action) =>
       produce(state, (draft) => {
         draft.is_login = true;
         draft.userInfo = action.payload.userInfo;
-        // console.log(action.payload.userInfo);
       }),
     [EDIT_USER]: (state, action) =>
       produce(state, (draft) => {
-        draft.userInfo = { ...draft.userInfo, ...action.payload.userInfo }; //갈아끼워줘라
+        draft.userInfo = { ...draft.userInfo, ...action.payload.userInfo };
       }),
   },
   initialState

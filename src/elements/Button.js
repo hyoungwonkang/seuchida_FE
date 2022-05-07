@@ -15,6 +15,7 @@ const Button = (props) => {
     right,
     bold,
     bg,
+    position,
   } = props;
 
   if (is_float) {
@@ -40,6 +41,7 @@ const Button = (props) => {
     bold: bold,
     right: right,
     bg: bg,
+    position: position,
   };
 
   return (
@@ -96,31 +98,20 @@ const FloatButton = styled.button`
   vertical-align: middle;
   border: none;
   border-radius: 50px;
-  /* &:hover {
-    box-shadow: 0px 0px 5px 0px gray;
-  }
-  font-family: "Cafe24Ohsquareair"; */
 `;
 
 const DeleteButton = styled.button`
   width: 40px;
   height: 20px;
-  background-color: #ffe05d;
-  color: #525e75;
+  background-color: gray;
+  color: white;
   box-sizing: border-box;
   font-size: 12px;
-  font-weight: 800;
-  position: fixed;
-  bottom: 50vh;
-  right: 16px;
+  position: absolute;
+  right: 15px;
   text-align: center;
   vertical-align: middle;
   border: none;
-  border-radius: 50x;
-  /* &:hover {
-    box-shadow: 0px 0px 5px 0px gray;
-  }
-  font-family: "Cafe24Ohsquareair"; */
 `;
 
 export default Button;

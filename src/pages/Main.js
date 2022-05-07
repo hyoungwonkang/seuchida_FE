@@ -1,11 +1,10 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Card, LCslider, RCslider, ECslider } from '../components/index';
-import FooterMenu from '../shared/FooterMenu';
-import { useSelector, useDispatch } from 'react-redux';
-import { actionCreators as postActions } from '../redux/modules/post';
-import { actionCreators as userActions } from '../redux/modules/user';
-import { history } from '../redux/configStore';
+import React from "react";
+import styled from "styled-components";
+import { Card, LCslider, RCslider, ECslider } from "../components/index";
+import FooterMenu from "../shared/FooterMenu";
+import { useSelector, useDispatch } from "react-redux";
+import { actionCreators as postActions } from "../redux/modules/post";
+import { history } from "../redux/configStore";
 
 const Main = () => {
   const catepost = useSelector((state) => state.post.list.caPost);
@@ -47,7 +46,7 @@ const Main = () => {
       // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
       setState((prev) => ({
         ...prev,
-        errMsg: 'geolocation을 사용할수 없어요..',
+        errMsg: "geolocation을 사용할수 없어요..",
         isLoading: false,
       }));
     }
@@ -125,7 +124,7 @@ const TopLive = styled.section`
 const WellcomeBox = styled.div`
   font-size: 24px;
   font-weight: 700;
-  padding: 40px 24px 40px 24px;
+  padding: 40px 24px;
 `;
 
 const Sports = styled.div`

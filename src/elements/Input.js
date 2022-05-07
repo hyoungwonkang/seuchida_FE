@@ -20,6 +20,7 @@ const Input = (props) => {
     height,
     wd,
     bg,
+    name,
   } = props;
 
   const styles = {
@@ -37,14 +38,15 @@ const Input = (props) => {
     value,
     wd,
     bg,
+    name,
   };
   //플레이스홀더, 라벨속성 지정가능, onChange:_onChange로 지정
   if (multiLine) {
     return (
-      <Grid>
+      <React.Fragment>
         {label && <Text margin="0px">{label}</Text>}
         <ElTextarea {...styles} rows={10}></ElTextarea>
-      </Grid>
+      </React.Fragment>
     );
   }
 
@@ -58,10 +60,8 @@ const Input = (props) => {
 
   return (
     <React.Fragment>
-      {/* <Grid> */}
       {label && <Text margin="0px">{label}</Text>}
       <ElInput {...styles} />
-      {/* </Grid> */}
     </React.Fragment>
   );
 };
@@ -80,12 +80,21 @@ Input.defaultProps = {
 };
 
 const ElTextarea = styled.textarea`
-  border: 1px solid #212121;
-  width: ${(props) => props.width};
+  border: none;
+  border-radius: 5px;
+  background: #ddd;
+  max-width: 390px;
+  width: 342px;
+  ${(
+    props //성별/나이 input 창
+  ) =>
+    props.wd ? `width: 213px; background: white; border: 1px solid #ddd;` : ""};
+  height: ${(props) => props.height};
   padding: 12px 4px;
   box-sizing: border-box;
   font-size: ${(props) => props.size};
   font-weight: ${(props) => props.bold};
+  resize: none;
 `;
 
 //기본 Input
@@ -104,6 +113,7 @@ const ElInput = styled.input`
   box-sizing: border-box;
   font-size: ${(props) => props.size};
   font-weight: ${(props) => props.bold};
+  name: ${(props) => props.name};
 `;
 
 const ElChatName = styled.input`
