@@ -18,7 +18,15 @@ const PostDone = () => {
       <Text margin='0px 0px 40px 132px' size='16px'>
         확인할 수 있어요
       </Text>
-      <FooterMenu next path='/main' text='확인' />
+      <Button
+        margin='0px 0px 0px 24px'
+        next
+        _onClick={() => {
+          history.push('/main');
+        }}
+        text='확인'
+      />
+      {/* <FooterMenu next path='/main' text='확인' /> */}
     </Grid>
   );
 };

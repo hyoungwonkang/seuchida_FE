@@ -41,13 +41,12 @@ const PostWrite_2 = (props) => {
   const genderChange = (e) => {
     setMemberGender(e.target.value);
   };
-  console.log(maxMember);
 
   //나이
   let [memberAge, setMemberAge] = useState('누구나');
-  const ageChange = (e) => {
-    setMemberAge(e.target.value);
-  };
+  // const ageChange = (e) => {
+  //   setMemberAge(e.target.value);
+  // };
 
   //'직접입력' 시 나이를 조합합니다.
   const [member, setMember] = useState({
