@@ -40,7 +40,7 @@ const FooterMenu = (props) => {
           }}
         >
           내주변
-        </Menu>
+        </Menu>``
         <Menu
           onClick={() => {
             history.push("/challenge");
