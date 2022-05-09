@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 import Image from "../elements/Image";
 const ReviewCard = (props) => {
-const  {review} = props
+const  {review,_onClick} = props
   return (
-    <Container>
+    <Container onClick={_onClick}>
      {/* top */}
       <Box>
       <ReviewImg src={review?.reviewImg} />

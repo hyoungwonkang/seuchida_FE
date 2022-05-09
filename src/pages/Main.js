@@ -75,7 +75,7 @@ const Main = () => {
 
         {/* 스친 운동 한줄평 */}
         <ReviewBox>
-          <TitleBox onClick={() => {window.location.href = '/reviewlist';}}>
+          <TitleBox onClick={() => {window.location.href = '/reviewlist/1';}}>
             <Title>함께한 스친들의 후기</Title> <Title>&gt;</Title>
           </TitleBox>
 

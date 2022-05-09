@@ -18,7 +18,9 @@ function RCslider (props) {
         <Slider {...settings} style={{padding:"0px 15px", height:"240px", }}>
          {review.map((review, index) =>{
             return (
-            <ReviewCard review ={review} key={review._id}></ReviewCard>
+            <ReviewCard review ={review} key={review._id} 
+            _onClick={() => {window.location.href = `/reviewlist/${review._id}`;}}
+            ></ReviewCard>
             
             )
           })} 

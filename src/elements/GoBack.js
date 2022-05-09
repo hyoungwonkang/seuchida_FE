@@ -5,12 +5,12 @@ import { Grid, Text } from './Index';
 
 const GoBack = (props) => {
 
-  if(props.Gback){
+  if(props.gback){
 
    return (
       <>
+
       <IoIosArrowBack
-        gback
         size={32}
         onClick={
           props._onClick

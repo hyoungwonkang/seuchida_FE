@@ -3,14 +3,14 @@
 import React from "react";
 import ModalPortal from "./Portal";
 import styled from "styled-components";
-import NameCard from "../../pages/MyPage";
 
-const Modal = () => {
+
+const Modal = (props) => {
+  console.log(props)
   return (
     <ModalPortal>
       <Background>
-        {/* <NameCard /> */}
-        <Content>모달창~</Content>
+        <Content>이걸 어쩔거니 ?</Content>
       </Background>
     </ModalPortal>
   );
@@ -23,7 +23,7 @@ export default Modal;
 const Background = styled.div`
   width: 100%;
   height: 80%;
-  max-width: 420px;
+  max-width: 390px;
   display: flex;
   align-items: center;
   justify-content: center;

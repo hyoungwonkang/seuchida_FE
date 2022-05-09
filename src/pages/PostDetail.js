@@ -6,6 +6,7 @@ import ModalPortal from "../components/Modal/Portal"; //모달 포탈
 import { Image } from "../elements/Index";
 import {useDispatch,useSelector } from "react-redux"
 import{ actionCreators as roomActions } from "../redux/modules/room";
+import{ actionCreators as userActions } from "../redux/modules/user";
 import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 import FooterMenu from "../shared/FooterMenu";
@@ -13,12 +14,12 @@ import GoBack from "../elements/GoBack";
 const PostDetail = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.userInfo)
   const [modalOn, setModalOn] = React.useState(false);
   const [post , setPost] = React.useState(null);
   const token = localStorage.getItem("token");
   const params = useParams();
-  console.log(post)
-
+  
   const openModal = (e) => {
     e.stopPropagation();
     setModalOn(true);
@@ -37,8 +38,15 @@ const PostDetail = (props) => {
         isLoading: true,
       });
     
+      function joinRoom() {
+        //
+        dispatch(roomActions.joinRoomDB(params.postId))
+        
+      
+      }
 
   React.useEffect(()=>{
+  
     if (navigator.geolocation) {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
       navigator.geolocation.getCurrentPosition(
@@ -77,11 +85,11 @@ const PostDetail = (props) => {
     }).then((response) => {
    setPost(response.data.post)
     });
-    
+    dispatch(userActions.isLoginDB());
   },[])
 
-  
   if(!post) return
+  const userCheck = post?.nowMember?.filter(u => u.memberId.includes(user.userId))
   return (
     <>
       <Header onClick={closeModal}>
@@ -128,13 +136,15 @@ const PostDetail = (props) => {
           </div>
         </LiveBox>
             <KakaoMap {...post}/>
-
+            {/* && userCheck[0]===false &&post.nowMember.length<=post.maxMember */}
       
       
-      
-        <ButtonBox>
-          <FooterMenu next text={"참여하기"}></FooterMenu>
-        </ButtonBox>
+      {post.status && userCheck[0]===undefined && post.nowMember.length<=post.maxMember?  <ButtonBox>      
+          <FooterMenu next text={"참여하기"} event={joinRoom} ></FooterMenu>
+        </ButtonBox> : <ButtonBox>      
+          <FooterMenu is_check text={"참여불가"} ></FooterMenu>
+        </ButtonBox> }
+       
       
       
       

@@ -86,7 +86,7 @@ let distance = getDistance(center.lat, center.lng, props.latitude, props.longitu
    <>
     <Container style={{border:"none"}} >
         <TitleBox style={{background:"white", borderDisplay:"none"}}>
-          <BoldTitle style={{fontSize:"20px"}}>
+          <BoldTitle style={{fontSize:"20px", color:"#FF6B52"}}>
             · {props?.status === true ? "모집중" : "모집완료"}
           </BoldTitle>
           <BoldTitle style={{fontSize:"20px"}}>{props?.postTitle}</BoldTitle>

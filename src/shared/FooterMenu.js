@@ -5,7 +5,7 @@ import { Button } from "../elements/Index";
 
 const FooterMenu = (props) => {
   // console.log(props);
-  const { next } = props;
+  const { next,is_check } = props;
   if (next) {
     return (
       <Btn>
@@ -16,6 +16,18 @@ const FooterMenu = (props) => {
             
           }}
           
+          margin={"12px 0px 0px 0px"}
+        >
+          {props.text}
+        </Button>
+      </Btn>
+    );
+  }
+  if (is_check) {
+    return (
+      <Btn>
+        <Button
+         is_delete
           margin={"12px 0px 0px 0px"}
         >
           {props.text}
@@ -40,7 +52,7 @@ const FooterMenu = (props) => {
           }}
         >
           내주변
-        </Menu>``
+        </Menu>
         <Menu
           onClick={() => {
             history.push("/challenge");
