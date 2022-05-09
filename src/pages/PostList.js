@@ -3,6 +3,7 @@ import { Card } from "../components/index";
 import styled from "styled-components";
 import FooterMenu from "../shared/FooterMenu";
 import gBack from "../shared/ImgBox/gBack.png";
+import GoBack from "../elements/GoBack";
 import { useSelector, useDispatch } from "react-redux";
 import post, { actionCreators as postActions } from "../redux/modules/post";
 import { history } from "../redux/configStore";
@@ -57,7 +58,7 @@ const PostList = () => {
     
       <Header>
         <Gback>
-          <img src={gBack} onClick={()=>{
+          <GoBack gback _onClick={()=>{
             window.location.href = '/main';
           }}/>
         </Gback>

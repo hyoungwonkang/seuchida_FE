@@ -4,10 +4,6 @@ import styled from "styled-components";
 import { useMap } from "react-kakao-maps-sdk";
 function KakaoMap(props) {
   const { MainMap, UserLoca, post} = props;
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [selectedMarker, setSeleteMarker] = React.useState()
-
-
 
   if (MainMap) {
     return (
@@ -59,13 +55,14 @@ const DetailMap = styled.div`
 
 const Box = styled.div`
   position: absolute;
-  top: -140px;
-  left: -70px;
+  top: -167px;
+  left: -80px;
   background-color: white;
-  width: 150px;
-  height: 100px;
+  width: 173px;
+  height: 126px;
   border-radius: 12px;
-  z-index: 30;
+  z-index: 9999;
+  box-shadow: 1px 1px 6px -2px;
 `;
 const Close = styled.button``;
 

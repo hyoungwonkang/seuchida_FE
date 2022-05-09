@@ -1,22 +1,23 @@
 import React from "react";
 import styled from "styled-components";
 import { Card, KakaoMap } from "../components/index";
-import gBack from "../shared/ImgBox/gBack.png";
 import Modal from "../components/Modal/Modal"; //모달 창
 import ModalPortal from "../components/Modal/Portal"; //모달 포탈
 import { Image } from "../elements/Index";
 import {useDispatch,useSelector } from "react-redux"
-import{ actionCreators as postActions } from "../redux/modules/post";
+import{ actionCreators as roomActions } from "../redux/modules/room";
 import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 import FooterMenu from "../shared/FooterMenu";
+import GoBack from "../elements/GoBack";
 const PostDetail = (props) => {
-  const dispatch = useDispatch()
+  const history = useHistory();
+  const dispatch = useDispatch();
   const [modalOn, setModalOn] = React.useState(false);
-  const [post , setPost] = React.useState(null)
-  const token = localStorage.getItem("token")
-  const params = useParams()
-
+  const [post , setPost] = React.useState(null);
+  const token = localStorage.getItem("token");
+  const params = useParams();
+  console.log(post)
 
   const openModal = (e) => {
     e.stopPropagation();
@@ -84,7 +85,7 @@ const PostDetail = (props) => {
   return (
     <>
       <Header onClick={closeModal}>
-        <img src={gBack} />
+       <GoBack  gback _onClick={()=> history.goBack()}/>
         {/* <h2>여기여기 붙어라</h2> */}
       </Header>
       <Container onClick={closeModal}>
@@ -128,9 +129,15 @@ const PostDetail = (props) => {
         </LiveBox>
             <KakaoMap {...post}/>
 
+      
+      
+      
         <ButtonBox>
           <FooterMenu next text={"참여하기"}></FooterMenu>
         </ButtonBox>
+      
+      
+      
       </Container>
     </>
   );

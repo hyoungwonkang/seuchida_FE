@@ -11,7 +11,6 @@ import { MdPlace } from 'react-icons/md';
 
 const Card =(props) => {
 const { MainCard, DetailCard, center, _onClick} = props
-
 function getDistance(lat1, lon1, lat2, lon2, unit) {
   if (lat1 === lat2 && lon1 === lon2) {
     return 0;
@@ -69,8 +68,10 @@ let distance = getDistance(center.lat, center.lng, props.latitude, props.longitu
               >
                 <ProfileBox>
                   {props?.nowMember.map((m, i) => {
-                    return <Profile ket={m.id}src={m.memberImg} key={m.memberId} />;
+                    
+                if(i<3) return <Profile key={i} src={m.memberImg} />;
                   })}
+                  {props.nowMember.length >3 ? <CountM>+{props.nowMember.length-3}</CountM>:null}
                 </ProfileBox>
                 <SmallFont>{distance} km 떨어짐 | 1분전</SmallFont>
               </Join>
@@ -82,6 +83,7 @@ let distance = getDistance(center.lat, center.lng, props.latitude, props.longitu
   }
 
  if(DetailCard) return (
+   <>
     <Container style={{border:"none"}} >
         <TitleBox style={{background:"white", borderDisplay:"none"}}>
           <BoldTitle style={{fontSize:"20px"}}>
@@ -133,7 +135,7 @@ let distance = getDistance(center.lat, center.lng, props.latitude, props.longitu
   
     
       </TextBoxList>
-    </Container>
+    </Container></>
   );
 
 
@@ -329,3 +331,10 @@ const SmallFont = styled.div`
   font-size: 12.5px;
   margin-top: 16px;
 `;
+
+const CountM = styled.span`
+margin-top: 10px;
+color: #787878;
+font-size: 14px;
+
+`

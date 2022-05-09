@@ -4,7 +4,24 @@ import { history } from '../redux/configStore';
 import { Grid, Text } from './Index';
 
 const GoBack = (props) => {
+
+  if(props.Gback){
+
+   return (
+      <>
+      <IoIosArrowBack
+        gback
+        size={32}
+        onClick={
+          props._onClick
+        }
+      /></>
+   )   
+  }
+  
   return (
+
+   <>
     <Grid row padding='20px'>
       <IoIosArrowBack
         size={32}
@@ -16,6 +33,8 @@ const GoBack = (props) => {
         {props.text}
       </Text>
     </Grid>
+</>
+
   );
 };
 

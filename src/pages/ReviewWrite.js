@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Grid, Image, Input, Text } from "../elements/Index";
-import GoBack from "../components/GoBack";
+import { Grid, Image, Input, Text , GoBack} from "../elements/Index";
 import FooterMenu from "../shared/FooterMenu";
 import styled from "styled-components";
 import { AiFillPlusCircle } from "react-icons/ai";

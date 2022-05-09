@@ -84,7 +84,7 @@ const Main = () => {
 
         {/* 여기여기 붙어라 */}
         <TitleBox onClick={() => {
-                    history.push(`/postlist`);
+                    window.location.href ='/postlist';
                   }}>
           <Title>여기여기 붙어라</Title>
           <Title>&gt;</Title>
