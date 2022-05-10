@@ -3,27 +3,17 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer"; //불변성관리
 import axios from "axios";
 
-
-
-const token = localStorage.getItem('token');
+const token = localStorage.getItem("token");
 //Actions
 const CHECK_IN = "CHECK_IN";
 
-
 //Action Creators
 
-const checkIn = createAction(CHECK_IN, (user) => ({user}));
-
-
+const checkIn = createAction(CHECK_IN, (user) => ({ user }));
 
 //initialState (default props 같은 것, 기본값)
 
-const initialState = {
-   
-}
-
-
-
+const initialState = {};
 
 //middleware
 
@@ -31,7 +21,7 @@ const joinRoomDB = (postId) => {
   return async function (dispatch, getState) {
     try {
       await axios({
-        method: 'post',
+        method: "post",
         url: `https://seuchidabackend.shop/api/postPush/${postId}`,
         headers: {
           authorization: `Bearer ${token}`,
@@ -39,8 +29,7 @@ const joinRoomDB = (postId) => {
       }).then((response) => {
         console.log(response);
         // dispatch(setPost(response.data));
-        window.location.href = `/postdetail/${postId}`
-      
+        window.location.href = `/postdetail/${postId}`;
       });
     } catch (err) {
       console.log(err);
@@ -48,21 +37,18 @@ const joinRoomDB = (postId) => {
   };
 };
 
-
 //reducer
-export default handleActions({
-    [CHECK_IN]: (state,action) => produce(state, (draft)=>{
-       
-    }),
-},initialState)
+export default handleActions(
+  {
+    [CHECK_IN]: (state, action) => produce(state, (draft) => {}),
+  },
+  initialState
+);
 
-
-// action creator export 
+// action creator export
 const actionCreators = {
-    checkIn,
-    joinRoomDB,
-
-
+  checkIn,
+  joinRoomDB,
 };
 
-export { actionCreators }
+export { actionCreators };

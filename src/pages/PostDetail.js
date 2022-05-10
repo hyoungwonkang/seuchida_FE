@@ -4,24 +4,40 @@ import { Card, KakaoMap } from "../components/index";
 import Modal from "../components/Modal/Modal"; //모달 창
 import ModalPortal from "../components/Modal/Portal"; //모달 포탈
 import { Image } from "../elements/Index";
-
-import {useDispatch,useSelector } from "react-redux"
-import{ actionCreators as roomActions } from "../redux/modules/room";
-import{ actionCreators as userActions } from "../redux/modules/user";
+import { actionCreators as mypageActions } from "../redux/modules/mypage";
+import { useDispatch, useSelector } from "react-redux";
+import { actionCreators as roomActions } from "../redux/modules/room";
+import { actionCreators as userActions } from "../redux/modules/user";
 import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 import FooterMenu from "../shared/FooterMenu";
 import GoBack from "../elements/GoBack";
 const PostDetail = (props) => {
-
   const history = useHistory();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.userInfo)
+  const user = useSelector((state) => state.user.userInfo);
   const [modalOn, setModalOn] = React.useState(false);
-  const [post , setPost] = React.useState(null);
+  const [post, setPost] = React.useState(null);
   const token = localStorage.getItem("token");
   const params = useParams();
-  
+
+  const userId = useSelector((state) => state.user.userInfo.userId);
+  const postOwner = useSelector((state) => state.mypage.myPost.userId);
+
+  const isMe = userId === postOwner ? true : false;
+
+  const postId = params.postId; //게시물 번호
+  console.log(postId);
+
+  const deleteone = (e) => {
+    const result = window.confirm("정말 삭제하시겠습니까?");
+    if (result === true) {
+      dispatch(mypageActions.deletePostDB(postId));
+    } else {
+      return;
+    }
+  };
+
   const openModal = (e) => {
     e.stopPropagation();
     setModalOn(true);
@@ -31,26 +47,21 @@ const PostDetail = (props) => {
     setModalOn(false);
   };
 
-
   const [state, setState] = React.useState({
-        center: {
-          lat: 33.450701,
-          lng: 126.570667,
-        },
-        errMsg: null,
-        isLoading: true,
-      });
-    
-      function joinRoom() {
-        //
-        dispatch(roomActions.joinRoomDB(params.postId))
-        
-      
-      }
+    center: {
+      lat: 33.450701,
+      lng: 126.570667,
+    },
+    errMsg: null,
+    isLoading: true,
+  });
 
-  React.useEffect(()=>{
-  
+  function joinRoom() {
+    //
+    dispatch(roomActions.joinRoomDB(params.postId));
+  }
 
+  React.useEffect(() => {
     if (navigator.geolocation) {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
       navigator.geolocation.getCurrentPosition(
@@ -91,15 +102,17 @@ const PostDetail = (props) => {
     });
 
     dispatch(userActions.isLoginDB());
-  },[])
+  }, []);
 
-  if(!post) return
-  const userCheck = post?.nowMember?.filter(u => u.memberId.includes(user.userId))
+  if (!post) return;
+  const userCheck = post?.nowMember?.filter((u) =>
+    u.memberId.includes(user.userId)
+  );
 
   return (
     <>
       <Header onClick={closeModal}>
-       <GoBack  gback _onClick={()=> history.goBack()}/>
+        <GoBack gback _onClick={() => history.goBack()} />
         {/* <h2>여기여기 붙어라</h2> */}
       </Header>
       <Container onClick={closeModal}>
@@ -111,7 +124,7 @@ const PostDetail = (props) => {
             size={60}
             _onClick={openModal}
           />
-          <ModalPortal>{modalOn && <Modal />}</ModalPortal>
+          <ModalPortal Profile>{modalOn && <Modal />}</ModalPortal>
 
           <User>
             <Master>{post.nickName}</Master>
@@ -122,7 +135,13 @@ const PostDetail = (props) => {
           </User>
         </ProfileBox>
 
-        <Card DetailCard center={state.center} {...post} />
+        <Card
+          DetailCard
+          center={state.center}
+          {...post}
+          isMe={isMe}
+          deleteone={deleteone}
+        />
 
         <LiveBox>
           <div style={{ fontWeight: "700 bold" }}>
@@ -147,20 +166,20 @@ const PostDetail = (props) => {
           </div>
         </LiveBox>
 
-            <KakaoMap {...post}/>
-            {/* && userCheck[0]===false &&post.nowMember.length<=post.maxMember */}
-      
-      
-      {post.status && userCheck[0]===undefined && post.nowMember.length<=post.maxMember?  <ButtonBox>      
-          <FooterMenu next text={"참여하기"} event={joinRoom} ></FooterMenu>
-        </ButtonBox> : <ButtonBox>      
-          <FooterMenu is_check text={"참여불가"} ></FooterMenu>
-        </ButtonBox> }
-       
-      
-      
-      
+        <KakaoMap {...post} />
+        {/* && userCheck[0]===false &&post.nowMember.length<=post.maxMember */}
 
+        {post.status &&
+        userCheck[0] === undefined &&
+        post.nowMember.length <= post.maxMember ? (
+          <ButtonBox>
+            <FooterMenu next text={"참여하기"} event={joinRoom}></FooterMenu>
+          </ButtonBox>
+        ) : (
+          <ButtonBox>
+            <FooterMenu is_check text={"참여불가"}></FooterMenu>
+          </ButtonBox>
+        )}
       </Container>
     </>
   );

@@ -37,11 +37,12 @@ const Button = (props) => {
   if (is_delete) {
     return (
       <React.Fragment>
-        <DeleteButton {...styles} onClick={_onClick}>{text ? text : children}</DeleteButton>
+        <DeleteButton {...styles} onClick={_onClick}>
+          {text ? text : children}
+        </DeleteButton>
       </React.Fragment>
     );
   }
-
 
   return (
     <React.Fragment>
@@ -67,7 +68,7 @@ Button.defaultProps = {
 const ElButton = styled.button`
   width: 342px;
   height: 54px;
-  background: #5796F7;
+  background: #5796f7;
   ${(props) => (props.bg ? `background: #FDE333` : "")};
   color: white;
   font-weight: bold;
@@ -100,10 +101,9 @@ const FloatButton = styled.button`
 `;
 
 const DeleteButton = styled.button`
-
   width: 342px;
   height: 54px;
-  background: #C4C4C4;
+  background: #c4c4c4;
   ${(props) => (props.bg ? `background: #FDE333` : "")};
   color: white;
   font-weight: bold;
@@ -112,12 +112,10 @@ const DeleteButton = styled.button`
   border: none;
   border-radius: 5px;
   ${(props) => (props.margin ? `margin: ${props.margin};` : "")}
-  ${(props) => (props.right ? `float: right` : "")}
-  /* &:hover {
+  ${(props) => (props.right ? `float: right` : "")} /* &:hover {
     box-shadow: 0px 0px 5px 0px gray;
   }
   font-family: "Cafe24Ohsquareair"; */
-
 `;
 
 export default Button;

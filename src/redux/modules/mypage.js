@@ -24,7 +24,7 @@ const myReviewList = createAction(MY_REVIEW, (myReview) => ({
 const addReview = createAction(ADD_REVIEW, (review) => ({
   review,
 }));
-const deletePost = createAction(DELETE_POST, (post) => ({ post }));
+const deletePost = createAction(DELETE_POST, (postId) => ({ postId }));
 
 //initialState (default props 같은 것, 기본값)
 const initialState = {
@@ -37,8 +37,8 @@ const initialState = {
 
 //myexercise
 const myExerciseDB = () => {
-  return (dispatch, getState, { history }) => {
-    axios({
+  return async (dispatch, getState, { history }) => {
+    await axios({
       method: "get",
       url: "https://seuchidabackend.shop/api/myPage/myExercise",
       headers: {
@@ -47,7 +47,6 @@ const myExerciseDB = () => {
       },
     })
       .then((res) => {
-        console.log(res);
         const myExercise = res.data;
         dispatch(myExList(myExercise));
       })
@@ -59,8 +58,8 @@ const myExerciseDB = () => {
 
 //mypost
 const myPostDB = () => {
-  return (dispatch, getState, { history }) => {
-    axios({
+  return async (dispatch, getState, { history }) => {
+    await axios({
       method: "get",
       url: "https://seuchidabackend.shop/api/myPage/post",
       headers: {
@@ -69,9 +68,7 @@ const myPostDB = () => {
       },
     })
       .then((res) => {
-        console.log(res);
         const myPost = res.data.myPost;
-        console.log(myPost);
         dispatch(myPostList(myPost));
       })
       .catch((err) => {
@@ -82,8 +79,8 @@ const myPostDB = () => {
 
 //myreview
 const myReviewDB = () => {
-  return (dispatch, getState, { history }) => {
-    axios({
+  return async (dispatch, getState, { history }) => {
+    await axios({
       method: "get",
       url: "https://seuchidabackend.shop/api/myPage/myReview",
       headers: {
@@ -92,7 +89,6 @@ const myReviewDB = () => {
       },
     })
       .then((res) => {
-        console.log(res);
         const myReview = res.data.myPost;
         dispatch(myReviewList(myReview));
       })
@@ -105,8 +101,8 @@ const myReviewDB = () => {
 //addreview
 const addReviewDB = (formData, postId) => {
   //reviewImg. content
-  return (dispatch, getState, { history }) => {
-    axios({
+  return async (dispatch, getState, { history }) => {
+    await axios({
       method: "post",
       url: `https://seuchidabackend.shop/api/review/${postId}`,
       data: formData,
@@ -116,7 +112,6 @@ const addReviewDB = (formData, postId) => {
       },
     })
       .then((res) => {
-        console.log(res);
         const review = res.data;
         dispatch(addReview(review));
       })
@@ -128,21 +123,23 @@ const addReviewDB = (formData, postId) => {
 
 //deletePost
 const deletePostDB = (postId) => {
+  console.log(postId);
   return async function (dispatch, getState, { history }) {
     await axios({
       method: "delete",
-      url: `https://seuchidabackend.shop/api/postDelete/:${postId}`,
+      url: `https://seuchidabackend.shop/api/postDelete/${postId}`,
+      data: { postId },
       headers: {
-        Authorization: `Bearer${localStorage.getItem("token")}`,
+        "Content-Type": `multipart/form-data;`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     })
       .then((res) => {
-        console.log(res);
         dispatch(deletePost(postId));
         history.replace("/mypage");
       })
       .catch((err) => {
-        console.log(err);
+        console.log("에러발생", err);
       });
   };
 };
@@ -153,27 +150,24 @@ export default handleActions(
     [MY_EXERCISE]: (state, action) =>
       produce(state, (draft) => {
         draft.myExercise = action.payload.myExercise;
-        // console.log(action.payload.userInfo);
       }),
     [MY_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.myPost = action.payload.myPost;
-        // console.log(action.payload.userInfo);
       }),
     [MY_REVIEW]: (state, action) =>
       produce(state, (draft) => {
         draft.myReview = action.payload.myReview;
-        // console.log(action.payload.userInfo);
       }),
-    [ADD_REVIEW]: (state, action) =>
-      produce(state, (draft) => {
-        draft.myPost.push(action.payload.review);
-        // console.log(action.payload.userInfo);
-      }),
+    // [ADD_REVIEW]: (state, action) =>
+    //   produce(state, (draft) => {
+    //     draft.myPost.push(action.payload.review);
+    //     // console.log(action.payload.userInfo);
+    //   }),
     [DELETE_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.list = draft.list.filter(
-          (p) => p.postId !== action.payload.postId
+        draft.myPost = draft.myPost.filter(
+          (p) => p._id !== action.payload.postId
         );
       }),
   },

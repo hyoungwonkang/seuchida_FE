@@ -9,18 +9,17 @@ function LCslider(props) {
   const post = props.catepost;
 
   const settings = {
-    className: "slider variable-width",
-    // className: "center",
+    className: "center",
     centerMode: true,
     infinite: true,
-    // centerPadding: "0px",
+    centerPadding: "0px",
     slidesToShow: 1,
     slidesToScroll: 1,
     variableWidth: true,
   };
   return (
     <div>
-      <Slider {...settings} style={{ height: "270px" }}>
+      <Sliders {...settings} style={{ height: "270px" }}>
         {post?.map((p, i) => {
           if (i < 6)
             return (
@@ -51,15 +50,15 @@ function LCslider(props) {
           <LiveCard>
             <h3>6</h3>
           </LiveCard> */}
-      </Slider>
+      </Sliders>
     </div>
   );
 }
 
 export default LCslider;
 
-// const Sliders = styled(Slider)`
-//   .slick-slide.slick-center {
-//     transform: scale(1.1);
-//   }
-// `;
+const Sliders = styled(Slider)`
+  .slick-slide.slick-center {
+    transform: scale(1.1);
+  }
+`;

@@ -21,6 +21,7 @@ const Grid = (props) => {
     right,
     position,
     justify,
+    isFlex_end,
   } = props;
 
   const styles = {
@@ -41,6 +42,7 @@ const Grid = (props) => {
     right: right,
     position: position,
     justify: justify,
+    isFlex_end: isFlex_end,
   };
 
   return (
@@ -66,6 +68,7 @@ Grid.defaultProps = {
   bottom: false,
   right: false,
   position: false,
+  isFlex_end: false,
 };
 
 const GridBox = styled.div`
@@ -94,6 +97,10 @@ const GridBox = styled.div`
   ${(props) => (props.bottom ? `bottom: 0px` : "")}
   ${(props) => (props.right ? `right: 0px` : "")}
   ${(props) => (props.position ? `position: fixed` : "")}
+  ${(props) =>
+    props.isFlex_end
+      ? `display: flex; align-items: center; justify-content: end;`
+      : null}
 `;
 
 export default Grid;

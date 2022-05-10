@@ -4,19 +4,22 @@ import { history } from "../redux/configStore";
 import { Button } from "../elements/Index";
 
 const FooterMenu = (props) => {
-  const { next,is_check } = props;
+  const { next, is_check } = props;
 
   if (next) {
     return (
       <Btn>
         <Button
           _onClick={() => {
+            //페이지 이동
             if (props.path) {
               history.push(props.path);
             }
+            //액션 실행
             if (props.event) {
               return props.event();
             }
+            //유효성 검사 실행
             if (props.state) {
               return props.state();
             }
@@ -31,10 +34,7 @@ const FooterMenu = (props) => {
   if (is_check) {
     return (
       <Btn>
-        <Button
-         is_delete
-          margin={"12px 0px 0px 0px"}
-        >
+        <Button is_delete margin={"12px 0px 0px 0px"}>
           {props.text}
         </Button>
       </Btn>

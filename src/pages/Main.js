@@ -21,7 +21,6 @@ const Main = () => {
     errMsg: null,
     isLoading: true,
   });
-  console.log(catepost);
   React.useEffect(() => {
     if (navigator.geolocation) {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
@@ -54,7 +53,6 @@ const Main = () => {
     }
     dispatch(userActions.isLoginDB());
     dispatch(postActions.getMainDB());
-    // dispatch(userActions.getUser(state.state))
   }, []);
 
   return (
@@ -75,9 +73,11 @@ const Main = () => {
 
         {/* 스친 운동 한줄평 */}
         <ReviewBox>
-
-          <TitleBox onClick={() => {window.location.href = '/reviewlist/1';}}>
-
+          <TitleBox
+            onClick={() => {
+              window.location.href = "/reviewlist/1";
+            }}
+          >
             <Title>함께한 스친들의 후기</Title> <Title>&gt;</Title>
           </TitleBox>
 
@@ -86,10 +86,11 @@ const Main = () => {
 
         {/* 여기여기 붙어라 */}
 
-        <TitleBox onClick={() => {
-                    window.location.href ='/postlist';
-                  }}>
-
+        <TitleBox
+          onClick={() => {
+            window.location.href = "/postlist";
+          }}
+        >
           <Title>여기여기 붙어라</Title>
           <Title>&gt;</Title>
         </TitleBox>

@@ -80,7 +80,7 @@ const signupDB = (formData) => {
     })
       .then((res) => {
         console.log("회원가입 성공");
-        window.location.href = "/done";
+        history.replace("/done");
       })
       .catch((error) => {
         console.log("회원가입 실패", error);
@@ -110,8 +110,8 @@ const isLoginDB = () => {
 
 //editProfile
 const editUserDB = (formData) => {
-  return function (dispatch, getState, { history }) {
-    axios({
+  return async function (dispatch, getState, { history }) {
+    await axios({
       method: "post",
       url: "https://seuchidabackend.shop/api/myPage/update", //주소확인필요
       data: formData,
@@ -123,7 +123,7 @@ const editUserDB = (formData) => {
       .then((res) => {
         dispatch(editUser(formData));
         console.log("프로필 수정 성공");
-        window.location.href = "/mypage";
+        history.replace("/editdone");
       })
       .catch((error) => {
         console.log("프로필 수정 실패", error);

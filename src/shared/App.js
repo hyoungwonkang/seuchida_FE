@@ -16,6 +16,7 @@ import {
   Map,
   ReviewList,
   Done,
+  EditDone,
   PostCategory,
   PostWrite_1,
   PostWrite_2,
@@ -26,15 +27,15 @@ import {
   MyPost,
   MyReview,
   ReviewWrite,
+  ChatRoom,
 } from "../pages/Index";
-import ReviewCardD from "../components/ReviewCardD";
 
 function App() {
   return (
     <>
       <Container>
         <ConnectedRouter history={history}>
-          <Route path="/login" exact component={Login} />
+          <Route path="/" exact component={Login} />
           <Route path="/main" exact component={Main} />
           <Route path="/oauth/callback/kakao" component={Redirect} />
           <Route path="/signupdone" exact component={SignupDone} />
@@ -48,15 +49,16 @@ function App() {
           <Route path="/mypost" exact component={MyPost} />
           <Route path="/myreview" exact component={MyReview} />
           <Route path="/map" exact component={Map} />
-          <Route path="/reviewcardD" exact component={ReviewCardD} />
           <Route path="/category" exact component={Category} />
           <Route path="/done" exact component={Done} />
+          <Route path="/editdone" exact component={EditDone} />
           <Route path="/postcategory" exact component={PostCategory} />
           <Route path="/postwrite1" exact component={PostWrite_1} />
           <Route path="/postwrite2" exact component={PostWrite_2} />
           <Route path="/postwrite3" exact component={PostWrite_3} />
           <Route path="/postwrite4" exact component={PostWrite_4} />
           <Route path="/postdone" exact component={PostDone} />
+          <Route path="/chat" exact component={ChatRoom} />
         </ConnectedRouter>
       </Container>
     </>

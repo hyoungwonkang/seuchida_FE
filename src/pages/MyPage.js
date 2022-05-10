@@ -22,10 +22,22 @@ const NameCard = () => {
   }, []);
 
   const userInfo = useSelector((state) => state.user.userInfo);
-  // console.log(userInfo);
+  const myReview = useSelector((state) => state.mypage.myReview);
+  const len = myReview.length;
+
+  //유저 등급
+  const medal = [
+    { count: 0, md: "" },
+    { count: 10, md: "🏅" },
+    { count: 20, md: "🥉" },
+    { count: 30, md: "🥈" },
+    { count: 40, md: "🥇" },
+    { count: 50, md: "🏆" },
+  ];
 
   return (
-    <Grid column height="304px" brbottom margin="0px" bg="white">
+    <Grid column height="auto" brbottom margin="0px" bg="white">
+      {/* 프로필 수정, 알람 */}
       <Grid row height="auto" margin="20px 0px 0px 0px" justify="right">
         <BsFillBellFill size={24} style={{ marginRight: 8 }} />
         <AiFillSetting
@@ -35,27 +47,48 @@ const NameCard = () => {
         />
       </Grid>
 
+      {/* 프로필이미지 */}
       <Image
         shape="circle"
         size={60}
         src={userInfo.userImg}
         margin="19px 0px 8px 0px"
       />
-      <Text size="24px" margin="0px">
-        🥇{userInfo.nickName}
+
+      {/* 유저 닉네임 */}
+      <Text size="24px" margin="0px" color="#323232">
+        {/* {medal.map((v, i) => {
+          len === 13 ? v.md : "";
+        })} */}
+
+        {len >= 50
+          ? "🏆"
+          : len >= 40
+          ? "🥇"
+          : len >= 30
+          ? "🥈"
+          : len >= 20
+          ? "🥉"
+          : len >= 10
+          ? "🏅"
+          : ""}
+
+        {userInfo.nickName}
       </Text>
 
+      {/* 유저 관심사 */}
       <Grid row height="auto" margin="8px 0px 16px 0px" justify="center">
         {userInfo.userInterest?.map((v, i) => {
           return (
-            <Text br margin="0px 5px" key={v + i}>
+            <Text br margin="0px 5px" key={v + i} color="#000000">
               {v}
             </Text>
           );
         })}
       </Grid>
 
-      <Text width="302px" color="gray" margin="0px 0px 45px 0px">
+      {/* 유저 소개글 */}
+      <Text width="302px" color="#505050" margin="0px 0px 45px 0px">
         {userInfo.userContent}
       </Text>
     </Grid>
@@ -63,9 +96,8 @@ const NameCard = () => {
 };
 
 const MyPage = () => {
-  const userInfo = useSelector((state) => state.user.userInfo);
-  const myReviewcnt = useSelector((state) => state.mypage.myReview);
-  // console.log(myReviewcnt);
+  const myReview = useSelector((state) => state.mypage.myReview);
+  const len = myReview.length;
 
   const Grade = [
     { key: 0, grade: "Iron" },
@@ -76,15 +108,20 @@ const MyPage = () => {
     { key: 50, grade: "Diamond" },
   ];
 
-  // const count = [10, 20, 30, 40, 50];
+  const levelUp = [10, 20, 30, 40, 50];
 
-  if (myReviewcnt?.length === 10 || myReviewcnt?.length === 20) {
+  if (
+    len?.length === 10 ||
+    len?.length === 20 ||
+    len?.length === 30 ||
+    len?.length === 40
+  ) {
     window.alert("레벨업 했습니다!");
   }
 
   return (
     <>
-      <Grid bg="#F6F6F6" height="950px">
+      <Grid bg="#0ED88B" height="950px">
         <Grid height="auto">
           <NameCard />
           <Grid height="96px" column margin="auto">
@@ -92,7 +129,7 @@ const MyPage = () => {
               size="16px"
               margin="30px 0px 0px 0px"
               width="342px"
-              color="gray"
+              color="#FFFFFF"
             >
               {/* {Grade.map((v, i) => {
                 return myReviewcnt.length >= v.key &&
@@ -100,31 +137,31 @@ const MyPage = () => {
                   ? v.grade
                   : "";
               })} */}
-              {myReviewcnt.length >= 40
+              {len >= 40
                 ? Grade[5].grade
-                : myReviewcnt?.length >= 30
+                : len >= 30
                 ? Grade[4].grade
-                : myReviewcnt.length >= 20
+                : len >= 20
                 ? Grade[3].grade
-                : myReviewcnt.length >= 10
+                : len >= 10
                 ? Grade[2].grade
                 : Grade[1].grade}
               레벨까지
               {10 -
-                (myReviewcnt.length >= 40
-                  ? myReviewcnt.length - 40
-                  : myReviewcnt.length >= 30
-                  ? myReviewcnt.length - 30
-                  : myReviewcnt.length >= 20
-                  ? myReviewcnt.length - 20
-                  : myReviewcnt.length >= 10
-                  ? myReviewcnt.length - 10
-                  : myReviewcnt.length)}
+                (len >= 40
+                  ? len - 40
+                  : len >= 30
+                  ? len - 30
+                  : len >= 20
+                  ? len - 20
+                  : len >= 10
+                  ? len - 10
+                  : len)}
               회
             </Text>
 
             <Grid
-              bg="#ddd"
+              bg="#FFFFFF"
               height="12px"
               width="342px"
               margin="0px 0px 30px 0px"
@@ -132,42 +169,43 @@ const MyPage = () => {
             >
               <Highlight
                 width={
-                  myReviewcnt.length >= 40
-                    ? ((myReviewcnt.length - 40) / 10) * 100 + "%"
-                    : myReviewcnt.length >= 30
-                    ? ((myReviewcnt.length - 30) / 10) * 100 + "%"
-                    : myReviewcnt.length >= 20
-                    ? ((myReviewcnt.length - 20) / 10) * 100 + "%"
-                    : myReviewcnt.length >= 10
-                    ? ((myReviewcnt.length - 10) / 10) * 100 + "%"
-                    : (myReviewcnt.length / 10) * 100 + "%"
+                  len >= 40
+                    ? ((len - 40) / 10) * 100 + "%"
+                    : len >= 30
+                    ? ((len - 30) / 10) * 100 + "%"
+                    : len >= 20
+                    ? ((len - 20) / 10) * 100 + "%"
+                    : len >= 10
+                    ? ((len - 10) / 10) * 100 + "%"
+                    : (len / 10) * 100 + "%"
                 }
               />
               <Text
                 size="16px"
                 margin="0px 0px 0px 310px"
                 width="342px"
-                color="gray"
+                color="#FFFFFF"
               >
-                {myReviewcnt.length >= 40
-                  ? myReviewcnt.length - 40
-                  : myReviewcnt.length >= 30
-                  ? myReviewcnt.length - 30
-                  : myReviewcnt.length >= 20
-                  ? myReviewcnt.length - 20
-                  : myReviewcnt.length >= 10
-                  ? myReviewcnt.length - 10
-                  : myReviewcnt.length}
+                {len >= 40
+                  ? len - 40
+                  : len >= 30
+                  ? len - 30
+                  : len >= 20
+                  ? len - 20
+                  : len >= 10
+                  ? len - 10
+                  : len}
                 /10
               </Text>
             </Grid>
           </Grid>
 
           <Grid padding="10px 24px" margin="0px 10px 0px 0px">
-            <Text size="16px">
-              <RiBarChartFill /> {""}
+            <Text size="16px" color="#FFFFFF">
+              <RiBarChartFill color="#FFFFFF" /> {""}
               운동 후기 남기고 스친 레벨 올리자!
             </Text>
+            {/* 내가 참여한 운동 => 추후 BE와 연결시 변동 예정*/}
             <ECslider />
           </Grid>
         </Grid>
@@ -222,7 +260,7 @@ const MyPage = () => {
 export default MyPage;
 
 const Highlight = styled.div`
-  background: black;
+  background: #ffe926;
   transition: 1s width; //몇초동안 뭐를(생략하면 모든것을 바꿈)
   width: ${(props) => props.width};
   height: 12px;
