@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Button, Text, Grid } from '../elements/Index';
-import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
-import FooterMenu from '../shared/FooterMenu';
-import { FaMapMarkerAlt } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from "react";
+import { Button, Text, Grid } from "../elements/Index";
+import { useHistory } from "react-router-dom";
+import styled from "styled-components";
+import FooterMenu from "../shared/FooterMenu";
+import { FaMapMarkerAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 // 지도에서 위치찍어서 포스트 올리기!
 const PostWrite_4 = (props) => {
@@ -45,8 +45,8 @@ const PostWrite_4 = (props) => {
   });
 
   // 지도 검색 기능
-  const [inputText, setInputText] = useState('');
-  const [searchPlace, setSearchPlace] = useState('');
+  const [inputText, setInputText] = useState("");
+  const [searchPlace, setSearchPlace] = useState("");
 
   const onChange = (e) => {
     setInputText(e.target.value);
@@ -72,7 +72,7 @@ const PostWrite_4 = (props) => {
         isLoading: false,
       }));
 
-      const mapContainer = document.getElementById('map'), // 지도를 표시할 div
+      const mapContainer = document.getElementById("map"), // 지도를 표시할 div
         mapOption = {
           center: new kakao.maps.LatLng(lat, lng), // 지도의 중심좌표
           level: 3, // 지도의 확대 레벨
@@ -91,21 +91,21 @@ const PostWrite_4 = (props) => {
         infowindow = new kakao.maps.InfoWindow({ zindex: 1 }); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
 
       // 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
-      kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
+      kakao.maps.event.addListener(map, "click", function (mouseEvent) {
         searchDetailAddrFromCoords(
           mouseEvent.latLng,
           function (result, status) {
             if (status === kakao.maps.services.Status.OK) {
               let detailAddr = !!result[0].road_address
-                ? '<div>도로명주소 : ' +
+                ? "<div>도로명주소 : " +
                   result[0].road_address.address_name +
-                  '</div>'
-                : '';
+                  "</div>"
+                : "";
               detailAddr +=
-                '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
+                "<div>지번 주소 : " + result[0].address.address_name + "</div>";
               let home =
                 result[0].address.region_1depth_name +
-                ' ' +
+                " " +
                 result[0].address.region_2depth_name;
               let town = result[0].road_address?.building_name
                 ? result[0].road_address.building_name
@@ -115,7 +115,7 @@ const PostWrite_4 = (props) => {
                 '<div class="bAddr" style="padding:5px;font-size:12px;>' +
                 '<span class="title">약속 장소</span>' +
                 detailAddr +
-                '</div>';
+                "</div>";
               // 마커를 클릭한 위치에 표시합니다
               let la = mouseEvent.latLng.Ma;
               let lo = mouseEvent.latLng.La;
@@ -130,7 +130,9 @@ const PostWrite_4 = (props) => {
               setLatitude(la);
               setLongitude(lo);
             }
-          }
+          },
+
+          console.log(mouseEvent.latLng)
         );
       });
 
@@ -169,18 +171,18 @@ const PostWrite_4 = (props) => {
         });
 
         // 마커에 클릭이벤트를 등록합니다
-        kakao.maps.event.addListener(marker_search, 'click', function () {
+        kakao.maps.event.addListener(marker_search, "click", function () {
           // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
           infowindow_search.setContent(
             '<div style="padding:5px;font-size:12px;">' +
               place.place_name +
-              '</div>' +
+              "</div>" +
               '<div style="padding:5px;font-size:12px;">도로명주소 : ' +
               place.road_address_name +
-              '</div>' +
+              "</div>" +
               '<div style="padding:5px;font-size:12px;">지번 주소 : ' +
               place.address_name +
-              '</div>'
+              "</div>"
           );
           infowindow_search.open(map, marker_search);
           setSearchAddress(place.address_name);
@@ -198,7 +200,7 @@ const PostWrite_4 = (props) => {
             }
           }
 
-          kakao.maps.event.addListener(marker, 'click', function () {
+          kakao.maps.event.addListener(marker, "click", function () {
             closeInfoWindow();
             infowindow.open(map, marker); //인포윈도우 열기
           });
@@ -212,7 +214,7 @@ const PostWrite_4 = (props) => {
             }
           }
 
-          kakao.maps.event.addListener(marker_search, 'click', function () {
+          kakao.maps.event.addListener(marker_search, "click", function () {
             closeInfoWindow_2();
             // infowindow_search.open(map, marker_search); //인포윈도우 열기
           });
@@ -220,7 +222,7 @@ const PostWrite_4 = (props) => {
       }
 
       // 중심 좌표나 확대 수준이 변경됐을 때 지도 중심 좌표에 대한 주소 정보를 표시하도록 이벤트를 등록합니다
-      kakao.maps.event.addListener(map, 'idle', function () {
+      kakao.maps.event.addListener(map, "idle", function () {
         searchAddrFromCoords(map.getCenter(), displayCenterInfo);
       });
 
@@ -237,7 +239,7 @@ const PostWrite_4 = (props) => {
       // 지도 좌측상단에 지도 중심좌표에 대한 주소정보를 표출하는 함수입니다
       function displayCenterInfo(result, status) {
         if (status === kakao.maps.services.Status.OK) {
-          const infoDiv = document.getElementById('centerAddr');
+          const infoDiv = document.getElementById("centerAddr");
         }
       }
     });
@@ -267,42 +269,42 @@ const PostWrite_4 = (props) => {
   return (
     <Grid>
       {/* 검색 */}
-      <form className='inputForm' onSubmit={handleSubmit}>
+      <form className="inputForm" onSubmit={handleSubmit}>
         <input
-          placeholder='Search Place...'
+          placeholder="Search Place..."
           onChange={onChange}
           value={inputText}
         />
-        <button type='submit'>검색</button>
+        <button type="submit">검색</button>
       </form>
       <Grid
         row
-        margin='12px 0px'
-        height='auto'
-        padding='12px 24px 12px 0px'
-        justify='space-between'
+        margin="12px 0px"
+        height="auto"
+        padding="12px 24px 12px 0px"
+        justify="space-between"
       >
-        {' '}
-        <Grid row margin='0px 0px 0px 24px'>
+        {" "}
+        <Grid row margin="0px 0px 0px 24px">
           <FaMapMarkerAlt />
-          <Text margin='0px 12px' size='16px'>
+          <Text margin="0px 12px" size="16px">
             현재위치
           </Text>
         </Grid>
         {spot}
       </Grid>
       <div
-        id='map'
+        id="map"
         // center={state.center}
         style={{
-          width: '100%',
-          height: '500px',
-          margin: '20px 0px',
+          width: "100%",
+          height: "500px",
+          margin: "20px 0px",
         }}
       ></div>
       <Link
         to={{
-          pathname: '/postwrite3',
+          pathname: "/postwrite3",
           state: {
             maxMember,
             memberAge,
@@ -317,7 +319,7 @@ const PostWrite_4 = (props) => {
           },
         }}
       >
-        <FooterMenu next path='/postwrite3' text='확인' />
+        <FooterMenu next path="/postwrite3" text="확인" />
       </Link>
     </Grid>
   );

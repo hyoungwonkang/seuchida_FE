@@ -2,7 +2,6 @@ import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import { createBrowserHistory } from "history";
 import { connectRouter } from "connected-react-router";
-
 import user from "./modules/user";
 import post from "./modules/post";
 import room from "./modules/room";

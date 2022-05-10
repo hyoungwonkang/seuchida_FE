@@ -1,12 +1,14 @@
-import React from 'react';
-import styled from 'styled-components';
-import { BiDumbbell } from 'react-icons/bi';
-import { AiFillCalendar } from 'react-icons/ai';
-import { FaPen } from 'react-icons/fa';
-import { MdPlace } from 'react-icons/md';
+import React from "react";
+import styled from "styled-components";
+import { BiDumbbell } from "react-icons/bi";
+import { AiFillCalendar } from "react-icons/ai";
+import { FaPen } from "react-icons/fa";
+import { MdPlace } from "react-icons/md";
+import { Button } from "../elements/Index";
 
 const Card = (props) => {
-  const { MainCard, DetailCard, center, _onClick } = props;
+  const { MainCard, DetailCard, center, _onClick, isMe, deleteone } = props;
+
   function getDistance(lat1, lon1, lat2, lon2, unit) {
     if (lat1 === lat2 && lon1 === lon2) {
       return 0;
@@ -24,10 +26,10 @@ const Card = (props) => {
       dist = Math.acos(dist);
       dist = (dist * 180) / Math.PI;
       dist = dist * 60 * 1.1515;
-      if (unit === 'K') {
+      if (unit === "K") {
         dist = dist * 1.609344;
       }
-      if (unit === 'N') {
+      if (unit === "N") {
         dist = dist * 0.8684;
       }
       return dist;
@@ -39,7 +41,7 @@ const Card = (props) => {
     center.lng,
     props.latitude,
     props.longitude,
-    'K'
+    "K"
   ).toFixed(1);
 
   if (MainCard) {
@@ -47,10 +49,10 @@ const Card = (props) => {
       <>
         <MainContainer>
           <div onClick={_onClick}>
-            <TextBox style={{ paddingBottom: '5px', height: '85px' }}>
-              <div style={{ marginBottom: '0px' }}>
-                <BoldTitle style={{ color: '#FF6B52' }}>
-                  · {props?.status === true ? '모집중' : '모집완료'}
+            <TextBox style={{ paddingBottom: "5px", height: "85px" }}>
+              <div style={{ marginBottom: "0px" }}>
+                <BoldTitle style={{ color: "#FF6B52" }}>
+                  · {props?.status === true ? "모집중" : "모집완료"}
                 </BoldTitle>
                 <BoldTitle>{props?.postTitle}</BoldTitle>
               </div>
@@ -61,8 +63,8 @@ const Card = (props) => {
             <div>
               <Join
                 style={{
-                  justifyContent: 'space-between',
-                  padding: '0px 24px',
+                  justifyContent: "space-between",
+                  padding: "0px 24px",
                 }}
               >
                 <ProfileBox>
@@ -84,68 +86,71 @@ const Card = (props) => {
 
   if (DetailCard)
     return (
-      <>
-        <Container style={{ border: 'none' }}>
-          <TitleBox style={{ background: 'white', borderDisplay: 'none' }}>
-            <BoldTitle style={{ fontSize: '20px', color: '#FF6B52' }}>
-              · {props?.status === true ? '모집중' : '모집완료'}
-            </BoldTitle>
-            <BoldTitle style={{ fontSize: '20px' }}>
-              {props?.postTitle}
-            </BoldTitle>
-          </TitleBox>
+      <Container style={{ border: "none" }}>
+        <TitleBox style={{ background: "white", borderDisplay: "none" }}>
+          <BoldTitle style={{ fontSize: "20px" }}>
+            · {props?.status === true ? "모집중" : "모집완료"}
+          </BoldTitle>
+          <BoldTitle style={{ fontSize: "20px" }}>{props?.postTitle}</BoldTitle>
+          {isMe ? (
+            <Button is_delete _onClick={deleteone}>
+              삭제
+            </Button>
+          ) : (
+            ""
+          )}
+        </TitleBox>
 
-          <TextBoxList>
-            <DescBox style={{ margin: '0px 0px' }}>
-              <DetailDesc>{props?.postDesc}</DetailDesc>
-            </DescBox>
+        <TextBoxList>
+          <DescBox style={{ margin: "0px 0px" }}>
+            <DetailDesc>{props?.postDesc}</DetailDesc>
+          </DescBox>
 
-            <Join>
-              <div> </div>
+          <Join>
+            <div> </div>
 
-              <SmallFont>
-                {distance} km 떨어짐 | {props.createdAt}
-              </SmallFont>
-            </Join>
+            <SmallFont>
+              {distance} km 떨어짐 | {props.createdAt}
+            </SmallFont>
+          </Join>
 
-            <Status style={{ background: '#F8F8F8', height: '120px' }}>
-              <StatusIcon>
-                <span>
-                  <MdPlace color='#787878' />
-                </span>{' '}
-                <StatusBox>{props?.spot}</StatusBox>
-              </StatusIcon>
-              <StatusIcon>
-                <span>
-                  <BiDumbbell color='#787878' />
-                </span>
-                <StatusBox>{props?.postCategory}</StatusBox>
-              </StatusIcon>
-              <StatusIcon>
-                <span>
-                  <AiFillCalendar color='#787878' />
-                </span>
-                <StatusBox>{props?.datemate}</StatusBox>
-              </StatusIcon>
-              <StatusIcon>
-                <span>
-                  <FaPen color='#787878' size='14px' />
-                </span>
-                <StatusBox>
-                  {props?.memberGender}, {props?.memberAge}
-                </StatusBox>
-              </StatusIcon>
-            </Status>
-          </TextBoxList>
-        </Container>
-      </>
+          <Status style={{ background: "#F8F8F8", height: "120px" }}>
+            <StatusIcon>
+              <span>
+                <MdPlace color="#787878" />
+              </span>{" "}
+              <StatusBox>{props?.spot}</StatusBox>
+            </StatusIcon>
+            <StatusIcon>
+              <span>
+                <BiDumbbell color="#787878" />
+              </span>
+              <StatusBox>{props?.postCategory}</StatusBox>
+            </StatusIcon>
+            <StatusIcon>
+              <span>
+                <AiFillCalendar color="#787878" />
+              </span>
+              <StatusBox>{props?.datemate}</StatusBox>
+            </StatusIcon>
+            <StatusIcon>
+              <span>
+                <FaPen color="#787878" size="14px" />
+              </span>
+              <StatusBox>
+                {props?.memberGender}, {props?.memberAge}
+              </StatusBox>
+            </StatusIcon>
+          </Status>
+        </TextBoxList>
+      </Container>
     );
 
   return (
-    <Container style={{ border: 'none' }} onClick={_onClick}>
-      <TitleBox style={{ backgroundColor: '#E7F8F1' }}>
+    <Container style={{ border: "none" }} onClick={_onClick}>
+      <TitleBox style={{ backgroundColor: "#E7F8F1" }}>
         <BoldTitle>
-          · {props?.status === true ? '모집중' : '모집완료'}
+          · {props?.status === true ? "모집중" : "모집완료"}
         </BoldTitle>
         <BoldTitle>{props?.postTitle}</BoldTitle>
       </TitleBox>
@@ -154,19 +159,19 @@ const Card = (props) => {
         <Status>
           <StatusIcon>
             <span>
-              <BiDumbbell color='#787878' />
-            </span>{' '}
+              <BiDumbbell color="#787878" />
+            </span>{" "}
             <StatusBox>{props?.postCategory}</StatusBox>
           </StatusIcon>
           <StatusIcon>
             <span>
-              <AiFillCalendar color='#787878' />
+              <AiFillCalendar color="#787878" />
             </span>
             <StatusBox>{props?.datemate}</StatusBox>
           </StatusIcon>
           <StatusIcon>
             <span>
-              <FaPen color='#787878' size='14px' />
+              <FaPen color="#787878" size="14px" />
             </span>
             <StatusBox>
               {props?.memberGender}, {props?.memberAge}
@@ -180,14 +185,14 @@ const Card = (props) => {
 
         <div>
           <Join>
-            <ProfileBox style={{ paddingBottom: '3px' }}>
+            <ProfileBox style={{ paddingBottom: "3px" }}>
               <Profile src={props?.userImg} />
-              <SmallFont style={{ margin: '12px 0px 0px 8px' }}>
+              <SmallFont style={{ margin: "12px 0px 0px 8px" }}>
                 {props?.nickName}
               </SmallFont>
             </ProfileBox>
 
-            <SmallFont style={{ marginTop: '12px' }}>
+            <SmallFont style={{ marginTop: "12px" }}>
               {distance} km 떨어짐 | 1분전
             </SmallFont>
           </Join>
