@@ -2,14 +2,16 @@ import React from "react";
 import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
 import styled from "styled-components";
 import { useMap } from "react-kakao-maps-sdk";
+import Image from "../elements/Image";
 function KakaoMap(props) {
-  const { MainMap, UserLoca, post} = props;
-
+  const { MainMap, UserLoca, post,_onClick} = props;
+console.log(props)
   if (MainMap) {
     return (
       <Map
         center={{ lat: UserLoca.lat, lng: UserLoca.lng }}
         style={{ width: "100%", height: "600px" }}
+        onClick={_onClick}
         level={7}
       >
         <MapMarker
@@ -55,7 +57,7 @@ const DetailMap = styled.div`
 
 const Box = styled.div`
   position: absolute;
-  top: -167px;
+  top: -170px;
   left: -80px;
   background-color: white;
   width: 173px;
@@ -67,21 +69,22 @@ const Box = styled.div`
 const Close = styled.button``;
 
 
-const EventMarkerContainer = ({latitude, longitude,  _id ,spot}) => {
+const EventMarkerContainer = (props) => {
   const [isclick, setIsClicked] = React.useState(false)
   return (
     <>
      <MapMarker 
-              key={_id}
-              position={{ lat:latitude, lng:longitude }}
+              key={props._id}
+              position={{ lat:props.latitude, lng:props.longitude }}
               onClick={() => setIsClicked(true)}  
             />
   <CustomOverlayMap
-      position={{lat:latitude, lng:longitude}} // 마커를 표시할 위치
+      position={{lat:props.latitude, lng:props.longitude}} // 마커를 표시할 위치
         
     >         
                { isclick&& <Box>
-                  {spot}
+                 <div><Image src ={props.userImg}
+                  size ={36}></Image>{props.nickName}</div> {props.postDesc}
                   <Close className="close" onClick={() => setIsClicked(false)}>
                     X
                   </Close>
