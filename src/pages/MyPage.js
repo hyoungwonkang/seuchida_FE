@@ -10,15 +10,19 @@ import { IoIosArrowForward } from "react-icons/io";
 import { history } from "../redux/configStore";
 import { RiBarChartFill } from "react-icons/ri";
 import { actionCreators as userActions } from "../redux/modules/user";
+import { actionCreators as mypageActions } from "../redux/modules/mypage";
 
 const NameCard = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(userActions.isLoginDB());
+    // dispatch(mypageActions.myExerciseDB());
+    dispatch(mypageActions.myReviewDB());
   }, []);
 
   const userInfo = useSelector((state) => state.user.userInfo);
+  // console.log(userInfo);
 
   return (
     <Grid column height="304px" brbottom margin="0px" bg="white">
@@ -34,7 +38,7 @@ const NameCard = () => {
       <Image
         shape="circle"
         size={60}
-        src="https://t1.daumcdn.net/cfile/tistory/212E043B5815E35605"
+        src={userInfo.userImg}
         margin="19px 0px 8px 0px"
       />
       <Text size="24px" margin="0px">
@@ -59,6 +63,25 @@ const NameCard = () => {
 };
 
 const MyPage = () => {
+  const userInfo = useSelector((state) => state.user.userInfo);
+  const myReviewcnt = useSelector((state) => state.mypage.myReview);
+  // console.log(myReviewcnt);
+
+  const Grade = [
+    { key: 0, grade: "Iron" },
+    { key: 10, grade: "Bronze" },
+    { key: 20, grade: "Silver" },
+    { key: 30, grade: "Gold" },
+    { key: 40, grade: "Platinum" },
+    { key: 50, grade: "Diamond" },
+  ];
+
+  // const count = [10, 20, 30, 40, 50];
+
+  if (myReviewcnt?.length === 10 || myReviewcnt?.length === 20) {
+    window.alert("레벨업 했습니다!");
+  }
+
   return (
     <>
       <Grid bg="#F6F6F6" height="950px">
@@ -71,7 +94,33 @@ const MyPage = () => {
               width="342px"
               color="gray"
             >
-              Green 레벨까지 6회
+              {/* {Grade.map((v, i) => {
+                return myReviewcnt.length >= v.key &&
+                  myReviewcnt.length <= v.key + 1
+                  ? v.grade
+                  : "";
+              })} */}
+              {myReviewcnt.length >= 40
+                ? Grade[5].grade
+                : myReviewcnt?.length >= 30
+                ? Grade[4].grade
+                : myReviewcnt.length >= 20
+                ? Grade[3].grade
+                : myReviewcnt.length >= 10
+                ? Grade[2].grade
+                : Grade[1].grade}
+              레벨까지
+              {10 -
+                (myReviewcnt.length >= 40
+                  ? myReviewcnt.length - 40
+                  : myReviewcnt.length >= 30
+                  ? myReviewcnt.length - 30
+                  : myReviewcnt.length >= 20
+                  ? myReviewcnt.length - 20
+                  : myReviewcnt.length >= 10
+                  ? myReviewcnt.length - 10
+                  : myReviewcnt.length)}
+              회
             </Text>
 
             <Grid
@@ -81,14 +130,35 @@ const MyPage = () => {
               margin="0px 0px 30px 0px"
               br="12px"
             >
-              <Highlight width={"130px"} />
+              <Highlight
+                width={
+                  myReviewcnt.length >= 40
+                    ? ((myReviewcnt.length - 40) / 10) * 100 + "%"
+                    : myReviewcnt.length >= 30
+                    ? ((myReviewcnt.length - 30) / 10) * 100 + "%"
+                    : myReviewcnt.length >= 20
+                    ? ((myReviewcnt.length - 20) / 10) * 100 + "%"
+                    : myReviewcnt.length >= 10
+                    ? ((myReviewcnt.length - 10) / 10) * 100 + "%"
+                    : (myReviewcnt.length / 10) * 100 + "%"
+                }
+              />
               <Text
                 size="16px"
                 margin="0px 0px 0px 310px"
                 width="342px"
                 color="gray"
               >
-                4/10
+                {myReviewcnt.length >= 40
+                  ? myReviewcnt.length - 40
+                  : myReviewcnt.length >= 30
+                  ? myReviewcnt.length - 30
+                  : myReviewcnt.length >= 20
+                  ? myReviewcnt.length - 20
+                  : myReviewcnt.length >= 10
+                  ? myReviewcnt.length - 10
+                  : myReviewcnt.length}
+                /10
               </Text>
             </Grid>
           </Grid>
@@ -118,7 +188,7 @@ const MyPage = () => {
                 size={30}
                 style={{ margin: "0px 0px 0px 220px" }}
                 onClick={() => {
-                  history.push();
+                  history.push("/mypost");
                 }}
               />
             </Grid>
@@ -136,7 +206,7 @@ const MyPage = () => {
                 size={30}
                 style={{ margin: "0px 0px 0px 233px" }}
                 onClick={() => {
-                  history.push();
+                  history.push("/myreview");
                 }}
               />
             </Grid>

@@ -6,6 +6,7 @@ import { Grid, Text,GoBack } from "../../elements/Index";
 import FooterMenu from "../../shared/FooterMenu";
 
 const Category = (props) => {
+  //SignupLoca & AddProfile에서 받은 값
   const get = props.location.state;
   const nickName = get?.nickName;
   const gender = get?.gender;
@@ -14,6 +15,7 @@ const Category = (props) => {
   const address = get?.address;
   const profile = get?.profile;
 
+  //카테고리 리스트
   const CategoryList = [
     { id: 0, data: "자전거" },
     { id: 1, data: "배드민턴" },
@@ -43,11 +45,12 @@ const Category = (props) => {
 
   const dispatch = useDispatch();
 
+  //작성 || 수정 구분
   const userInfo = useSelector((state) => state.user.userInfo);
   const edit = useSelector((state) => state.user?.userInfo.userImg);
-
   const is_edit = edit ? true : false;
 
+  //유저 정보
   React.useEffect(() => {
     dispatch(userActions.isLoginDB());
   }, []);
@@ -57,8 +60,8 @@ const Category = (props) => {
   }, [userInfo]);
 
   const [userInterest, setUserInterest] = useState([]);
-  // console.log(userInterest);
 
+  //선택된 카테고리 배열화
   const _userInterest = (checked, item) => {
     if (checked) {
       if (userInterest?.length <= 2) {
@@ -71,6 +74,7 @@ const Category = (props) => {
     }
   };
 
+  //프로필 추가
   const addProfile = () => {
     const formData = new FormData();
     formData.append("userImg", profile);
@@ -82,12 +86,12 @@ const Category = (props) => {
 
     for (var i = 0; i < userInterest.length; i++) {
       formData.append("userInterest[]", userInterest[i]);
-      // console.log(userInterest[i]);
     }
 
     dispatch(userActions.signupDB(formData));
   };
 
+  //프로필 수정
   const editProfile = () => {
     const formData = new FormData();
     formData.append("newUserImg", profile);
@@ -96,9 +100,11 @@ const Category = (props) => {
     formData.append("userAge", age);
     formData.append("userContent", content);
     formData.append("address", address);
+
     for (var i = 0; i < userInterest.length; i++) {
       formData.append("userInterest[]", userInterest[i]);
     }
+
     dispatch(userActions.editUserDB(formData));
   };
 
@@ -112,7 +118,10 @@ const Category = (props) => {
       <Text margin="12px 0px 28px 30px" size="16px" color="gray">
         내 관심사에 딱 맞는 맞춤형 모임을 추천해 드려요
       </Text>
+
+      {/* 관심사 선택 */}
       <Grid height="auto" column margin="auto">
+        {/* 카테고리 */}
         <CateBox>
           {CategoryList.map((item) => {
             return (
@@ -128,17 +137,19 @@ const Category = (props) => {
                   checked={userInterest?.includes(item.data) ? true : false}
                 />
                 <label htmlFor={item.id}>
-                  <Cate color={userInterest?.includes(item.data)}>
+                  <Cate click={userInterest?.includes(item.data)}>
                     {item.data}
                   </Cate>
                 </label>
               </div>
             );
           })}
+
+          {/* 푸터 */}
           {is_edit ? (
             <FooterMenu next path="/mypage" text="수정" event={editProfile} />
           ) : (
-            <FooterMenu next path="/main" text="다음" event={addProfile} />
+            <FooterMenu next path="/done" text="다음" event={addProfile} />
           )}
         </CateBox>
       </Grid>
@@ -148,6 +159,7 @@ const Category = (props) => {
 
 export default Category;
 
+//카테고리 css
 const CateBox = styled.div`
   width: 90%;
   height: 100%;
@@ -162,6 +174,8 @@ const CateBox = styled.div`
     clip: rect(0, 0, 0, 0);
   }
 `;
+
+//카테고리 한 개 css
 const Cate = styled.div`
   width: auto;
   height: 30px;
@@ -171,6 +185,6 @@ const Cate = styled.div`
   border: 1px solid #ddd;
   border-radius: 30px;
   font-size: 20px;
-  background: ${(props) => (props.color ? "#013676" : "white")};
-  color: ${(props) => (props.color ? "white" : "black")};
+  background: ${(props) => (props.click ? "#013676" : "white")};
+  color: ${(props) => (props.click ? "white" : "black")};
 `;

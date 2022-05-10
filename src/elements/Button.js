@@ -15,6 +15,7 @@ const Button = (props) => {
     right,
     bold,
     bg,
+    position,
   } = props;
 
   const styles = {
@@ -40,7 +41,6 @@ const Button = (props) => {
       </React.Fragment>
     );
   }
-
 
 
   return (
@@ -97,13 +97,10 @@ const FloatButton = styled.button`
   vertical-align: middle;
   border: none;
   border-radius: 50px;
-  /* &:hover {
-    box-shadow: 0px 0px 5px 0px gray;
-  }
-  font-family: "Cafe24Ohsquareair"; */
 `;
 
 const DeleteButton = styled.button`
+
   width: 342px;
   height: 54px;
   background: #C4C4C4;
@@ -120,6 +117,7 @@ const DeleteButton = styled.button`
     box-shadow: 0px 0px 5px 0px gray;
   }
   font-family: "Cafe24Ohsquareair"; */
+
 `;
 
 export default Button;

@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+
 import { BiDumbbell } from 'react-icons/bi';
 import { AiFillCalendar } from 'react-icons/ai';
 import { FaPen } from 'react-icons/fa';
@@ -25,38 +26,30 @@ function getDistance(lat1, lon1, lat2, lon2, unit) {
     if (dist > 1) {
       dist = 1;
     }
-    dist = Math.acos(dist);
-    dist = (dist * 180) / Math.PI;
-    dist = dist * 60 * 1.1515;
-    if (unit === "K") {
-      dist = dist * 1.609344;
-    }
-    if (unit === "N") {
-      dist = dist * 0.8684;
-    }
-    return dist;
   }
-}
 
-let distance = getDistance(center.lat, center.lng, props.latitude, props.longitude, "K").toFixed(1)
-
+  let distance = getDistance(
+    center.lat,
+    center.lng,
+    props.latitude,
+    props.longitude,
+    "K"
+  ).toFixed(1);
 
   if (MainCard) {
     return (
       <>
-        <MainContainer  >
+        <MainContainer>
           <div onClick={_onClick}>
-            <TextBox style={{paddingBottom:"5px", height:"85px"}}>
+            <TextBox style={{ paddingBottom: "5px", height: "85px" }}>
               <div style={{ marginBottom: "0px" }}>
-                <BoldTitle style={{color:"#FF6B52"}}>
+                <BoldTitle style={{ color: "#FF6B52" }}>
                   · {props?.status === true ? "모집중" : "모집완료"}
                 </BoldTitle>
                 <BoldTitle>{props?.postTitle}</BoldTitle>
               </div>
 
-      
-                <MainDesc>{props?.postDesc} </MainDesc>
-             
+              <MainDesc>{props?.postDesc} </MainDesc>
             </TextBox>
 
             <div>
@@ -68,8 +61,10 @@ let distance = getDistance(center.lat, center.lng, props.latitude, props.longitu
               >
                 <ProfileBox>
                   {props?.nowMember.map((m, i) => {
+
                     
                 if(i<3) return <Profile key={i} src={m.memberImg} />;
+
                   })}
                   {props.nowMember.length >3 ? <CountM>+{props.nowMember.length-3}</CountM>:null}
                 </ProfileBox>
@@ -82,21 +77,19 @@ let distance = getDistance(center.lat, center.lng, props.latitude, props.longitu
     );
   }
 
+
  if(DetailCard) return (
    <>
     <Container style={{border:"none"}} >
         <TitleBox style={{background:"white", borderDisplay:"none"}}>
           <BoldTitle style={{fontSize:"20px", color:"#FF6B52"}}>
+
             · {props?.status === true ? "모집중" : "모집완료"}
           </BoldTitle>
-          <BoldTitle style={{fontSize:"20px"}}>{props?.postTitle}</BoldTitle>
-        </TitleBox>
-    
-    
-    
-    
+          <BoldTitle style={{ fontSize: "20px" }}>{props?.postTitle}</BoldTitle>
+          {/* {isMe ? <Button is_delete>삭제</Button> : ""} */}
+        </TitleBox> 
       <TextBoxList>
-
       <DescBox style={{margin:"0px 0px"}}>
           <DetailDesc>{props?.postDesc}</DetailDesc>
         </DescBox>
@@ -139,36 +132,81 @@ let distance = getDistance(center.lat, center.lng, props.latitude, props.longitu
   );
 
 
+        <TextBoxList>
+          <DescBox style={{ margin: "0px 0px" }}>
+            <Desc>{props?.postDesc}</Desc>
+          </DescBox>
 
+          <Join>
+            <div> </div>
 
+            <SmallFont>
+              {distance} km 떨어짐 | {props.createdAt}
+            </SmallFont>
+          </Join>
+
+          <Status style={{ background: "#F8F8F8", height: "120px" }}>
+            <StatusIcon>
+              <span>
+                <MdPlace color="#787878" />
+              </span>{" "}
+              <StatusBox>{props?.spot}</StatusBox>
+            </StatusIcon>
+            <StatusIcon>
+              <span>
+                <BiDumbbell color="#787878" />
+              </span>
+              <StatusBox>{props?.postCategory}</StatusBox>
+            </StatusIcon>
+            <StatusIcon>
+              <span>
+                <AiFillCalendar color="#787878" />
+              </span>
+              <StatusBox>{props?.datemate}</StatusBox>
+            </StatusIcon>
+            <StatusIcon>
+              <span>
+                <FaPen color="#787878" size="14px" />
+              </span>
+              <StatusBox>
+                {props?.memberGender}, {props?.memberAge}
+              </StatusBox>
+            </StatusIcon>
+          </Status>
+        </TextBoxList>
+      </Container>
+    );
 
   return (
-    <Container style={{border:"none"}} onClick={_onClick}>
-        <TitleBox style={{backgroundColor:"#E7F8F1"}}>
-          <BoldTitle>
-            · {props?.status === true ? "모집중" : "모집완료"}
-          </BoldTitle>
-          <BoldTitle>{props?.postTitle}</BoldTitle>
-        </TitleBox>
-    
-    
-    
-    
+    <Container style={{ border: "none" }} onClick={_onClick}>
+      <TitleBox style={{ backgroundColor: "#E7F8F1" }}>
+        <BoldTitle>
+          · {props?.status === true ? "모집중" : "모집완료"}
+        </BoldTitle>
+        <BoldTitle>{props?.postTitle}</BoldTitle>
+      </TitleBox>
+
       <TextBoxList>
-      <Status  > 
+        <Status>
           <StatusIcon>
-          
-            <span><BiDumbbell color="#787878"/></span> <StatusBox>{props?.postCategory}</StatusBox>
+            <span>
+              <BiDumbbell color="#787878" />
+            </span>{" "}
+            <StatusBox>{props?.postCategory}</StatusBox>
           </StatusIcon>
           <StatusIcon>
-            <span><AiFillCalendar color="#787878"/></span>
+            <span>
+              <AiFillCalendar color="#787878" />
+            </span>
             <StatusBox>{props?.datemate}</StatusBox>
           </StatusIcon>
           <StatusIcon>
-            <span><FaPen color="#787878" size="14px"/></span>
+            <span>
+              <FaPen color="#787878" size="14px" />
+            </span>
             <StatusBox>
               {props?.memberGender}, {props?.memberAge}
-            </StatusBox>        
+            </StatusBox>
           </StatusIcon>
         </Status>
 
@@ -178,14 +216,16 @@ let distance = getDistance(center.lat, center.lng, props.latitude, props.longitu
 
         <div>
           <Join>
-          
-              <ProfileBox style={{paddingBottom:"3px"}}>
-               <Profile src={props?.userImg}/>
-               <SmallFont style={{margin:"12px 0px 0px 8px"}}>{props?.nickName}</SmallFont>
-              </ProfileBox>
-    
+            <ProfileBox style={{ paddingBottom: "3px" }}>
+              <Profile src={props?.userImg} />
+              <SmallFont style={{ margin: "12px 0px 0px 8px" }}>
+                {props?.nickName}
+              </SmallFont>
+            </ProfileBox>
 
-            <SmallFont style={{marginTop:"12px"}} >{distance} km 떨어짐 | 1분전</SmallFont>
+            <SmallFont style={{ marginTop: "12px" }}>
+              {distance} km 떨어짐 | 1분전
+            </SmallFont>
           </Join>
         </div>
       </TextBoxList>
@@ -202,7 +242,7 @@ const MainContainer = styled.section`
   height: 168px;
   margin-bottom: 14px;
   cursor: pointer;
-  z-index:3;
+  z-index: 3;
 `;
 
 const Container = styled.section`
@@ -215,14 +255,13 @@ const Container = styled.section`
 `;
 
 const TitleBox = styled.div`
-background-color:  #e9e9e9;
-width: 100%;
-height: 46px;
-align-items: center;
-display: flex;
-padding: 0px 24px;
-`
-
+  background-color: #e9e9e9;
+  width: 100%;
+  height: 46px;
+  align-items: center;
+  display: flex;
+  padding: 0px 24px;
+`;
 
 const Desc = styled.div`
   font-size: 17px;
@@ -239,34 +278,34 @@ const ListDesc = styled.div`
   padding-top: 4px;
   height: 60px;
   overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 3; /* 라인수 */
-    -webkit-box-orient: vertical;
-    word-wrap:break-word; 
-    line-height: 1.3em;
-    height: 3.9em;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* 라인수 */
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+  line-height: 1.3em;
+  height: 3.9em;
 `;
 const MainDesc = styled.div`
   font-size: 17px;
   padding-top: 8px;
   height: 60px;
   overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2; /* 라인수 */
-    -webkit-box-orient: vertical;
-    word-wrap:break-word; 
-    line-height: 1.3em;
-    height: 2.4em;
-    color:#585858;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* 라인수 */
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+  line-height: 1.3em;
+  height: 2.4em;
+  color: #585858;
 `;
 
 const Status = styled.div`
   display: flex;
   flex-direction: column;
-  border-bottom: 1px solid  #e9e9e9;
-  padding : 0px 24px ;
+  border-bottom: 1px solid #e9e9e9;
+  padding: 0px 24px;
   height: 92px;
   justify-content: center;
 `;
@@ -274,7 +313,7 @@ const Status = styled.div`
 const DescBox = styled.div`
   margin: 12px 0px;
   min-height: 48px;
-  padding :0px 24px;
+  padding: 0px 24px;
 `;
 
 const Join = styled.div`
@@ -310,7 +349,6 @@ const TextBox = styled.div`
   align-items: center;
 `;
 const TextBoxList = styled.div`
-
   align-items: center;
 `;
 

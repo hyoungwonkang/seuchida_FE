@@ -4,6 +4,7 @@ import { Card, KakaoMap } from "../components/index";
 import Modal from "../components/Modal/Modal"; //모달 창
 import ModalPortal from "../components/Modal/Portal"; //모달 포탈
 import { Image } from "../elements/Index";
+
 import {useDispatch,useSelector } from "react-redux"
 import{ actionCreators as roomActions } from "../redux/modules/room";
 import{ actionCreators as userActions } from "../redux/modules/user";
@@ -12,6 +13,7 @@ import axios from "axios";
 import FooterMenu from "../shared/FooterMenu";
 import GoBack from "../elements/GoBack";
 const PostDetail = (props) => {
+
   const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.userInfo)
@@ -28,6 +30,7 @@ const PostDetail = (props) => {
   const closeModal = (e) => {
     setModalOn(false);
   };
+
 
   const [state, setState] = React.useState({
         center: {
@@ -47,6 +50,7 @@ const PostDetail = (props) => {
 
   React.useEffect(()=>{
   
+
     if (navigator.geolocation) {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
       navigator.geolocation.getCurrentPosition(
@@ -83,13 +87,15 @@ const PostDetail = (props) => {
         authorization: `Bearer ${token}`,
       },
     }).then((response) => {
-   setPost(response.data.post)
+      setPost(response.data.post);
     });
+
     dispatch(userActions.isLoginDB());
   },[])
 
   if(!post) return
   const userCheck = post?.nowMember?.filter(u => u.memberId.includes(user.userId))
+
   return (
     <>
       <Header onClick={closeModal}>
@@ -99,7 +105,7 @@ const PostDetail = (props) => {
       <Container onClick={closeModal}>
         <ProfileBox>
           <Image
-          margin="0px 15px 0px 0px"
+            margin="0px 15px 0px 0px"
             shape="circle"
             src={post.userImg}
             size={60}
@@ -109,32 +115,38 @@ const PostDetail = (props) => {
 
           <User>
             <Master>{post.nickName}</Master>
-            <div style={{color:"rgba(120, 120, 120, 1)"}}> {post.userGender}/{post.userAge}세</div>
+            <div style={{ color: "rgba(120, 120, 120, 1)" }}>
+              {" "}
+              {post.userGender}/{post.userAge}세
+            </div>
           </User>
         </ProfileBox>
 
-        <Card DetailCard center={state.center} {...post}/>
+        <Card DetailCard center={state.center} {...post} />
 
         <LiveBox>
-          <div style={{fontWeight:"700 bold"}}> 참여중인 운동 메이트 {post?.nowMember?.length}/{post?.maxMember} </div>
+          <div style={{ fontWeight: "700 bold" }}>
+            {" "}
+            참여중인 운동 메이트 {post?.nowMember?.length}/{post?.maxMember}{" "}
+          </div>
           <div className="otherProfile">
             {post?.nowMember?.map((m, i) => {
               return (
-               <div   key={m._id}>
-                <Image
-            
-              shape="circle"
-              src={m.memberImg}
-              size={40}
-              margin="3px"
-              _onClick={openModal}
-            />
-            <ModalPortal >{modalOn && <Modal />}</ModalPortal></div>
-              )
+                <div key={m._id}>
+                  <Image
+                    shape="circle"
+                    src={m.memberImg}
+                    size={40}
+                    margin="3px"
+                    _onClick={openModal}
+                  />
+                  <ModalPortal>{modalOn && <Modal />}</ModalPortal>
+                </div>
+              );
             })}
-       
           </div>
         </LiveBox>
+
             <KakaoMap {...post}/>
             {/* && userCheck[0]===false &&post.nowMember.length<=post.maxMember */}
       
@@ -148,6 +160,7 @@ const PostDetail = (props) => {
       
       
       
+
       </Container>
     </>
   );
@@ -172,9 +185,8 @@ const User = styled.div`
 `;
 
 const Master = styled.div`
-font-weight: bold;
-
-`
+  font-weight: bold;
+`;
 
 const Header = styled.div`
   top: 0;
