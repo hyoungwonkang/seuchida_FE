@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import FooterMenu from '../shared/FooterMenu';
 import { Button, Grid, Text, Input } from '../elements/Index';
-import GoBack from '../components/GoBack';
+import GoBack from '../elements/GoBack';
 
 import { BsFillPeopleFill } from 'react-icons/bs';
 import { MdEdit } from 'react-icons/md';

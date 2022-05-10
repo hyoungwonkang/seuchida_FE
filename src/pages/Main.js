@@ -1,11 +1,11 @@
-import React from "react";
-import styled from "styled-components";
-import { Card, LCslider, RCslider, ECslider } from "../components/index";
-import FooterMenu from "../shared/FooterMenu";
-import { useSelector, useDispatch } from "react-redux";
-import { actionCreators as postActions } from "../redux/modules/post";
-import { actionCreators as userActions } from "../redux/modules/user";
-import { history } from "../redux/configStore";
+import React from 'react';
+import styled from 'styled-components';
+import { Card, LCslider, RCslider, ECslider } from '../components/index';
+import FooterMenu from '../shared/FooterMenu';
+import { useSelector, useDispatch } from 'react-redux';
+import { actionCreators as postActions } from '../redux/modules/post';
+import { actionCreators as userActions } from '../redux/modules/user';
+import { history } from '../redux/configStore';
 
 const Main = () => {
   const catepost = useSelector((state) => state.post.list.caPost);
@@ -21,7 +21,6 @@ const Main = () => {
     errMsg: null,
     isLoading: true,
   });
-  console.log(catepost);
   React.useEffect(() => {
     if (navigator.geolocation) {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
@@ -48,7 +47,7 @@ const Main = () => {
       // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
       setState((prev) => ({
         ...prev,
-        errMsg: "geolocation을 사용할수 없어요..",
+        errMsg: 'geolocation을 사용할수 없어요..',
         isLoading: false,
       }));
     }
@@ -77,7 +76,7 @@ const Main = () => {
         <ReviewBox>
           <TitleBox
             onClick={() => {
-              window.location.href = "/reviewlist";
+              window.location.href = '/reviewlist/1';
             }}
           >
             <Title>함께한 스친들의 후기</Title> <Title>&gt;</Title>
@@ -87,9 +86,10 @@ const Main = () => {
         </ReviewBox>
 
         {/* 여기여기 붙어라 */}
+
         <TitleBox
           onClick={() => {
-            history.push(`/postlist`);
+            window.location.href = '/postlist';
           }}
         >
           <Title>여기여기 붙어라</Title>

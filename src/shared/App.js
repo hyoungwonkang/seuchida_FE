@@ -42,7 +42,7 @@ function App() {
           <Route path="/addprofile" exact component={AddProfile} />
           <Route path="/postlist" exact component={PostList} />
           <Route path="/postdetail/:postId" exact component={PostDetail} />
-          <Route path="/ReviewList" exact component={ReviewList} />
+          <Route path="/ReviewList/:reviewId" exact component={ReviewList} />
           <Route path="/mypage" exact component={MyPage} />
           <Route path="/reviewwrite" exact component={ReviewWrite} />
           <Route path="/mypost" exact component={MyPost} />

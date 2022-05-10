@@ -1,22 +1,27 @@
 import React from "react";
 import styled from "styled-components";
 import { Card, KakaoMap } from "../components/index";
-import gBack from "../shared/ImgBox/gBack.png";
 import Modal from "../components/Modal/Modal"; //모달 창
 import ModalPortal from "../components/Modal/Portal"; //모달 포탈
 import { Image } from "../elements/Index";
-import { useDispatch, useSelector } from "react-redux";
-import { actionCreators as postActions } from "../redux/modules/post";
+
+import {useDispatch,useSelector } from "react-redux"
+import{ actionCreators as roomActions } from "../redux/modules/room";
+import{ actionCreators as userActions } from "../redux/modules/user";
 import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 import FooterMenu from "../shared/FooterMenu";
+import GoBack from "../elements/GoBack";
 const PostDetail = (props) => {
+
+  const history = useHistory();
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.userInfo)
   const [modalOn, setModalOn] = React.useState(false);
-  const [post, setPost] = React.useState(null);
+  const [post , setPost] = React.useState(null);
   const token = localStorage.getItem("token");
   const params = useParams();
-
+  
   const openModal = (e) => {
     e.stopPropagation();
     setModalOn(true);
@@ -26,33 +31,26 @@ const PostDetail = (props) => {
     setModalOn(false);
   };
 
-  const userId = useSelector((state) => state.user.userInfo.userId);
-  console.log(userId);
-  const postOwner = useSelector((state) => state.post.list.nearPosts);
-  console.log(postOwner);
-
-  const isMe = userId === postOwner ? true : false;
-  console.log(isMe);
-
-  // const deleteArticle = () => {
-  //   const result = window.confirm("정말 삭제하시겠습니까?");
-  //   if (result === true) {
-  //     dispatch(articleActions.deleteArticleDB(articleNumber));
-  //   } else {
-  //     return;
-  //   }
-  // };
 
   const [state, setState] = React.useState({
-    center: {
-      lat: 33.450701,
-      lng: 126.570667,
-    },
-    errMsg: null,
-    isLoading: true,
-  });
+        center: {
+          lat: 33.450701,
+          lng: 126.570667,
+        },
+        errMsg: null,
+        isLoading: true,
+      });
+    
+      function joinRoom() {
+        //
+        dispatch(roomActions.joinRoomDB(params.postId))
+        
+      
+      }
 
-  React.useEffect(() => {
+  React.useEffect(()=>{
+  
+
     if (navigator.geolocation) {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
       navigator.geolocation.getCurrentPosition(
@@ -91,13 +89,17 @@ const PostDetail = (props) => {
     }).then((response) => {
       setPost(response.data.post);
     });
-  }, []);
 
-  if (!post) return;
+    dispatch(userActions.isLoginDB());
+  },[])
+
+  if(!post) return
+  const userCheck = post?.nowMember?.filter(u => u.memberId.includes(user.userId))
+
   return (
     <>
       <Header onClick={closeModal}>
-        <img src={gBack} />
+       <GoBack  gback _onClick={()=> history.goBack()}/>
         {/* <h2>여기여기 붙어라</h2> */}
       </Header>
       <Container onClick={closeModal}>
@@ -144,11 +146,21 @@ const PostDetail = (props) => {
             })}
           </div>
         </LiveBox>
-        <KakaoMap {...post} />
 
-        <ButtonBox>
-          <FooterMenu next text={"참여하기"}></FooterMenu>
-        </ButtonBox>
+            <KakaoMap {...post}/>
+            {/* && userCheck[0]===false &&post.nowMember.length<=post.maxMember */}
+      
+      
+      {post.status && userCheck[0]===undefined && post.nowMember.length<=post.maxMember?  <ButtonBox>      
+          <FooterMenu next text={"참여하기"} event={joinRoom} ></FooterMenu>
+        </ButtonBox> : <ButtonBox>      
+          <FooterMenu is_check text={"참여불가"} ></FooterMenu>
+        </ButtonBox> }
+       
+      
+      
+      
+
       </Container>
     </>
   );

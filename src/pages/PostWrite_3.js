@@ -5,13 +5,12 @@ import { ko } from 'date-fns/esm/locale';
 import { getYear, getMonth } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Link, useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { actionCreators as postActions } from '../redux/modules/post';
 import { useDispatch } from 'react-redux';
 import FooterMenu from '../shared/FooterMenu';
 import Picker from 'react-mobile-picker-scroll';
 import { Button, Grid, Text, Input } from '../elements/Index';
-import GoBack from '../components/GoBack';
+import GoBack from '../elements/GoBack';
 
 import { BsFillCalendarFill } from 'react-icons/bs';
 import { AiFillClockCircle } from 'react-icons/ai';
@@ -118,17 +117,17 @@ const PostWrite_3 = (props) => {
     );
   };
 
-  console.log(address);
-  console.log(datemate);
-  console.log(latitude);
-  console.log(longitude);
-  console.log(maxMember);
-  console.log(memberAge);
-  console.log(memberGender);
-  console.log(postCategory);
-  console.log(postDesc);
-  console.log(postTitle);
-  console.log(spot);
+  // console.log(address);
+  // console.log(datemate);
+  // console.log(latitude);
+  // console.log(longitude);
+  // console.log(maxMember);
+  // console.log(memberAge);
+  // console.log(memberGender);
+  // console.log(postCategory);
+  // console.log(postDesc);
+  // console.log(postTitle);
+  // console.log(spot);
 
   //토글
   const [show, setShow] = useState(false);
@@ -151,6 +150,52 @@ const PostWrite_3 = (props) => {
           margin='12px 0px'
           height='auto'
           padding='0px 24px 4px 0px'
+          justify='space-between'
+        >
+          <Grid row margin='0px 0px 0px 24px'>
+            <FaMapMarkerAlt />
+            <Text margin='0px 12px' size='16px'>
+              장소
+            </Text>
+          </Grid>
+          {spot ? (
+            <div
+              onClick={() => {
+                history.push('/postwrite4');
+              }}
+            >
+              {spot}
+            </div>
+          ) : (
+            <Link
+              to={{
+                pathname: '/postwrite4',
+                state: {
+                  maxMember,
+                  memberAge,
+                  memberGender,
+                  postCategory,
+                  postDesc,
+                  postTitle,
+                },
+              }}
+            >
+              <div
+                onClick={() => {
+                  history.push('/postwrite4');
+                }}
+              >
+                장소입력
+              </div>
+            </Link>
+          )}
+        </Grid>
+      </LineBox>
+      <LineBox>
+        <Grid
+          row
+          height='auto'
+          padding='12px 24px 12px 0px'
           justify='space-between'
         >
           <Grid row margin='0px 0px 0px 24px'>
@@ -225,30 +270,28 @@ const PostWrite_3 = (props) => {
           </div>
         </Grid>
       </LineBox>
-      <LineBox>
-        <Grid
-          row
-          height='auto'
-          padding='12px 24px 12px 0px'
-          justify='space-between'
-        >
-          <Grid row margin='0px 0px 0px 24px'>
-            <AiFillClockCircle />
-            <Text margin='0px 12px' size='16px' _onClick={() => setShow(!show)}>
-              시간
-            </Text>
-          </Grid>
-          <div className='Test'>
-            <input
-              value={
-                `${valueGroups?.AmPm} ${valueGroups?.Hour}:${valueGroups?.Minute}` ||
-                ''
-              }
-              style={{ border: '0px', margin: '0px 0xp 0px 200px' }}
-            />
-          </div>
+      <Grid
+        row
+        height='auto'
+        padding='12px 24px 12px 0px'
+        justify='space-between'
+      >
+        <Grid row margin='0px 0px 0px 24px'>
+          <AiFillClockCircle />
+          <Text margin='0px 12px' size='16px' _onClick={() => setShow(!show)}>
+            시간
+          </Text>
         </Grid>
-      </LineBox>
+        <div className='Test'>
+          <input
+            value={
+              `${valueGroups?.AmPm} ${valueGroups?.Hour}:${valueGroups?.Minute}` ||
+              ''
+            }
+            style={{ border: '0px', margin: '0px 0xp 0px 200px' }}
+          />
+        </div>
+      </Grid>
       <div className='App'>
         {show ? (
           <Picker
@@ -258,44 +301,7 @@ const PostWrite_3 = (props) => {
           />
         ) : null}
       </div>
-      <Grid
-        row
-        height='auto'
-        padding='12px 24px 483px 0px'
-        justify='space-between'
-      >
-        <Grid row margin='0px 0px 0px 24px'>
-          <FaMapMarkerAlt />
-          <Text margin='0px 12px' size='16px'>
-            장소
-          </Text>
-        </Grid>
-        {spot ? (
-          <div>{spot}</div>
-        ) : (
-          <Link
-            to={{
-              pathname: '/postwrite4',
-              state: {
-                maxMember,
-                memberAge,
-                memberGender,
-                postCategory,
-                postDesc,
-                postTitle,
-              },
-            }}
-          >
-            <div
-              onClick={() => {
-                history.push('/postwrite4');
-              }}
-            >
-              장소입력
-            </div>
-          </Link>
-        )}
-      </Grid>
+
       <FooterMenu next event={addPost} text='다음' />
     </Grid>
   );
