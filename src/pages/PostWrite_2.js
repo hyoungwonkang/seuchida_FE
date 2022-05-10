@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { useHistory } from "react-router-dom";
-import { Link } from "react-router-dom";
-import FooterMenu from "../shared/FooterMenu";
-import { Button, Grid, Text, Input, GoBack } from "../elements/Index";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import FooterMenu from '../shared/FooterMenu';
+import { Button, Grid, Text, Input, GoBack } from '../elements/Index';
 
-import { BsFillPeopleFill } from "react-icons/bs";
-import { MdEdit } from "react-icons/md";
-import { AiOutlineMinusCircle } from "react-icons/ai";
-import { AiOutlinePlusCircle } from "react-icons/ai";
+import { BsFillPeopleFill } from 'react-icons/bs';
+import { MdEdit } from 'react-icons/md';
+import { AiOutlineMinusCircle } from 'react-icons/ai';
+import { AiOutlinePlusCircle } from 'react-icons/ai';
 
 const PostWrite_2 = (props) => {
   const history = useHistory();
@@ -23,7 +23,7 @@ const PostWrite_2 = (props) => {
     setMaxMember(maxMember + 1);
     if (maxMember > 29) {
       setMaxMember(maxMember);
-      alert("제한인원은 30명까지 입니다.");
+      alert('제한인원은 30명까지 입니다.');
     }
   };
 
@@ -31,28 +31,25 @@ const PostWrite_2 = (props) => {
     setMaxMember(maxMember - 1);
     if (maxMember < 1) {
       setMaxMember(maxMember);
-      alert("잘못된 입력입니다.");
+      alert('잘못된 입력입니다.');
     }
   };
 
   //성별
-  const [memberGender, setMemberGender] = useState("누구나");
-  const genderChange = (e) => {
-    setMemberGender(e.target.value);
-  };
+  const [memberGender, setMemberGender] = useState('성별무관');
 
   //나이
-  let [memberAge, setMemberAge] = useState("누구나");
+  let [memberAge, setMemberAge] = useState('나이무관');
   // const ageChange = (e) => {
   //   setMemberAge(e.target.value);
   // };
 
   //'직접입력' 시 나이를 조합합니다.
   const [member, setMember] = useState({
-    fage: "",
-    lage: "",
+    fage: '',
+    lage: '',
   });
-  let combine_member = member.fage + "~" + member.lage + "세";
+  let combine_member = member.fage + '~' + member.lage + '세';
 
   const handleChange = (e) => {
     setMember({
@@ -77,74 +74,63 @@ const PostWrite_2 = (props) => {
 
   return (
     <Grid>
-      <GoBack text="모임 만들기" path="/postwrite1" />
+      <GoBack text='모임 만들기' path='/postwrite1' />
       <ProgressBar>
-        <HighLight width={(count / 3) * 100 + "%"} />
+        <HighLight width={(count / 3) * 100 + '%'} />
       </ProgressBar>
       <LineBox>
-        <Grid row margin="12px 0px" height="auto" justify="space-between">
-          <Grid row margin="0px 0px 0px 24px">
+        <Grid row margin='12px 0px' height='auto' justify='space-between'>
+          <Grid row margin='0px 0px 0px 24px'>
             <BsFillPeopleFill />
-            <Text margin="0px 12px" size="16px">
+            <Text margin='0px 12px' size='16px'>
               인원
             </Text>
           </Grid>
-          <Grid row margin="0px 24px 0px 124px">
+          <Grid row margin='0px 24px 0px 124px'>
             <div onClick={onDecrease}>
-              <AiOutlineMinusCircle size="31" />
+              <AiOutlineMinusCircle size='31' />
             </div>
-            <Grid padding="0px 12px"> {maxMember}명 </Grid>
+            <Grid padding='0px 0px 6px 12px'> {maxMember}명 </Grid>
             <div onClick={onIncrease}>
-              <AiOutlinePlusCircle size="31" />
+              <AiOutlinePlusCircle size='31' />
             </div>
           </Grid>
         </Grid>
       </LineBox>
-      <Grid row margin="12px 0px 20px 24px">
+      <Grid
+        row
+        margin='12px 0px 20px 24px'
+        height='auto'
+        padding='0px 52px 4px 0px'
+        justify='space-between'
+      >
         <MdEdit />
-        <Text margin="0px 12px" size="16px" _onClick={() => setShow(!show)}>
+        <Text width='100px' margin='0px 12px' size='16px'>
           모집조건
         </Text>
+        <Grid _onClick={() => setShow(!show)} isFlex_end>
+          조건선택
+        </Grid>
       </Grid>
-      <div className="App">
+      <div className='App'>
         {show ? (
           <div>
             <GenderBox>
               <Text>성별</Text>
-              <Grid row>
-                <Item>
-                  <RadioButton
-                    type="radio"
-                    name="gender"
-                    value="누구나"
-                    checked={memberGender === "누구나"}
-                    onChange={(event) => genderChange(event)}
-                  />
-                  <RadioButtonLabel />
-                  <div>누구나</div>
-                </Item>
-                <Item>
-                  <RadioButton
-                    type="radio"
-                    name="gender"
-                    value="여성만"
-                    checked={memberGender === "여성만"}
-                    onChange={(event) => genderChange(event)}
-                  />
-                  <RadioButtonLabel />
-                  <div>여성만</div>
-                </Item>
-                <Item>
-                  <RadioButton
-                    type="radio"
-                    name="gender"
-                    value="남성만"
-                    checked={memberGender === "남성만"}
-                    onChange={(event) => genderChange(event)}
-                  />
-                  <RadioButtonLabel />
-                  <div>남성만</div>
-                </Item>
+              <Grid>
+                <form
+                  onChange={(e) => {
+                    setMemberGender(e.target.value);
+                  }}
+                  style={{
+                    display: 'flex',
+                    width: '100%',
+                  }}
+                >
+                  <input type='radio' name='state' value='누구나' /> 누구나
+                  <input type='radio' name='state' value='여성만' /> 여성만
+                  <input type='radio' name='state' value='남성만' /> 남성만
+                </form>
               </Grid>
             </GenderBox>
             <AgeBox>
@@ -154,41 +140,42 @@ const PostWrite_2 = (props) => {
                   setMemberAge(e.target.value);
                 }}
                 style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  width: "100%",
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  width: '100%',
                 }}
               >
                 <Grid>
                   <Grid>
-                    <input type="radio" name="state" value="누구나" /> 누구나
+                    <input type='radio' name='state' value='나이무관' />
+                    나이무관
                     <input
-                      type="radio"
-                      name="state"
+                      type='radio'
+                      name='state'
                       value={member.fage + member.lage}
                     />
                     직접입력
                   </Grid>
-                  <Grid margin="12px 0px" justify="center">
+                  <Grid margin='12px 0px' justify='center'>
                     <label>
                       <input
-                        type="textarea"
-                        name="fage"
+                        type='textarea'
+                        name='fage'
                         value={member.fage}
                         onChange={handleChange}
-                        placeholder="시작 나이 ex) 20"
-                        style={{ width: "100px", height: "32px" }}
+                        placeholder='시작 나이 ex) 20'
+                        style={{ width: '100px', height: '32px' }}
                       />
                     </label>
-                    {"   -   "}
+                    {'   -   '}
                     <label>
                       <input
-                        type="textarea"
-                        name="lage"
+                        type='textarea'
+                        name='lage'
                         value={member.lage}
                         onChange={handleChange}
-                        placeholder="끝 나이 ex) 29"
-                        style={{ width: "100px", height: "32px" }}
+                        placeholder='끝 나이 ex) 29'
+                        style={{ width: '100px', height: '32px' }}
                       />
                     </label>
                   </Grid>
@@ -201,7 +188,7 @@ const PostWrite_2 = (props) => {
 
       <Link
         to={{
-          pathname: "/postwrite3",
+          pathname: '/postwrite3',
           state: {
             maxMember,
             memberGender,
@@ -219,7 +206,7 @@ const PostWrite_2 = (props) => {
           onClick={addContents}
           event={maxMember < 2 ? alert('인원을 2명 이상 설정해 주세요') : ''}
         /> */}
-        <Button margin="260px 0px 0px 24px">다음</Button>
+        <Button margin='260px 0px 0px 24px'>다음</Button>
       </Link>
     </Grid>
   );
@@ -269,7 +256,7 @@ const RadioButton = styled.input`
   &:hover ~ ${RadioButtonLabel} {
     background: #bebebe;
     &::after {
-      content: "";
+      content: '';
       display: block;
       border-radius: 50%;
       width: 12px;
