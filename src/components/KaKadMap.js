@@ -5,7 +5,7 @@ import { useMap } from "react-kakao-maps-sdk";
 import Image from "../elements/Image";
 function KakaoMap(props) {
   const { MainMap, UserLoca, post,_onClick} = props;
-console.log(props)
+
   if (MainMap) {
     return (
       <Map

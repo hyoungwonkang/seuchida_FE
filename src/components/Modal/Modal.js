@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 
 const Modal = (props) => {
-  console.log(props)
+ 
   return (
     <ModalPortal>
       <Background>

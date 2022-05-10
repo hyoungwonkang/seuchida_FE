@@ -79,15 +79,12 @@ const Category = (props) => {
     formData.append("userAge", age);
     formData.append("userContent", content);
     formData.append("address", address);
-    console.log("formData", formData);
+
     for (var i = 0; i < userInterest.length; i++) {
       formData.append("userInterest[]", userInterest[i]);
       // console.log(userInterest[i]);
     }
-    console.log(userInterest);
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ", " + pair[1]);
-    }
+
     dispatch(userActions.signupDB(formData));
   };
 
@@ -99,13 +96,8 @@ const Category = (props) => {
     formData.append("userAge", age);
     formData.append("userContent", content);
     formData.append("address", address);
-    console.log("formData", formData);
     for (var i = 0; i < userInterest.length; i++) {
       formData.append("userInterest[]", userInterest[i]);
-    }
-    console.log(userInterest);
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ", " + pair[1]);
     }
     dispatch(userActions.editUserDB(formData));
   };

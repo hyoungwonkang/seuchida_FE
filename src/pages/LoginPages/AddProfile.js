@@ -18,7 +18,7 @@ const AddProfile = (props) => {
 
   const userInfo = useSelector((state) => state.user?.userInfo);
   const edit = useSelector((state) => state.user?.userInfo.userImg);
-  console.log(edit);
+
   const is_edit = edit ? true : false;
 
   React.useEffect(() => {
