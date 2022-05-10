@@ -11,7 +11,7 @@ const Main = () => {
   const catepost = useSelector((state) => state.post.list.caPost);
   const post_list = useSelector((state) => state.post.list.nearPost);
   const review = useSelector((state) => state.post.list.filterRe);
-  const user = useSelector((state)=> state.user)
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [state, setState] = React.useState({
     center: {
@@ -21,7 +21,6 @@ const Main = () => {
     errMsg: null,
     isLoading: true,
   });
-  console.log(catepost);
   React.useEffect(() => {
     if (navigator.geolocation) {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
@@ -64,7 +63,7 @@ const Main = () => {
         <TopLive>
           <WellcomeBox>
             <Wellcome>
-             {user.userInfo.nickName}님
+              {user.userInfo.nickName}님
               <br />
               방금 개설된 가까운 <br />
               <Sports>배드민턴</Sports> 매칭이에요!
@@ -75,7 +74,11 @@ const Main = () => {
 
         {/* 스친 운동 한줄평 */}
         <ReviewBox>
-          <TitleBox onClick={() => {window.location.href = '/reviewlist';}}>
+          <TitleBox
+            onClick={() => {
+              window.location.href = '/reviewlist';
+            }}
+          >
             <Title>함께한 스친들의 후기</Title> <Title>&gt;</Title>
           </TitleBox>
 
@@ -83,9 +86,11 @@ const Main = () => {
         </ReviewBox>
 
         {/* 여기여기 붙어라 */}
-        <TitleBox onClick={() => {
-                    history.push(`/postlist`);
-                  }}>
+        <TitleBox
+          onClick={() => {
+            history.push(`/postlist`);
+          }}
+        >
           <Title>여기여기 붙어라</Title>
           <Title>&gt;</Title>
         </TitleBox>
@@ -124,24 +129,24 @@ const Container = styled.section`
 const TopLive = styled.section`
   max-height: 60vh;
   min-height: 450px;
-  background-color: #F8F8FA;
+  background-color: #f8f8fa;
 `;
 
 const WellcomeBox = styled.div`
   font-size: 24px;
- 
+
   padding: 40px 24px 30px 24px;
-  background-color: #0ED88B;
+  background-color: #0ed88b;
 `;
 
 const Sports = styled.div`
   display: inline;
-  color: #FFFFFF;
+  color: #ffffff;
   font-weight: bold;
 `;
 
 const Wellcome = styled.div`
-  color: #FFFFFF;
+  color: #ffffff;
 `;
 
 // --라이브 카드

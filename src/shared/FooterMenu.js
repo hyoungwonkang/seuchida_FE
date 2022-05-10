@@ -11,12 +11,20 @@ const FooterMenu = (props) => {
       <Btn>
         <Button
           _onClick={() => {
-            history.push(props.path);
-            props.event();
-            
+            //페이지 이동
+            if (props.path) {
+              history.push(props.path);
+            }
+            //액션 실행
+            if (props.event) {
+              return props.event();
+            }
+            //유효성 검사 실행
+            if (props.state) {
+              return props.state();
+            }
           }}
-          
-          margin={"12px 0px 0px 0px"}
+          margin={'12px 0px 0px 0px'}
         >
           {props.text}
         </Button>

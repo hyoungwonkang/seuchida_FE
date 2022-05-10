@@ -42,6 +42,11 @@ const PostWrite_1 = (props) => {
           _onChange={selectPostTitle}
           placeholder='어떤 활동을 같이하고 싶나요?'
         />
+        <Grid margin='0px 0px 0px 310px'>
+          <Text size='12px' color='#787878'>
+            {postDesc.length}/60
+          </Text>
+        </Grid>
       </Grid>
       <Text margin='0px 0px 0px 24px' size='16px'>
         설명
@@ -56,6 +61,11 @@ const PostWrite_1 = (props) => {
           _onChange={selectPostDesc}
           placeholder='스친과 함께하고 싶은 운동에 대해 설명해주세요.'
         />
+        <Grid margin='0px 0px 0px 310px'>
+          <Text size='12px' color='#787878'>
+            {postDesc.length}/200
+          </Text>
+        </Grid>
       </Grid>
       <Link
         to={{
