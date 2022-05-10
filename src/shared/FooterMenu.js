@@ -4,8 +4,8 @@ import { history } from "../redux/configStore";
 import { Button } from "../elements/Index";
 
 const FooterMenu = (props) => {
-  const { next } = props;
-  //다음 버튼
+  const { next,is_check } = props;
+
   if (next) {
     return (
       <Btn>
@@ -21,6 +21,18 @@ const FooterMenu = (props) => {
               return props.state();
             }
           }}
+          margin={"12px 0px 0px 0px"}
+        >
+          {props.text}
+        </Button>
+      </Btn>
+    );
+  }
+  if (is_check) {
+    return (
+      <Btn>
+        <Button
+         is_delete
           margin={"12px 0px 0px 0px"}
         >
           {props.text}

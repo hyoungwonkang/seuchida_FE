@@ -75,11 +75,9 @@ const Main = () => {
 
         {/* 스친 운동 한줄평 */}
         <ReviewBox>
-          <TitleBox
-            onClick={() => {
-              window.location.href = "/reviewlist";
-            }}
-          >
+
+          <TitleBox onClick={() => {window.location.href = '/reviewlist/1';}}>
+
             <Title>함께한 스친들의 후기</Title> <Title>&gt;</Title>
           </TitleBox>
 
@@ -87,11 +85,11 @@ const Main = () => {
         </ReviewBox>
 
         {/* 여기여기 붙어라 */}
-        <TitleBox
-          onClick={() => {
-            history.push(`/postlist`);
-          }}
-        >
+
+        <TitleBox onClick={() => {
+                    window.location.href ='/postlist';
+                  }}>
+
           <Title>여기여기 붙어라</Title>
           <Title>&gt;</Title>
         </TitleBox>

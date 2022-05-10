@@ -18,6 +18,15 @@ const Button = (props) => {
     position,
   } = props;
 
+  const styles = {
+    margin: margin,
+    width: width,
+    padding: padding,
+    border: border,
+    bold: bold,
+    right: right,
+    bg: bg,
+  };
   if (is_float) {
     return (
       <React.Fragment>
@@ -28,21 +37,11 @@ const Button = (props) => {
   if (is_delete) {
     return (
       <React.Fragment>
-        <DeleteButton onClick={_onClick}>{text ? text : children}</DeleteButton>
+        <DeleteButton {...styles} onClick={_onClick}>{text ? text : children}</DeleteButton>
       </React.Fragment>
     );
   }
 
-  const styles = {
-    margin: margin,
-    width: width,
-    padding: padding,
-    border: border,
-    bold: bold,
-    right: right,
-    bg: bg,
-    position: position,
-  };
 
   return (
     <React.Fragment>
@@ -101,17 +100,24 @@ const FloatButton = styled.button`
 `;
 
 const DeleteButton = styled.button`
-  width: 40px;
-  height: 20px;
-  background-color: gray;
+
+  width: 342px;
+  height: 54px;
+  background: #C4C4C4;
+  ${(props) => (props.bg ? `background: #FDE333` : "")};
   color: white;
+  font-weight: bold;
+  padding: ${(props) => props.padding};
   box-sizing: border-box;
-  font-size: 12px;
-  position: absolute;
-  right: 15px;
-  text-align: center;
-  vertical-align: middle;
   border: none;
+  border-radius: 5px;
+  ${(props) => (props.margin ? `margin: ${props.margin};` : "")}
+  ${(props) => (props.right ? `float: right` : "")}
+  /* &:hover {
+    box-shadow: 0px 0px 5px 0px gray;
+  }
+  font-family: "Cafe24Ohsquareair"; */
+
 `;
 
 export default Button;

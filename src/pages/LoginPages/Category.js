@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as userActions } from "../../redux/modules/user";
-import GoBack from "../../components/GoBack";
-import { Grid, Text } from "../../elements/Index";
+import { Grid, Text,GoBack } from "../../elements/Index";
 import FooterMenu from "../../shared/FooterMenu";
 
 const Category = (props) => {
@@ -88,9 +87,7 @@ const Category = (props) => {
     for (var i = 0; i < userInterest.length; i++) {
       formData.append("userInterest[]", userInterest[i]);
     }
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ", " + pair[1]);
-    }
+
     dispatch(userActions.signupDB(formData));
   };
 
@@ -108,9 +105,6 @@ const Category = (props) => {
       formData.append("userInterest[]", userInterest[i]);
     }
 
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ", " + pair[1]);
-    }
     dispatch(userActions.editUserDB(formData));
   };
 

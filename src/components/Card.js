@@ -1,38 +1,30 @@
 import React from "react";
 import styled from "styled-components";
-import { BiDumbbell } from "react-icons/bi";
-import { AiFillCalendar } from "react-icons/ai";
-import { FaPen } from "react-icons/fa";
-import { MdPlace } from "react-icons/md";
-// import { Grid, Image, Text, Button } from "../elements/Index";
 
-const Card = (props) => {
-  const { MainCard, DetailCard, center, _onClick, isMe } = props;
+import { BiDumbbell } from 'react-icons/bi';
+import { AiFillCalendar } from 'react-icons/ai';
+import { FaPen } from 'react-icons/fa';
+import { MdPlace } from 'react-icons/md';
 
-  function getDistance(lat1, lon1, lat2, lon2, unit) {
-    if (lat1 === lat2 && lon1 === lon2) {
-      return 0;
-    } else {
-      var radlat1 = (Math.PI * lat1) / 180;
-      var radlat2 = (Math.PI * lat2) / 180;
-      var theta = lon1 - lon2;
-      var radtheta = (Math.PI * theta) / 180;
-      var dist =
-        Math.sin(radlat1) * Math.sin(radlat2) +
-        Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-      if (dist > 1) {
-        dist = 1;
-      }
-      dist = Math.acos(dist);
-      dist = (dist * 180) / Math.PI;
-      dist = dist * 60 * 1.1515;
-      if (unit === "K") {
-        dist = dist * 1.609344;
-      }
-      if (unit === "N") {
-        dist = dist * 0.8684;
-      }
-      return dist;
+
+
+
+
+const Card =(props) => {
+const { MainCard, DetailCard, center, _onClick} = props
+function getDistance(lat1, lon1, lat2, lon2, unit) {
+  if (lat1 === lat2 && lon1 === lon2) {
+    return 0;
+  } else {
+    var radlat1 = (Math.PI * lat1) / 180;
+    var radlat2 = (Math.PI * lat2) / 180;
+    var theta = lon1 - lon2;
+    var radtheta = (Math.PI * theta) / 180;
+    var dist =
+      Math.sin(radlat1) * Math.sin(radlat2) +
+      Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+    if (dist > 1) {
+      dist = 1;
     }
   }
 
@@ -69,10 +61,12 @@ const Card = (props) => {
               >
                 <ProfileBox>
                   {props?.nowMember.map((m, i) => {
-                    return (
-                      <Profile ket={m.id} src={m.memberImg} key={m.memberId} />
-                    );
+
+                    
+                if(i<3) return <Profile key={i} src={m.memberImg} />;
+
                   })}
+                  {props.nowMember.length >3 ? <CountM>+{props.nowMember.length-3}</CountM>:null}
                 </ProfileBox>
                 <SmallFont>{distance} km 떨어짐 | 1분전</SmallFont>
               </Join>
@@ -83,16 +77,60 @@ const Card = (props) => {
     );
   }
 
-  if (DetailCard)
-    return (
-      <Container style={{ border: "none" }}>
-        <TitleBox style={{ background: "white", borderDisplay: "none" }}>
-          <BoldTitle style={{ fontSize: "20px" }}>
+
+ if(DetailCard) return (
+   <>
+    <Container style={{border:"none"}} >
+        <TitleBox style={{background:"white", borderDisplay:"none"}}>
+          <BoldTitle style={{fontSize:"20px", color:"#FF6B52"}}>
+
             · {props?.status === true ? "모집중" : "모집완료"}
           </BoldTitle>
           <BoldTitle style={{ fontSize: "20px" }}>{props?.postTitle}</BoldTitle>
           {/* {isMe ? <Button is_delete>삭제</Button> : ""} */}
-        </TitleBox>
+        </TitleBox> 
+      <TextBoxList>
+      <DescBox style={{margin:"0px 0px"}}>
+          <DetailDesc>{props?.postDesc}</DetailDesc>
+        </DescBox>
+        
+        <Join>
+          <div> </div>
+    
+
+            <SmallFont>{distance} km 떨어짐 | {props.createdAt}</SmallFont>
+          </Join>
+
+      <Status style={{background:"#F8F8F8", height: "120px"}}> 
+         
+         
+          <StatusIcon>
+          
+            <span ><MdPlace color="#787878"/></span> <StatusBox>{props?.spot}</StatusBox>
+          </StatusIcon>
+          <StatusIcon>
+          
+          <span><BiDumbbell color="#787878"/></span><StatusBox>{props?.postCategory}</StatusBox>
+          </StatusIcon>
+          <StatusIcon>
+          <span><AiFillCalendar color="#787878"/></span>
+            <StatusBox>{props?.datemate}</StatusBox>
+          </StatusIcon>
+          <StatusIcon>
+          <span><FaPen color="#787878" size="14px"/></span>
+            <StatusBox>
+              {props?.memberGender}, {props?.memberAge}
+            </StatusBox>        
+          </StatusIcon>
+        </Status>
+
+     
+  
+    
+      </TextBoxList>
+    </Container></>
+  );
+
 
         <TextBoxList>
           <DescBox style={{ margin: "0px 0px" }}>
@@ -331,3 +369,10 @@ const SmallFont = styled.div`
   font-size: 12.5px;
   margin-top: 16px;
 `;
+
+const CountM = styled.span`
+margin-top: 10px;
+color: #787878;
+font-size: 14px;
+
+`

@@ -5,14 +5,18 @@ import { connectRouter } from "connected-react-router";
 
 import user from "./modules/user";
 import post from "./modules/post";
+import room from "./modules/room";
 import mypage from "./modules/mypage";
+
 
 export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
   user: user,
-  post: post,
+  post:post,
+  room:room,
   mypage: mypage,
+
 
   router: connectRouter(history),
 });

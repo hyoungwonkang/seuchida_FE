@@ -6,10 +6,18 @@ import ModalPortal from "../components/Modal/Portal";
 import FooterMenu from '../shared/FooterMenu';
 import { useDispatch , useSelector} from 'react-redux';
 import { actionCreators as postActions } from "../redux/modules/post";
-
+import { useParams } from 'react-router-dom';
 const ReviewList = () => {
-  const review_list = useSelector(state => state.post.review)
+  const review = useSelector(state => state.post.review)
   const dispatch = useDispatch()
+  const params = useParams();
+
+  const review_list =[
+    ...review.filter(d => d._id ===params.reviewId),
+    ...review.filter(d => d._id !== params.reviewId)
+  ] //선택된 리뷰를 가장 먼저 보여지도록 정렬을 수정
+
+
   const [modalOn, setModalOn] = React.useState(false);
   const openModal = (e) => {
     e.stopPropagation();
@@ -23,9 +31,13 @@ const ReviewList = () => {
     dispatch(postActions.getReviewlistDB())
 
   },[])
+ 
+
 
   if(!review_list) return
+ 
 
+ 
 
   return (
     <>

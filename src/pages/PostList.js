@@ -2,13 +2,19 @@ import React from "react";
 import { Card } from "../components/index";
 import styled from "styled-components";
 import FooterMenu from "../shared/FooterMenu";
-import gBack from "../shared/ImgBox/gBack.png";
+import GoBack from "../elements/GoBack";
 import { useSelector, useDispatch } from "react-redux";
-import post, { actionCreators as postActions } from "../redux/modules/post";
+import { actionCreators as postActions } from "../redux/modules/post";
 import { history } from "../redux/configStore";
 const PostList = () => {
   const dispatch = useDispatch();
+
   const post_list = useSelector((state) => state.post.list.nearPosts);
+
+
+
+
+
   const [state, setState] = React.useState({
     center: {
       lat: 33.450701,
@@ -57,7 +63,7 @@ const PostList = () => {
     
       <Header>
         <Gback>
-          <img src={gBack} onClick={()=>{
+          <GoBack gback _onClick={()=>{
             window.location.href = '/main';
           }}/>
         </Gback>
@@ -103,7 +109,7 @@ const Gback = styled.div``;
 const HeadContents = styled.div`
   font-size: 20px;
   font-weight: bold;
-  margin-left: 20px;
+  margin: 2px 0px 0px 20px;
 `;
 
 const ListBox = styled.div`

@@ -65,6 +65,7 @@ const Map = () => {
   let UserLoca = state.center;
   return (
     <>
+    <div >
       <Header>
         <Title>
           내 주변에 개설된 <br />
@@ -79,10 +80,10 @@ const Map = () => {
                <div>sdfsdaasa</div>
           </>)
         })}</Modal>}
-        <KakaoMap MainMap UserLoca={UserLoca} post={post} />
+        <KakaoMap MainMap UserLoca={UserLoca} post={post} _onClick={()=> setIsOpen(false)} />
       </div>
 
-      <FooterMenu />
+      <FooterMenu /></div>
     </>
   );
 };
@@ -117,7 +118,7 @@ const slideUp = keyframes`
 `;
 const Modal = styled.div`
   width: 100%;
-  height: 400px;
+  height: 450px;
   position: fixed;
   z-index: 29;
   background-color: green;
@@ -132,7 +133,7 @@ const Modal = styled.div`
 const OpenModal = styled.div`
   position: fixed;
   bottom: 95px;
-  z-index: 30;
+  z-index: 10;
   background-color: white;
   padding: 8px 16px;
   border-radius: 50px;
