@@ -3,11 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
-import { Grid, Image, Input, Text } from "../../elements/Index";
+import { Grid, Image, Input, Text, GoBack } from "../../elements/Index";
 import { actionCreators as userActions } from "../../redux/modules/user";
 import { useHistory } from "react-router-dom";
 import FooterMenu from "../../shared/FooterMenu";
-import GoBack from "../../components/GoBack";
 import { AiFillPlusCircle } from "react-icons/ai";
 
 const AddProfile = (props) => {
