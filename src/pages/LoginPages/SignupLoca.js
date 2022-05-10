@@ -10,10 +10,12 @@ import { actionCreators as userActions } from "../../redux/modules/user";
 
 const SignupLoca = () => {
   const dispatch = useDispatch();
-  const edit = useSelector((state) => state.user?.userInfo.userImg);
 
+  //작성||수정 구분
+  const edit = useSelector((state) => state.user?.userInfo.userImg);
   const is_edit = edit ? true : false;
 
+  //유저정보
   React.useEffect(() => {
     dispatch(userActions.isLoginDB());
   }, []);
@@ -29,9 +31,9 @@ const SignupLoca = () => {
     isLoading: true,
   });
 
+  //현재 내 위치
   React.useEffect(() => {
     if (navigator.geolocation) {
-      // GeoLocation을 이용해서 접속 위치를 얻어옵니다
       navigator.geolocation.getCurrentPosition(
         (pos) => {
           const lat = pos.coords.latitude; // 위도
@@ -44,6 +46,7 @@ const SignupLoca = () => {
             },
             isLoading: false,
           }));
+          //현재 내 경도, 위도 => 주소로 변환
           axios
             .get(
               `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lng}&y=${lat}&input_coord=WGS84`,
@@ -56,7 +59,7 @@ const SignupLoca = () => {
             .then((res) => {
               const location = res.data.documents[0].address; //내 현 위치의 주소
               const result = `${location.region_1depth_name} ${location.region_2depth_name}`;
-              // console.log(res);
+
               setFullAddress(location.address_name);
               setAddress(result); //input에 지소 띄우기
             });
@@ -70,7 +73,6 @@ const SignupLoca = () => {
         }
       );
     } else {
-      // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
       setState((prev) => ({
         ...prev,
         errMsg: "geolocation을 사용할수 없어요..",
@@ -86,6 +88,8 @@ const SignupLoca = () => {
       ) : (
         <GoBack text="동네 설정하기" path="/signupdone" />
       )}
+
+      {/* 동네 설정 */}
       <Grid height="auto" column margin="auto">
         <Grid row padding="0px 30px" height="auto">
           <Image src="https://ifh.cc/g/NcBFMY.png" size={16} />
@@ -95,7 +99,8 @@ const SignupLoca = () => {
           <Text size="16px">{fullAddress}</Text>
         </Grid>
 
-        <Map // 지도를 표시할 Container
+        {/* 지도 */}
+        <Map
           id="map"
           center={state.center}
           style={{
@@ -103,8 +108,9 @@ const SignupLoca = () => {
             height: "311px",
             margin: "0px 0px 300px 0px",
           }}
-          level={3} // 지도의 확대 레벨
+          level={3}
         >
+          {/* 맵마커 */}
           {!state.isLoading && (
             <MapMarker
               position={state.center}
@@ -121,6 +127,7 @@ const SignupLoca = () => {
           )}
         </Map>
 
+        {/* 푸터*/}
         <Link
           to={{
             pathname: "/addprofile",
@@ -128,15 +135,15 @@ const SignupLoca = () => {
           }}
           style={{ textDecoration: "none" }}
         >
-          <FooterMenu next path="/addprofile" text="다음" event="null" />
+          <FooterMenu next path="/addprofile" text="다음" />
         </Link>
       </Grid>
     </Grid>
   );
 };
 
+export default SignupLoca;
+
 const MsgBox = styled.div`
   padding: 5px;
 `;
-
-export default SignupLoca;

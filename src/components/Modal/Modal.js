@@ -1,8 +1,9 @@
 //Modal.js
 
-import React from "react";
-import ModalPortal from "./Portal";
-import styled from "styled-components";
+import React from 'react';
+import ModalPortal from './Portal';
+import styled from 'styled-components';
+import NameCard from '../../pages/MyPage';
 
 
 const Modal = (props) => {

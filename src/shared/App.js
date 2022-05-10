@@ -3,28 +3,31 @@ import styled from "styled-components";
 import { Route } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configStore";
-
-import Login from "../pages/LoginPages/Login";
-import Main from "../pages/Main";
-import Redirect from "./Redirect";
-import SignupDone from "../pages/LoginPages/SignupDone";
-import SignupLoca from "../pages/LoginPages/SignupLoca";
-import AddProfile from "../pages/LoginPages/AddProfile";
-import PostList from "../pages/PostList";
-import PostDetail from "../pages/PostDetail";
-import Map from "../pages/Map";
-import MyPage from "../pages/MyPage";
-import Category from "../pages/LoginPages/Category";
-import Time from "../components/Time";
-import Done from "../pages/LoginPages/Done";
-import PostCategory from "../pages/PostCategory";
-import PostWrite_1 from "../pages/PostWrite_1";
-import PostWrite_2 from "../pages/PostWrite_2";
-import PostWrite_3 from "../pages/PostWrite_3";
-import PostWrite_4 from "../pages/PostWrite_4";
-import PostDone from "../pages/PostDone";
-import ReviewList from "../pages/ReviewList";
-import ReviewWrite from "../pages/ReviewWrite";
+import {
+  Login,
+  Redirect,
+  SignupDone,
+  SignupLoca,
+  AddProfile,
+  Category,
+  Main,
+  PostList,
+  PostDetail,
+  Map,
+  ReviewList,
+  Done,
+  PostCategory,
+  PostWrite_1,
+  PostWrite_2,
+  PostWrite_3,
+  PostWrite_4,
+  PostDone,
+  MyPage,
+  MyPost,
+  MyReview,
+  ReviewWrite,
+} from "../pages/Index";
+import ReviewCardD from "../components/ReviewCardD";
 
 function App() {
   return (
@@ -42,8 +45,10 @@ function App() {
           <Route path="/ReviewList/:reviewId" exact component={ReviewList} />
           <Route path="/mypage" exact component={MyPage} />
           <Route path="/reviewwrite" exact component={ReviewWrite} />
+          <Route path="/mypost" exact component={MyPost} />
+          <Route path="/myreview" exact component={MyReview} />
           <Route path="/map" exact component={Map} />
-          <Route path="/time" exact component={Time} />
+          <Route path="/reviewcardD" exact component={ReviewCardD} />
           <Route path="/category" exact component={Category} />
           <Route path="/done" exact component={Done} />
           <Route path="/postcategory" exact component={PostCategory} />
