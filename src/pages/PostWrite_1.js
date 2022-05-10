@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import FooterMenu from '../shared/FooterMenu';
 import { Grid, Text, Input } from '../elements/Index';
-import GoBack from '../components/GoBack';
+import GoBack from '../elements/GoBack';
 
 const PostWrite_1 = (props) => {
   const postCategory = props?.location?.state?.postCategory;

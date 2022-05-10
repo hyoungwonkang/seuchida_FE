@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux';
 import FooterMenu from '../shared/FooterMenu';
 import Picker from 'react-mobile-picker-scroll';
 import { Button, Grid, Text, Input } from '../elements/Index';
-import GoBack from '../components/GoBack';
+import GoBack from '../elements/GoBack';
 
 import { BsFillCalendarFill } from 'react-icons/bs';
 import { AiFillClockCircle } from 'react-icons/ai';
