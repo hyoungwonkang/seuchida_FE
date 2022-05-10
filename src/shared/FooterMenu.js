@@ -1,27 +1,30 @@
-import React from "react";
-import styled from "styled-components";
-import { history } from "../redux/configStore";
-import { Button } from "../elements/Index";
+import React from 'react';
+import styled from 'styled-components';
+import { history } from '../redux/configStore';
+import { Button } from '../elements/Index';
 
 const FooterMenu = (props) => {
-  const { next,is_check } = props;
+  const { next, is_check } = props;
 
   if (next) {
     return (
       <Btn>
         <Button
           _onClick={() => {
+            //페이지 이동
             if (props.path) {
               history.push(props.path);
             }
+            //액션 실행
             if (props.event) {
               return props.event();
             }
+            //유효성 검사 실행
             if (props.state) {
               return props.state();
             }
           }}
-          margin={"12px 0px 0px 0px"}
+          margin={'12px 0px 0px 0px'}
         >
           {props.text}
         </Button>
@@ -31,10 +34,7 @@ const FooterMenu = (props) => {
   if (is_check) {
     return (
       <Btn>
-        <Button
-         is_delete
-          margin={"12px 0px 0px 0px"}
-        >
+        <Button is_delete margin={'12px 0px 0px 0px'}>
           {props.text}
         </Button>
       </Btn>
@@ -46,35 +46,35 @@ const FooterMenu = (props) => {
       <MenuBox>
         <Menu
           onClick={() => {
-            history.push("/main");
+            history.push('/main');
           }}
         >
           홈
         </Menu>
         <Menu
           onClick={() => {
-            history.push("/map");
+            history.push('/map');
           }}
         >
           내주변
         </Menu>
         <Menu
           onClick={() => {
-            history.push("/challenge");
+            history.push('/challenge');
           }}
         >
           챌린지
         </Menu>
         <Menu
           onClick={() => {
-            history.push("/chat");
+            history.push('/chat');
           }}
         >
           채팅
         </Menu>
         <Menu
           onClick={() => {
-            history.push("/mypage");
+            history.push('/mypage');
           }}
         >
           마이페이지

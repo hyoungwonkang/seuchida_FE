@@ -1,16 +1,16 @@
-import React from "react";
-import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
-import styled from "styled-components";
-import { useMap } from "react-kakao-maps-sdk";
-import Image from "../elements/Image";
+import React from 'react';
+import { CustomOverlayMap, Map, MapMarker } from 'react-kakao-maps-sdk';
+import styled from 'styled-components';
+import { useMap } from 'react-kakao-maps-sdk';
+import Image from '../elements/Image';
 function KakaoMap(props) {
-  const { MainMap, UserLoca, post,_onClick} = props;
+  const { MainMap, UserLoca, post, _onClick } = props;
 
   if (MainMap) {
     return (
       <Map
         center={{ lat: UserLoca.lat, lng: UserLoca.lng }}
-        style={{ width: "100%", height: "600px" }}
+        style={{ width: '100%', height: '600px' }}
         onClick={_onClick}
         level={7}
       >
@@ -19,7 +19,7 @@ function KakaoMap(props) {
         ></MapMarker>
         {post?.map((position, index) => (
           <>
-              <EventMarkerContainer {...position}/>
+            <EventMarkerContainer {...position} />
           </>
         ))}
       </Map>
@@ -31,7 +31,7 @@ function KakaoMap(props) {
       <DetailMap>
         <Map
           center={{ lat: props?.latitude, lng: props?.longitude }}
-          style={{ width: "100%", height: "200px" }}
+          style={{ width: '100%', height: '200px' }}
           level={3}
         >
           <MapMarker
@@ -40,14 +40,8 @@ function KakaoMap(props) {
         </Map>
       </DetailMap>
     </>
-
-
-
   );
- 
 }
-
-
 
 export default KakaoMap;
 
@@ -68,28 +62,31 @@ const Box = styled.div`
 `;
 const Close = styled.button``;
 
-
 const EventMarkerContainer = (props) => {
-  const [isclick, setIsClicked] = React.useState(false)
+  const [isclick, setIsClicked] = React.useState(false);
   return (
     <>
-     <MapMarker 
-              key={props._id}
-              position={{ lat:props.latitude, lng:props.longitude }}
-              onClick={() => setIsClicked(true)}  
-            />
-  <CustomOverlayMap
-      position={{lat:props.latitude, lng:props.longitude}} // 마커를 표시할 위치
-        
-    >         
-               { isclick&& <Box>
-                 <div><Image src ={props.userImg}
-                  size ={36}></Image>{props.nickName}</div> {props.postDesc}
-                  <Close className="close" onClick={() => setIsClicked(false)}>
-                    X
-                  </Close>
-                </Box>}
-            
-    </CustomOverlayMap></>
-  )
-}
+      <MapMarker
+        key={props._id}
+        position={{ lat: props.latitude, lng: props.longitude }}
+        onClick={() => setIsClicked(true)}
+      />
+      <CustomOverlayMap
+        position={{ lat: props.latitude, lng: props.longitude }} // 마커를 표시할 위치
+      >
+        {isclick && (
+          <Box>
+            <div>
+              <Image src={props.userImg} size={36}></Image>
+              {props.nickName}
+            </div>{' '}
+            {props.postDesc}
+            <Close className='close' onClick={() => setIsClicked(false)}>
+              X
+            </Close>
+          </Box>
+        )}
+      </CustomOverlayMap>
+    </>
+  );
+};
