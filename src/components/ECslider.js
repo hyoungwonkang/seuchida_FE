@@ -5,7 +5,6 @@ import "slick-carousel/slick/slick-theme.css";
 import EndCard from "./EndCard";
 import styled from "styled-components";
 
-// export default class ECslider extends Component {
 function ECslider(props) {
   const settings = {
     dots: true,
@@ -15,6 +14,7 @@ function ECslider(props) {
     slidesToScroll: 1,
     variableWidth: true,
   };
+
   return (
     <Sliders {...settings} style={{ height: "180px", margin: "0px" }}>
       <EndCard>
@@ -33,6 +33,7 @@ function ECslider(props) {
 export default ECslider;
 
 const Sliders = styled(Slider)`
+  margin: auto;
   .slider {
     position: relative;
   }

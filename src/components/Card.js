@@ -4,10 +4,10 @@ import { BiDumbbell } from "react-icons/bi";
 import { AiFillCalendar } from "react-icons/ai";
 import { FaPen } from "react-icons/fa";
 import { MdPlace } from "react-icons/md";
-// import { Grid, Image, Text, Button } from "../elements/Index";
+import { Button } from "../elements/Index";
 
 const Card = (props) => {
-  const { MainCard, DetailCard, center, _onClick, isMe } = props;
+  const { MainCard, DetailCard, center, _onClick, isMe, deleteone } = props;
 
   function getDistance(lat1, lon1, lat2, lon2, unit) {
     if (lat1 === lat2 && lon1 === lon2) {
@@ -91,7 +91,13 @@ const Card = (props) => {
             · {props?.status === true ? "모집중" : "모집완료"}
           </BoldTitle>
           <BoldTitle style={{ fontSize: "20px" }}>{props?.postTitle}</BoldTitle>
-          {/* {isMe ? <Button is_delete>삭제</Button> : ""} */}
+          {isMe ? (
+            <Button is_delete _onClick={deleteone}>
+              삭제
+            </Button>
+          ) : (
+            ""
+          )}
         </TitleBox>
 
         <TextBoxList>

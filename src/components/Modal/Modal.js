@@ -1,16 +1,30 @@
-//Modal.js
+import React from "react";
+import reactDom from "react-dom";
+import styled from "styled-components";
+import { Grid, Image, Text } from "../../elements/Index";
+import { BiCategory } from "react-icons/bi";
 
-import React from 'react';
-import ModalPortal from './Portal';
-import styled from 'styled-components';
-import NameCard from '../../pages/MyPage';
+const ModalPortal = ({ children }) => {
+  const el = document.getElementById("modal");
+  return reactDom.createPortal(children, el);
+};
 
-const Modal = () => {
+const Modal = (props) => {
   return (
     <ModalPortal>
       <Background>
-        {/* <NameCard /> */}
-        <Content>모달창~</Content>
+        <Grid width="342px" bg="pink" height="356px" br="10px" padding="15px">
+          <Grid height="auto" row>
+            <Image shape="circle" src={props.Cate} size={60} margin="3px" />
+            {/* <Grid column> */}
+            <Image src="./img/red_medal.png" />
+            <Text margin="0px">{props.user?.nickName}</Text>
+            <Text margin="0px">{props.user?.nickName}여/21세</Text>
+            {/* </Grid> */}
+          </Grid>
+          Category
+          <Text>운동에 관심이 많은 상대방 입니다 재미있게 같이 운동해요:</Text>
+        </Grid>
       </Background>
     </ModalPortal>
   );

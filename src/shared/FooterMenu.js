@@ -1,22 +1,26 @@
 import React from "react";
 import styled from "styled-components";
-import { history } from "../redux/configStore";
+import { useHistory } from "react-router-dom";
 import { Button } from "../elements/Index";
 
 const FooterMenu = (props) => {
+  const history = useHistory();
   const { next } = props;
   //다음 버튼
   if (next) {
     return (
       <Btn>
         <Button
-          _onClick={() => {
+          _onClick={(e) => {
+            //페이지 이동
             if (props.path) {
               history.push(props.path);
             }
+            //액션 실행
             if (props.event) {
               return props.event();
             }
+            //유효성 검사 실행
             if (props.state) {
               return props.state();
             }

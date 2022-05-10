@@ -37,8 +37,10 @@ const ReviewWrite = (props) => {
   };
 
   const writeReview = (e) => {
+    if (e.target.value.length >= 100) {
+      e.target.value = e.target.value.substr(0, 100);
+    }
     setReview(e.target.value);
-    console.log(e.target.value);
   };
 
   const addReview = () => {
@@ -51,11 +53,16 @@ const ReviewWrite = (props) => {
     dispatch(mypageActions.addReviewDB(formData));
   };
 
+  if (review?.length >= 100) {
+    window.alert("100글자 이내로 작성해주세요:)");
+  }
+
   return (
     <Grid>
       <GoBack text="후기 작성하기" path="/mypage" />
-      <Grid height="900px">
-        <Grid height="auto" width="342px" margin="auto">
+      <Grid height="950px">
+        {/* 포스트 내용  */}
+        <Grid height="46px" width="342px" margin="auto">
           <Text color="gray">배드민턴 칠 사람!</Text>
         </Grid>
         <Grid border="1px solid gray" height="92px" padding="15px 22px">
@@ -63,6 +70,8 @@ const ReviewWrite = (props) => {
           <Text margin="0px">5월2일, 06:00 오후</Text>
           <Text margin="0px">여성만, 20세-29세</Text>
         </Grid>
+
+        {/* 사진추가 */}
         <Image
           shape="rectangle"
           size={39}
@@ -88,6 +97,8 @@ const ReviewWrite = (props) => {
             }}
           />
         </FileUpload>
+
+        {/* 후기작성 */}
         <Grid column margin="20px auto" height="auto">
           <Input
             multiLine
@@ -97,9 +108,17 @@ const ReviewWrite = (props) => {
             _onChange={writeReview}
             value={review || ""}
           />
+          <Text
+            size="16px"
+            color="#787878"
+            margin="0px 0px 0px 300px"
+            height="auto"
+          >
+            {review?.length}/100
+          </Text>
         </Grid>
-
-        {/* <Grid  width="342px" margin="auto" height="0px">
+        {/* 
+        <Grid width="342px" margin="auto" height="300px">
           <Text>함께한 운동메이트는 어땠나요?</Text>
           <Text size="14px">칭찬하고 싶은 사람을 칭찬해 주세요!</Text>
           <Grid row bg="green">

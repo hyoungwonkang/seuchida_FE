@@ -150,25 +150,25 @@ const getReviewlistDB = () => {
   };
 };
 
-const deletePostDB = (postId) => {
-  return async function (dispatch, getState, { history }) {
-    await axios({
-      method: "delete",
-      url: `https://seuchidabackend.shop/api/postDelete/:${postId}`,
-      headers: {
-        Authorization: `Bearer${localStorage.getItem("token")}`,
-      },
-    })
-      .then((res) => {
-        console.log(res);
-        dispatch(deletePost(postId));
-        history.replace("/");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-};
+// const deletePostDB = (postId) => {
+//   return async function (dispatch, getState, { history }) {
+//     await axios({
+//       method: "delete",
+//       url: `https://seuchidabackend.shop/api/postDelete/:${postId}`,
+//       headers: {
+//         Authorization: `Bearer${localStorage.getItem("token")}`,
+//       },
+//     })
+//       .then((res) => {
+//         console.log(res);
+//         dispatch(deletePost(postId));
+//         history.replace("/");
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//       });
+//   };
+// };
 
 export default handleActions(
   {
@@ -205,7 +205,7 @@ const actionCreators = {
   addPost,
   addPostDB,
   deletePost,
-  deletePostDB,
+  // deletePostDB,
 };
 
 export { actionCreators };

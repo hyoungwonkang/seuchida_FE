@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Card } from "../components/index";
-import styled from "styled-components";
-import { history } from "../redux/configStore";
+import { useHistory } from "react-router-dom";
 import FooterMenu from "../shared/FooterMenu";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as mypageActions } from "../redux/modules/mypage";
@@ -11,16 +10,11 @@ import PostDetail from "./PostDetail";
 
 const MyPost = (props) => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const myPostList = useSelector((state) => state.mypage.myPost);
-  // console.log(myPostList);
 
-  // const userId = useSelector((state) => state.user.userInfo.userId);
-  // const postOwner = useSelector((state) => state.post.list.nearPosts[0].userId);
-  // console.log(userId, postOwner);
-
-  // const isMe = userId === postOwner ? true : false;
-
-  // const isMe = userId === postOwner ? true : false;
+  // const remove = myPostList ? true : false;
+  // console.log(remove);
 
   const [state, setState] = React.useState({
     center: {
@@ -72,11 +66,13 @@ const MyPost = (props) => {
 
       <Grid>
         {myPostList.map((p, i) => {
+          // console.log(p._id);
           return (
             <Card
               {...p}
               key={p.id}
               center={state.center}
+              // removeone={p._id}
               _onClick={() => {
                 history.push(`/postdetail/${p._id}`);
               }}

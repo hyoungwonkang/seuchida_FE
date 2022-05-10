@@ -9,6 +9,7 @@ import FooterMenu from "../../shared/FooterMenu";
 const Category = (props) => {
   //SignupLoca & AddProfile에서 받은 값
   const get = props.location.state;
+  // console.log(get);
   const nickName = get?.nickName;
   const gender = get?.gender;
   const age = get?.age;
@@ -153,7 +154,7 @@ const Category = (props) => {
 
           {/* 푸터 */}
           {is_edit ? (
-            <FooterMenu next path="/mypage" text="수정" event={editProfile} />
+            <FooterMenu next path="/editdone" text="수정" event={editProfile} />
           ) : (
             <FooterMenu next path="/done" text="다음" event={addProfile} />
           )}

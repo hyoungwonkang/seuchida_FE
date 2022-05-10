@@ -3,13 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
-import { Grid, Image, Input } from "../../elements/Index";
+import { Grid, Image, Input, Text } from "../../elements/Index";
 import { actionCreators as userActions } from "../../redux/modules/user";
+import { useHistory } from "react-router-dom";
 import FooterMenu from "../../shared/FooterMenu";
 import GoBack from "../../components/GoBack";
 import { AiFillPlusCircle } from "react-icons/ai";
 
 const AddProfile = (props) => {
+  const history = useHistory();
   const dispatch = useDispatch();
 
   //SignupLoca에서 받아온 address값
@@ -60,27 +62,44 @@ const AddProfile = (props) => {
     setAge(e.target.value);
   };
   const selectContent = (e) => {
+    if (e.target.value.length >= 100) {
+      e.target.value = e.target.value.substr(0, 100);
+    }
     setContent(e.target.value);
   };
 
   //빈값 유효성 검사
-  const alert = () => {
-    if (profile === undefined) {
-      window.alert("프로필을 선택해 주세요:)");
-    }
-    if (nickName === undefined) {
-      window.alert("닉네임을 입력해 주세요:)");
-    }
-    if (gender === undefined) {
-      window.alert("성별을 입력해 주세요:)");
-    }
-    if (age === undefined) {
-      window.alert("나이를 입력해 주세요:)");
-    }
-    if (content === undefined) {
-      window.alert("자기소개를 입력해 주세요:)");
+  const alert = (e) => {
+    if (!is_edit) {
+      if (
+        profile === undefined ||
+        nickName === undefined ||
+        gender === undefined ||
+        age === undefined ||
+        content === undefined
+      ) {
+        window.alert("입력값을 모두 입력해주세요:)");
+      } else {
+        history.push("/category");
+      }
+    } else {
+      if (
+        profile === "" ||
+        nickName === "" ||
+        gender === "" ||
+        age === "" ||
+        content === ""
+      ) {
+        window.alert("입력값을 모두 입력해주세요:)");
+      } else {
+        history.push("/category");
+      }
     }
   };
+
+  if (content?.length >= 100) {
+    window.alert("100글자 이내로 작성해주세요:)");
+  }
 
   return (
     <Grid>
@@ -143,7 +162,7 @@ const AddProfile = (props) => {
               <Input
                 wd
                 height="56px"
-                type="text"
+                type="number"
                 placeholder="나이"
                 _onChange={selectAge}
                 value={age || ""}
@@ -161,15 +180,17 @@ const AddProfile = (props) => {
             _onChange={selectContent}
             value={content || ""}
           />
+          <Text size="16px" color="#787878" margin="0px 0px 0px 300px">
+            {content?.length}/100
+          </Text>
 
           {/* 푸터 */}
           <Link
             to={{
-              pathname: "/category",
               state: { profile, nickName, gender, age, content, address },
             }}
           >
-            <FooterMenu next path="/category" text="다음" state={alert} />
+            <FooterMenu next text="다음" state={alert} />
           </Link>
         </Grid>
       </Grid>

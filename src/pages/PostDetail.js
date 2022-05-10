@@ -6,16 +6,35 @@ import Modal from "../components/Modal/Modal"; //모달 창
 import ModalPortal from "../components/Modal/Portal"; //모달 포탈
 import { Image } from "../elements/Index";
 import { useDispatch, useSelector } from "react-redux";
-import { actionCreators as postActions } from "../redux/modules/post";
+import { actionCreators as mypageActions } from "../redux/modules/mypage";
+import post, { actionCreators as postActions } from "../redux/modules/post";
 import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 import FooterMenu from "../shared/FooterMenu";
+
 const PostDetail = (props) => {
   const dispatch = useDispatch();
   const [modalOn, setModalOn] = React.useState(false);
   const [post, setPost] = React.useState(null);
   const token = localStorage.getItem("token");
   const params = useParams();
+
+  const userId = useSelector((state) => state.user.userInfo.userId);
+  const postOwner = useSelector((state) => state.mypage.myPost.userId);
+
+  const isMe = userId === postOwner ? true : false;
+
+  const postId = params.postId; //게시물 번호
+  console.log(postId);
+
+  const deleteone = (e) => {
+    const result = window.confirm("정말 삭제하시겠습니까?");
+    if (result === true) {
+      dispatch(mypageActions.deletePostDB(postId));
+    } else {
+      return;
+    }
+  };
 
   const openModal = (e) => {
     e.stopPropagation();
@@ -25,23 +44,6 @@ const PostDetail = (props) => {
   const closeModal = (e) => {
     setModalOn(false);
   };
-
-  const userId = useSelector((state) => state.user.userInfo.userId);
-  console.log(userId);
-  const postOwner = useSelector((state) => state.post.list.nearPosts);
-  console.log(postOwner);
-
-  const isMe = userId === postOwner ? true : false;
-  console.log(isMe);
-
-  // const deleteArticle = () => {
-  //   const result = window.confirm("정말 삭제하시겠습니까?");
-  //   if (result === true) {
-  //     dispatch(articleActions.deleteArticleDB(articleNumber));
-  //   } else {
-  //     return;
-  //   }
-  // };
 
   const [state, setState] = React.useState({
     center: {
@@ -91,6 +93,7 @@ const PostDetail = (props) => {
     }).then((response) => {
       setPost(response.data.post);
     });
+    dispatch(postActions.getPostlistDB());
   }, []);
 
   if (!post) return;
@@ -109,7 +112,7 @@ const PostDetail = (props) => {
             size={60}
             _onClick={openModal}
           />
-          <ModalPortal>{modalOn && <Modal />}</ModalPortal>
+          <ModalPortal Profile>{modalOn && <Modal />}</ModalPortal>
 
           <User>
             <Master>{post.nickName}</Master>
@@ -120,7 +123,13 @@ const PostDetail = (props) => {
           </User>
         </ProfileBox>
 
-        <Card DetailCard center={state.center} {...post} />
+        <Card
+          DetailCard
+          center={state.center}
+          {...post}
+          isMe={isMe}
+          deleteone={deleteone}
+        />
 
         <LiveBox>
           <div style={{ fontWeight: "700 bold" }}>

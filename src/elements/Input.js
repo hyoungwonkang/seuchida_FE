@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import styled from "styled-components";
 
 import { Text, Grid } from "./Index";
@@ -80,6 +80,7 @@ Input.defaultProps = {
   keyPress: () => {},
   bold: false,
   margin: false,
+  maxLength: "10",
 };
 
 const ElTextarea = styled.textarea`

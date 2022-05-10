@@ -20,6 +20,8 @@ import MyPage from "../pages/MyPage";
 import MyPost from "../pages/MyPost";
 import MyReview from "../pages/MyReview";
 import ReviewWrite from "../pages/ReviewWrite";
+import EditDone from "./LoginPages/EditDone";
+import ChatRoom from "./ChatRoom";
 
 export {
   Login,
@@ -34,6 +36,7 @@ export {
   Map,
   ReviewList,
   Done,
+  EditDone,
   PostCategory,
   PostWrite_1,
   PostWrite_2,
@@ -44,4 +47,5 @@ export {
   MyPost,
   MyReview,
   ReviewWrite,
+  ChatRoom,
 };
