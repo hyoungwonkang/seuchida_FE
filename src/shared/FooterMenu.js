@@ -34,7 +34,7 @@ const FooterMenu = (props) => {
   if (is_check) {
     return (
       <Btn>
-        <Button is_delete margin={"12px 0px 0px 0px"}>
+        <Button bg="#c4c4c4" margin={"12px 0px 0px 0px"}>
           {props.text}
         </Button>
       </Btn>

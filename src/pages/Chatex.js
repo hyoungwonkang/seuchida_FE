@@ -4,10 +4,8 @@ import styled from "styled-components";
 import GoBack from "../elements/GoBack";
 import Image from "../elements/Image";
 
-
-
-const token = localStorage.getItem("token")
-const socket = io.connect("https://seuchidabackend.shop" ,{
+const token = localStorage.getItem("token");
+const socket = io.connect("https://seuchidabackend.shop", {
   auth: {
     auth: token,
   },
@@ -19,12 +17,11 @@ function Chatex(props) {
   const [chatlist, setChatlist] = useState([]);
   const [chat, setChat] = useState([]);
 
-    console.log(roomId)
+  console.log(roomId);
 
   useEffect(() => {
     socket?.emit("join", {
-      roomId
-   
+      roomId,
     });
   }, [socket]);
 
@@ -45,18 +42,14 @@ function Chatex(props) {
     (e) => {
       if (message) {
         e.preventDefault();
-        socket.emit(
-          "chat",
-          { roomId,msg: message },
-          setMessage("")
-        );
+        socket.emit("chat", { roomId, msg: message }, setMessage(""));
       }
     },
     [message]
   );
 
   const leaveRoom = () => {
-    socket.emit("leave", { roomId});
+    socket.emit("leave", { roomId });
   };
 
   return (
@@ -64,8 +57,11 @@ function Chatex(props) {
       <Header>
         <HeaderContents>
           <GoBack gback />
-          <div style={{margin: "3px 0px 0px 10px"}}>제목 들어갈 공간</div>
-          <div style={{ margin: "3px 0px 0px 15px", color: "#C4C4C4" }}> 2/3</div>
+          <div style={{ margin: "3px 0px 0px 10px" }}>제목 들어갈 공간</div>
+          <div style={{ margin: "3px 0px 0px 15px", color: "#C4C4C4" }}>
+            {" "}
+            2/3
+          </div>
         </HeaderContents>
         <button> 모집완료 </button>
       </Header>
@@ -86,7 +82,6 @@ function Chatex(props) {
             </p>
           );
         })}
-      
       </Body>
       <Chatting>
         <SendMsg>
@@ -135,16 +130,13 @@ const Chatting = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-
 `;
 
-const SendMsg = styled.div`
- 
-`;
+const SendMsg = styled.div``;
 
 const TextMsg = styled.input`
   font-size: 16px;
-  
+
   padding: 16px;
   /* height: 54px; */
   width: 310px;
@@ -153,7 +145,6 @@ const TextMsg = styled.input`
 `;
 
 const Send = styled.span`
-
-right: 30px;
-position: fixed;
-`
+  right: 30px;
+  position: fixed;
+`;

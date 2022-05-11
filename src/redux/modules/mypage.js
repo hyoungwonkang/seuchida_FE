@@ -24,7 +24,6 @@ const myReviewList = createAction(MY_REVIEW, (myReview) => ({
 const addReview = createAction(ADD_REVIEW, (review) => ({
   review,
 }));
-const deletePost = createAction(DELETE_POST, (postId) => ({ postId }));
 
 //initialState (default props 같은 것, 기본값)
 const initialState = {
@@ -47,7 +46,7 @@ const myExerciseDB = () => {
       },
     })
       .then((res) => {
-        const myExercise = res.data;
+        const myExercise = res.data.myEx;
         dispatch(myExList(myExercise));
       })
       .catch((err) => {
@@ -135,8 +134,8 @@ const deletePostDB = (postId) => {
       },
     })
       .then((res) => {
-        dispatch(deletePost(postId));
-        history.replace("/mypage");
+        console.log("삭제 성공", res);
+        history.replace("/main");
       })
       .catch((err) => {
         console.log("에러발생", err);
@@ -164,12 +163,6 @@ export default handleActions(
     //     draft.myPost.push(action.payload.review);
     //     // console.log(action.payload.userInfo);
     //   }),
-    [DELETE_POST]: (state, action) =>
-      produce(state, (draft) => {
-        draft.myPost = draft.myPost.filter(
-          (p) => p._id !== action.payload.postId
-        );
-      }),
   },
   initialState
 );

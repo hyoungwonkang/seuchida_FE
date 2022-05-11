@@ -1,11 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 const ChatRoom = () => {
-  return (
-    <div>
-      
-    </div>
-  );
+  return <div></div>;
 };
 
 export default ChatRoom;

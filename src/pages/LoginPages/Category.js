@@ -61,11 +61,12 @@ const Category = (props) => {
   }, [userInfo]);
 
   const [userInterest, setUserInterest] = useState([]);
+  console.log(userInterest, userInterest.length);
 
   //선택된 카테고리 배열화
   const _userInterest = (checked, item) => {
     if (checked) {
-      if (userInterest?.length <= 2) {
+      if (userInterest?.length < 3) {
         setUserInterest([...userInterest, item]);
       } else {
         window.alert("최대 3개까지 선택 가능합니다:)");

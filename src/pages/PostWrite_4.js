@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 const PostWrite_4 = (props) => {
   const history = useHistory();
 
+  // 넘겨오는 값
   const memberAge = props?.location?.state?.memberAge;
   const memberGender = props?.location?.state?.memberGender;
   const maxMember = props?.location?.state?.maxMember;
@@ -28,11 +29,6 @@ const PostWrite_4 = (props) => {
   const [searchSpot, setSearchSpot] = useState();
   const [searchLatitude, setSearchLatitude] = useState();
   const [searchLongitude, setSearchLongitude] = useState();
-
-  const [changeAddress, setChangeAddress] = useState();
-  const [changeSpot, setChangeSpot] = useState();
-  const [changeLatitude, setChangeLatitude] = useState();
-  const [changeLongitude, setChangeLongitude] = useState();
 
   //지도
   const [state, setState] = useState({
@@ -91,50 +87,62 @@ const PostWrite_4 = (props) => {
         infowindow = new kakao.maps.InfoWindow({ zindex: 1 }); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
 
       // 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
-      kakao.maps.event.addListener(map, "click", function (mouseEvent) {
-        searchDetailAddrFromCoords(
-          mouseEvent.latLng,
-          function (result, status) {
-            if (status === kakao.maps.services.Status.OK) {
-              let detailAddr = !!result[0].road_address
-                ? "<div>도로명주소 : " +
-                  result[0].road_address.address_name +
-                  "</div>"
-                : "";
-              detailAddr +=
-                "<div>지번 주소 : " + result[0].address.address_name + "</div>";
-              let home =
-                result[0].address.region_1depth_name +
-                " " +
-                result[0].address.region_2depth_name;
-              let town = result[0].road_address?.building_name
-                ? result[0].road_address.building_name
-                : result[0].address.address_name;
+      kakao.maps.event.addListener(
+        map,
+        "click",
+        function (mouseEvent) {
+          searchDetailAddrFromCoords(
+            mouseEvent.latLng,
+            function (result, status) {
+              if (status === kakao.maps.services.Status.OK) {
+                let detailAddr = !!result[0].road_address
+                  ? "<div>도로명주소 : " +
+                    result[0].road_address.address_name +
+                    "</div>"
+                  : "";
+                detailAddr +=
+                  "<div>지번 주소 : " +
+                  result[0].address.address_name +
+                  "</div>";
+                let home =
+                  result[0].address.region_1depth_name +
+                  " " +
+                  result[0].address.region_2depth_name;
+                let town = result[0].road_address?.building_name
+                  ? result[0].road_address.building_name
+                  : result[0].address.address_name;
 
-              let content =
-                '<div class="bAddr" style="padding:5px;font-size:12px;>' +
-                '<span class="title">약속 장소</span>' +
-                detailAddr +
-                "</div>";
-              // 마커를 클릭한 위치에 표시합니다
-              let la = mouseEvent.latLng.Ma;
-              let lo = mouseEvent.latLng.La;
-              marker.setPosition(mouseEvent.latLng);
-              marker.setMap(map);
+                let content =
+                  '<div class="bAddr" style="padding:5px;font-size:12px;>' +
+                  '<span class="title">약속 장소</span>' +
+                  detailAddr +
+                  "</div>";
+                // 마커를 클릭한 위치에 표시합니다
+                let la = mouseEvent.latLng.Ma;
+                let lo = mouseEvent.latLng.La;
+                marker.setPosition(mouseEvent.latLng);
+                marker.setMap(map);
 
-              // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
-              infowindow.setContent(content);
-              infowindow.open(map, marker);
-              setAddress(home); //state값 넘겨주기
-              setSpot(town);
-              setLatitude(la);
-              setLongitude(lo);
-            }
-          },
+                // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
+                infowindow.setContent(content);
+                infowindow.open(map, marker);
+                setAddress(home); //state값 넘겨주기
+                setSpot(town);
+                setLatitude(la);
+                setLongitude(lo);
 
-          console.log(mouseEvent.latLng)
-        );
-      });
+                setSearchAddress(home);
+                setSearchSpot(town);
+                setSearchLatitude(la);
+                setSearchLongitude(lo);
+              }
+            },
+
+            console.log(mouseEvent.latLng)
+          );
+        },
+        []
+      );
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////
       //검색
@@ -252,20 +260,6 @@ const PostWrite_4 = (props) => {
     longitude = searchLongitude;
   }
 
-  // if (changeAddress) {
-  //   address = changeAddress;
-  //   spot = changeSpot;
-  //   latitude = changeLatitude;
-  //   longitude = changeLongitude;
-  // }
-
-  // if (setAddress) {
-  //   setAddress(address);
-  //   setSpot(spot);
-  //   setLatitude(latitude);
-  //   setLongitude(longitude);
-  // }
-
   return (
     <Grid>
       {/* 검색 */}
@@ -298,7 +292,7 @@ const PostWrite_4 = (props) => {
         // center={state.center}
         style={{
           width: "100%",
-          height: "500px",
+          height: "600px",
           margin: "20px 0px",
         }}
       ></div>

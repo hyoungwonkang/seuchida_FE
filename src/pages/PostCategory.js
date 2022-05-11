@@ -33,20 +33,7 @@ const PostCategory = (prop) => {
   ];
 
   // 데이터를 넣을 빈배열
-  const [postCate, setPostCate] = useState([]);
-
-  const _postCate = (checked, item) => {
-    if (checked) {
-      if (postCate.length <= 0) {
-        setPostCate([...postCate, item]);
-      } else {
-        window.alert("최대 1개까지 선택 가능합니다:)");
-      }
-    } else if (!checked) {
-      setPostCate(postCate.filter((el) => el !== item));
-    }
-  };
-
+  const [postCate, setPostCate] = useState("");
   const postCategory = postCate.toString();
 
   return (
@@ -67,10 +54,10 @@ const PostCategory = (prop) => {
                   type="checkbox"
                   value={item.data}
                   onChange={(e) => {
-                    _postCate(e.target.checked, e.target.value);
+                    setPostCate(e.target.value);
                   }}
                   //배열에 data가 있으면 true, 없으면 false
-                  checked={postCate.includes(item.data) ? true : false}
+                  // checked={item.data}
                 />
                 <label htmlFor={item.id}>
                   <Cate color={+postCate.includes(item.data)}>{item.data}</Cate>

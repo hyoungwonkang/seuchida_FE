@@ -6,6 +6,8 @@ import EndCard from "./EndCard";
 import styled from "styled-components";
 
 function ECslider(props) {
+  const myEx = props?.myExercise;
+  // console.log(myEx);
   const settings = {
     dots: true,
     infinite: true,
@@ -15,17 +17,15 @@ function ECslider(props) {
     variableWidth: true,
   };
 
+  if (!myEx) return;
+
   return (
     <Sliders {...settings} style={{ height: "180px", margin: "0px" }}>
-      <EndCard>
-        <h3>1</h3>
-      </EndCard>
-      <EndCard>
-        <h3>2</h3>
-      </EndCard>
-      <EndCard>
-        <h3>3</h3>
-      </EndCard>
+      {myEx?.map((p, i) => {
+        if (i < 6) {
+          return <EndCard {...p} key={p.id} _onClick={props._onClick} />;
+        }
+      })}
     </Sliders>
   );
 }

@@ -1,12 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
-import Image from '../elements/Image';
-import Modal from '../components/Modal/Modal'; //모달 창
-import ModalPortal from '../components/Modal/Portal';
-import FooterMenu from '../shared/FooterMenu';
-import { useDispatch, useSelector } from 'react-redux';
-import { actionCreators as postActions } from '../redux/modules/post';
-import { useParams } from 'react-router-dom';
+import React from "react";
+import styled from "styled-components";
+import Image from "../elements/Image";
+import Modal from "../components/Modal/Modal"; //모달 창
+import FooterMenu from "../shared/FooterMenu";
+import { useDispatch, useSelector } from "react-redux";
+import { actionCreators as postActions } from "../redux/modules/post";
+import { useParams } from "react-router-dom";
 const ReviewList = () => {
   const review = useSelector((state) => state.post.review);
   const dispatch = useDispatch();
@@ -34,16 +33,16 @@ const ReviewList = () => {
 
   return (
     <>
-      <div style={{ marginBottom: '80px' }}>
+      <div style={{ marginBottom: "80px" }}>
         {review_list?.map((review, index) => {
           return (
             <div key={review._id}>
-              <ModalPortal>{modalOn && <Modal />}</ModalPortal>
+              {modalOn && <Modal />}
 
               <ProfileBox>
                 <Image
-                  margin='5px 15px 0px 0px'
-                  shape='circle'
+                  margin="5px 15px 0px 0px"
+                  shape="circle"
                   src={review.userImg}
                   size={36}
                   _onClick={openModal}
@@ -51,14 +50,14 @@ const ReviewList = () => {
 
                 <User>
                   <Master>{review.nickName}</Master>
-                  <div style={{ color: 'rgba(120, 120, 120, 1)' }}>
-                    {' '}
+                  <div style={{ color: "rgba(120, 120, 120, 1)" }}>
+                    {" "}
                     {review.createdAt}
                   </div>
                 </User>
               </ProfileBox>
               {review.reviewImg ? (
-                <Image shape='rectangle' size={390} src={review.reviewImg} />
+                <Image shape="rectangle" size={390} src={review.reviewImg} />
               ) : null}
               <Desc>{review.content} </Desc>
               <Info>

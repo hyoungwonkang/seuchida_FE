@@ -1,26 +1,38 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { Grid, Image, Input, Text, GoBack } from "../elements/Index";
 import FooterMenu from "../shared/FooterMenu";
 import styled from "styled-components";
 import { HiPlus } from "react-icons/hi";
 import { actionCreators as mypageActions } from "../redux/modules/mypage";
+import { useSearchParams } from "react-router-dom";
 
 const ReviewWrite = (props) => {
+  const history = useHistory();
   const dispatch = useDispatch();
 
-  const postId = props.match.params.postId;
+  const postInfo = useSelector((state) => state.mypage.myExercise);
+  // console.log(postInfo);
 
-  const GoodList = [
-    { id: 0, data: "친절하고 매너가 좋아요" },
-    { id: 1, data: "시간약속을 잘 지켜요" },
-    { id: 2, data: "다음에도 같이 하고 싶어요" },
-  ];
-  const BadList = [
-    { id: 0, data: "불친절하고 매너가 좋지 않아요" },
-    { id: 1, data: "노쇼했어요:(" },
-    { id: 2, data: "다음에 같이 하고 싶지 않아요" },
-  ];
+  const postId = props.match.params.PostId;
+  // console.log(postId);
+
+  useEffect(() => {
+    //한개만 가져오는 api 필요!
+    dispatch(mypageActions.myExerciseDB());
+  }, []);
+
+  // const GoodList = [
+  //   { id: 0, data: "친절하고 매너가 좋아요" },
+  //   { id: 1, data: "시간약속을 잘 지켜요" },
+  //   { id: 2, data: "다음에도 같이 하고 싶어요" },
+  // ];
+  // const BadList = [
+  //   { id: 0, data: "불친절하고 매너가 좋지 않아요" },
+  //   { id: 1, data: "노쇼했어요:(" },
+  //   { id: 2, data: "다음에 같이 하고 싶지 않아요" },
+  // ];
 
   const [review, setReview] = useState("");
   const [preview, setPreview] = useState("");
@@ -43,18 +55,19 @@ const ReviewWrite = (props) => {
   };
 
   const addReview = () => {
-    const formData = new FormData();
-    formData.append("userImg", reviewImg);
-    formData.append("Review", review);
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ", " + pair[1]);
+    if (reviewImg === "" || review === "") {
+      window.alert("입력값을 모두 입력해주세요:)");
+    } else {
+      const formData = new FormData();
+      formData.append("userImg", reviewImg);
+      formData.append("Review", review);
+      for (var pair of formData.entries()) {
+        console.log(pair[0] + ", " + pair[1]);
+      }
+      dispatch(mypageActions.addReviewDB(formData, postId));
+      history.push("/mypage");
     }
-    dispatch(mypageActions.addReviewDB(formData));
   };
-
-  if (review?.length >= 100) {
-    window.alert("100글자 이내로 작성해주세요:)");
-  }
 
   return (
     <Grid>
@@ -62,7 +75,7 @@ const ReviewWrite = (props) => {
       <Grid height="950px">
         {/* 포스트 내용  */}
         <Grid height="46px" width="342px" margin="auto">
-          <Text color="gray">배드민턴 칠 사람!</Text>
+          <Text color="gray">배드민턴 칠 사람</Text>
         </Grid>
         <Grid border="1px solid gray" height="92px" padding="15px 22px">
           <Text margin="0px">배드민턴</Text>
@@ -142,7 +155,7 @@ const ReviewWrite = (props) => {
           </Grid>
         </Grid> */}
       </Grid>
-      <FooterMenu next text="후기 작성하기" path="/" event={addReview} />
+      <FooterMenu next text="후기 작성하기" event={addReview} />
     </Grid>
   );
 };

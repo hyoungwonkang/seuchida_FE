@@ -4,10 +4,12 @@ import { BiDumbbell } from "react-icons/bi";
 import { AiFillCalendar } from "react-icons/ai";
 import { FaPen } from "react-icons/fa";
 import { MdPlace } from "react-icons/md";
+import moment from "moment";
+import "moment/locale/ko";
 import { Button } from "../elements/Index";
 
 const Card = (props) => {
-  const { MainCard, DetailCard, center, _onClick, isMe, deleteone } = props;
+  const { MainCard, DetailCard, center, _onClick } = props;
 
   function getDistance(lat1, lon1, lat2, lon2, unit) {
     if (lat1 === lat2 && lon1 === lon2) {
@@ -44,6 +46,9 @@ const Card = (props) => {
     "K"
   ).toFixed(1);
 
+  // 작성 시간
+  const time = moment(props.createdAt).fromNow();
+
   if (MainCard) {
     return (
       <>
@@ -75,7 +80,9 @@ const Card = (props) => {
                     <CountM>+{props.nowMember.length - 3}</CountM>
                   ) : null}
                 </ProfileBox>
-                <SmallFont>{distance} km 떨어짐 | 1분전</SmallFont>
+                <SmallFont>
+                  {distance} km 떨어짐 | {time}
+                </SmallFont>
               </Join>
             </div>
           </div>
@@ -92,13 +99,6 @@ const Card = (props) => {
             · {props?.status === true ? "모집중" : "모집완료"}
           </BoldTitle>
           <BoldTitle style={{ fontSize: "20px" }}>{props?.postTitle}</BoldTitle>
-          {isMe ? (
-            <Button is_delete _onClick={deleteone}>
-              삭제
-            </Button>
-          ) : (
-            ""
-          )}
         </TitleBox>
 
         <TextBoxList>
@@ -110,7 +110,7 @@ const Card = (props) => {
             <div> </div>
 
             <SmallFont>
-              {distance} km 떨어짐 | {props.createdAt}
+              {distance} km 떨어짐 | {time}
             </SmallFont>
           </Join>
 
@@ -193,7 +193,7 @@ const Card = (props) => {
             </ProfileBox>
 
             <SmallFont style={{ marginTop: "12px" }}>
-              {distance} km 떨어짐 | 1분전
+              {distance} km 떨어짐 | {time}
             </SmallFont>
           </Join>
         </div>
