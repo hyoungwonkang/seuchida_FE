@@ -9,7 +9,7 @@ import { Grid } from "../elements/Index";
 const MyReview = () => {
   const dispatch = useDispatch();
   const myReviewList = useSelector((state) => state.mypage.myReview);
-  console.log(myReviewList);
+  // console.log(myReviewList);
 
   useEffect(() => {
     dispatch(mypageActions.myReviewDB());

@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Card, LCslider, RCslider, ECslider } from "../components/index";
+import { Button, Text, Grid } from "../elements/Index";
 import FooterMenu from "../shared/FooterMenu";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
@@ -111,6 +112,12 @@ const Main = () => {
             })}
           </CardBox>
         </ListBox>
+        <Button
+          is_float
+          _onClick={() => {
+            history.push("/postcategory");
+          }}
+        ></Button>
 
         {/* 푸터 */}
       </Container>

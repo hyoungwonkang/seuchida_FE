@@ -31,6 +31,9 @@ const SignupLoca = () => {
     isLoading: true,
   });
 
+  //주소 로컬에 저장
+  localStorage.setItem("address", address);
+
   //현재 내 위치
   React.useEffect(() => {
     if (navigator.geolocation) {

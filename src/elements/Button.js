@@ -15,7 +15,6 @@ const Button = (props) => {
     right,
     bold,
     bg,
-    position,
   } = props;
 
   const styles = {
@@ -69,7 +68,7 @@ const ElButton = styled.button`
   width: 342px;
   height: 54px;
   background: #5796f7;
-  ${(props) => (props.bg ? `background: #FDE333` : "")};
+  background: ${(props) => props.bg};
   color: white;
   font-weight: bold;
   padding: ${(props) => props.padding};
@@ -86,36 +85,34 @@ const ElButton = styled.button`
 const FloatButton = styled.button`
   width: 50px;
   height: 50px;
-  background-color: #ffe05d;
+  background-color: #5796f7;
   color: #525e75;
   box-sizing: border-box;
   font-size: 36px;
   font-weight: 800;
   position: fixed;
-  bottom: 50px;
-  right: 16px;
+  bottom: 100px;
+  right: 25px;
   text-align: center;
   vertical-align: middle;
   border: none;
   border-radius: 50px;
+  z-index: 1000;
 `;
 
 const DeleteButton = styled.button`
-  width: 342px;
-  height: 54px;
-  background: #c4c4c4;
-  ${(props) => (props.bg ? `background: #FDE333` : "")};
+  width: 40px;
+  height: 20px;
+  background-color: #525e75;
   color: white;
-  font-weight: bold;
-  padding: ${(props) => props.padding};
   box-sizing: border-box;
+  font-size: 12px;
+  font-weight: 800;
+  /* position: fixed; */
+  bottom: 50vh;
+  right: 16px;
+  text-align: center;
   border: none;
-  border-radius: 5px;
-  ${(props) => (props.margin ? `margin: ${props.margin};` : "")}
-  ${(props) => (props.right ? `float: right` : "")} /* &:hover {
-    box-shadow: 0px 0px 5px 0px gray;
-  }
-  font-family: "Cafe24Ohsquareair"; */
 `;
 
 export default Button;

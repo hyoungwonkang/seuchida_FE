@@ -16,12 +16,12 @@ const Grid = (props) => {
     border,
     border_bottom,
     br,
-    brbottom,
     bottom,
     right,
     position,
     justify,
     isFlex_end,
+    shadow,
   } = props;
 
   const styles = {
@@ -37,12 +37,12 @@ const Grid = (props) => {
     border: border,
     border_bottom,
     br: br,
-    brbottom: brbottom,
     bottom: bottom,
     right: right,
     position: position,
     justify: justify,
     isFlex_end: isFlex_end,
+    shadow: shadow,
   };
 
   return (
@@ -76,6 +76,8 @@ const GridBox = styled.div`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   box-sizing: border-box; //총 넓이에 padding과 border를 포함하는가? //yes
+  box-shadow: ${(props) => props.shadow};
+  ${(props) => (props.padding ? `padding: ${props.padding};` : "")}
   ${(props) => (props.padding ? `padding: ${props.padding};` : "")}
   ${(props) => (props.margin ? `margin: ${props.margin};` : "")}
   ${(props) => (props.bg ? `background-color: ${props.bg};` : "")}
@@ -90,10 +92,6 @@ const GridBox = styled.div`
   border: ${(props) => props.border};
   border-bottom: ${(props) => props.border_bottom};
   border-radius: ${(props) => props.br};
-  ${(props) =>
-    props.brbottom
-      ? `border-bottom-left-radius: 20px; border-bottom-right-radius: 20px`
-      : ""}
   ${(props) => (props.bottom ? `bottom: 0px` : "")}
   ${(props) => (props.right ? `right: 0px` : "")}
   ${(props) => (props.position ? `position: fixed` : "")}

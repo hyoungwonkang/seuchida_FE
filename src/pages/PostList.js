@@ -11,10 +11,6 @@ const PostList = () => {
 
   const post_list = useSelector((state) => state.post.list.nearPosts);
 
-
-
-
-
   const [state, setState] = React.useState({
     center: {
       lat: 33.450701,
@@ -60,12 +56,14 @@ const PostList = () => {
 
   return (
     <>
-    
       <Header>
         <Gback>
-          <GoBack gback _onClick={()=>{
-            window.location.href = '/main';
-          }}/>
+          <GoBack
+            gback
+            _onClick={() => {
+              window.location.href = "/main";
+            }}
+          />
         </Gback>
         <HeadContents>
           <div> 여기여기 붙어라</div>
@@ -100,7 +98,7 @@ const Header = styled.div`
   width: 100%;
   height: 40px;
   padding: 24px 0px 0px 24px;
-  border-bottom: 1px solid #e9e9e9; 
+  border-bottom: 1px solid #e9e9e9;
   display: flex;
   flex-direction: row;
 `;

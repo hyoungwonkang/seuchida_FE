@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { Card, KakaoMap } from "../components/index";
 import Modal from "../components/Modal/Modal"; //모달 창
-import ModalPortal from "../components/Modal/Portal"; //모달 포탈
-import { Image } from "../elements/Index";
+import PostOwner from "../components/Modal/PostOwner";
+import { Image, Button } from "../elements/Index";
 import { actionCreators as mypageActions } from "../redux/modules/mypage";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as roomActions } from "../redux/modules/room";
@@ -12,22 +12,24 @@ import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 import FooterMenu from "../shared/FooterMenu";
 import GoBack from "../elements/GoBack";
+
 const PostDetail = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.userInfo);
-  const [modalOn, setModalOn] = React.useState(false);
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen2, setIsOpen2] = React.useState(false);
+  const [modalData, setModalData] = React.useState(null);
   const [post, setPost] = React.useState(null);
   const token = localStorage.getItem("token");
   const params = useParams();
 
   const userId = useSelector((state) => state.user.userInfo.userId);
-  const postOwner = useSelector((state) => state.mypage.myPost.userId);
+  const postOwner = post?.userId;
 
   const isMe = userId === postOwner ? true : false;
 
   const postId = params.postId; //게시물 번호
-  console.log(postId);
 
   const deleteone = (e) => {
     const result = window.confirm("정말 삭제하시겠습니까?");
@@ -36,15 +38,6 @@ const PostDetail = (props) => {
     } else {
       return;
     }
-  };
-
-  const openModal = (e) => {
-    e.stopPropagation();
-    setModalOn(true);
-  };
-
-  const closeModal = (e) => {
-    setModalOn(false);
   };
 
   const [state, setState] = React.useState({
@@ -57,7 +50,6 @@ const PostDetail = (props) => {
   });
 
   function joinRoom() {
-    //
     dispatch(roomActions.joinRoomDB(params.postId));
   }
 
@@ -111,25 +103,35 @@ const PostDetail = (props) => {
 
   return (
     <>
-      <Header onClick={closeModal}>
+      <Header>
         <GoBack gback _onClick={() => history.goBack()} />
+        {isMe ? (
+          <Button is_delete _onClick={deleteone}>
+            삭제
+          </Button>
+        ) : (
+          ""
+        )}
         {/* <h2>여기여기 붙어라</h2> */}
       </Header>
-      <Container onClick={closeModal}>
+      <Container>
         <ProfileBox>
           <Image
             margin="0px 15px 0px 0px"
             shape="circle"
             src={post.userImg}
             size={60}
-            _onClick={openModal}
+            _onClick={() => {
+              setIsOpen(true);
+            }}
           />
-          <ModalPortal Profile>{modalOn && <Modal />}</ModalPortal>
+          <Modal open={isOpen} onClose={() => setIsOpen(false)}>
+            <PostOwner post={post.nowMember} />
+          </Modal>
 
           <User>
             <Master>{post.nickName}</Master>
             <div style={{ color: "rgba(120, 120, 120, 1)" }}>
-              {" "}
               {post.userGender}/{post.userAge}세
             </div>
           </User>
@@ -145,7 +147,6 @@ const PostDetail = (props) => {
 
         <LiveBox>
           <div style={{ fontWeight: "700 bold" }}>
-            {" "}
             참여중인 운동 메이트 {post?.nowMember?.length}/{post?.maxMember}{" "}
           </div>
           <div className="otherProfile">
@@ -157,9 +158,14 @@ const PostDetail = (props) => {
                     src={m.memberImg}
                     size={40}
                     margin="3px"
-                    _onClick={openModal}
+                    _onClick={() => {
+                      setModalData(m);
+                      setIsOpen2(true);
+                    }}
                   />
-                  <ModalPortal>{modalOn && <Modal />}</ModalPortal>
+                  <Modal open={isOpen2} onClose={() => setIsOpen2(false)}>
+                    <PostOwner Members post={modalData} />
+                  </Modal>
                 </div>
               );
             })}
@@ -173,7 +179,12 @@ const PostDetail = (props) => {
         userCheck[0] === undefined &&
         post.nowMember.length <= post.maxMember ? (
           <ButtonBox>
-            <FooterMenu next text={"참여하기"} event={joinRoom}></FooterMenu>
+            <FooterMenu
+              next
+              text={"참여하기"}
+              event={joinRoom}
+              path={`/chattest/${postId}`}
+            ></FooterMenu>
           </ButtonBox>
         ) : (
           <ButtonBox>

@@ -17,26 +17,27 @@ const NameCard = () => {
 
   useEffect(() => {
     dispatch(userActions.isLoginDB());
-    // dispatch(mypageActions.myExerciseDB());
+    dispatch(mypageActions.myExerciseDB());
     dispatch(mypageActions.myReviewDB());
   }, []);
 
   const userInfo = useSelector((state) => state.user.userInfo);
   const myReview = useSelector((state) => state.mypage.myReview);
+
   const len = myReview.length;
 
   //유저 등급
-  const medal = [
-    { count: 0, md: "" },
-    { count: 10, md: "🏅" },
-    { count: 20, md: "🥉" },
-    { count: 30, md: "🥈" },
-    { count: 40, md: "🥇" },
-    { count: 50, md: "🏆" },
-  ];
+  // const medal = [
+  //   { count: 0, md: "" },
+  //   { count: 10, md: "🏅" },
+  //   { count: 20, md: "🥉" },
+  //   { count: 30, md: "🥈" },
+  //   { count: 40, md: "🥇" },
+  //   { count: 50, md: "🏆" },
+  // ];
 
   return (
-    <Grid column height="auto" brbottom margin="0px" bg="white">
+    <Grid column height="auto" margin="0px" bg="white">
       {/* 프로필 수정, 알람 */}
       <Grid row height="auto" margin="20px 0px 0px 0px" justify="right">
         <BsFillBellFill size={24} style={{ marginRight: 8 }} />
@@ -54,26 +55,32 @@ const NameCard = () => {
         src={userInfo.userImg}
         margin="19px 0px 8px 0px"
       />
-
       {/* 유저 닉네임 */}
       <Text size="24px" margin="0px" color="#323232">
         {/* {medal.map((v, i) => {
           len === 13 ? v.md : "";
         })} */}
+        <Grid row>
+          {len >= 60 ? (
+            <Image src="./img/purple.png" />
+          ) : len >= 50 ? (
+            <Image src="./img/blue.png" />
+          ) : len >= 40 ? (
+            <Image src="./img/skyblue.png" />
+          ) : len >= 30 ? (
+            <Image src="./img/green.png" />
+          ) : len >= 20 ? (
+            <Image src="./img/yellow.png" />
+          ) : len >= 10 ? (
+            <Image src="./img/orange.png" />
+          ) : len >= 0 ? (
+            <Image src="./img/red.png" />
+          ) : (
+            ""
+          )}
 
-        {len >= 50
-          ? "🏆"
-          : len >= 40
-          ? "🥇"
-          : len >= 30
-          ? "🥈"
-          : len >= 20
-          ? "🥉"
-          : len >= 10
-          ? "🏅"
-          : ""}
-
-        {userInfo.nickName}
+          {userInfo.nickName}
+        </Grid>
       </Text>
 
       {/* 유저 관심사 */}
@@ -97,24 +104,27 @@ const NameCard = () => {
 
 const MyPage = () => {
   const myReview = useSelector((state) => state.mypage.myReview);
+  const myExercise = useSelector((state) => state.mypage.myExercise);
   const len = myReview.length;
 
-  const Grade = [
-    { key: 0, grade: "Iron" },
-    { key: 10, grade: "Bronze" },
-    { key: 20, grade: "Silver" },
-    { key: 30, grade: "Gold" },
-    { key: 40, grade: "Platinum" },
-    { key: 50, grade: "Diamond" },
-  ];
+  // const Grade = [
+  //   { key: 0, grade: "Iron" },
+  //   { key: 10, grade: "Bronze" },
+  //   { key: 20, grade: "Silver" },
+  //   { key: 30, grade: "Gold" },
+  //   { key: 40, grade: "Platinum" },
+  //   { key: 50, grade: "Diamond" },
+  // ];
 
-  const levelUp = [10, 20, 30, 40, 50];
+  // const levelUp = [10, 20, 30, 40, 50];
 
   if (
     len?.length === 10 ||
     len?.length === 20 ||
     len?.length === 30 ||
-    len?.length === 40
+    len?.length === 40 ||
+    len?.length === 50 ||
+    len?.length === 60
   ) {
     window.alert("레벨업 했습니다!");
   }
@@ -131,24 +141,24 @@ const MyPage = () => {
               width="342px"
               color="#FFFFFF"
             >
-              {/* {Grade.map((v, i) => {
-                return myReviewcnt.length >= v.key &&
-                  myReviewcnt.length <= v.key + 1
-                  ? v.grade
-                  : "";
-              })} */}
-              {len >= 40
-                ? Grade[5].grade
+              {len >= 50
+                ? "Purple"
+                : len >= 40
+                ? "Blue"
                 : len >= 30
-                ? Grade[4].grade
+                ? "Skyblue"
                 : len >= 20
-                ? Grade[3].grade
+                ? "Green"
                 : len >= 10
-                ? Grade[2].grade
-                : Grade[1].grade}
+                ? "Yellow"
+                : "Orange"}
               레벨까지
               {10 -
-                (len >= 40
+                (len >= 60
+                  ? len - 60
+                  : len >= 50
+                  ? len - 50
+                  : len >= 40
                   ? len - 40
                   : len >= 30
                   ? len - 30
@@ -202,11 +212,10 @@ const MyPage = () => {
 
           <Grid padding="10px 24px" margin="0px 10px 0px 0px">
             <Text size="16px" color="#FFFFFF">
-              <RiBarChartFill color="#FFFFFF" /> {""}
+              <RiBarChartFill color="#FFFFFF" />
               운동 후기 남기고 스친 레벨 올리자!
             </Text>
-            {/* 내가 참여한 운동 => 추후 BE와 연결시 변동 예정*/}
-            <ECslider />
+            <ECslider myExercise={myExercise} />
           </Grid>
         </Grid>
 

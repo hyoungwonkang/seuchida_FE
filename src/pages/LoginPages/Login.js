@@ -17,10 +17,10 @@ const Login = (props) => {
         </Text>
 
         <Button
-          bg
+          bg="#FDE333"
           margin="131px 0px 8px 0px"
           _onClick={() => {
-            window.location.href = '/main';
+            window.location.href = "/main";
           }}
         >
           <A href={KAKAO_AUTH_URL}>카카오 로그인</A>

@@ -39,6 +39,15 @@ const AddProfile = (props) => {
   const [age, setAge] = useState("");
   const [content, setContent] = useState("");
 
+  // localStorage.setItem(
+  //   ("profile", "nickName", "gender", "age", "content"),
+  //   profile,
+  //   nickName,
+  //   gender,
+  //   age,
+  //   content
+  // );
+
   const selectPreview = (e) => {
     setPreview(window.webkitURL.createObjectURL(e.target.files[0]));
   };

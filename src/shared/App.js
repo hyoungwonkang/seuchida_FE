@@ -28,6 +28,7 @@ import {
   MyReview,
   ReviewWrite,
   ChatRoom,
+  ChatTest,
 } from "../pages/Index";
 
 function App() {
@@ -45,7 +46,7 @@ function App() {
           <Route path="/postdetail/:postId" exact component={PostDetail} />
           <Route path="/ReviewList/:reviewId" exact component={ReviewList} />
           <Route path="/mypage" exact component={MyPage} />
-          <Route path="/reviewwrite" exact component={ReviewWrite} />
+          <Route path="/reviewwrite/:postId" exact component={ReviewWrite} />
           <Route path="/mypost" exact component={MyPost} />
           <Route path="/myreview" exact component={MyReview} />
           <Route path="/map" exact component={Map} />
@@ -59,6 +60,7 @@ function App() {
           <Route path="/postwrite4" exact component={PostWrite_4} />
           <Route path="/postdone" exact component={PostDone} />
           <Route path="/chat" exact component={ChatRoom} />
+          <Route path="/chattest/:postId" exact component={ChatTest} />
         </ConnectedRouter>
       </Container>
     </>

@@ -23,13 +23,16 @@ const joinRoomDB = (postId) => {
       await axios({
         method: "post",
         url: `https://seuchidabackend.shop/api/postPush/${postId}`,
+        data: JSON.stringify({
+          postId: postId,
+        }),
         headers: {
           authorization: `Bearer ${token}`,
         },
       }).then((response) => {
         console.log(response);
         // dispatch(setPost(response.data));
-        window.location.href = `/postdetail/${postId}`;
+        window.location.href = `/chattest/${postId}`;
       });
     } catch (err) {
       console.log(err);
