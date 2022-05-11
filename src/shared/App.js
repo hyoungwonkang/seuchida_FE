@@ -29,6 +29,7 @@ import {
   ReviewWrite,
   ChatRoom,
 } from "../pages/Index";
+import Chatex from "../pages/Chatex";
 
 function App() {
   return (
@@ -59,6 +60,7 @@ function App() {
           <Route path="/postwrite4" exact component={PostWrite_4} />
           <Route path="/postdone" exact component={PostDone} />
           <Route path="/chat" exact component={ChatRoom} />
+          <Route path="/chatex" exact component={Chatex} />
         </ConnectedRouter>
       </Container>
     </>

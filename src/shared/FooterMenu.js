@@ -60,7 +60,7 @@ const FooterMenu = (props) => {
         </Menu>
         <Menu
           onClick={() => {
-            history.push("/challenge");
+            history.push('/challenge');
           }}
         >
           챌린지
