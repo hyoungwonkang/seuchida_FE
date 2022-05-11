@@ -3,6 +3,7 @@ import { CustomOverlayMap, Map, MapMarker } from 'react-kakao-maps-sdk';
 import styled from 'styled-components';
 import { useMap } from 'react-kakao-maps-sdk';
 import Image from '../elements/Image';
+
 function KakaoMap(props) {
   const { MainMap, UserLoca, post, _onClick } = props;
 
@@ -19,7 +20,7 @@ function KakaoMap(props) {
         ></MapMarker>
         {post?.map((position, index) => (
           <>
-            <EventMarkerContainer {...position} />
+            <EventMarkerContainer {...position} key={`${position.PostId} + ${position.latitude}`}/>
           </>
         ))}
       </Map>

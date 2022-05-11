@@ -60,5 +60,6 @@ export default LCslider;
 const Sliders = styled(Slider)`
   .slick-slide.slick-center {
     transform: scale(1.1);
+    transition: 0.5s;
   }
 `;

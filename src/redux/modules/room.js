@@ -37,6 +37,8 @@ const joinRoomDB = (postId) => {
   };
 };
 
+
+
 //reducer
 export default handleActions(
   {

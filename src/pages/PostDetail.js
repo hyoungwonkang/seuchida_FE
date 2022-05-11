@@ -23,12 +23,10 @@ const PostDetail = (props) => {
 
   const userId = useSelector((state) => state.user.userInfo.userId);
   const postOwner = useSelector((state) => state.mypage.myPost.userId);
-
   const isMe = userId === postOwner ? true : false;
-
   const postId = params.postId; //게시물 번호
-  console.log(postId);
 
+  console.log(post)
   const deleteone = (e) => {
     const result = window.confirm("정말 삭제하시겠습니까?");
     if (result === true) {
@@ -129,7 +127,6 @@ const PostDetail = (props) => {
           <User>
             <Master>{post.nickName}</Master>
             <div style={{ color: "rgba(120, 120, 120, 1)" }}>
-              {" "}
               {post.userGender}/{post.userAge}세
             </div>
           </User>
@@ -142,11 +139,13 @@ const PostDetail = (props) => {
           isMe={isMe}
           deleteone={deleteone}
         />
-
+<button onClick={() => {history.push({
+  pathname: "/chatex",
+  state: `${post.roomId}`
+})}} >채팅하기</button>
         <LiveBox>
           <div style={{ fontWeight: "700 bold" }}>
-            {" "}
-            참여중인 운동 메이트 {post?.nowMember?.length}/{post?.maxMember}{" "}
+            참여중인 운동 메이트 {post?.nowMember?.length}/{post?.maxMember}
           </div>
           <div className="otherProfile">
             {post?.nowMember?.map((m, i) => {
@@ -180,6 +179,7 @@ const PostDetail = (props) => {
             <FooterMenu is_check text={"참여불가"}></FooterMenu>
           </ButtonBox>
         )}
+        
       </Container>
     </>
   );
