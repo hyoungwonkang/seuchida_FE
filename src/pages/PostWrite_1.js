@@ -36,6 +36,8 @@ const PostWrite_1 = (props) => {
       </Text>
       <Grid padding='8px 0px 28px 24px'>
         <Input
+          size='16px'
+          height='56px'
           type='textarea'
           value={postTitle}
           maxLength='60'
@@ -44,7 +46,7 @@ const PostWrite_1 = (props) => {
         />
         <Grid margin='0px 0px 0px 310px'>
           <Text size='12px' color='#787878'>
-            {postDesc.length}/60
+            {postTitle.length}/60
           </Text>
         </Grid>
       </Grid>
@@ -53,7 +55,8 @@ const PostWrite_1 = (props) => {
       </Text>
       <Grid padding='8px 0px 0px 24px'>
         <Input
-          multiline
+          size='16px'
+          multiLine
           height='160px'
           type='textarea'
           value={postDesc}

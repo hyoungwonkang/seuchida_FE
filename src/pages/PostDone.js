@@ -12,17 +12,16 @@ const PostDone = () => {
       <Text margin='280px 0px 10px 44px' size='24px'>
         모집 등록이 완료되었습니다!
       </Text>
-      <Text margin='0px 0px 0px 80px' size='16px'>
+      <Text margin='0px 0px 0px 80px' size='16px' color='grey'>
         내가 만든 모임은 마이페이지에서
       </Text>
-      <Text margin='0px 0px 40px 132px' size='16px'>
+      <Text margin='0px 0px 40px 132px' size='16px' color='grey'>
         확인할 수 있어요
       </Text>
       <Button
         margin='0px 0px 0px 24px'
-        next
         _onClick={() => {
-          history.push('/main');
+          window.location.href = '/main';
         }}
         text='확인'
       />

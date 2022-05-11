@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import FooterMenu from '../shared/FooterMenu';
 import { Button, Grid, Text, Input, GoBack } from '../elements/Index';
 
+import { IconContext } from 'react-icons';
 import { BsFillPeopleFill } from 'react-icons/bs';
 import { MdEdit } from 'react-icons/md';
 import { AiOutlineMinusCircle } from 'react-icons/ai';
@@ -17,7 +18,7 @@ const PostWrite_2 = (props) => {
   const postDesc = props.location.state?.postDesc;
 
   //인원
-  const [maxMember, setMaxMember] = useState(0);
+  const [maxMember, setMaxMember] = useState(2);
 
   const onIncrease = () => {
     setMaxMember(maxMember + 1);
@@ -29,9 +30,9 @@ const PostWrite_2 = (props) => {
 
   const onDecrease = () => {
     setMaxMember(maxMember - 1);
-    if (maxMember < 1) {
+    if (maxMember < 3) {
       setMaxMember(maxMember);
-      alert('잘못된 입력입니다.');
+      alert('모집인원은 2명 이상 입니다.');
     }
   };
 
@@ -68,7 +69,7 @@ const PostWrite_2 = (props) => {
 
   //프로그레스바
   let count = 1;
-  if (maxMember > 0) {
+  if (maxMember > 2 || show) {
     count++;
   }
 
@@ -81,18 +82,24 @@ const PostWrite_2 = (props) => {
       <LineBox>
         <Grid row margin='12px 0px' height='auto' justify='space-between'>
           <Grid row margin='0px 0px 0px 24px'>
-            <BsFillPeopleFill />
+            <IconContext.Provider value={{ color: '#787878', size: '16px' }}>
+              <BsFillPeopleFill />
+            </IconContext.Provider>
             <Text margin='0px 12px' size='16px'>
               인원
             </Text>
           </Grid>
-          <Grid row margin='0px 24px 0px 124px'>
+          <Grid row margin='0px 24px 0px 184px'>
             <div onClick={onDecrease}>
-              <AiOutlineMinusCircle size='31' />
+              <IconContext.Provider value={{ color: '#DDDDDD', size: '28px' }}>
+                <AiOutlineMinusCircle />
+              </IconContext.Provider>
             </div>
-            <Grid padding='0px 0px 6px 12px'> {maxMember}명 </Grid>
+            <Grid margin='0px 0px 6px 0px'> {maxMember}명 </Grid>
             <div onClick={onIncrease}>
-              <AiOutlinePlusCircle size='31' />
+              <IconContext.Provider value={{ color: '#DDDDDD', size: '28px' }}>
+                <AiOutlinePlusCircle />
+              </IconContext.Provider>
             </div>
           </Grid>
         </Grid>
@@ -104,12 +111,18 @@ const PostWrite_2 = (props) => {
         padding='0px 52px 4px 0px'
         justify='space-between'
       >
-        <MdEdit />
-        <Text width='100px' margin='0px 12px' size='16px'>
+        <IconContext.Provider value={{ color: '#787878', size: '24px' }}>
+          <MdEdit />
+        </IconContext.Provider>
+        <Text width='100px' margin='0px 12px'>
           모집조건
         </Text>
         <Grid _onClick={() => setShow(!show)} isFlex_end>
-          조건선택
+          {show ? (
+            <div style={{ color: '#000000' }}>확인</div>
+          ) : (
+            <div style={{ color: '#C4C4C4' }}>조건 선택</div>
+          )}
         </Grid>
       </Grid>
       <div className='App'>
@@ -117,7 +130,7 @@ const PostWrite_2 = (props) => {
           <div>
             <GenderBox>
               <Text>성별</Text>
-              <Grid>
+              <Grid margin='0px 0px 32px 0px'>
                 <form
                   onChange={(e) => {
                     setMemberGender(e.target.value);
@@ -127,9 +140,14 @@ const PostWrite_2 = (props) => {
                     width: '100%',
                   }}
                 >
-                  <input type='radio' name='state' value='누구나' /> 누구나
-                  <input type='radio' name='state' value='여성만' /> 여성만
-                  <input type='radio' name='state' value='남성만' /> 남성만
+                  <Grid>
+                    <RadioInput type='radio' name='state' value='성별무관' />{' '}
+                    성별무관&nbsp;&nbsp;&nbsp;&nbsp;
+                    <RadioInput type='radio' name='state' value='여성만' />{' '}
+                    여성만&nbsp;&nbsp;&nbsp;&nbsp;
+                    <RadioInput type='radio' name='state' value='남성만' />{' '}
+                    남성만
+                  </Grid>
                 </form>
               </Grid>
             </GenderBox>
@@ -147,35 +165,44 @@ const PostWrite_2 = (props) => {
               >
                 <Grid>
                   <Grid>
-                    <input type='radio' name='state' value='나이무관' />
-                    나이무관
-                    <input
+                    <RadioInput type='radio' name='state' value='나이무관' />{' '}
+                    나이무관&nbsp;&nbsp;&nbsp;&nbsp;
+                    <RadioInput
                       type='radio'
                       name='state'
                       value={member.fage + member.lage}
-                    />
+                    />{' '}
                     직접입력
                   </Grid>
-                  <Grid margin='12px 0px' justify='center'>
+                  <Grid row margin='24px 0px' padding='0px 8px'>
                     <label>
-                      <input
-                        type='textarea'
+                      <AgeInput
+                        type='number'
                         name='fage'
                         value={member.fage}
                         onChange={handleChange}
                         placeholder='시작 나이 ex) 20'
-                        style={{ width: '100px', height: '32px' }}
+                        style={{
+                          width: '136px',
+                          height: '56px',
+                        }}
+                        pattern='[0-9]+'
                       />
                     </label>
-                    {'   -   '}
+                    &nbsp;&nbsp;&nbsp;
+                    <Text size='18px' bold>
+                      -
+                    </Text>
+                    &nbsp;&nbsp;&nbsp;
                     <label>
-                      <input
-                        type='textarea'
+                      <AgeInput
+                        type='number'
                         name='lage'
                         value={member.lage}
                         onChange={handleChange}
                         placeholder='끝 나이 ex) 29'
-                        style={{ width: '100px', height: '32px' }}
+                        style={{ width: '136px', height: '56px' }}
+                        pattern='[0-9]+'
                       />
                     </label>
                   </Grid>
@@ -188,7 +215,7 @@ const PostWrite_2 = (props) => {
 
       <Link
         to={{
-          pathname: '/postwrite3',
+          // pathname: '/postwrite3',
           state: {
             maxMember,
             memberGender,
@@ -206,7 +233,7 @@ const PostWrite_2 = (props) => {
           onClick={addContents}
           event={maxMember < 2 ? alert('인원을 2명 이상 설정해 주세요') : ''}
         /> */}
-        <Button margin='260px 0px 0px 24px'>다음</Button>
+        <FooterMenu next path='/postwrite3' text='다음' />
       </Link>
     </Grid>
   );
@@ -295,4 +322,35 @@ const HighLight = styled.div`
   height: 4.5px;
 `;
 
+const AgeInput = styled.input`
+  ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  ::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+`;
+
+const RadioInput = styled.input`
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+
+  border: 2px solid #999;
+  transition: 0.2s all linear;
+  margin-right: 5px;
+
+  position: relative;
+  top: 4px;
+
+  :checked {
+    border: 5px solid #5796f7;
+  }
+`;
 export default PostWrite_2;

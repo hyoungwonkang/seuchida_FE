@@ -3,8 +3,11 @@ import { Button, Text, Grid } from '../elements/Index';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import FooterMenu from '../shared/FooterMenu';
-import { FaMapMarkerAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+
+import { IconContext } from 'react-icons';
+import { FaMapMarkerAlt } from 'react-icons/fa';
+import { AiOutlineSearch } from 'react-icons/ai';
 
 // 지도에서 위치찍어서 포스트 올리기!
 const PostWrite_4 = (props) => {
@@ -41,7 +44,7 @@ const PostWrite_4 = (props) => {
 
   // 지도 검색 기능
   const [inputText, setInputText] = useState('');
-  const [searchPlace, setSearchPlace] = useState('');
+  const [searchPlace, setSearchPlace] = useState('방이동 공원');
 
   const onChange = (e) => {
     setInputText(e.target.value);
@@ -50,7 +53,6 @@ const PostWrite_4 = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setSearchPlace(inputText);
-    // setInputText('');
   };
 
   useEffect(() => {
@@ -263,14 +265,22 @@ const PostWrite_4 = (props) => {
   return (
     <Grid>
       {/* 검색 */}
-      <form className='inputForm' onSubmit={handleSubmit}>
-        <input
-          placeholder='Search Place...'
-          onChange={onChange}
-          value={inputText}
-        />
-        <button type='submit'>검색</button>
-      </form>
+      <Grid margin='12px 0px 0px 24px'>
+        <form className='inputForm' onSubmit={handleSubmit}>
+          {/* <form className='inputForm'> */}
+          <SearchContainer>
+            <Search
+              placeholder='장소 또는 지역을 검색하세요'
+              onChange={onChange}
+              value={inputText}
+            />
+            <img src={require('../shared/ImgBox/search.png')} alt='search' />
+            {/* <button type='submit'>
+              <AiOutlineSearch />
+            </button> */}
+          </SearchContainer>
+        </form>
+      </Grid>
       <Grid
         row
         margin='12px 0px'
@@ -280,12 +290,14 @@ const PostWrite_4 = (props) => {
       >
         {' '}
         <Grid row margin='0px 0px 0px 24px'>
-          <FaMapMarkerAlt />
+          <IconContext.Provider value={{ color: 'grey', size: '24px' }}>
+            <FaMapMarkerAlt />
+          </IconContext.Provider>
           <Text margin='0px 12px' size='16px'>
             현재위치
           </Text>
         </Grid>
-        {spot}
+        <Grid isFlex_end>{spot}</Grid>
       </Grid>
       <div
         id='map'
@@ -318,5 +330,31 @@ const PostWrite_4 = (props) => {
     </Grid>
   );
 };
+
+const SearchContainer = styled.div`
+  width: 90%;
+  height: 45px;
+  position: relative;
+  display: flex;
+  /* flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border: 0; */
+  img {
+    position: absolute;
+    right: 20px;
+    top: 16px;
+  }
+`;
+
+const Search = styled.input`
+  border: 0;
+  padding-left: 10px;
+  background-color: #eaeaea;
+  width: 100%;
+  height: 100%;
+  outline: none;
+  font-size: 18px;
+`;
 
 export default PostWrite_4;

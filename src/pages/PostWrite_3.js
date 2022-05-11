@@ -13,6 +13,7 @@ import FooterMenu from '../shared/FooterMenu';
 import Picker from 'react-mobile-picker-scroll';
 import { Button, Grid, Text, Input, GoBack } from '../elements/Index';
 
+import { IconContext } from 'react-icons';
 import { BsFillCalendarFill } from 'react-icons/bs';
 import { AiFillClockCircle } from 'react-icons/ai';
 import { FaMapMarkerAlt } from 'react-icons/fa';
@@ -118,20 +119,21 @@ const PostWrite_3 = (props) => {
     );
   };
 
-  // console.log(address);
-  // console.log(datemate);
-  // console.log(latitude);
-  // console.log(longitude);
-  // console.log(maxMember);
-  // console.log(memberAge);
-  // console.log(memberGender);
-  // console.log(postCategory);
-  // console.log(postDesc);
-  // console.log(postTitle);
-  // console.log(spot);
+  console.log(address);
+  console.log(datemate);
+  console.log(latitude);
+  console.log(longitude);
+  console.log(maxMember);
+  console.log(memberAge);
+  console.log(memberGender);
+  console.log(postCategory);
+  console.log(postDesc);
+  console.log(postTitle);
+  console.log(spot);
 
   //토글
   const [show, setShow] = useState(false);
+  const [showTime, setShowTime] = useState(false);
 
   //프로그레스바
   let count = 2;
@@ -154,20 +156,41 @@ const PostWrite_3 = (props) => {
           justify='space-between'
         >
           <Grid row margin='0px 0px 0px 24px'>
-            <FaMapMarkerAlt />
+            <IconContext.Provider value={{ color: '#787878', size: '16px' }}>
+              <FaMapMarkerAlt />
+            </IconContext.Provider>
             <Text margin='0px 12px' size='16px'>
               장소
             </Text>
           </Grid>
           <Grid isFlex_end>
             {spot ? (
-              <div
-                onClick={() => {
-                  history.push('/postwrite4');
+              <Link
+                to={{
+                  pathname: '/postwrite4',
+                  state: {
+                    maxMember,
+                    memberAge,
+                    memberGender,
+                    postCategory,
+                    postDesc,
+                    postTitle,
+                  },
+                }}
+                style={{
+                  textDecoration: 'none',
+                  color: 'black',
+                  // fontWeight: 'bold',
                 }}
               >
-                {spot}
-              </div>
+                <div
+                  onClick={() => {
+                    history.push('/postwrite4');
+                  }}
+                >
+                  {spot}
+                </div>
+              </Link>
             ) : (
               <Link
                 to={{
@@ -181,13 +204,18 @@ const PostWrite_3 = (props) => {
                     postTitle,
                   },
                 }}
+                style={{
+                  textDecoration: 'none',
+                  color: '#C4C4C4',
+                  // fontWeight: 'bold',
+                }}
               >
                 <div
                   onClick={() => {
                     history.push('/postwrite4');
                   }}
                 >
-                  장소입력
+                  조건 선택
                 </div>
               </Link>
             )}
@@ -202,7 +230,9 @@ const PostWrite_3 = (props) => {
           justify='space-between'
         >
           <Grid row margin='0px 0px 0px 24px'>
-            <BsFillCalendarFill />
+            <IconContext.Provider value={{ color: '#787878', size: '16px' }}>
+              <BsFillCalendarFill />
+            </IconContext.Provider>
             <Text margin='0px 12px' size='16px'>
               날짜
             </Text>
@@ -280,24 +310,34 @@ const PostWrite_3 = (props) => {
         justify='space-between'
       >
         <Grid row margin='0px 0px 0px 24px'>
-          <AiFillClockCircle />
-          <Text width='32px' margin='0px 12px' size='16px'>
+          <IconContext.Provider value={{ color: '#787878', size: '16px' }}>
+            <AiFillClockCircle />
+          </IconContext.Provider>
+          <Text width='32px' margin='0px 12px'>
             시간
           </Text>
         </Grid>
         <Grid isFlex_end>
           <div className='Test' onClick={() => setShow(!show)}>
-            <input
-              value={
-                `${valueGroups?.AmPm} ${valueGroups?.Hour}:${valueGroups?.Minute}` ||
-                ''
-              }
-              style={{
-                width: '60px',
-                border: '0px',
-                margin: '0px 0xp 0px 200px',
-              }}
-            />
+            {show ? (
+              <div
+                onClick={() => setShowTime(!showTime)}
+                style={{
+                  border: '0px',
+                  fontSize: '16px',
+                }}
+              >
+                {showTime ? b + ` ` + c + `:` + d : `확인`}
+              </div>
+            ) : (
+              <div>
+                {showTime ? (
+                  <div>{b + ` ` + c + `:` + d}</div>
+                ) : (
+                  <div style={{ color: '#C4C4C4' }}>조건 선택</div>
+                )}
+              </div>
+            )}
           </div>
         </Grid>
       </Grid>
