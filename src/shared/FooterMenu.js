@@ -67,7 +67,7 @@ const FooterMenu = (props) => {
         </Menu>
         <Menu
           onClick={() => {
-            history.push("/chat");
+            history.push("/chatlist");
           }}
         >
           채팅

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { Card, LCslider, RCslider, ECslider } from "../components/index";
-import { Button, Text, Grid } from "../elements/Index";
+import { Card, LCslider, RCslider } from "../components/index";
+import { Button} from "../elements/Index";
 import FooterMenu from "../shared/FooterMenu";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
@@ -157,11 +157,6 @@ const Wellcome = styled.div`
 `;
 
 // --라이브 카드
-
-//참여한 운동매칭
-const EndBox = styled.div`
-  background-color: white;
-`;
 
 // 여기여기 붙어라
 

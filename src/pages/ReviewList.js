@@ -16,6 +16,10 @@ const ReviewList = () => {
     ...review.filter((d) => d._id !== params.reviewId),
   ]; //선택된 리뷰를 가장 먼저 보여지도록 정렬을 수정
 
+  const hi = review.filter(d => d.postCategory !== "농구")
+  console.log(hi)
+
+
   const [modalOn, setModalOn] = React.useState(false);
   const openModal = (e) => {
     e.stopPropagation();
