@@ -13,6 +13,7 @@ import axios from "axios";
 import FooterMenu from "../shared/FooterMenu";
 import GoBack from "../elements/GoBack";
 
+
 const PostDetail = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -26,11 +27,12 @@ const PostDetail = (props) => {
 
   const userId = useSelector((state) => state.user.userInfo.userId);
   const postOwner = post?.userId;
+  
 
   const isMe = userId === postOwner ? true : false;
   const postId = params.postId; //게시물 번호
 
-  console.log(post);
+
   const deleteone = (e) => {
     const result = window.confirm("정말 삭제하시겠습니까?");
     if (result === true) {
@@ -149,6 +151,7 @@ const PostDetail = (props) => {
             history.push({
               pathname: "/chatex",
               state: `${post.roomId}`,
+            
             });
           }}
         >
@@ -192,7 +195,6 @@ const PostDetail = (props) => {
               next
               text={"참여하기"}
               event={joinRoom}
-              path={`/chattest/${postId}`}
             ></FooterMenu>
           </ButtonBox>
         ) : (
@@ -204,6 +206,8 @@ const PostDetail = (props) => {
     </>
   );
 };
+
+
 
 export default PostDetail;
 

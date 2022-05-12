@@ -6,7 +6,7 @@ import Image from '../elements/Image';
 
 function KakaoMap(props) {
   const { MainMap, UserLoca, post, _onClick } = props;
-
+  
   if (MainMap) {
     return (
       <Map
@@ -15,9 +15,22 @@ function KakaoMap(props) {
         onClick={_onClick}
         level={7}
       >
-        <MapMarker
+        <MapMarker // 마커를 생성합니다
           position={{ lat: UserLoca.lat, lng: UserLoca.lng }}
-        ></MapMarker>
+          image={{
+            src: "./img/isMe.png", // 마커이미지의 주소입니다
+            size: {
+              width: 42,
+              height: 59,
+            }, // 마커이미지의 크기입니다
+            options: {
+              offset: {
+                x: 27,
+                y: 69,
+              }, // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+            },
+          }}
+        />
         {post?.map((position, index) => (
           <>
             <EventMarkerContainer {...position} key={`${position.PostId} + ${position.latitude}`}/>
@@ -26,7 +39,7 @@ function KakaoMap(props) {
       </Map>
     );
   }
-
+  // <Image src="./img/blue.png" />
   return (
     <>
       <DetailMap>

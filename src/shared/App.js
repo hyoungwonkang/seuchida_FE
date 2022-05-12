@@ -28,9 +28,9 @@ import {
   MyReview,
   ReviewWrite,
   ChatRoom,
-  ChatTest,
 } from "../pages/Index";
 import Chatex from "../pages/Chatex";
+import ChatList from "../pages/ChatList"
 
 function App() {
   return (
@@ -60,9 +60,8 @@ function App() {
           <Route path="/postwrite3" exact component={PostWrite_3} />
           <Route path="/postwrite4" exact component={PostWrite_4} />
           <Route path="/postdone" exact component={PostDone} />
-          <Route path="/chat" exact component={ChatRoom} />
+          <Route path="/ChatList" exact component={ChatList} />
           <Route path="/chatex" exact component={Chatex} />
-          <Route path="/chattest/:postId" exact component={ChatTest} />
         </ConnectedRouter>
       </Container>
     </>
