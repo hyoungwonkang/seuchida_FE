@@ -8,6 +8,7 @@ import { actionCreators as postActions } from "../redux/modules/post";
 import { useParams } from "react-router-dom";
 const ReviewList = () => {
   const review = useSelector((state) => state.post.review);
+  console.log(review);
   const dispatch = useDispatch();
   const params = useParams();
 

@@ -1,18 +1,34 @@
 import React from "react";
 import { Button, Text, Grid, Image } from "../../elements/Index";
 
-const PostOwner = (props) => {
-  const { Members, alert } = props;
+const ModalData = (props) => {
+  const { Members, Alert, Check, text, onClose, onCheck } = props;
 
-  //alert 창
-  if (alert) {
-    return;
+  //재확인 창
+  if (Check) {
+    return (
+      <Grid width="240px" height="156px">
+        <Text>{text}</Text>
+        <button onClick={onClose}>취소</button>
+        <button onClick={onCheck}>삭제</button>
+      </Grid>
+    );
   }
 
-  //참여중인 운동 메이트 프로필
+  //alert 창
+  if (Alert) {
+    return (
+      <Grid>
+        <Text>앗! 입력값을 모두 입력해 주세요!</Text>
+        <button onClick={onClose}>Close</button>
+      </Grid>
+    );
+  }
+
+  //참여중인 운동 메이트 프로필s
   if (Members) {
     return (
-      <>
+      <Grid width="342px" height="356px">
         <Grid height="auto" row>
           <Image
             shape="circle"
@@ -46,13 +62,14 @@ const PostOwner = (props) => {
         </Grid>
 
         <Text margin="20px 0px 0px 3px">{props?.post?.memberDesc}</Text>
-      </>
+        <button onClick={onClose}>Close</button>
+      </Grid>
     );
   }
 
   //게시물 작성자 프로필
   return (
-    <>
+    <Grid width="342px" height="356px">
       <Grid height="auto" row>
         <Image
           shape="circle"
@@ -85,8 +102,9 @@ const PostOwner = (props) => {
         })}
       </Grid>
       <Text margin="20px 0px 0px 3px">{props.post[0].memberDesc}</Text>
-    </>
+      <button onClick={onClose}>Close</button>
+    </Grid>
   );
 };
 
-export default PostOwner;
+export default ModalData;

@@ -7,15 +7,13 @@ import post from "./modules/post";
 import room from "./modules/room";
 import mypage from "./modules/mypage";
 
-
 export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
   user: user,
-  post:post,
-  room:room,
+  post: post,
+  room: room,
   mypage: mypage,
-
 
   router: connectRouter(history),
 });

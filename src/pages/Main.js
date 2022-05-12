@@ -66,7 +66,12 @@ const Main = () => {
               {user.userInfo.nickName}님
               <br />
               방금 개설된 가까운 <br />
-              <Sports>배드민턴</Sports> 매칭이에요!
+              <Sports>
+                {catepost.map((v, i) => {
+                  return v.postCategory;
+                })}
+              </Sports>{" "}
+              매칭이에요!
             </Wellcome>
           </WellcomeBox>
           <LCslider catepost={catepost} center={state.center} />
@@ -117,7 +122,9 @@ const Main = () => {
           _onClick={() => {
             history.push("/postcategory");
           }}
-        ></Button>
+        >
+          +
+        </Button>
 
         {/* 푸터 */}
       </Container>

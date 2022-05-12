@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { history } from "../redux/configStore";
+import { useHistory } from "react-router-dom";
 import { Button } from "../elements/Index";
 
 const FooterMenu = (props) => {
+  const history = useHistory();
   const { next, is_check } = props;
 
   if (next) {
@@ -60,7 +61,7 @@ const FooterMenu = (props) => {
         </Menu>
         <Menu
           onClick={() => {
-            history.push('/challenge');
+            history.push("/challenge");
           }}
         >
           챌린지

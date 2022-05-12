@@ -99,7 +99,6 @@ const myReviewDB = () => {
 
 //addreview
 const addReviewDB = (formData, postId) => {
-  //reviewImg. content
   return async (dispatch, getState, { history }) => {
     await axios({
       method: "post",

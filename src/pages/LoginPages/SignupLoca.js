@@ -131,15 +131,7 @@ const SignupLoca = () => {
         </Map>
 
         {/* 푸터*/}
-        <Link
-          to={{
-            pathname: "/addprofile",
-            state: { address },
-          }}
-          style={{ textDecoration: "none" }}
-        >
-          <FooterMenu next path="/addprofile" text="다음" />
-        </Link>
+        <FooterMenu next path="/addprofile" text="다음" />
       </Grid>
     </Grid>
   );

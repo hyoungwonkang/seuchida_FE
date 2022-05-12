@@ -1,12 +1,12 @@
-import React from 'react';
-import styled, { keyframes } from 'styled-components';
-import FooterMenu from '../shared/FooterMenu';
-import { KakaoMap } from '../components';
-import { useDispatch } from 'react-redux';
-import axios from 'axios';
-import { Card } from '../components/index';
+import React from "react";
+import styled, { keyframes } from "styled-components";
+import FooterMenu from "../shared/FooterMenu";
+import { KakaoMap } from "../components";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+import { Card } from "../components/index";
 const Map = () => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   const [isOpen, setIsOpen] = React.useState(false);
   const [post, setPost] = React.useState(null);
   const [state, setState] = React.useState({
@@ -21,7 +21,7 @@ const Map = () => {
   React.useEffect(() => {
     //갱신으로 수정해야됨
     axios({
-      method: 'get',
+      method: "get",
       url: `https://seuchidabackend.shop/api/nearPostList`,
       headers: {
         authorization: `Bearer ${token}`,
@@ -56,7 +56,7 @@ const Map = () => {
       // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
       setState((prev) => ({
         ...prev,
-        errMsg: 'geolocation을 사용할수 없어요..',
+        errMsg: "geolocation을 사용할수 없어요..",
         isLoading: false,
       }));
     }
@@ -72,7 +72,7 @@ const Map = () => {
             운동매칭이에요
           </Title>
         </Header>
-        <div style={{ marginTop: '128px' }}>
+        <div style={{ marginTop: "128px" }}>
           <OpenModal onClick={() => setIsOpen(!isOpen)}>목록보기</OpenModal>
           {isOpen && (
             <Modal>
