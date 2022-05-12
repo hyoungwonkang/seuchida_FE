@@ -5,8 +5,6 @@ const MODAL_STYLES = {
   position: "fixed",
   top: "50%",
   left: "50%",
-  width: "342px",
-  height: "356px",
   transform: "translate(-50%, -50%)",
   backgroundColor: "white",
   borderRadius: "10px",
@@ -29,10 +27,7 @@ export default function Modal({ open, children, onClose }) {
   return ReactDom.createPortal(
     <>
       <div style={OVERLAY_STYLES} />
-      <div style={MODAL_STYLES}>
-        {children}
-        <button onClick={onClose}>Close</button>
-      </div>
+      <div style={MODAL_STYLES}>{children}</div>
     </>,
     document.getElementById("modal")
   );

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Card, KakaoMap } from "../components/index";
 import Modal from "../components/Modal/Modal"; //모달 창
-import PostOwner from "../components/Modal/PostOwner";
+import ModalData from "../components/Modal/ModalData";
 import { Image, Button } from "../elements/Index";
 import { actionCreators as mypageActions } from "../redux/modules/mypage";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,13 +13,13 @@ import axios from "axios";
 import FooterMenu from "../shared/FooterMenu";
 import GoBack from "../elements/GoBack";
 
-
 const PostDetail = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.userInfo);
   const [isOpen, setIsOpen] = React.useState(false);
   const [isOpen2, setIsOpen2] = React.useState(false);
+  const [isOpen3, setIsOpen3] = React.useState(false);
   const [modalData, setModalData] = React.useState(null);
   const [post, setPost] = React.useState(null);
   const token = localStorage.getItem("token");
@@ -27,19 +27,19 @@ const PostDetail = (props) => {
 
   const userId = useSelector((state) => state.user.userInfo.userId);
   const postOwner = post?.userId;
-  
 
   const isMe = userId === postOwner ? true : false;
   const postId = params.postId; //게시물 번호
 
-
+  //게시물 삭제
   const deleteone = (e) => {
-    const result = window.confirm("정말 삭제하시겠습니까?");
-    if (result === true) {
-      dispatch(mypageActions.deletePostDB(postId));
-    } else {
-      return;
-    }
+    dispatch(mypageActions.deletePostDB(postId));
+    history.push("/main");
+  };
+
+  //채팅방 이동
+  const movechat = (e) => {
+    history.push("/chatex");
   };
 
   const [state, setState] = React.useState({
@@ -107,13 +107,21 @@ const PostDetail = (props) => {
     <>
       <Header>
         <GoBack gback _onClick={() => history.goBack()} />
+
+        {/* 본인에게만 삭제버튼  */}
         {isMe ? (
-          <Button is_delete _onClick={deleteone}>
+          <Button
+            is_delete
+            _onClick={() => {
+              setIsOpen3(true);
+            }}
+          >
             삭제
           </Button>
         ) : (
           ""
         )}
+
         {/* <h2>여기여기 붙어라</h2> */}
       </Header>
       <Container>
@@ -127,8 +135,8 @@ const PostDetail = (props) => {
               setIsOpen(true);
             }}
           />
-          <Modal open={isOpen} onClose={() => setIsOpen(false)}>
-            <PostOwner post={post.nowMember} />
+          <Modal open={isOpen}>
+            <ModalData post={post.nowMember} onClose={() => setIsOpen(false)} />
           </Modal>
 
           <User>
@@ -151,7 +159,6 @@ const PostDetail = (props) => {
             history.push({
               pathname: "/chatex",
               state: `${post.roomId}`,
-            
             });
           }}
         >
@@ -175,8 +182,12 @@ const PostDetail = (props) => {
                       setIsOpen2(true);
                     }}
                   />
-                  <Modal open={isOpen2} onClose={() => setIsOpen2(false)}>
-                    <PostOwner Members post={modalData} />
+                  <Modal open={isOpen2}>
+                    <ModalData
+                      Members
+                      post={modalData}
+                      onClose={() => setIsOpen2(false)}
+                    />
                   </Modal>
                 </div>
               );
@@ -191,11 +202,7 @@ const PostDetail = (props) => {
         userCheck[0] === undefined &&
         post.nowMember.length <= post.maxMember ? (
           <ButtonBox>
-            <FooterMenu
-              next
-              text={"참여하기"}
-              event={joinRoom}
-            ></FooterMenu>
+            <FooterMenu next text={"참여하기"} event={joinRoom}></FooterMenu>
           </ButtonBox>
         ) : (
           <ButtonBox>
@@ -203,11 +210,29 @@ const PostDetail = (props) => {
           </ButtonBox>
         )}
       </Container>
+
+      {/* 모달 삭제 확인 창 */}
+      <Modal open={isOpen3}>
+        <ModalData
+          Check
+          text="정말 삭제하시겠습니까?"
+          onClose={() => setIsOpen3(false)}
+          onCheck={() => deleteone()}
+        />
+      </Modal>
+
+      {/* 채팅방 이동 확인 창(채팅하기 버튼에 모달 적용 전) */}
+      <Modal open={isOpen3}>
+        <ModalData
+          Check
+          text="모임에 참여하시겠어요?"
+          onClose={() => setIsOpen3(false)}
+          onCheck={() => movechat()}
+        />
+      </Modal>
     </>
   );
 };
-
-
 
 export default PostDetail;
 

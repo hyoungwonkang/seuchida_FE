@@ -59,8 +59,8 @@ const ReviewWrite = (props) => {
       window.alert("입력값을 모두 입력해주세요:)");
     } else {
       const formData = new FormData();
-      formData.append("userImg", reviewImg);
-      formData.append("Review", review);
+      formData.append("image", reviewImg);
+      formData.append("content", review);
       for (var pair of formData.entries()) {
         console.log(pair[0] + ", " + pair[1]);
       }

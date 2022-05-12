@@ -7,15 +7,15 @@ import { Grid, Image, Input, Text, GoBack } from "../../elements/Index";
 import { actionCreators as userActions } from "../../redux/modules/user";
 import { useHistory } from "react-router-dom";
 import FooterMenu from "../../shared/FooterMenu";
+import Modal from "../../components/Modal/Modal"; //모달 창
+import ModalData from "../../components/Modal/ModalData";
 import { AiFillPlusCircle } from "react-icons/ai";
 
 const AddProfile = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  //SignupLoca에서 받아온 address값
-  const address = props.location.state?.address;
-
+  //유저 정보
   React.useEffect(() => {
     dispatch(userActions.isLoginDB());
   }, []);
@@ -24,6 +24,7 @@ const AddProfile = (props) => {
   const edit = useSelector((state) => state.user?.userInfo.userImg);
   const is_edit = edit ? true : false;
 
+  //수정 페이지 기본 정보 불러오기
   React.useEffect(() => {
     setProfile(userInfo?.userImg);
     setNickName(userInfo?.nickName);
@@ -32,6 +33,10 @@ const AddProfile = (props) => {
     setContent(userInfo?.userContent);
   }, [userInfo]);
 
+  //모달 오픈 state
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  //입력값 state
   const [preview, setPreview] = useState("");
   const [profile, setProfile] = useState("");
   const [nickName, setNickName] = useState("");
@@ -39,23 +44,24 @@ const AddProfile = (props) => {
   const [age, setAge] = useState("");
   const [content, setContent] = useState("");
 
-  // localStorage.setItem(
-  //   ("profile", "nickName", "gender", "age", "content"),
-  //   profile,
-  //   nickName,
-  //   gender,
-  //   age,
-  //   content
-  // );
+  //프로필,닉네임,성별,나이,자기 소개 로컬에 값 저장
+  window.localStorage.setItem("profile", JSON.stringify([profile]));
+  localStorage.setItem("nickName", nickName);
+  localStorage.setItem("gender", gender);
+  localStorage.setItem("age", age);
+  localStorage.setItem("content", content);
 
+  //프로필 작성 페이지 localstorage 값 저장
+  React.useEffect(() => {
+    setNickName(localStorage.getItem("content"));
+  }, [content]);
+
+  //
   const selectPreview = (e) => {
     setPreview(window.webkitURL.createObjectURL(e.target.files[0]));
   };
 
   const selectImage = (e) => {
-    if (!e.target.file) {
-      setProfile(userInfo?.userImg);
-    }
     setProfile(e.target.files[0]);
   };
 
@@ -86,7 +92,7 @@ const AddProfile = (props) => {
         age === undefined ||
         content === undefined
       ) {
-        window.alert("입력값을 모두 입력해주세요:)");
+        setIsOpen(true);
       } else {
         history.push("/category");
       }
@@ -98,7 +104,7 @@ const AddProfile = (props) => {
         age === "" ||
         content === ""
       ) {
-        window.alert("입력값을 모두 입력해주세요:)");
+        setIsOpen(true);
       } else {
         history.push("/category");
       }
@@ -193,13 +199,17 @@ const AddProfile = (props) => {
           </Text>
 
           {/* 푸터 */}
-          <Link
-            to={{
-              state: { profile, nickName, gender, age, content, address },
-            }}
-          >
-            <FooterMenu next text="다음" state={alert} />
-          </Link>
+          <FooterMenu
+            next
+            text="다음"
+            state={alert}
+            // event={setIsOpen(true)}
+          />
+
+          {/* 경고창 모달 */}
+          <Modal open={isOpen}>
+            <ModalData Alert onClose={() => setIsOpen(false)} />
+          </Modal>
         </Grid>
       </Grid>
     </Grid>

@@ -8,7 +8,7 @@ import FooterMenu from "../../shared/FooterMenu";
 const Category = (props) => {
   //SignupLoca & AddProfile에서 받은 값
   const get = props.location.state;
-  // console.log(get);
+  console.log(get);
   const nickName = get?.nickName;
   const gender = get?.gender;
   const age = get?.age;
@@ -61,7 +61,15 @@ const Category = (props) => {
   }, [userInfo]);
 
   const [userInterest, setUserInterest] = useState([]);
-  console.log(userInterest, userInterest.length);
+
+  //저장한 값 불러오기
+  const _address = localStorage.getItem("address");
+  const _profile = localStorage.getItem("profile");
+  console.log(_profile);
+  const _nickName = localStorage.getItem("nickName");
+  const _gender = localStorage.getItem("gender");
+  const _age = localStorage.getItem("age");
+  const _content = localStorage.getItem("content");
 
   //선택된 카테고리 배열화
   const _userInterest = (checked, item) => {
@@ -79,12 +87,12 @@ const Category = (props) => {
   //프로필 추가
   const addProfile = () => {
     const formData = new FormData();
-    formData.append("userImg", profile);
-    formData.append("nickName", nickName);
-    formData.append("userGender", gender);
-    formData.append("userAge", age);
-    formData.append("userContent", content);
-    formData.append("address", address);
+    formData.append("userImg", _profile);
+    formData.append("nickName", _nickName);
+    formData.append("userGender", _gender);
+    formData.append("userAge", _age);
+    formData.append("userContent", _content);
+    formData.append("address", _address);
 
     for (var i = 0; i < userInterest.length; i++) {
       formData.append("userInterest[]", userInterest[i]);
@@ -96,12 +104,12 @@ const Category = (props) => {
   //프로필 수정
   const editProfile = () => {
     const formData = new FormData();
-    formData.append("newUserImg", profile);
-    formData.append("nickName", nickName);
-    formData.append("userGender", gender);
-    formData.append("userAge", age);
-    formData.append("userContent", content);
-    formData.append("address", address);
+    formData.append("newUserImg", _profile);
+    formData.append("nickName", _nickName);
+    formData.append("userGender", _gender);
+    formData.append("userAge", _age);
+    formData.append("userContent", _content);
+    formData.append("address", _address);
     for (var i = 0; i < userInterest.length; i++) {
       formData.append("userInterest[]", userInterest[i]);
     }

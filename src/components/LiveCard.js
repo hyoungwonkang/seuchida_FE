@@ -8,6 +8,7 @@ import "moment/locale/ko";
 
 const LiveCard = (props) => {
   const Livepost = props;
+  // console.log(Livepost);
 
   function getDistance(lat1, lon1, lat2, lon2, unit) {
     if (lat1 === lat2 && lon1 === lon2) {
@@ -69,11 +70,11 @@ const LiveCard = (props) => {
           </Location>
 
           <Desc>{Livepost?.postDesc}</Desc>
-
+          {Livepost?.postCategory}
           <LocaTime>
             <Location>
               <SmallFont style={{ marginRight: "8px" }}>
-                <img src={place} />
+                <img src="./img/place.png" />
               </SmallFont>
               <SmallFont>{distance} km</SmallFont>
             </Location>

@@ -14,8 +14,7 @@ const chatRoom = createAction(SET_CHAT, (chat_list) => ({ chat_list }));
 //initialState (default props 같은 것, 기본값)
 
 const initialState = {
-  list:{
-  }
+  list: {},
 };
 
 //middleware
@@ -42,7 +41,6 @@ const joinRoomDB = (postId) => {
   };
 };
 
-
 const getchatRoomDB = () => {
   return async function (dispatch, getState) {
     try {
@@ -54,9 +52,7 @@ const getchatRoomDB = () => {
         },
       }).then((response) => {
         console.log(response);
-        dispatch(chatRoom(response.data))
-
-
+        dispatch(chatRoom(response.data));
       });
     } catch (err) {
       console.log(err);
@@ -64,16 +60,14 @@ const getchatRoomDB = () => {
   };
 };
 
-
-
-
 //reducer
 export default handleActions(
- { 
-   [SET_CHAT] : (state, action) => produce(state, (draft) => {
-    draft.list = action.payload.chat_list;
-  })
-},
+  {
+    [SET_CHAT]: (state, action) =>
+      produce(state, (draft) => {
+        draft.list = action.payload.chat_list;
+      }),
+  },
   initialState
 );
 

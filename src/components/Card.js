@@ -159,7 +159,7 @@ console.log(props.createdAt)
           <StatusIcon>
             <span>
               <BiDumbbell color="#787878" />
-            </span>{" "}
+            </span>
             <StatusBox>{props?.postCategory}</StatusBox>
           </StatusIcon>
           <StatusIcon>
