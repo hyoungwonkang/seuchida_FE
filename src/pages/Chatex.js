@@ -3,6 +3,12 @@ import io from "socket.io-client";
 import styled from "styled-components";
 import GoBack from "../elements/GoBack";
 import Image from "../elements/Image";
+import { useDispatch, useSelector } from "react-redux";
+import { actionCreators as userActions } from "../redux/modules/user";
+
+
+
+
 
 const token = localStorage.getItem("token");
 const socket = io.connect("https://seuchidabackend.shop", {
@@ -10,31 +16,47 @@ const socket = io.connect("https://seuchidabackend.shop", {
     auth: token,
   },
 });
-
 function Chatex(props) {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.userInfo);
   const roomId = props.location.state;
   const [message, setMessage] = useState("");
   const [chatlist, setChatlist] = useState([]);
   const [chat, setChat] = useState([]);
 
-  console.log(roomId);
+
+
+  const TimeCheck = (t) =>{
+    let time = t.split(' ')[1]
+    let hour = time.split(':')[0] 
+    
+    if(hour>12) {
+      hour = `오후 ${hour-12}`
+    }else{
+      hour = `오전 ${hour}`
+    }
+    return (`${hour}:${time.split(':')[1]}`)
+  } //작성시간 변환 함수
+
 
   useEffect(() => {
+    dispatch(userActions.isLoginDB());
     socket?.emit("join", {
       roomId,
     });
-  }, [socket]);
+    return;
+  }, [roomId]);
 
   useEffect(() => {
     socket.on("broadcast", (data) => {
       setChat((chat) => chat.concat(data));
-      console.log(data);
     });
   }, []);
 
   useEffect(() => {
     socket.on("chatlist", (data) => {
       setChatlist(data);
+      console.log(chatlist);
     });
   }, []);
 
@@ -59,27 +81,68 @@ function Chatex(props) {
           <GoBack gback />
           <div style={{ margin: "3px 0px 0px 10px" }}>제목 들어갈 공간</div>
           <div style={{ margin: "3px 0px 0px 15px", color: "#C4C4C4" }}>
-            {" "}
             2/3
           </div>
         </HeaderContents>
-        <button> 모집완료 </button>
       </Header>
 
       <Body>
+       
+       
+       {/* 이전 채팅  */}
         {chatlist.map((prevChat, index) => {
-          if (index < 30)
-            return (
-              <p>
-                작성자:{prevChat.name} 내용:{prevChat.msg}
-              </p>
-            );
+          return prevChat.name === "System" ? null : prevChat.name ===
+            user.nickName ? (
+              <IsMe>
+              <TextBoxMe>
+                {prevChat.msg}
+              </TextBoxMe>
+                <TimeBox>{TimeCheck(prevChat.createdAt)}</TimeBox>
+            </IsMe>
+          ) : (
+            <div>
+              <RowBox>
+              <Image src={prevChat.userImg} size={32}/>
+              <NameBox>{prevChat.name}</NameBox>
+          </RowBox>
+
+           <RowBox>
+            <TextBox>
+               {prevChat.msg}
+            </TextBox>
+            <TimeBox>{TimeCheck(prevChat.createdAt)}</TimeBox>
+           </RowBox>
+            </div>
+          );
         })}
+
+        {/* 라이브 채팅 */}
         {chat.map((chat, index) => {
-          return (
-            <p>
-              작성자:{chat.name} 내용:{chat.msg}
-            </p>
+          return chat.name === "System" ? (
+            <div>{chat.msg}</div>
+          ) : chat.name === user.nickName ? (
+            <IsMe>
+              <TextBoxMe>
+                {chat.msg}
+              </TextBoxMe>
+                <TimeBox >{TimeCheck(chat.createdAt)}</TimeBox>
+            </IsMe>
+          ) : (
+            <>
+                  <div>
+              <RowBox>
+              <Image src={chat.userImg} size={32}/>
+              <NameBox>{chat.name}</NameBox>
+          </RowBox>
+
+           <RowBox>
+            <TextBox>
+               {chat.msg}
+            </TextBox>
+            <TimeBox>{TimeCheck(chat.createdAt)}</TimeBox>
+           </RowBox>
+            </div>
+            </>
           );
         })}
       </Body>
@@ -92,7 +155,6 @@ function Chatex(props) {
           />
 
           <Send onClick={sendMessage}>전송</Send>
-          <button onClick={leaveRoom}>나가기</button>
         </SendMsg>
       </Chatting>
     </div>
@@ -101,7 +163,7 @@ function Chatex(props) {
 
 export default Chatex;
 const Header = styled.div`
-  height: 155px;
+  height: 75px;
   top: 0;
   position: fixed;
   border-bottom: 1px solid #e6e6e6;
@@ -118,7 +180,8 @@ const HeaderContents = styled.div`
 `;
 
 const Body = styled.div`
-  margin-top: 156px;
+  margin: 90px 24px;
+  overflow: auto;
 `;
 
 const Chatting = styled.div`
@@ -136,7 +199,6 @@ const SendMsg = styled.div``;
 
 const TextMsg = styled.input`
   font-size: 16px;
-
   padding: 16px;
   /* height: 54px; */
   width: 310px;
@@ -147,4 +209,43 @@ const TextMsg = styled.input`
 const Send = styled.span`
   right: 30px;
   position: fixed;
+`;
+
+const RowBox = styled.div`
+display: flex;
+flex-direction: row;
+
+`
+const TimeBox = styled.span`
+font-size: 14px;
+color: #787878;
+display: flex;
+    flex-direction: column-reverse;
+    margin: 0px 8px 15px 8px;
+`
+const NameBox = styled.div`
+color: #C4C4C4;
+margin: 4px 0px 0px 8px;
+
+`
+
+const TextBox = styled.div`
+  display: flex;
+  background-color: #f1f1f5;
+  padding: 15px;
+  border-radius: 8px;
+  margin: 8px 0px 15px 40px;
+  max-width: 200px;
+`;
+const IsMe = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+`;
+
+const TextBoxMe = styled.div`
+  border: 1px solid #dddddd;
+  padding: 15px;
+  border-radius: 8px;
+  margin: 15px 0px;
+  max-width: 200px;
 `;

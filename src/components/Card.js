@@ -6,7 +6,6 @@ import { FaPen } from "react-icons/fa";
 import { MdPlace } from "react-icons/md";
 import moment from "moment";
 import "moment/locale/ko";
-import { Button } from "../elements/Index";
 
 const Card = (props) => {
   const { MainCard, DetailCard, center, _onClick } = props;
@@ -48,7 +47,7 @@ const Card = (props) => {
 
   // 작성 시간
   const time = moment(props.createdAt).fromNow();
-
+console.log(props.createdAt)
   if (MainCard) {
     return (
       <>
