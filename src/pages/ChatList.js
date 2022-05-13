@@ -12,42 +12,43 @@ const ChatList = () => {
   const dispatch = useDispatch();
   const room_list = useSelector((state) => state.room.list.chattingRoom);
   const last_chat = useSelector((state) => state.room.list.lastChatting);
-  console.log(last_chat);
+  console.log(room_list);
 
   React.useEffect(() => {
     dispatch(roomCreators.getchatRoomDB());
   }, []);
-  // moment().fromNow();
+  
   return (
     <>
       <Header>채팅</Header>
       <Body>
         {room_list?.map((room, index) => {
           return (
-            <>
+           
               <ChatBox
-                onClick={() => {
-                  history.push({
-                    pathname: "/chatex",
-                    state: `${room.roomId}`,
-                  });
-                }}
+              key={`${room.roomId}+${index}`}
+                     onClick={() => {
+                      history.push({
+                        pathname: `/chatex/${room.roomId}`,
+                        state: {...room},
+                      });
+                    }}
               >
                 <ContentBox>
                   <ChatTitleBox>
                     <Image src={room.ownerImg} size={50} />
-                    <div>
-                      <div>
+                    <div style={{marginLeft:"8px"}}>
+                      <div style={{marginBottom:"5px"}}>
                         <ChatTitle>{room.postTitle} </ChatTitle>
                         <UserCount> {room.userList.length}</UserCount>
                       </div>
-                      <div>{last_chat[index].msg}</div>
+                      <LastMsg>{last_chat[index]?.msg}</LastMsg>
                     </div>
                   </ChatTitleBox>
                   <div>{moment(last_chat[index]?.createdAt).fromNow()}</div>
                 </ContentBox>
               </ChatBox>
-            </>
+  
           );
         })}
       </Body>
@@ -82,6 +83,8 @@ const ChatBox = styled.div`
 
 const ChatTitle = styled.span`
   font-weight: bold;
+  margin-right: 5px;
+  
 `;
 
 const UserCount = styled.span`
@@ -93,6 +96,18 @@ const ChatTitleBox = styled.div`
   display: flex;
   flex-direction: row;
 `;
+
+const LastMsg = styled.div`
+ overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 라인수 */
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+  line-height: 1.3em;
+  height: 1.3em;
+  width: 200px;
+`
 
 const ContentBox = styled.div`
   display: flex;

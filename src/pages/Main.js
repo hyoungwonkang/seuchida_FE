@@ -67,7 +67,7 @@ const Main = () => {
               <br />
               방금 개설된 가까운 <br />
               <Sports>
-                {catepost.map((v, i) => {
+                {catepost?.map((v, i) => {
                   return v.postCategory;
                 })}
               </Sports>{" "}
@@ -94,7 +94,7 @@ const Main = () => {
 
         <TitleBox
           onClick={() => {
-            window.location.href = "/postlist";
+            history.push("/postlist")
           }}
         >
           <Title>여기여기 붙어라</Title>

@@ -56,7 +56,6 @@ const ReviewList = () => {
                 <User>
                   <Master>{review.nickName}</Master>
                   <div style={{ color: "rgba(120, 120, 120, 1)" }}>
-                    {" "}
                     {review.createdAt}
                   </div>
                 </User>
