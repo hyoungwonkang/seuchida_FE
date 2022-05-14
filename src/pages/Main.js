@@ -1,12 +1,12 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Card, LCslider, RCslider } from '../components/index';
-import { Button } from '../elements/Index';
-import FooterMenu from '../shared/FooterMenu';
-import { useSelector, useDispatch } from 'react-redux';
-import { actionCreators as postActions } from '../redux/modules/post';
-import { actionCreators as userActions } from '../redux/modules/user';
-import { history } from '../redux/configStore';
+import React from "react";
+import styled from "styled-components";
+import { Card, LCslider, RCslider } from "../components/index";
+import { Button } from "../elements/Index";
+import FooterMenu from "../shared/FooterMenu";
+import { useSelector, useDispatch } from "react-redux";
+import { actionCreators as postActions } from "../redux/modules/post";
+import { actionCreators as userActions } from "../redux/modules/user";
+import { history } from "../redux/configStore";
 
 const Main = () => {
   const catepost = useSelector((state) => state.post.list.caPost);
@@ -14,6 +14,7 @@ const Main = () => {
   const review = useSelector((state) => state.post.list.filterRe);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+
   const [state, setState] = React.useState({
     center: {
       lat: 33.450701,
@@ -48,7 +49,7 @@ const Main = () => {
       // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
       setState((prev) => ({
         ...prev,
-        errMsg: 'geolocation을 사용할수 없어요..',
+        errMsg: "geolocation을 사용할수 없어요..",
         isLoading: false,
       }));
     }
@@ -61,27 +62,18 @@ const Main = () => {
       <Container>
         {/* 라이브 카드  */}
         <TopLive>
-          <WellcomeBox>
-            <Wellcome>
-              {user.userInfo.nickName}님
-              <br />
-              방금 개설된 가까운 <br />
-              <Sports>
-                {catepost?.map((v, i) => {
-                  return v.postCategory;
-                })}
-              </Sports>{' '}
-              매칭이에요!
-            </Wellcome>
-          </WellcomeBox>
-          <LCslider catepost={catepost} center={state.center} />
+          <LCslider
+            catepost={catepost}
+            center={state.center}
+            user={user.userInfo.nickName}
+          />
         </TopLive>
 
         {/* 스친 운동 한줄평 */}
         <ReviewBox>
           <TitleBox
             onClick={() => {
-              window.location.href = '/reviewlist/1';
+              window.location.href = "/reviewlist/1";
             }}
           >
             <Title>함께한 스친들의 후기</Title> <Title>&gt;</Title>
@@ -94,7 +86,7 @@ const Main = () => {
 
         <TitleBox
           onClick={() => {
-            history.push('/postlist');
+            history.push("/postlist");
           }}
         >
           <Title>여기여기 붙어라</Title>
@@ -120,14 +112,14 @@ const Main = () => {
         <Button
           is_float
           _onClick={() => {
-            history.push('/postcategory');
-            localStorage.setItem('postCategory', '');
-            localStorage.setItem('postTitle', '');
-            localStorage.setItem('postDesc', '');
-            localStorage.setItem('maxMember', 2);
-            localStorage.setItem('memberGender', '');
-            localStorage.setItem('memberAge', '');
-            localStorage.setItem('searchPlace', '');
+            history.push("/postcategory");
+            localStorage.setItem("postCategory", "");
+            localStorage.setItem("postTitle", "");
+            localStorage.setItem("postDesc", "");
+            localStorage.setItem("maxMember", 2);
+            localStorage.setItem("memberGender", "");
+            localStorage.setItem("memberAge", "");
+            localStorage.setItem("searchPlace", "");
           }}
         >
           +
@@ -151,25 +143,6 @@ const TopLive = styled.section`
   min-height: 450px;
   background-color: #f8f8fa;
 `;
-
-const WellcomeBox = styled.div`
-  font-size: 24px;
-  padding: 40px 24px 30px 24px;
-  background-color: #0ed88b;
-  font-weight: 700;
-`;
-
-const Sports = styled.div`
-  display: inline;
-  color: #ffffff;
-  font-weight: bold;
-`;
-
-const Wellcome = styled.div`
-  color: #ffffff;
-`;
-
-// --라이브 카드
 
 // 여기여기 붙어라
 

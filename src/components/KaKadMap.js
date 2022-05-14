@@ -1,5 +1,6 @@
 import React from "react";
 import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
+import { Grid, Text, GoBack } from "../elements/Index";
 import styled from "styled-components";
 import { useMap } from "react-kakao-maps-sdk";
 import Image from "../elements/Image";
@@ -42,7 +43,7 @@ function KakaoMap(props) {
       </Map>
     );
   }
-  // <Image src="./img/blue.png" />
+
   return (
     <>
       <DetailMap>
@@ -107,16 +108,18 @@ const EventMarkerContainer = (props) => {
         position={{ lat: props.latitude, lng: props.longitude }} // 마커를 표시할 위치
       >
         {isclick && (
-          <Box>
-            <div>
+          <Grid bg="white" padding="15px" br="10px">
+            <Grid row>
               <Image src={props.userImg} size={36}></Image>
               {props.nickName}
-            </div>{" "}
+            </Grid>
             {props.postDesc}
-            <Close className="close" onClick={() => setIsClicked(false)}>
-              X
-            </Close>
-          </Box>
+            <div>
+              <Close className="close" onClick={() => setIsClicked(false)}>
+                X
+              </Close>
+            </div>
+          </Grid>
         )}
       </CustomOverlayMap>
     </>

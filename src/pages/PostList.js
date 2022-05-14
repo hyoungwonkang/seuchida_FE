@@ -5,9 +5,11 @@ import FooterMenu from "../shared/FooterMenu";
 import GoBack from "../elements/GoBack";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
-import { history } from "../redux/configStore";
+import { useHistory } from "react-router-dom";
+
 const PostList = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const post_list = useSelector((state) => state.post.list.nearPosts);
 
@@ -84,6 +86,7 @@ const PostList = () => {
           );
         })}
       </ListBox>
+
       <FooterMenu />
     </>
   );

@@ -17,38 +17,36 @@ const ChatList = () => {
   React.useEffect(() => {
     dispatch(roomCreators.getchatRoomDB());
   }, []);
-  
+
   return (
     <>
       <Header>채팅</Header>
       <Body>
         {room_list?.map((room, index) => {
           return (
-           
-              <ChatBox
+            <ChatBox
               key={`${room.roomId}+${index}`}
-                     onClick={() => {
-                      history.push({
-                        pathname: `/chatex/${room.roomId}`,
-                        state: {...room},
-                      });
-                    }}
-              >
-                <ContentBox>
-                  <ChatTitleBox>
-                    <Image src={room.ownerImg} size={50} />
-                    <div style={{marginLeft:"8px"}}>
-                      <div style={{marginBottom:"5px"}}>
-                        <ChatTitle>{room.postTitle} </ChatTitle>
-                        <UserCount> {room.userList.length}</UserCount>
-                      </div>
-                      <LastMsg>{last_chat[index]?.msg}</LastMsg>
+              onClick={() => {
+                history.push({
+                  pathname: `/chatex/${room.roomId}`,
+                  state: { ...room },
+                });
+              }}
+            >
+              <ContentBox>
+                <ChatTitleBox>
+                  <Image src={room.ownerImg} size={50} />
+                  <div style={{ marginLeft: "8px" }}>
+                    <div style={{ marginBottom: "5px" }}>
+                      <ChatTitle>{room.postTitle} </ChatTitle>
+                      <UserCount> {room.userList.length}</UserCount>
                     </div>
-                  </ChatTitleBox>
-                  <div>{moment(last_chat[index]?.createdAt).fromNow()}</div>
-                </ContentBox>
-              </ChatBox>
-  
+                    <LastMsg>{last_chat[index]?.msg}</LastMsg>
+                  </div>
+                </ChatTitleBox>
+                <div>{moment(last_chat[index]?.createdAt).fromNow()}</div>
+              </ContentBox>
+            </ChatBox>
           );
         })}
       </Body>
@@ -84,7 +82,6 @@ const ChatBox = styled.div`
 const ChatTitle = styled.span`
   font-weight: bold;
   margin-right: 5px;
-  
 `;
 
 const UserCount = styled.span`
@@ -98,7 +95,7 @@ const ChatTitleBox = styled.div`
 `;
 
 const LastMsg = styled.div`
- overflow: hidden;
+  overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 1; /* 라인수 */
@@ -107,7 +104,7 @@ const LastMsg = styled.div`
   line-height: 1.3em;
   height: 1.3em;
   width: 200px;
-`
+`;
 
 const ContentBox = styled.div`
   display: flex;

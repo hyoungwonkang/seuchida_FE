@@ -4,11 +4,14 @@ import { BiDumbbell } from "react-icons/bi";
 import { AiFillCalendar } from "react-icons/ai";
 import { FaPen } from "react-icons/fa";
 import { MdPlace } from "react-icons/md";
+import Modal from "../components/Modal/Modal"; //모달 창
+import ModalData from "../components/Modal/ModalData";
 import moment from "moment";
 import "moment/locale/ko";
 
 const Card = (props) => {
-  const { MainCard, DetailCard, center, _onClick } = props;
+  const [isOpen, setIsOpen] = React.useState(false);
+  const { MainCard, DetailCard, center, _onClick, Map } = props;
 
   function getDistance(lat1, lon1, lat2, lon2, unit) {
     if (lat1 === lat2 && lon1 === lon2) {
@@ -47,7 +50,7 @@ const Card = (props) => {
 
   // 작성 시간
   const time = moment(props.createdAt).fromNow();
-console.log(props.createdAt)
+
   if (MainCard) {
     return (
       <>
@@ -145,10 +148,61 @@ console.log(props.createdAt)
       </Container>
     );
 
+  if (Map) {
+    return (
+      <Container style={{ border: "none" }} onClick={_onClick}>
+        <TitleBox style={{ backgroundColor: "white", paddingTop: "5px" }}>
+          <BoldTitle style={{ color: "#FF6B52" }}>
+            · {props?.status === true ? "모집중" : "모집완료"}
+          </BoldTitle>
+          <BoldTitle>{props?.postTitle}</BoldTitle>
+        </TitleBox>
+
+        <TextBoxList>
+          <Status style={{ paddingBottom: "10px" }}>
+            <StatusIcon>
+              <span>
+                <BiDumbbell color="#787878" />
+              </span>
+              <StatusBox>{props?.postCategory}</StatusBox>
+            </StatusIcon>
+            <StatusIcon>
+              <span>
+                <AiFillCalendar color="#787878" />
+              </span>
+              <StatusBox>{props?.datemate}</StatusBox>
+            </StatusIcon>
+            <StatusIcon>
+              <span>
+                <FaPen color="#787878" size="14px" />
+              </span>
+              <StatusBox>
+                {props?.memberGender}, {props?.memberAge}
+              </StatusBox>
+            </StatusIcon>
+          </Status>
+
+          <Join>
+            <ProfileBox style={{ paddingBottom: "3px" }}>
+              <Profile src={props?.userImg} />
+              <SmallFont style={{ margin: "12px 0px 0px 8px" }}>
+                {props?.nickName}
+              </SmallFont>
+            </ProfileBox>
+
+            <SmallFont style={{ marginTop: "12px" }}>
+              {distance} km 떨어짐 | {time}
+            </SmallFont>
+          </Join>
+        </TextBoxList>
+      </Container>
+    );
+  }
+
   return (
     <Container style={{ border: "none" }} onClick={_onClick}>
-      <TitleBox style={{ backgroundColor: "#E7F8F1" }}>
-        <BoldTitle>
+      <TitleBox style={{ backgroundColor: "#F1F1F5" }}>
+        <BoldTitle style={{ color: "#FF6B52" }}>
           · {props?.status === true ? "모집중" : "모집완료"}
         </BoldTitle>
         <BoldTitle>{props?.postTitle}</BoldTitle>
@@ -185,7 +239,13 @@ console.log(props.createdAt)
         <div>
           <Join>
             <ProfileBox style={{ paddingBottom: "3px" }}>
-              <Profile src={props?.userImg} />
+              <Profile
+                src={props?.userImg}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsOpen(true);
+                }}
+              />
               <SmallFont style={{ margin: "12px 0px 0px 8px" }}>
                 {props?.nickName}
               </SmallFont>
@@ -197,6 +257,15 @@ console.log(props.createdAt)
           </Join>
         </div>
       </TextBoxList>
+      <Modal open={isOpen}>
+        <ModalData
+          post={props.nowMember}
+          onClose={(e) => {
+            e.stopPropagation();
+            setIsOpen(false);
+          }}
+        />
+      </Modal>
     </Container>
   );
 };

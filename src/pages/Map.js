@@ -2,10 +2,11 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 import FooterMenu from "../shared/FooterMenu";
 import { KakaoMap } from "../components";
-import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { Card } from "../components/index";
 const Map = () => {
+  const history = useHistory();
   const token = localStorage.getItem("token");
   const [isOpen, setIsOpen] = React.useState(false);
   const [post, setPost] = React.useState(null);
@@ -60,7 +61,7 @@ const Map = () => {
         isLoading: false,
       }));
     }
-  }, []);
+  }, [state.center]);
 
   let UserLoca = state.center;
   return (
@@ -76,12 +77,17 @@ const Map = () => {
           <OpenModal onClick={() => setIsOpen(!isOpen)}>목록보기</OpenModal>
           {isOpen && (
             <Modal>
-              {post.map((list, index) => {
+              {post.map((p, i) => {
                 return (
-                  <>
-                    <div>sdfsdfsdf</div>
-                    <div>sdfsdaasa</div>
-                  </>
+                  <Card
+                    Map
+                    {...p}
+                    key={p.id}
+                    center={state.center}
+                    _onClick={() => {
+                      history.push(`/postdetail/${p._id}`);
+                    }}
+                  />
                 );
               })}
             </Modal>

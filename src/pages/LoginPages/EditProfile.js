@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
 import { Grid, Image, Input, Text, GoBack } from "../../elements/Index";
 import { actionCreators as userActions } from "../../redux/modules/user";
@@ -10,8 +11,25 @@ import Modal from "../../components/Modal/Modal"; //모달 창
 import ModalData from "../../components/Modal/ModalData";
 import { AiFillPlusCircle } from "react-icons/ai";
 
-const AddProfile = (props) => {
+const EditProfile = (props) => {
   const history = useHistory();
+  const dispatch = useDispatch();
+
+  //유저 정보
+  React.useEffect(() => {
+    dispatch(userActions.isLoginDB());
+  }, []);
+
+  const userInfo = useSelector((state) => state.user.userInfo);
+
+  //수정 페이지 기본 정보 불러오기
+  React.useEffect(() => {
+    setProfile(userInfo?.userImg);
+    setNickName(userInfo?.nickName);
+    setGender(userInfo?.userGender);
+    setAge(userInfo?.userAge);
+    setContent(userInfo?.userContent);
+  }, [userInfo]);
 
   //모달 오픈 state
   const [isOpen, setIsOpen] = React.useState(false);
@@ -19,10 +37,10 @@ const AddProfile = (props) => {
   //입력값 state
   const [preview, setPreview] = useState("");
   const [profile, setProfile] = useState("");
-  const [nickName, setNickName] = useState(localStorage.getItem("nickName"));
-  const [gender, setGender] = useState(localStorage.getItem("gender"));
-  const [age, setAge] = useState(localStorage.getItem("age"));
-  const [content, setContent] = useState(localStorage.getItem("content"));
+  const [nickName, setNickName] = useState("");
+  const [gender, setGender] = useState("");
+  const [age, setAge] = useState("");
+  const [content, setContent] = useState("");
 
   const selectPreview = (e) => {
     setPreview(window.webkitURL.createObjectURL(e.target.files[0]));
@@ -39,11 +57,9 @@ const AddProfile = (props) => {
   const selectGender = (e) => {
     setGender(e.target.value);
   };
-
   const selectAge = (e) => {
     setAge(e.target.value);
   };
-
   const selectContent = (e) => {
     if (e.target.value.length >= 100) {
       e.target.value = e.target.value.substr(0, 100);
@@ -76,7 +92,7 @@ const AddProfile = (props) => {
 
   return (
     <Grid>
-      <GoBack text="프로필 작성" path="/signuploca" />
+      <GoBack text="프로필 수정" path="/signuploca" />
 
       <Grid column height="650px">
         <Grid height="auto" column margin="30px 0px">
@@ -85,7 +101,7 @@ const AddProfile = (props) => {
             size={80}
             position="relative"
             alt="profile"
-            src={preview ? preview : "https://ifh.cc/g/SCJaxK.png"}
+            src={preview ? preview : userInfo.userImg}
           />
           <FileUpload>
             <label htmlFor="image">
@@ -114,7 +130,7 @@ const AddProfile = (props) => {
           <Option>
             <select onChange={selectGender} defaultValue="default">
               <option className="title" value="default" disabled>
-                {"성별"}
+                {userInfo.userGender ? userInfo.userGender : "성별"}
               </option>
               <option value="남성">남성</option>
               <option value="여성">여성</option>
@@ -133,8 +149,8 @@ const AddProfile = (props) => {
                   placeholder: "나이",
                 }}
                 onChange={selectAge}
-                pattern="[0-9]+"
                 value={age || ""}
+                pattern="[0-9]+"
               />
             </div>
           </Option>
@@ -177,6 +193,7 @@ const AddProfile = (props) => {
     </Grid>
   );
 };
+export default EditProfile;
 
 const FileUpload = styled.div`
   margin: 0px 0px 50px 0px;
@@ -231,5 +248,3 @@ const Age = styled.input`
     margin: 0;
   }
 `;
-
-export default AddProfile;

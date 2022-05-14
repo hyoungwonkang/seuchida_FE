@@ -32,12 +32,12 @@ const EndCard = (props) => {
         <Text
           size="12px"
           margin="0px 0px 0px 150px"
-          _onClick={() => history.push(`/reviewwrite/${props.PostId}`)}
+          _onClick={() => history.push(`/reviewwrite/${props.postId}`)}
           post={props.PostId}
         >
           <FaPen
             size={14}
-            onClick={() => history.push(`/reviewwrite/${props.PostId}`)}
+            onClick={() => history.push(`/reviewwrite/${props.postId}`)}
           />
           후기 작성하기
         </Text>

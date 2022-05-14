@@ -1,5 +1,7 @@
 import React from "react";
 import { Grid, Image, Text } from "../elements/Index";
+import { BiDumbbell } from "react-icons/bi";
+import { MdPlace } from "react-icons/md";
 
 const ReviewCardD = (props) => {
   return (
@@ -9,7 +11,7 @@ const ReviewCardD = (props) => {
         <Grid height="40px" width="auto">
           <Text margin="0px">{props.nickName}</Text>
           <Text margin="0px" color="gray">
-            2022.05.02
+            {props.createdAt}
           </Text>
         </Grid>
       </Grid>
@@ -19,8 +21,14 @@ const ReviewCardD = (props) => {
       <Grid width="342px" margin="auto" height="auto">
         <Text>{props.content}</Text>
         <Grid height="68px">
-          <Text margin="0px">{props.spot} </Text>
-          <Text margin="0px">{props.postCategory}</Text>
+          <Text margin="0px">
+            <MdPlace color="#787878" />
+            {props.spot}{" "}
+          </Text>
+          <Text margin="0px">
+            <BiDumbbell color="#787878" />
+            {props.postCategory}
+          </Text>
         </Grid>
       </Grid>
     </Grid>

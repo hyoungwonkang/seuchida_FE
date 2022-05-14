@@ -101,16 +101,15 @@ const FloatButton = styled.button`
 `;
 
 const DeleteButton = styled.button`
-  width: 40px;
-  height: 20px;
-  background-color: #525e75;
-  color: white;
+  width: 57px;
+  height: 32px;
+  background-color: #fff;
   box-sizing: border-box;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 800;
-  /* position: fixed; */
-  bottom: 50vh;
-  right: 16px;
+  position: fixed;
+  top: 25px;
+  right: 70px;
   text-align: center;
   border: none;
 `;
