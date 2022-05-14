@@ -71,7 +71,7 @@ const PostList = () => {
       </Header>
 
       <ListBox>
-        {post_list.map((p, i) => {
+        {post_list?.map((p, i) => {
           return (
             <Card
               {...p}

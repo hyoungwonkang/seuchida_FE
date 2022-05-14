@@ -1,17 +1,17 @@
-import React from "react";
-import styled from "styled-components";
-import { Card, KakaoMap } from "../components/index";
-import Modal from "../components/Modal/Modal"; //모달 창
-import ModalData from "../components/Modal/ModalData";
-import { Image, Button } from "../elements/Index";
-import { actionCreators as mypageActions } from "../redux/modules/mypage";
-import { useDispatch, useSelector } from "react-redux";
-import { actionCreators as roomActions } from "../redux/modules/room";
-import { actionCreators as userActions } from "../redux/modules/user";
-import { useParams, useHistory } from "react-router-dom";
-import axios from "axios";
-import FooterMenu from "../shared/FooterMenu";
-import GoBack from "../elements/GoBack";
+import React from 'react';
+import styled from 'styled-components';
+import { Card, KakaoMap } from '../components/index';
+import Modal from '../components/Modal/Modal'; //모달 창
+import ModalData from '../components/Modal/ModalData';
+import { Image, Button } from '../elements/Index';
+import { actionCreators as mypageActions } from '../redux/modules/mypage';
+import { useDispatch, useSelector } from 'react-redux';
+import { actionCreators as roomActions } from '../redux/modules/room';
+import { actionCreators as userActions } from '../redux/modules/user';
+import { useParams, useHistory } from 'react-router-dom';
+import axios from 'axios';
+import FooterMenu from '../shared/FooterMenu';
+import GoBack from '../elements/GoBack';
 
 const PostDetail = (props) => {
   const history = useHistory();
@@ -22,7 +22,7 @@ const PostDetail = (props) => {
   const [isOpen3, setIsOpen3] = React.useState(false);
   const [modalData, setModalData] = React.useState(null);
   const [post, setPost] = React.useState(null);
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
   const params = useParams();
 
   const userId = useSelector((state) => state.user.userInfo.userId);
@@ -34,12 +34,12 @@ const PostDetail = (props) => {
   //게시물 삭제
   const deleteone = (e) => {
     dispatch(mypageActions.deletePostDB(postId));
-    history.push("/main");
+    history.push('/main');
   };
 
   //채팅방 이동
   const movechat = (e) => {
-    history.push("/chatex");
+    history.push('/chatex');
   };
 
   const [state, setState] = React.useState({
@@ -81,12 +81,12 @@ const PostDetail = (props) => {
       // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
       setState((prev) => ({
         ...prev,
-        errMsg: "geolocation을 사용할수 없어요..",
+        errMsg: 'geolocation을 사용할수 없어요..',
         isLoading: false,
       }));
     }
     axios({
-      method: "get",
+      method: 'get',
       url: `https://seuchidabackend.shop/api/postDetail/${params.postId}`,
       headers: {
         authorization: `Bearer ${token}`,
@@ -119,7 +119,7 @@ const PostDetail = (props) => {
             삭제
           </Button>
         ) : (
-          ""
+          ''
         )}
 
         {/* <h2>여기여기 붙어라</h2> */}
@@ -127,8 +127,8 @@ const PostDetail = (props) => {
       <Container>
         <ProfileBox>
           <Image
-            margin="0px 15px 0px 0px"
-            shape="circle"
+            margin='0px 15px 0px 0px'
+            shape='circle'
             src={post.userImg}
             size={60}
             _onClick={() => {
@@ -141,7 +141,7 @@ const PostDetail = (props) => {
 
           <User>
             <Master>{post.nickName}</Master>
-            <div style={{ color: "rgba(120, 120, 120, 1)" }}>
+            <div style={{ color: 'rgba(120, 120, 120, 1)' }}>
               {post.userGender}/{post.userAge}세
             </div>
           </User>
@@ -157,26 +157,26 @@ const PostDetail = (props) => {
         <button
           onClick={() => {
             history.push({
-              pathname: "/chatex",
-              state: `${post.roomId}`,
+              pathname: `/chatex/${post.roomId}`,
+              state: { ...post },
             });
           }}
         >
           채팅하기
         </button>
         <LiveBox>
-          <div style={{ fontWeight: "700 bold" }}>
+          <div style={{ fontWeight: '700 bold' }}>
             참여중인 운동 메이트 {post?.nowMember?.length}/{post?.maxMember}
           </div>
-          <div className="otherProfile">
+          <div className='otherProfile'>
             {post?.nowMember?.map((m, i) => {
               return (
                 <div key={m._id}>
                   <Image
-                    shape="circle"
+                    shape='circle'
                     src={m.memberImg}
                     size={40}
-                    margin="3px"
+                    margin='3px'
                     _onClick={() => {
                       setModalData(m);
                       setIsOpen2(true);
@@ -198,15 +198,15 @@ const PostDetail = (props) => {
         <KakaoMap {...post} />
         {/* && userCheck[0]===false &&post.nowMember.length<=post.maxMember */}
 
-        {post.status &&
+        {post.status === true &&
         userCheck[0] === undefined &&
         post.nowMember.length <= post.maxMember ? (
           <ButtonBox>
-            <FooterMenu next text={"참여하기"} event={joinRoom}></FooterMenu>
+            <FooterMenu next text={'참여하기'} event={joinRoom}></FooterMenu>
           </ButtonBox>
         ) : (
           <ButtonBox>
-            <FooterMenu is_check text={"참여불가"}></FooterMenu>
+            <FooterMenu is_check text={'참여불가'}></FooterMenu>
           </ButtonBox>
         )}
       </Container>
@@ -215,7 +215,7 @@ const PostDetail = (props) => {
       <Modal open={isOpen3}>
         <ModalData
           Check
-          text="정말 삭제하시겠습니까?"
+          text='정말 삭제하시겠습니까?'
           onClose={() => setIsOpen3(false)}
           onCheck={() => deleteone()}
         />
@@ -225,7 +225,7 @@ const PostDetail = (props) => {
       <Modal open={isOpen3}>
         <ModalData
           Check
-          text="모임에 참여하시겠어요?"
+          text='모임에 참여하시겠어요?'
           onClose={() => setIsOpen3(false)}
           onCheck={() => movechat()}
         />

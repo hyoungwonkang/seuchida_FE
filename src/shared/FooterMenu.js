@@ -1,11 +1,11 @@
-import React from "react";
-import styled from "styled-components";
-import { useHistory } from "react-router-dom";
-import { Button } from "../elements/Index";
+import React from 'react';
+import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
+import { Button } from '../elements/Index';
 
 const FooterMenu = (props) => {
   const history = useHistory();
-  const { next, is_check } = props;
+  const { next, is_check, __onClick } = props;
 
   if (next) {
     return (
@@ -25,7 +25,7 @@ const FooterMenu = (props) => {
               return props.state();
             }
           }}
-          margin={"12px 0px 0px 0px"}
+          margin={'12px 0px 0px 0px'}
         >
           {props.text}
         </Button>
@@ -35,7 +35,7 @@ const FooterMenu = (props) => {
   if (is_check) {
     return (
       <Btn>
-        <Button bg="#c4c4c4" margin={"12px 0px 0px 0px"}>
+        <Button bg='#c4c4c4' margin={'12px 0px 0px 0px'}>
           {props.text}
         </Button>
       </Btn>
@@ -47,35 +47,35 @@ const FooterMenu = (props) => {
       <MenuBox>
         <Menu
           onClick={() => {
-            history.push("/main");
+            history.push('/main');
           }}
         >
           홈
         </Menu>
         <Menu
           onClick={() => {
-            history.push("/map");
+            history.push('/map');
           }}
         >
           내주변
         </Menu>
         <Menu
           onClick={() => {
-            history.push("/challenge");
+            history.push('/challenge');
           }}
         >
           챌린지
         </Menu>
         <Menu
           onClick={() => {
-            history.push("/chatlist");
+            history.push('/chatlist');
           }}
         >
           채팅
         </Menu>
         <Menu
           onClick={() => {
-            history.push("/mypage");
+            history.push('/mypage');
           }}
         >
           마이페이지
