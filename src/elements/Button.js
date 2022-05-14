@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 const Button = (props) => {
   const {
@@ -58,8 +58,8 @@ Button.defaultProps = {
   _onClick: () => {},
   is_float: false,
   margin: false,
-  width: "100%",
-  padding: "12px 0px",
+  width: '100%',
+  padding: '12px 0px',
   border: false,
   bg: false,
 };
@@ -75,8 +75,8 @@ const ElButton = styled.button`
   box-sizing: border-box;
   border: none;
   border-radius: 5px;
-  ${(props) => (props.margin ? `margin: ${props.margin};` : "")}
-  ${(props) => (props.right ? `float: right` : "")} /* &:hover {
+  ${(props) => (props.margin ? `margin: ${props.margin};` : '')}
+  ${(props) => (props.right ? `float: right` : '')} /* &:hover {
     box-shadow: 0px 0px 5px 0px gray;
   }
   font-family: "Cafe24Ohsquareair"; */

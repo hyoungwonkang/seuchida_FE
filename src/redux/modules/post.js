@@ -1,14 +1,14 @@
-import { createAction, handleActions } from "redux-actions";
-import { produce } from "immer";
-import axios from "axios";
+import { createAction, handleActions } from 'redux-actions';
+import { produce } from 'immer';
+import axios from 'axios';
 
-const token = localStorage.getItem("token");
+const token = localStorage.getItem('token');
 
 //Action
-const SET_POST = "SET_POST";
-const SET_REVIEW = "SET_REVIEW";
-const ADD_POST = "ADD_POST";
-const DELETE_POST = "DELETE_POST";
+const SET_POST = 'SET_POST';
+const SET_REVIEW = 'SET_REVIEW';
+const ADD_POST = 'ADD_POST';
+const DELETE_POST = 'DELETE_POST';
 
 //Action Creators
 const setReview = createAction(SET_REVIEW, (review_list) => ({ review_list }));
@@ -43,8 +43,8 @@ const addPostDB = (
 ) => {
   return async function (dispatch, getState, { history }) {
     await axios({
-      method: "post",
-      url: "https://seuchidabackend.shop/api/postWrite",
+      method: 'post',
+      url: 'https://seuchidabackend.shop/api/postWrite',
       data: JSON.stringify({
         address: address,
         datemate: datemate,
@@ -59,20 +59,20 @@ const addPostDB = (
         spot: spot,
       }),
       headers: {
-        "Content-Type": `application/json`,
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        'Content-Type': `application/json`,
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
     })
       .then((res) => {
         console.log(res);
 
         dispatch(addPost());
-        console.log("게시물 등록 성공");
-        history.replace("/postdone");
+        console.log('게시물 등록 성공');
+        history.push('/postdone');
       })
       .catch((err) => {
-        window.alert("뭔가 이상해요");
-        console.log("게시물작성실패", err);
+        window.alert('모든 조건을 선택해 주세요');
+        console.log('게시물작성실패', err);
       });
   };
 };
@@ -81,10 +81,10 @@ const getMainDB = () => {
   return async function (dispatch, getState) {
     try {
       await axios({
-        method: "get",
+        method: 'get',
         url: `https://seuchidabackend.shop/api/postList`,
         headers: {
-          authorization: `Bearer ${localStorage.getItem("token")}`,
+          authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       }).then((response) => {
         console.log(response);
@@ -100,7 +100,7 @@ const getPostlistDB = () => {
   return async function (dispatch, getState) {
     try {
       await axios({
-        method: "get",
+        method: 'get',
         url: `https://seuchidabackend.shop/api/nearPostList`,
         headers: {
           authorization: `Bearer ${token}`,
@@ -119,7 +119,7 @@ const getReviewlistDB = () => {
   return async function (dispatch, getState) {
     try {
       await axios({
-        method: "get",
+        method: 'get',
         url: `https://seuchidabackend.shop/api/review`,
         headers: {
           authorization: `Bearer ${token}`,
