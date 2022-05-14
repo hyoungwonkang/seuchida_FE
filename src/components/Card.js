@@ -210,7 +210,7 @@ const MainContainer = styled.section`
   height: 168px;
   margin-bottom: 14px;
   cursor: pointer;
-  z-index: 3;
+  z-index: 3; 
 `;
 
 const Container = styled.section`
