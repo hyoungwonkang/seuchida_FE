@@ -17,7 +17,7 @@ const ChatList = () => {
   React.useEffect(() => {
     dispatch(roomCreators.getchatRoomDB());
   }, []);
-  // moment().fromNow();
+
   return (
     <>
       <Header>채팅</Header>
@@ -41,7 +41,7 @@ const ChatList = () => {
                         <ChatTitle>{room.postTitle} </ChatTitle>
                         <UserCount> {room.userList.length}</UserCount>
                       </div>
-                      <div>{last_chat[index].msg}</div>
+                      <div>{last_chat[index]?.msg}</div>
                     </div>
                   </ChatTitleBox>
                   <div>{moment(last_chat[index]?.createdAt).fromNow()}</div>

@@ -6,9 +6,12 @@ import FooterMenu from "../shared/FooterMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { useParams } from "react-router-dom";
+import { BiDumbbell } from "react-icons/bi";
+import { MdPlace } from "react-icons/md";
+
 const ReviewList = () => {
   const review = useSelector((state) => state.post.review);
-  console.log(review);
+
   const dispatch = useDispatch();
   const params = useParams();
 
@@ -17,9 +20,7 @@ const ReviewList = () => {
     ...review.filter((d) => d._id !== params.reviewId),
   ]; //선택된 리뷰를 가장 먼저 보여지도록 정렬을 수정
 
-  const hi = review.filter(d => d.postCategory !== "농구")
-  console.log(hi)
-
+  const hi = review.filter((d) => d.postCategory !== "농구");
 
   const [modalOn, setModalOn] = React.useState(false);
   const openModal = (e) => {
@@ -67,11 +68,11 @@ const ReviewList = () => {
               <Desc>{review.content} </Desc>
               <Info>
                 <div>
-                  <Icon>아이콘</Icon>
+                  <MdPlace color="#787878" />
                   <span>{review.spot}</span>
                 </div>
                 <div>
-                  <Icon>아이콘</Icon>
+                  <BiDumbbell color="#787878" />
                   <span>{review.postCategory}</span>
                 </div>
               </Info>

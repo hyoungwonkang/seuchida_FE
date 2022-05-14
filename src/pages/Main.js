@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Card, LCslider, RCslider } from "../components/index";
-import { Button} from "../elements/Index";
+import { Button } from "../elements/Index";
 import FooterMenu from "../shared/FooterMenu";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
@@ -14,6 +14,7 @@ const Main = () => {
   const review = useSelector((state) => state.post.list.filterRe);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+
   const [state, setState] = React.useState({
     center: {
       lat: 33.450701,
@@ -61,20 +62,11 @@ const Main = () => {
       <Container>
         {/* 라이브 카드  */}
         <TopLive>
-          <WellcomeBox>
-            <Wellcome>
-              {user.userInfo.nickName}님
-              <br />
-              방금 개설된 가까운 <br />
-              <Sports>
-                {catepost.map((v, i) => {
-                  return v.postCategory;
-                })}
-              </Sports>{" "}
-              매칭이에요!
-            </Wellcome>
-          </WellcomeBox>
-          <LCslider catepost={catepost} center={state.center} />
+          <LCslider
+            catepost={catepost}
+            center={state.center}
+            user={user.userInfo.nickName}
+          />
         </TopLive>
 
         {/* 스친 운동 한줄평 */}
@@ -145,25 +137,6 @@ const TopLive = styled.section`
   min-height: 450px;
   background-color: #f8f8fa;
 `;
-
-const WellcomeBox = styled.div`
-  font-size: 24px;
-  padding: 40px 24px 30px 24px;
-  background-color: #0ed88b;
-  font-weight: 700;
-`;
-
-const Sports = styled.div`
-  display: inline;
-  color: #ffffff;
-  font-weight: bold;
-`;
-
-const Wellcome = styled.div`
-  color: #ffffff;
-`;
-
-// --라이브 카드
 
 // 여기여기 붙어라
 

@@ -18,8 +18,9 @@ const Done = () => {
   };
 
   return (
-    <Grid column margin="200px 0px">
-      <Text size="24px">
+    <Grid column margin="167px auto 0px auto">
+      <img src="./img/seuchin.png" />
+      <Text size="24px" bold>
         프로필 작성이 <br />
         완료되었어요:)
       </Text>
@@ -29,7 +30,7 @@ const Done = () => {
       <Text size="16px" color="gray" margin="0px">
         찾으러 떠나 볼까요?
       </Text>
-      <FooterMenu next event={removeToken} text="다음" />
+      <FooterMenu next event={removeToken} text="확인" />
     </Grid>
   );
 };

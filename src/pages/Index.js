@@ -22,7 +22,7 @@ import MyReview from "../pages/MyReview";
 import ReviewWrite from "../pages/ReviewWrite";
 import EditDone from "./LoginPages/EditDone";
 import ChatRoom from "./ChatRoom";
-import ChatTest from "./ChatTest";
+import EditProfile from "./LoginPages/EditProfile";
 
 export {
   Login,
@@ -30,6 +30,7 @@ export {
   SignupDone,
   SignupLoca,
   AddProfile,
+  EditProfile,
   Category,
   Main,
   PostList,
@@ -49,5 +50,4 @@ export {
   MyReview,
   ReviewWrite,
   ChatRoom,
-  ChatTest,
 };

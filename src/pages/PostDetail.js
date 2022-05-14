@@ -20,6 +20,7 @@ const PostDetail = (props) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [isOpen2, setIsOpen2] = React.useState(false);
   const [isOpen3, setIsOpen3] = React.useState(false);
+  const [isOpen4, setIsOpen4] = React.useState(false);
   const [modalData, setModalData] = React.useState(null);
   const [post, setPost] = React.useState(null);
   const token = localStorage.getItem("token");
@@ -108,7 +109,7 @@ const PostDetail = (props) => {
       <Header>
         <GoBack gback _onClick={() => history.goBack()} />
 
-        {/* 본인에게만 삭제버튼  */}
+        {/*  삭제버튼  */}
         {isMe ? (
           <Button
             is_delete
@@ -222,11 +223,11 @@ const PostDetail = (props) => {
       </Modal>
 
       {/* 채팅방 이동 확인 창(채팅하기 버튼에 모달 적용 전) */}
-      <Modal open={isOpen3}>
+      <Modal open={isOpen4}>
         <ModalData
           Check
           text="모임에 참여하시겠어요?"
-          onClose={() => setIsOpen3(false)}
+          onClose={() => setIsOpen4(false)}
           onCheck={() => movechat()}
         />
       </Modal>

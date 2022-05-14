@@ -5,21 +5,42 @@ import { Grid, Image, Input, Text, GoBack } from "../elements/Index";
 import FooterMenu from "../shared/FooterMenu";
 import styled from "styled-components";
 import { HiPlus } from "react-icons/hi";
+import { AiFillCalendar } from "react-icons/ai";
+import { FaPen } from "react-icons/fa";
+import { BiDumbbell } from "react-icons/bi";
 import { actionCreators as mypageActions } from "../redux/modules/mypage";
-import { useSearchParams } from "react-router-dom";
+import Modal from "../components/Modal/Modal"; //모달 창
+import ModalData from "../components/Modal/ModalData";
+import axios from "axios";
 
 const ReviewWrite = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const postInfo = useSelector((state) => state.mypage.myExercise);
-  // console.log(postInfo);
+  const postId = props.match.params.postId;
 
-  const postId = props.match.params.PostId;
-  // console.log(postId);
+  const [postInfo, setPostInfo] = useState();
+
+  //모달 오픈 state
+  const [isOpen, setIsOpen] = React.useState(false);
 
   useEffect(() => {
-    //한개만 가져오는 api 필요!
+    axios({
+      method: "get",
+      url: `https://seuchidabackend.shop/api//reviewPost/${postId}`,
+      headers: {
+        "Content-Type": `multipart/form-data;`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((res) => {
+        // console.log(res.data.post);
+        const _postInfo = res.data.post;
+        setPostInfo(_postInfo);
+      })
+      .catch((err) => {
+        console.log("mypostone에 실패했습니다.", err);
+      });
     dispatch(mypageActions.myExerciseDB());
   }, []);
 
@@ -55,8 +76,9 @@ const ReviewWrite = (props) => {
   };
 
   const addReview = () => {
+    console.log(postId);
     if (reviewImg === "" || review === "") {
-      window.alert("입력값을 모두 입력해주세요:)");
+      setIsOpen(true);
     } else {
       const formData = new FormData();
       formData.append("image", reviewImg);
@@ -75,12 +97,24 @@ const ReviewWrite = (props) => {
       <Grid height="950px">
         {/* 포스트 내용  */}
         <Grid height="46px" width="342px" margin="auto">
-          <Text color="gray">배드민턴 칠 사람</Text>
+          <Text color="gray" size="16px">
+            {postInfo?.postTitle}
+          </Text>
         </Grid>
         <Grid border="1px solid gray" height="92px" padding="15px 22px">
-          <Text margin="0px">배드민턴</Text>
-          <Text margin="0px">5월2일, 06:00 오후</Text>
-          <Text margin="0px">여성만, 20세-29세</Text>
+          <Text margin="0px" size="14px">
+            <BiDumbbell color="#787878" />
+            {postInfo?.postCategory}
+          </Text>
+          <Text margin="0px" size="14px">
+            <AiFillCalendar color="#787878" />
+
+            {postInfo?.datemate}
+          </Text>
+          <Text margin="0px" size="14px">
+            <FaPen color="#787878" size="14px" />
+            {postInfo?.memberGender}, {postInfo?.memberAge}
+          </Text>
         </Grid>
 
         {/* 사진추가 */}
@@ -89,7 +123,7 @@ const ReviewWrite = (props) => {
           size={39}
           position="relative"
           alt="profile"
-          src={preview ? preview : "./img/blank_img.png"}
+          src={preview ? preview : "../img/blank_img.png"}
         />
         <FileUpload>
           <label htmlFor="image">
@@ -156,6 +190,11 @@ const ReviewWrite = (props) => {
         </Grid> */}
       </Grid>
       <FooterMenu next text="후기 작성하기" event={addReview} />
+
+      {/* 경고창 모달 */}
+      <Modal open={isOpen}>
+        <ModalData Alert onClose={() => setIsOpen(false)} />
+      </Modal>
     </Grid>
   );
 };
@@ -167,7 +206,7 @@ const FileUpload = styled.div`
   label {
     position: absolute;
     top: 360px;
-    right: 150px;
+    right: 160px;
   }
   input {
     position: absolute;

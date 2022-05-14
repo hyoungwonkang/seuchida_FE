@@ -70,7 +70,7 @@ const LiveCard = (props) => {
           </Location>
 
           <Desc>{Livepost?.postDesc}</Desc>
-          {Livepost?.postCategory}
+
           <LocaTime>
             <Location>
               <SmallFont style={{ marginRight: "8px" }}>

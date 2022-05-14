@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import { Button } from "../elements/Index";
+import { Button, Image } from "../elements/Index";
 
 const FooterMenu = (props) => {
   const history = useHistory();
@@ -61,13 +61,6 @@ const FooterMenu = (props) => {
         </Menu>
         <Menu
           onClick={() => {
-            history.push("/challenge");
-          }}
-        >
-          챌린지
-        </Menu>
-        <Menu
-          onClick={() => {
             history.push("/chatlist");
           }}
         >
@@ -78,7 +71,7 @@ const FooterMenu = (props) => {
             history.push("/mypage");
           }}
         >
-          마이페이지
+          프로필
         </Menu>
       </MenuBox>
     </Container>
@@ -111,6 +104,8 @@ const Menu = styled.div`
   font-size: 16px;
   color: #787878;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Btn = styled.div`

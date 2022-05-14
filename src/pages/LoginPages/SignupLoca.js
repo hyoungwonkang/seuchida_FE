@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import styled from "styled-components";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import { Grid, Text, Image, GoBack } from "../../elements/Index";
 import FooterMenu from "../../shared/FooterMenu";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { actionCreators as userActions } from "../../redux/modules/user";
 
 const SignupLoca = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   //작성||수정 구분
   const edit = useSelector((state) => state.user?.userInfo.userImg);
@@ -20,7 +21,7 @@ const SignupLoca = () => {
     dispatch(userActions.isLoginDB());
   }, []);
 
-  const [address, setAddress] = useState();
+  const [address, setAddress] = useState("");
   const [fullAddress, setFullAddress] = useState();
   const [state, setState] = useState({
     center: {
@@ -131,7 +132,11 @@ const SignupLoca = () => {
         </Map>
 
         {/* 푸터*/}
-        <FooterMenu next path="/addprofile" text="다음" />
+        {is_edit ? (
+          <FooterMenu next text="다음" path="/editprofile" />
+        ) : (
+          <FooterMenu next text="다음" path="/addprofile" />
+        )}
       </Grid>
     </Grid>
   );

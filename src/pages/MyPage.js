@@ -26,16 +26,6 @@ const NameCard = () => {
 
   const len = myReview.length;
 
-  //유저 등급
-  // const medal = [
-  //   { count: 0, md: "" },
-  //   { count: 10, md: "🏅" },
-  //   { count: 20, md: "🥉" },
-  //   { count: 30, md: "🥈" },
-  //   { count: 40, md: "🥇" },
-  //   { count: 50, md: "🏆" },
-  // ];
-
   return (
     <Grid column height="auto" margin="0px" bg="white">
       {/* 프로필 수정, 알람 */}
@@ -55,42 +45,35 @@ const NameCard = () => {
         src={userInfo.userImg}
         margin="19px 0px 8px 0px"
       />
-      {/* 유저 닉네임 */}
-      <Text size="24px" margin="0px" color="#323232">
-        {/* {medal.map((v, i) => {
-          len === 13 ? v.md : "";
-        })} */}
-        <Grid row>
-          {len >= 60 ? (
-            <Image src="./img/purple.png" />
-          ) : len >= 50 ? (
-            <Image src="./img/blue.png" />
-          ) : len >= 40 ? (
-            <Image src="./img/skyblue.png" />
-          ) : len >= 30 ? (
-            <Image src="./img/green.png" />
-          ) : len >= 20 ? (
-            <Image src="./img/yellow.png" />
-          ) : len >= 10 ? (
-            <Image src="./img/orange.png" />
-          ) : len >= 0 ? (
-            <Image src="./img/red.png" />
-          ) : (
-            ""
-          )}
 
+      {/* 유저 닉네임 */}
+      <Grid row justify="center">
+        {len >= 60 ? (
+          <Image src="./img/purple.png" />
+        ) : len >= 50 ? (
+          <Image src="./img/blue.png" />
+        ) : len >= 40 ? (
+          <Image src="./img/skyblue.png" />
+        ) : len >= 30 ? (
+          <Image src="./img/green.png" />
+        ) : len >= 20 ? (
+          <Image src="./img/yellow.png" />
+        ) : len >= 10 ? (
+          <Image src="./img/orange.png" />
+        ) : len >= 0 ? (
+          <Image src="./img/red.png" />
+        ) : (
+          ""
+        )}
+        <Text size="24px" margin="0px" color="#323232" bold>
           {userInfo.nickName}
-        </Grid>
-      </Text>
+        </Text>
+      </Grid>
 
       {/* 유저 관심사 */}
       <Grid row height="auto" margin="8px 0px 16px 0px" justify="center">
         {userInfo.userInterest?.map((v, i) => {
-          return (
-            <Text br margin="0px 5px" key={v + i} color="#000000">
-              {v}
-            </Text>
-          );
+          return <Cate key={v + i}>{v}</Cate>;
         })}
       </Grid>
 
@@ -131,133 +114,122 @@ const MyPage = () => {
 
   return (
     <>
-      <Grid bg="#0ED88B" height="950px">
-        <Grid height="auto">
-          <NameCard />
-          <Grid height="96px" column margin="auto">
+      <Grid bg="#0ED88B" height="auto">
+        <NameCard />
+        <Grid height="117px" column margin="auto">
+          <Text
+            size="16px"
+            margin="30px 0px 0px 0px"
+            width="342px"
+            color="#FFFFFF"
+            bold
+          >
+            {len >= 50
+              ? "Purple"
+              : len >= 40
+              ? "Blue"
+              : len >= 30
+              ? "Skyblue"
+              : len >= 20
+              ? "Green"
+              : len >= 10
+              ? "Yellow"
+              : "Orange"}
+            레벨까지
+            {10 -
+              (len >= 60
+                ? len - 60
+                : len >= 50
+                ? len - 50
+                : len >= 40
+                ? len - 40
+                : len >= 30
+                ? len - 30
+                : len >= 20
+                ? len - 20
+                : len >= 10
+                ? len - 10
+                : len)}
+            회
+          </Text>
+
+          <Grid
+            bg="#FFFFFF"
+            height="12px"
+            width="342px"
+            margin="0px 0px 40px 0px"
+            br="12px"
+          >
+            <Highlight
+              width={
+                len >= 40
+                  ? ((len - 40) / 10) * 100 + "%"
+                  : len >= 30
+                  ? ((len - 30) / 10) * 100 + "%"
+                  : len >= 20
+                  ? ((len - 20) / 10) * 100 + "%"
+                  : len >= 10
+                  ? ((len - 10) / 10) * 100 + "%"
+                  : (len / 10) * 100 + "%"
+              }
+            />
             <Text
               size="16px"
-              margin="30px 0px 0px 0px"
+              margin="0px 0px 0px 310px"
               width="342px"
               color="#FFFFFF"
+              bold
             >
-              {len >= 50
-                ? "Purple"
-                : len >= 40
-                ? "Blue"
+              {len >= 40
+                ? len - 40
                 : len >= 30
-                ? "Skyblue"
+                ? len - 30
                 : len >= 20
-                ? "Green"
+                ? len - 20
                 : len >= 10
-                ? "Yellow"
-                : "Orange"}
-              레벨까지
-              {10 -
-                (len >= 60
-                  ? len - 60
-                  : len >= 50
-                  ? len - 50
-                  : len >= 40
-                  ? len - 40
-                  : len >= 30
-                  ? len - 30
-                  : len >= 20
-                  ? len - 20
-                  : len >= 10
-                  ? len - 10
-                  : len)}
-              회
+                ? len - 10
+                : len}
+              /10
             </Text>
-
-            <Grid
-              bg="#FFFFFF"
-              height="12px"
-              width="342px"
-              margin="0px 0px 30px 0px"
-              br="12px"
-            >
-              <Highlight
-                width={
-                  len >= 40
-                    ? ((len - 40) / 10) * 100 + "%"
-                    : len >= 30
-                    ? ((len - 30) / 10) * 100 + "%"
-                    : len >= 20
-                    ? ((len - 20) / 10) * 100 + "%"
-                    : len >= 10
-                    ? ((len - 10) / 10) * 100 + "%"
-                    : (len / 10) * 100 + "%"
-                }
-              />
-              <Text
-                size="16px"
-                margin="0px 0px 0px 310px"
-                width="342px"
-                color="#FFFFFF"
-              >
-                {len >= 40
-                  ? len - 40
-                  : len >= 30
-                  ? len - 30
-                  : len >= 20
-                  ? len - 20
-                  : len >= 10
-                  ? len - 10
-                  : len}
-                /10
-              </Text>
-            </Grid>
-          </Grid>
-
-          <Grid padding="10px 24px" margin="0px 10px 0px 0px">
-            <Text size="16px" color="#FFFFFF">
-              <RiBarChartFill color="#FFFFFF" />
-              운동 후기 남기고 스친 레벨 올리자!
-            </Text>
-            <ECslider myExercise={myExercise} />
           </Grid>
         </Grid>
 
-        <Grid column bg="white" height="auto" margin="30px 0px 0px 0px">
-          <Grid height="200px" bg="white">
-            <Grid
-              row
-              bg="white"
-              height="62px"
-              margin="0px"
-              border="1px solid #ddd"
-            >
-              <Text size="16px" margin="0px 0px 0px 24px">
-                내가 만든 모임
-              </Text>
-              <IoIosArrowForward
-                size={30}
-                style={{ margin: "0px 0px 0px 220px" }}
-                onClick={() => {
-                  history.push("/mypost");
-                }}
-              />
-            </Grid>
-            <Grid
-              row
-              bg="white"
-              height="62px"
-              margin="0px"
-              border="1px solid #ddd"
-            >
-              <Text size="16px" margin="0px 0px 0px 24px">
-                내가 쓴 후기
-              </Text>
-              <IoIosArrowForward
-                size={30}
-                style={{ margin: "0px 0px 0px 233px" }}
-                onClick={() => {
-                  history.push("/myreview");
-                }}
-              />
-            </Grid>
-          </Grid>
+        <Grid
+          padding="10px 24px"
+          margin="0px 10px 0px 0px"
+          bg="white"
+          height="300px"
+        >
+          <Text size="16px" bold>
+            <RiBarChartFill color="#FF6B52" />
+            운동 후기 남기고 스친 레벨 올리자!
+          </Text>
+          <ECslider myExercise={myExercise} />
+        </Grid>
+
+        <Grid row bg="white" height="62px" margin="0px" border="1px solid #ddd">
+          <Text size="16px" margin="0px 0px 0px 24px" bold>
+            내가 만든 모임
+          </Text>
+          <IoIosArrowForward
+            size={30}
+            style={{ margin: "0px 0px 0px 220px" }}
+            onClick={() => {
+              history.push("/mypost");
+            }}
+          />
+        </Grid>
+        <Grid row bg="white" height="62px" margin="0px" border="1px solid #ddd">
+          <Text size="16px" margin="0px 0px 0px 24px" bold>
+            내가 쓴 후기
+          </Text>
+          <IoIosArrowForward
+            size={30}
+            style={{ margin: "0px 0px 0px 233px" }}
+            onClick={() => {
+              history.push("/myreview");
+            }}
+          />
         </Grid>
       </Grid>
 
@@ -274,4 +246,19 @@ const Highlight = styled.div`
   width: ${(props) => props.width};
   height: 12px;
   border-radius: 12px;
+`;
+
+//카테고리 한 개 css
+const Cate = styled.div`
+  width: auto;
+  height: auto;
+  box-sizing: border-box;
+  margin: 5px 3px;
+  padding: 8px 13px;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 30px;
+  font-size: 16px;
+  background: ${(props) => (props.click ? "#0ED88B" : "white")};
+  color: ${(props) => (props.click ? "white" : "black")};
 `;

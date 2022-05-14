@@ -99,6 +99,7 @@ const isLoginDB = () => {
       },
     })
       .then((res) => {
+        console.log(res);
         const userInfo = res.data.myPage[0];
         dispatch(getUser(userInfo));
       })
@@ -123,7 +124,7 @@ const editUserDB = (formData) => {
       .then((res) => {
         dispatch(editUser(formData));
         console.log("프로필 수정 성공");
-        history.replace("/editdone");
+        // history.replace("/editdone");
       })
       .catch((error) => {
         console.log("프로필 수정 실패", error);

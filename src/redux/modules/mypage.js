@@ -10,7 +10,6 @@ const MY_EXERCISE = "MY_EXERCISE";
 const MY_POST = "MY_POST";
 const MY_REVIEW = "MY_REVIEW";
 const ADD_REVIEW = "ADD_REVIEW";
-const DELETE_POST = "DELETE_POST";
 
 //Action Creators
 
@@ -100,6 +99,7 @@ const myReviewDB = () => {
 //addreview
 const addReviewDB = (formData, postId) => {
   return async (dispatch, getState, { history }) => {
+    console.log(postId);
     await axios({
       method: "post",
       url: `https://seuchidabackend.shop/api/review/${postId}`,
@@ -110,6 +110,7 @@ const addReviewDB = (formData, postId) => {
       },
     })
       .then((res) => {
+        console.log(res);
         const review = res.data;
         dispatch(addReview(review));
       })

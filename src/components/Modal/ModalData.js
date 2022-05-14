@@ -78,7 +78,8 @@ const ModalData = (props) => {
           margin="3px"
         />
         <Grid column width="auto" height="60px">
-          <Image src="./img/red_medal.png" />
+          {/* 임의 */}
+          <Image src="../img/purple.png" />
           <Text margin="0px">{props.post[0].memberNickname}</Text>
           <Text margin="0px">
             {props.post[0].memberGen}/{props.post[0].memberAgee}

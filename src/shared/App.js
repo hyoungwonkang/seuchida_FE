@@ -9,6 +9,7 @@ import {
   SignupDone,
   SignupLoca,
   AddProfile,
+  EditProfile,
   Category,
   Main,
   PostList,
@@ -27,10 +28,9 @@ import {
   MyPost,
   MyReview,
   ReviewWrite,
-  ChatRoom,
 } from "../pages/Index";
 import Chatex from "../pages/Chatex";
-import ChatList from "../pages/ChatList"
+import ChatList from "../pages/ChatList";
 
 function App() {
   return (
@@ -43,6 +43,7 @@ function App() {
           <Route path="/signupdone" exact component={SignupDone} />
           <Route path="/signuploca" exact component={SignupLoca} />
           <Route path="/addprofile" exact component={AddProfile} />
+          <Route path="/editprofile" exact component={EditProfile} />
           <Route path="/postlist" exact component={PostList} />
           <Route path="/postdetail/:postId" exact component={PostDetail} />
           <Route path="/ReviewList/:reviewId" exact component={ReviewList} />
