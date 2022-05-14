@@ -1,20 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import FooterMenu from '../shared/FooterMenu';
 import { Grid, Text, Input, GoBack } from '../elements/Index';
 
 const PostWrite_1 = (props) => {
-  const postCategory = props?.location?.state?.postCategory;
-  console.log(postCategory);
+  const history = useHistory();
 
   //제목과 설명 state
   const [postTitle, setPostTitle] = useState('');
   const [postDesc, setPostDesc] = useState('');
+
   const selectPostTitle = (e) => {
     setPostTitle(e.target.value);
   };
-
   const selectPostDesc = (e) => {
     setPostDesc(e.target.value);
   };
@@ -25,16 +24,40 @@ const PostWrite_1 = (props) => {
     count++;
   }
 
+  //유효성 검사
+  const check = () => {
+    if (!postTitle || !postDesc) {
+      window.alert('입력창에 내용을 넣어주세요');
+    } else {
+      history.push('/postwrite2');
+    }
+  };
+
+  // 새로고침시 데이터를 유지합니다.
+  useEffect(() => {
+    setPostTitle(window.localStorage.getItem('postTitle'));
+    setPostDesc(window.localStorage.getItem('postDesc'));
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem('postTitle', postTitle);
+  }, [postTitle]);
+  useEffect(() => {
+    window.localStorage.setItem('postDesc', postDesc);
+  }, [postDesc]);
+
   return (
     <Grid>
       <GoBack text='모임 만들기' path='/postcategory' />
-      <ProgressBar>
-        <HighLight width={(count / 3) * 100 + '%'} />
-      </ProgressBar>
+      <Grid margin='24px 0px 40px 0px'>
+        <ProgressBar>
+          <HighLight width={(count / 3) * 100 + '%'} />
+        </ProgressBar>
+      </Grid>
       <Text margin='0px 0px 0px 24px' size='16px'>
         제목
       </Text>
-      <Grid padding='8px 0px 28px 24px'>
+      <Grid padding='8px 0px 20px 24px'>
         <Input
           size='16px'
           height='56px'
@@ -70,18 +93,7 @@ const PostWrite_1 = (props) => {
           </Text>
         </Grid>
       </Grid>
-      <Link
-        to={{
-          // pathname: '/postwrite2',
-          state: {
-            postTitle,
-            postDesc,
-            postCategory,
-          },
-        }}
-      >
-        <FooterMenu next path='/postwrite2' text='다음' />
-      </Link>
+      <FooterMenu next text='다음' state={check} />
     </Grid>
   );
 };
@@ -95,7 +107,7 @@ const ProgressBar = styled.div`
 `;
 
 const HighLight = styled.div`
-  background: black;
+  background: #0ed88b;
   transition: 1s;
   width: ${(props) => props.width};
   height: 4.5px;

@@ -71,7 +71,7 @@ const addPostDB = (
         history.push('/postdone');
       })
       .catch((err) => {
-        window.alert('뭔가 이상해요');
+        window.alert('모든 조건을 선택해 주세요');
         console.log('게시물작성실패', err);
       });
   };

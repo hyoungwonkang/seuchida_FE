@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { actionCreators as postActions } from '../redux/modules/post';
 import { actionCreators as userActions } from '../redux/modules/user';
 import { history } from '../redux/configStore';
+import { Button } from '../elements/Index';
 
 const Main = () => {
   const catepost = useSelector((state) => state.post.list.caPost);
@@ -111,7 +112,21 @@ const Main = () => {
             })}
           </CardBox>
         </ListBox>
-
+        <Button
+          is_float
+          _onClick={() => {
+            history.push('/postcategory');
+            localStorage.setItem('postCategory', '');
+            localStorage.setItem('postTitle', '');
+            localStorage.setItem('postDesc', '');
+            localStorage.setItem('maxMember', 2);
+            localStorage.setItem('memberGender', '');
+            localStorage.setItem('memberAge', '');
+            localStorage.setItem('searchPlace', '');
+          }}
+        >
+          +
+        </Button>
         {/* 푸터 */}
       </Container>
       <FooterMenu />

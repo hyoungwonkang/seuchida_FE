@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import FooterMenu from '../shared/FooterMenu';
-import { Button, Grid, Text, Input, GoBack } from '../elements/Index';
+import { Grid, Text, GoBack } from '../elements/Index';
 
 import { IconContext } from 'react-icons';
 import { BsFillPeopleFill } from 'react-icons/bs';
@@ -13,13 +12,10 @@ import { AiOutlinePlusCircle } from 'react-icons/ai';
 
 const PostWrite_2 = (props) => {
   const history = useHistory();
-  const postCategory = props.location.state?.postCategory;
-  const postTitle = props.location.state?.postTitle;
-  const postDesc = props.location.state?.postDesc;
 
   //인원
-  const [maxMember, setMaxMember] = useState(2);
-
+  let [maxMember, setMaxMember] = useState();
+  maxMember = parseInt(maxMember);
   const onIncrease = () => {
     setMaxMember(maxMember + 1);
     if (maxMember > 29) {
@@ -37,13 +33,10 @@ const PostWrite_2 = (props) => {
   };
 
   //성별
-  const [memberGender, setMemberGender] = useState('성별무관');
+  const [memberGender, setMemberGender] = useState('');
 
   //나이
-  let [memberAge, setMemberAge] = useState('나이무관');
-  // const ageChange = (e) => {
-  //   setMemberAge(e.target.value);
-  // };
+  let [memberAge, setMemberAge] = useState('');
 
   //'직접입력' 시 나이를 조합합니다.
   const [member, setMember] = useState({
@@ -59,6 +52,11 @@ const PostWrite_2 = (props) => {
     });
   };
 
+  if (memberAge === '나이무관') {
+    member.fage = '';
+    member.lage = '';
+  }
+
   // '직접입력' 시 조합된 나이로 보내줍니다.
   if (combine_member.length > 2) {
     memberAge = combine_member;
@@ -66,36 +64,75 @@ const PostWrite_2 = (props) => {
 
   //토글
   const [show, setShow] = useState(false);
+  let [showOptions, setShowOptions] = useState('');
 
   //프로그레스바
   let count = 1;
-  if (maxMember > 2 || show) {
+  if (maxMember > 1) {
     count++;
   }
+
+  //유효성 검사
+  const check = () => {
+    if (maxMember < 2) {
+      window.alert('인원을 2명 이상 선택해주세요');
+      if (!maxMember || !memberGender || !memberAge) {
+        window.alert('모든 조건을 선택해 주세요');
+      }
+    } else {
+      history.push('/postwrite3');
+    }
+  };
+
+  // 새로고침시 데이터를 유지합니다.
+  useEffect(() => {
+    setMaxMember(window.localStorage.getItem('maxMember'));
+    setMemberGender(window.localStorage.getItem('memberGender'));
+    setMemberAge(window.localStorage.getItem('memberAge'));
+    setShowOptions(window.localStorage.getItem('showOptions'));
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem('maxMember', maxMember);
+  }, [maxMember]);
+  useEffect(() => {
+    window.localStorage.setItem('memberGender', memberGender);
+  }, [memberGender]);
+  useEffect(() => {
+    window.localStorage.setItem('memberAge', memberAge);
+  }, [memberAge]);
+  useEffect(() => {
+    window.localStorage.setItem('showOptions', showOptions);
+  }, [showOptions]);
 
   return (
     <Grid>
       <GoBack text='모임 만들기' path='/postwrite1' />
-      <ProgressBar>
-        <HighLight width={(count / 3) * 100 + '%'} />
-      </ProgressBar>
+      <Grid margin='24px 0px 40px 0px'>
+        <ProgressBar>
+          <HighLight width={(count / 3) * 100 + '%'} />
+        </ProgressBar>
+      </Grid>
       <LineBox>
         <Grid row margin='12px 0px' height='auto' justify='space-between'>
           <Grid row margin='0px 0px 0px 24px'>
             <IconContext.Provider value={{ color: '#787878', size: '16px' }}>
               <BsFillPeopleFill />
             </IconContext.Provider>
-            <Text margin='0px 12px' size='16px'>
+            <Text width='40px' margin='0px 12px' size='16px'>
               인원
             </Text>
           </Grid>
-          <Grid row margin='0px 24px 0px 184px'>
+          <Grid row margin='0px 24px 0px 172px'>
             <div onClick={onDecrease}>
               <IconContext.Provider value={{ color: '#DDDDDD', size: '28px' }}>
                 <AiOutlineMinusCircle />
               </IconContext.Provider>
             </div>
-            <Grid margin='0px 0px 6px 0px'> {maxMember}명 </Grid>
+            <Grid margin='0px 0px 6px 0px'>
+              {' '}
+              &nbsp;{maxMember}&nbsp;명&nbsp;{' '}
+            </Grid>
             <div onClick={onIncrease}>
               <IconContext.Provider value={{ color: '#DDDDDD', size: '28px' }}>
                 <AiOutlinePlusCircle />
@@ -119,7 +156,14 @@ const PostWrite_2 = (props) => {
         </Text>
         <Grid _onClick={() => setShow(!show)} isFlex_end>
           {show ? (
-            <div style={{ color: '#000000' }}>확인</div>
+            <div
+              onClick={() => setShowOptions(memberGender + `, ` + memberAge)}
+              style={{ color: '#000000' }}
+            >
+              확인
+            </div>
+          ) : showOptions ? (
+            memberGender + `, ` + memberAge
           ) : (
             <div style={{ color: '#C4C4C4' }}>조건 선택</div>
           )}
@@ -174,7 +218,7 @@ const PostWrite_2 = (props) => {
                     />{' '}
                     직접입력
                   </Grid>
-                  <Grid row margin='24px 0px' padding='0px 8px'>
+                  <Grid row margin='28px 0px' padding='0px 8px'>
                     <label>
                       <AgeInput
                         type='number'
@@ -185,8 +229,13 @@ const PostWrite_2 = (props) => {
                         style={{
                           width: '136px',
                           height: '56px',
+                          textAlign: 'center',
+                          fontSize: '16px',
                         }}
                         pattern='[0-9]+'
+                        // onKeyUp={
+                        //   (this.value = this.value.replace(/[^0-9]/g, ''))
+                        // }
                       />
                     </label>
                     &nbsp;&nbsp;&nbsp;
@@ -201,7 +250,12 @@ const PostWrite_2 = (props) => {
                         value={member.lage}
                         onChange={handleChange}
                         placeholder='끝 나이 ex) 29'
-                        style={{ width: '136px', height: '56px' }}
+                        style={{
+                          width: '136px',
+                          height: '56px',
+                          textAlign: 'center',
+                          fontSize: '16px',
+                        }}
                         pattern='[0-9]+'
                       />
                     </label>
@@ -212,29 +266,7 @@ const PostWrite_2 = (props) => {
           </div>
         ) : null}
       </div>
-
-      <Link
-        to={{
-          // pathname: '/postwrite3',
-          state: {
-            maxMember,
-            memberGender,
-            memberAge,
-            postCategory,
-            postTitle,
-            postDesc,
-          },
-        }}
-      >
-        {/* <FooterMenu
-          next
-          path='/postwrite3'
-          text='다음'
-          onClick={addContents}
-          event={maxMember < 2 ? alert('인원을 2명 이상 설정해 주세요') : ''}
-        /> */}
-        <FooterMenu next path='/postwrite3' text='다음' />
-      </Link>
+      <FooterMenu next text='다음' state={check} />
     </Grid>
   );
 };
@@ -253,60 +285,6 @@ const AgeBox = styled.div`
   padding: 0px 24px;
 `;
 
-const Item = styled.div`
-  display: flex;
-  align-items: center;
-  height: 48px;
-  position: relative;
-  margin: 0px 20px 0px 0px;
-`;
-
-const RadioButtonLabel = styled.label`
-  position: absolute;
-  top: 25%;
-  left: 4px;
-  width: 24px;
-  height: 24px;
-  border-radius: 20%;
-  background: white;
-  border: 1px solid #bebebe;
-  /* ${(props) =>
-    props.checked?.length > 2 ? `background:#C9C9C9'` : `background:'white'`} */
-`;
-const RadioButton = styled.input`
-  opacity: 0;
-  z-index: 1;
-  border-radius: 50%;
-  width: 26px;
-  height: 26px;
-  margin-right: 10px;
-  &:hover ~ ${RadioButtonLabel} {
-    background: #bebebe;
-    &::after {
-      content: '';
-      display: block;
-      border-radius: 50%;
-      width: 12px;
-      height: 12px;
-      margin: 6px;
-      background: #eeeeee;
-    }
-  }
-  ${(props) =>
-    props.checked &&
-    ` 
-    &:checked + ${RadioButtonLabel} {
-      background: #C9C9C9;
-      &::after {
-        content: "";
-        display: block;
-        margin: 6px;
-        background: white;
-      }
-    }
-  `}
-`;
-
 const ProgressBar = styled.div`
   background: #eee;
   width: 85%;
@@ -316,7 +294,7 @@ const ProgressBar = styled.div`
 `;
 
 const HighLight = styled.div`
-  background: black;
+  background: #0ed88b;
   transition: 1s;
   width: ${(props) => props.width};
   height: 4.5px;

@@ -1,12 +1,31 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
 import Button from '../elements/Button';
 import { Grid, Text } from '../elements/Index';
-import FooterMenu from '../shared/FooterMenu';
 
 const PostDone = () => {
-  const history = useHistory();
+  //localStorage에 있는 데이터를 삭제합니다.
+  const setDone = () => {
+    localStorage.removeItem('address');
+    localStorage.removeItem('spot');
+    localStorage.removeItem('latitude');
+    localStorage.removeItem('longitude');
+    localStorage.removeItem('datemate');
+    localStorage.removeItem('memberAge');
+    localStorage.removeItem('memberGender');
+    localStorage.removeItem('maxMember');
+    localStorage.removeItem('postCategory');
+    localStorage.removeItem('postTitle');
+    localStorage.removeItem('postDesc');
+    localStorage.removeItem('searchPlace');
+    localStorage.removeItem('value');
+    localStorage.removeItem('pageTime');
+    localStorage.removeItem('dayDate');
+    localStorage.removeItem('inputText');
+    localStorage.removeItem('showOptions');
+    localStorage.removeItem('dayDate');
+    localStorage.removeItem('dayDate');
+    window.location.href = '/main';
+  };
   return (
     <Grid>
       <Text margin='280px 0px 10px 44px' size='24px'>
@@ -18,14 +37,7 @@ const PostDone = () => {
       <Text margin='0px 0px 40px 132px' size='16px' color='grey'>
         확인할 수 있어요
       </Text>
-      <Button
-        margin='0px 0px 0px 24px'
-        _onClick={() => {
-          window.location.href = '/main';
-        }}
-        text='확인'
-      />
-      {/* <FooterMenu next path='/main' text='확인' /> */}
+      <Button margin='0px 0px 0px 24px' _onClick={setDone} text='확인' />
     </Grid>
   );
 };

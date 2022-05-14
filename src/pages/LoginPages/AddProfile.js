@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import 'react-datepicker/dist/react-datepicker.css';
 import { Link } from 'react-router-dom';
 import { Grid, Image, Input, Text, GoBack } from '../../elements/Index';
 import { actionCreators as userActions } from '../../redux/modules/user';
