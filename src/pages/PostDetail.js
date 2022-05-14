@@ -157,8 +157,8 @@ const PostDetail = (props) => {
         <button
           onClick={() => {
             history.push({
-              pathname: "/chatex",
-              state: `${post.roomId}`,
+              pathname: `/chatex/${post.roomId}`,
+              state: {...post},
             });
           }}
         >
@@ -198,7 +198,7 @@ const PostDetail = (props) => {
         <KakaoMap {...post} />
         {/* && userCheck[0]===false &&post.nowMember.length<=post.maxMember */}
 
-        {post.status &&
+        {post.status ===true &&
         userCheck[0] === undefined &&
         post.nowMember.length <= post.maxMember ? (
           <ButtonBox>

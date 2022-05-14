@@ -5,7 +5,7 @@ import { Button } from "../elements/Index";
 
 const FooterMenu = (props) => {
   const history = useHistory();
-  const { next, is_check } = props;
+  const { next, is_check, __onClick } = props;
 
   if (next) {
     return (
@@ -35,7 +35,7 @@ const FooterMenu = (props) => {
   if (is_check) {
     return (
       <Btn>
-        <Button bg="#c4c4c4" margin={"12px 0px 0px 0px"}>
+        <Button bg="#c4c4c4" margin={"12px 0px 0px 0px"} >
           {props.text}
         </Button>
       </Btn>
