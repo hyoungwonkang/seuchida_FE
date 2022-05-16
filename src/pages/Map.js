@@ -61,7 +61,7 @@ const Map = () => {
         isLoading: false,
       }));
     }
-  }, [state.center]);
+  }, [state]);
 
   let UserLoca = state.center;
   return (
