@@ -130,7 +130,6 @@ const PostWrite_2 = (props) => {
               </IconContext.Provider>
             </div>
             <Grid margin='0px 0px 6px 0px'>
-              {' '}
               &nbsp;{maxMember}&nbsp;명&nbsp;{' '}
             </Grid>
             <div onClick={onIncrease}>
