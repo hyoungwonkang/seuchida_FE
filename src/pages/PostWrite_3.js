@@ -138,7 +138,6 @@ const PostWrite_3 = (props) => {
     count++;
   }
 
-  //유효성 검사
   if (!show) {
     datemate = null;
     if (showDate && showTime) {
@@ -169,7 +168,7 @@ const PostWrite_3 = (props) => {
   };
 
   // console.log(address);
-  console.log(datemate);
+  // console.log(datemate);
   // console.log(latitude);
   // console.log(longitude);
   // console.log(maxMember);
@@ -370,7 +369,6 @@ const CalendarContainer = styled.div`
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
   .react-calendar {
     border: 0 !important;
-    /* font-size: 16px; */
   }
   .react-calendar__month-view__weekdays__weekday abbr {
     text-decoration: none;
