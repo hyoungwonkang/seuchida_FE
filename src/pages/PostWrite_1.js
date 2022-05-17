@@ -1,20 +1,38 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import FooterMenu from '../shared/FooterMenu';
 import { Grid, Text, Input, GoBack } from '../elements/Index';
+import Modal from '../components/Modal/Modal';
+import ModalData from '../components/Modal/ModalData';
 
 const PostWrite_1 = (props) => {
+  document.body.style.overscrollBehavior = 'none';
   const history = useHistory();
+
+  if (history.action === 'POP') {
+    history.replace('/main');
+  }
+
+  const postCategory = props?.location?.state?.postCategory;
+
+  //모달 오픈 state
+  const [isOpen, setIsOpen] = React.useState(false);
 
   //제목과 설명 state
   const [postTitle, setPostTitle] = useState('');
   const [postDesc, setPostDesc] = useState('');
 
   const selectPostTitle = (e) => {
+    if (e.target.value.length >= 60) {
+      e.target.value = e.target.value.substr(0, 60);
+    }
     setPostTitle(e.target.value);
   };
   const selectPostDesc = (e) => {
+    if (e.target.value.length >= 200) {
+      e.target.value = e.target.value.substr(0, 200);
+    }
     setPostDesc(e.target.value);
   };
 
@@ -27,24 +45,18 @@ const PostWrite_1 = (props) => {
   //유효성 검사
   const check = () => {
     if (!postTitle || !postDesc) {
-      window.alert('입력창에 내용을 넣어주세요');
+      setIsOpen(true);
     } else {
       history.push('/postwrite2');
     }
   };
 
-  // 새로고침시 데이터를 유지합니다.
-  useEffect(() => {
-    setPostTitle(window.localStorage.getItem('postTitle'));
-    setPostDesc(window.localStorage.getItem('postDesc'));
-  }, []);
-
-  useEffect(() => {
-    window.localStorage.setItem('postTitle', postTitle);
-  }, [postTitle]);
-  useEffect(() => {
-    window.localStorage.setItem('postDesc', postDesc);
-  }, [postDesc]);
+  if (postTitle?.length >= 60) {
+    window.alert('60글자 이내로 작성해주세요:)');
+  }
+  if (postDesc?.length >= 200) {
+    window.alert('200글자 이내로 작성해주세요:)');
+  }
 
   return (
     <Grid>
@@ -93,7 +105,21 @@ const PostWrite_1 = (props) => {
           </Text>
         </Grid>
       </Grid>
-      <FooterMenu next text='다음' state={check} />
+      <Link
+        to={{
+          state: {
+            postTitle,
+            postDesc,
+            postCategory,
+          },
+        }}
+      >
+        <FooterMenu next text='다음' state={check} />
+      </Link>
+      {/* 경고창 모달 */}
+      <Modal open={isOpen}>
+        <ModalData Alert onClose={() => setIsOpen(false)} />
+      </Modal>
     </Grid>
   );
 };

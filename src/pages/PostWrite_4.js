@@ -1,15 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { Text, Grid } from '../elements/Index';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import FooterMenu from '../shared/FooterMenu';
+import Modal from '../components/Modal/Modal';
+import ModalData from '../components/Modal/ModalData';
 
 import { IconContext } from 'react-icons';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 
 // 지도에서 위치찍어서 포스트 올리기!
 const PostWrite_4 = (props) => {
+  document.body.style.overscrollBehavior = 'none';
   const history = useHistory();
+
+  if (history.action === 'POP') {
+    history.replace('/main');
+  }
+
+  //모달 오픈 state
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const memberAge = props?.location?.state?.memberAge;
+  const memberGender = props?.location?.state?.memberGender;
+  const maxMember = props?.location?.state?.maxMember;
+  const postCategory = props?.location?.state?.postCategory;
+  const postTitle = props?.location?.state?.postTitle;
+  const postDesc = props?.location?.state?.postDesc;
 
   const { kakao } = window;
 
@@ -204,8 +221,6 @@ const PostWrite_4 = (props) => {
           kakao.maps.event.addListener(marker_search, 'click', function () {
             deleteMarker();
             closeInfoWindow_search();
-
-            // infowindow_search.open(map, marker_search); //인포윈도우 열기
           });
         });
       }
@@ -221,48 +236,18 @@ const PostWrite_4 = (props) => {
 
   //유효성 검사
   const check = (e) => {
-    if (address === 'null' || undefined) {
-      window.alert('위치를 지정해 주세요');
+    if (!address) {
+      setIsOpen(true);
     } else {
       history.push('/postwrite3');
     }
   };
-
-  if (searchPlace === null) {
-    window.localStorage.setItme('searchPlace', spot);
-  }
-
-  // 새로고침시 데이터를 유지합니다.
-  useEffect(() => {
-    setAddress(window.localStorage.getItem('address'));
-    setSpot(window.localStorage.getItem('spot'));
-    setLatitude(window.localStorage.getItem('latitude'));
-    setLongitude(window.localStorage.getItem('longitude'));
-    setSearchPlace(window.localStorage.getItem('searchPlace'));
-  }, []);
-
-  useEffect(() => {
-    window.localStorage.setItem('address', address);
-  }, [address]);
-  useEffect(() => {
-    window.localStorage.setItem('spot', spot);
-  }, [spot]);
-  useEffect(() => {
-    window.localStorage.setItem('latitude', latitude);
-  }, [latitude]);
-  useEffect(() => {
-    window.localStorage.setItem('longitude', longitude);
-  }, [longitude]);
-  useEffect(() => {
-    window.localStorage.setItem('searchPlace', searchPlace);
-  }, [searchPlace]);
 
   return (
     <Grid>
       {/* 검색 */}
       <Grid margin='12px 0px 0px 24px'>
         <form className='inputForm' onSubmit={handleSubmit}>
-          {/* <form className='inputForm'> */}
           <SearchContainer>
             <Search
               placeholder='장소 또는 지역을 검색하세요'
@@ -270,9 +255,6 @@ const PostWrite_4 = (props) => {
               value={inputText || ''}
             />
             <img src='/img/search.png' alt='search' />
-            {/* <button type='submit'>
-              <AiOutlineSearch />
-            </button> */}
           </SearchContainer>
         </form>
       </Grid>
@@ -303,7 +285,28 @@ const PostWrite_4 = (props) => {
           margin: '12px 0px',
         }}
       ></div>
-      <FooterMenu next text='확인' state={check} />
+      <Link
+        to={{
+          state: {
+            maxMember,
+            memberAge,
+            memberGender,
+            postCategory,
+            postDesc,
+            postTitle,
+            address,
+            latitude,
+            longitude,
+            spot,
+          },
+        }}
+      >
+        <FooterMenu next text='확인' state={check} />
+      </Link>
+      {/* 경고창 모달 */}
+      <Modal open={isOpen}>
+        <ModalData Alert onClose={() => setIsOpen(false)} />
+      </Modal>
     </Grid>
   );
 };
@@ -313,10 +316,6 @@ const SearchContainer = styled.div`
   height: 45px;
   position: relative;
   display: flex;
-  /* flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  border: 0; */
   img {
     position: absolute;
     right: 20px;

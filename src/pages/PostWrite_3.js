@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { actionCreators as postActions } from '../redux/modules/post';
 import { useDispatch } from 'react-redux';
 import FooterMenu from '../shared/FooterMenu';
 import Picker from 'react-mobile-picker-scroll';
 import { Grid, Text, GoBack } from '../elements/Index';
+import Modal from '../components/Modal/Modal';
+import ModalData from '../components/Modal/ModalData';
 
 import { IconContext } from 'react-icons';
 import { BsFillCalendarFill } from 'react-icons/bs';
@@ -15,25 +17,28 @@ import { AiFillClockCircle } from 'react-icons/ai';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 
 const PostWrite_3 = (props) => {
+  document.body.style.overscrollBehavior = 'none';
   const history = useHistory();
   const dispatch = useDispatch();
 
-  //localStorage에 있는 데이터를 불러옵니다.
-  const address = localStorage.getItem('address');
-  const spot = localStorage.getItem('spot');
-  const latitude = localStorage.getItem('latitude');
-  const longitude = localStorage.getItem('longitude');
-  const memberAge = localStorage.getItem('memberAge');
-  const memberGender = localStorage.getItem('memberGender');
-  const maxMember = localStorage.getItem('maxMember');
-  const postCategory = localStorage.getItem('postCategory');
-  const postTitle = localStorage.getItem('postTitle');
-  const postDesc = localStorage.getItem('postDesc');
+  if (history.action === 'POP') {
+    history.replace('/main');
+  }
 
-  //localStorage에서 가져온 데이터를 새로고침 시 사용합니다.
-  // let [loca, setLoca] = useState();
-  let [dayDate, setDayDate] = useState();
-  let [pageTime, setPageTime] = useState();
+  //모달 오픈 state
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const memberAge = props?.location?.state?.memberAge;
+  const memberGender = props?.location?.state?.memberGender;
+  const maxMember = props?.location?.state?.maxMember;
+  const postCategory = props?.location?.state?.postCategory;
+  const postTitle = props?.location?.state?.postTitle;
+  const postDesc = props?.location?.state?.postDesc;
+
+  const address = props.location?.state?.address;
+  const spot = props.location?.state?.spot;
+  const latitude = props.location?.state?.latitude;
+  const longitude = props.location?.state?.longitude;
 
   // 날짜
   const [value, setValue] = useState(new Date());
@@ -80,7 +85,7 @@ const PostWrite_3 = (props) => {
   }
 
   //요일을 포함하는 변수를 만듭니다.
-  dayDate = new_realfinal + ' ' + getDay();
+  let dayDate = new_realfinal + ' ' + getDay();
 
   //시간
   const [optionGroups] = useState({
@@ -115,40 +120,11 @@ const PostWrite_3 = (props) => {
   let c = JSON.stringify(valueGroups)?.substring(21, 23);
   let d = JSON.stringify(valueGroups)?.substring(35, 37);
 
-  pageTime = b + ` ` + c + `:` + d;
+  // 오후 12:00 형식의 변수를 만듭니다.
+  let pageTime = b + ` ` + c + `:` + d;
 
   //날짜와 시간을 datemate로 합성합니다.
   let datemate = new_realfinal + ', ' + c + ':' + d + ' ' + b;
-
-  const addPost = () => {
-    dispatch(
-      postActions.addPostDB(
-        address,
-        datemate,
-        latitude,
-        longitude,
-        maxMember,
-        memberAge,
-        memberGender,
-        postCategory,
-        postDesc,
-        postTitle,
-        spot
-      )
-    );
-  };
-
-  // console.log(address);
-  // console.log(datemate);
-  // console.log(latitude);
-  // console.log(longitude);
-  // console.log(maxMember);
-  // console.log(memberAge);
-  // console.log(memberGender);
-  // console.log(postCategory);
-  // console.log(postDesc);
-  // console.log(postTitle);
-  // console.log(spot);
 
   //토글
   const [show, setShow] = useState(false);
@@ -162,32 +138,51 @@ const PostWrite_3 = (props) => {
     count++;
   }
 
-  //토글 열 때 datemate 저장
-  if (show || show2) {
-    localStorage.setItem('datemate', datemate);
+  //유효성 검사
+  if (!show) {
+    datemate = null;
+    if (showDate && showTime) {
+      datemate = new_realfinal + ', ' + c + ':' + d + ' ' + b;
+    }
   }
 
-  // 새로고침시 데이터를 유지합니다.
-  // useEffect(() => {
-  //   setDayDate(window.localStorage.getItem('dayDate'));
-  //   setPageTime(window.localStorage.getItem('pageTime'));
-  //   setShowDate(window.localStorage.getItem('showDate'));
-  //   setShowTime(window.localStorage.getItem('showTime'));
-  // }, []);
+  const addPost = () => {
+    if (!address || !datemate) {
+      setIsOpen(true);
+    } else {
+      dispatch(
+        postActions.addPostDB(
+          address,
+          datemate,
+          latitude,
+          longitude,
+          maxMember,
+          memberAge,
+          memberGender,
+          postCategory,
+          postDesc,
+          postTitle,
+          spot
+        )
+      );
+    }
+  };
 
-  // useEffect(() => {
-  //   window.localStorage.setItem('dayDate', dayDate);
-  // }, [dayDate]);
-  // useEffect(() => {
-  //   window.localStorage.setItem('pageTime', pageTime);
-  // }, [pageTime]);
-  useEffect(() => {
-    window.localStorage.setItem('spot', spot);
-  }, [spot]);
+  // console.log(address);
+  console.log(datemate);
+  // console.log(latitude);
+  // console.log(longitude);
+  // console.log(maxMember);
+  // console.log(memberAge);
+  // console.log(memberGender);
+  // console.log(postCategory);
+  // console.log(postDesc);
+  // console.log(postTitle);
+  // console.log(spot);
 
   return (
     <Grid>
-      <GoBack text='모임 만들기' path='/postwrite2' />
+      <GoBack text='모임 만들기' path='/postcategory' />
       <Grid margin='24px 0px 40px 0px'>
         <ProgressBar>
           <HighLight width={(count / 3) * 100 + '%'} />
@@ -210,17 +205,32 @@ const PostWrite_3 = (props) => {
             </Text>
           </Grid>
           <Grid isFlex_end>
-            {spot === 'null' ? (
-              <div
-                onClick={() => {
-                  history.push('/postwrite4');
+            {!spot ? (
+              <Link
+                to={{
+                  // pathname: '/postwrite4',
+                  state: {
+                    maxMember,
+                    memberAge,
+                    memberGender,
+                    postCategory,
+                    postDesc,
+                    postTitle,
+                  },
                 }}
-                style={{
-                  color: '#C4C4C4',
-                }}
+                style={{ textDecorationLine: 'none' }}
               >
-                조건 선택
-              </div>
+                <div
+                  onClick={() => {
+                    history.push('/postwrite4');
+                  }}
+                  style={{
+                    color: '#C4C4C4',
+                  }}
+                >
+                  조건 선택
+                </div>
+              </Link>
             ) : (
               <div
                 onClick={() => {
@@ -272,7 +282,16 @@ const PostWrite_3 = (props) => {
               </Grid>
             </Grid>
             <Grid row margin='0px 12px' padding='0px 8px'>
-              {show ? <Calendar onChange={setValue} value={value} /> : null}
+              {show ? (
+                <CalendarContainer>
+                  <Calendar
+                    onChange={setValue}
+                    calendarType='US'
+                    locale='EN'
+                    value={value}
+                  />
+                </CalendarContainer>
+              ) : null}
             </Grid>
           </Grid>
         </Grid>
@@ -317,8 +336,11 @@ const PostWrite_3 = (props) => {
           onChange={handleChange}
         />
       ) : null}
-
       <FooterMenu next event={addPost} text='다음' />
+      {/* 경고창 모달 */}
+      <Modal open={isOpen}>
+        <ModalData Alert onClose={() => setIsOpen(false)} />
+      </Modal>
     </Grid>
   );
 };
@@ -340,6 +362,19 @@ const HighLight = styled.div`
   transition: 1s;
   width: ${(props) => props.width};
   height: 4.5px;
+`;
+
+const CalendarContainer = styled.div`
+  margin-right: 24px;
+  margin-top: 24px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  .react-calendar {
+    border: 0 !important;
+    /* font-size: 16px; */
+  }
+  .react-calendar__month-view__weekdays__weekday abbr {
+    text-decoration: none;
+  }
 `;
 
 export default PostWrite_3;

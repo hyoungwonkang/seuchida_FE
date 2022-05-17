@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import FooterMenu from '../shared/FooterMenu';
 import { Grid, Text, GoBack } from '../elements/Index';
+import Modal from '../components/Modal/Modal';
+import ModalData from '../components/Modal/ModalData';
 
 import { IconContext } from 'react-icons';
 import { BsFillPeopleFill } from 'react-icons/bs';
@@ -11,10 +13,22 @@ import { AiOutlineMinusCircle } from 'react-icons/ai';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 
 const PostWrite_2 = (props) => {
+  document.body.style.overscrollBehavior = 'none';
   const history = useHistory();
 
+  if (history.action === 'POP') {
+    history.replace('/main');
+  }
+
+  //모달 오픈 state
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const postCategory = props.location.state?.postCategory;
+  const postTitle = props.location.state?.postTitle;
+  const postDesc = props.location.state?.postDesc;
+
   //인원
-  let [maxMember, setMaxMember] = useState();
+  let [maxMember, setMaxMember] = useState(2);
   maxMember = parseInt(maxMember);
   const onIncrease = () => {
     setMaxMember(maxMember + 1);
@@ -73,41 +87,25 @@ const PostWrite_2 = (props) => {
   }
 
   //유효성 검사
-  const check = () => {
-    if (maxMember < 2) {
-      window.alert('인원을 2명 이상 선택해주세요');
-      if (!maxMember || !memberGender || !memberAge) {
-        window.alert('모든 조건을 선택해 주세요');
-      }
+  const check = (e) => {
+    if (memberGender === '' || memberAge === '') {
+      setIsOpen(true);
     } else {
       history.push('/postwrite3');
     }
   };
 
-  // 새로고침시 데이터를 유지합니다.
-  useEffect(() => {
-    setMaxMember(window.localStorage.getItem('maxMember'));
-    setMemberGender(window.localStorage.getItem('memberGender'));
-    setMemberAge(window.localStorage.getItem('memberAge'));
-    setShowOptions(window.localStorage.getItem('showOptions'));
-  }, []);
-
-  useEffect(() => {
-    window.localStorage.setItem('maxMember', maxMember);
-  }, [maxMember]);
-  useEffect(() => {
-    window.localStorage.setItem('memberGender', memberGender);
-  }, [memberGender]);
-  useEffect(() => {
-    window.localStorage.setItem('memberAge', memberAge);
-  }, [memberAge]);
-  useEffect(() => {
-    window.localStorage.setItem('showOptions', showOptions);
-  }, [showOptions]);
+  const chkCharCode = (e) => {
+    const regExp = /[^0-9]/g;
+    const ele = e.target;
+    if (regExp.test(ele.value)) {
+      ele.value = ele.value.replace(regExp, '');
+    }
+  };
 
   return (
     <Grid>
-      <GoBack text='모임 만들기' path='/postwrite1' />
+      <GoBack text='모임 만들기' path='/postcategory' />
       <Grid margin='24px 0px 40px 0px'>
         <ProgressBar>
           <HighLight width={(count / 3) * 100 + '%'} />
@@ -218,7 +216,7 @@ const PostWrite_2 = (props) => {
                     />{' '}
                     직접입력
                   </Grid>
-                  <Grid row margin='28px 0px' padding='0px 8px'>
+                  <Grid row margin='28px 0px' padding='4px 8px'>
                     <label>
                       <AgeInput
                         type='number'
@@ -233,9 +231,7 @@ const PostWrite_2 = (props) => {
                           fontSize: '16px',
                         }}
                         pattern='[0-9]+'
-                        // onKeyUp={
-                        //   (this.value = this.value.replace(/[^0-9]/g, ''))
-                        // }
+                        // onKeyUp={chkCharCode}
                       />
                     </label>
                     &nbsp;&nbsp;&nbsp;
@@ -257,6 +253,7 @@ const PostWrite_2 = (props) => {
                           fontSize: '16px',
                         }}
                         pattern='[0-9]+'
+                        // onKeyUp={chkCharCode}
                       />
                     </label>
                   </Grid>
@@ -266,7 +263,24 @@ const PostWrite_2 = (props) => {
           </div>
         ) : null}
       </div>
-      <FooterMenu next text='다음' state={check} />
+      <Link
+        to={{
+          state: {
+            maxMember,
+            memberGender,
+            memberAge,
+            postCategory,
+            postTitle,
+            postDesc,
+          },
+        }}
+      >
+        <FooterMenu next text='다음' state={check} />
+      </Link>
+      {/* 경고창 모달 */}
+      <Modal open={isOpen}>
+        <ModalData Alert onClose={() => setIsOpen(false)} />
+      </Modal>
     </Grid>
   );
 };

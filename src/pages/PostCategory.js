@@ -1,11 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import FooterMenu from '../shared/FooterMenu';
 import { Grid, Text, GoBack } from '../elements/Index';
+import Modal from '../components/Modal/Modal';
+import ModalData from '../components/Modal/ModalData';
 
 const PostCategory = (prop) => {
+  document.body.style.overscrollBehavior = 'none';
   const history = useHistory();
+
+  if (history.action === 'POP') {
+    history.replace('/main');
+  }
+
+  //모달 오픈 state
+  const [isOpen, setIsOpen] = React.useState(false);
+
   const CategoryList = [
     { id: 0, data: '자전거' },
     { id: 1, data: '배드민턴' },
@@ -42,25 +53,11 @@ const PostCategory = (prop) => {
   //유효성 검사
   const check = () => {
     if (!postCategory) {
-      window.alert('카테고리를 선택해주세요');
+      setIsOpen(true);
     } else {
       history.push('/postwrite1');
     }
   };
-
-  // 새로고침시 데이터 유지
-  useEffect(() => {
-    setPostCate(window.localStorage.getItem('postCategory'));
-  }, []);
-
-  useEffect(() => {
-    window.localStorage.setItem('postCategory', postCategory);
-  }, [postCategory]);
-
-  //localStorage 저장
-  if (postCategory) {
-    localStorage.setItem('postCategory', postCategory);
-  }
 
   return (
     <Grid>
@@ -91,7 +88,13 @@ const PostCategory = (prop) => {
               </div>
             );
           })}
-          <FooterMenu next text='다음' state={check} />
+          <Link to={{ state: { postCategory } }}>
+            <FooterMenu next text='다음' state={check} />
+          </Link>
+          {/* 경고창 모달 */}
+          <Modal open={isOpen}>
+            <ModalData Alert onClose={() => setIsOpen(false)} />
+          </Modal>
         </CateBox>
       </Grid>
     </Grid>
