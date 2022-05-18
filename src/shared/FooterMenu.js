@@ -47,14 +47,16 @@ const FooterMenu = (props) => {
       <MenuBox>
         <Menu
           onClick={() => {
-            history.push("/main");
+            // history.push("/main");
+            window.location.href = "/main";
           }}
         >
           홈
         </Menu>
         <Menu
           onClick={() => {
-            history.push("/map");
+            // history.push("/map");
+            window.location.href = "/map";
           }}
         >
           내주변
