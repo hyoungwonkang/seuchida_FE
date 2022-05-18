@@ -38,8 +38,8 @@ const ChatList = () => {
                   <Image src={room.ownerImg} size={50} />
                   <div style={{ marginLeft: "10px" }}>
                     <div style={{ marginBottom: "5px" }}>
-                      <ChatTitle>{room.postTitle} </ChatTitle>
-                      <UserCount> {room.userList.length}</UserCount>
+                      <ChatTitle>{room?.postTitle} </ChatTitle>
+                      <UserCount> {room.userList?.length}</UserCount>
                     </div>
                     <LastMsg>{last_chat[index]?.msg}</LastMsg>
                   </div>
