@@ -15,6 +15,8 @@ const Main = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
+  console.log(catepost,post_list,review)
+
   const [state, setState] = React.useState({
     center: {
       lat: 33.450701,

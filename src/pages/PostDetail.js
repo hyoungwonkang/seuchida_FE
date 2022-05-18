@@ -104,6 +104,8 @@ const PostDetail = (props) => {
     u.memberId.includes(user.userId)
   );
 
+  console.log(userCheck)
+
   return (
     <>
       <Header>
@@ -155,16 +157,6 @@ const PostDetail = (props) => {
           isMe={isMe}
           deleteone={deleteone}
         />
-        <button
-          onClick={() => {
-            history.push({
-              pathname: `/chatex/${post.roomId}`,
-              state: { ...post },
-            });
-          }}
-        >
-          채팅하기
-        </button>
         <LiveBox>
           <div style={{ fontWeight: "700 bold" }}>
             참여중인 운동 메이트 {post?.nowMember?.length}/{post?.maxMember}
@@ -197,19 +189,30 @@ const PostDetail = (props) => {
         </LiveBox>
 
         <KakaoMap {...post} />
-        {/* && userCheck[0]===false &&post.nowMember.length<=post.maxMember */}
-
-        {post.status === true &&
-        userCheck[0] === undefined &&
-        post.nowMember.length <= post.maxMember ? (
-          <ButtonBox>
-            <FooterMenu next text={"참여하기"} event={joinRoom}></FooterMenu>
-          </ButtonBox>
-        ) : (
+        {/* && userCheck[0]===false &&post.nowMember.length<=post.maxMember  */}
+ 
+        {isMe===true || userCheck.length===1?   <ButtonBox>
+            <FooterMenu next text={"채팅하기"} path={{
+              pathname: `/chatex/${post.roomId}`,
+              state: { ...post },
+            }}></FooterMenu>
+          </ButtonBox> :
+        // 방장이고 참여자일때 채팅하기 버튼
+        
+        post.status === false &&post.nowMember.length === post.maxMember ?       
           <ButtonBox>
             <FooterMenu is_check text={"참여불가"}></FooterMenu>
-          </ButtonBox>
-        )}
+         </ButtonBox>
+         :
+        // 모집이 완료되었거나 참여자가 최대인원과 같으면 참여불가 버튼
+        
+        //참여중이 아니거나 모집중일경우 참여하기 버튼
+        userCheck.length === 0 && post.status ===true &&    
+          <ButtonBox>
+             <FooterMenu next text={"참여하기"} event={joinRoom}></FooterMenu>
+           </ButtonBox>
+           }
+           
       </Container>
 
       {/* 모달 삭제 확인 창 */}

@@ -36,7 +36,7 @@ const ChatList = () => {
               <ContentBox>
                 <ChatTitleBox>
                   <Image src={room.ownerImg} size={50} />
-                  <div style={{ marginLeft: "8px" }}>
+                  <div style={{ marginLeft: "10px" }}>
                     <div style={{ marginBottom: "5px" }}>
                       <ChatTitle>{room.postTitle} </ChatTitle>
                       <UserCount> {room.userList.length}</UserCount>
