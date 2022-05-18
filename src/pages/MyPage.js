@@ -11,21 +11,16 @@ import { history } from "../redux/configStore";
 import { RiBarChartFill } from "react-icons/ri";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { actionCreators as mypageActions } from "../redux/modules/mypage";
-
 const NameCard = () => {
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(userActions.isLoginDB());
     dispatch(mypageActions.myExerciseDB());
     dispatch(mypageActions.myReviewDB());
   }, []);
-
   const userInfo = useSelector((state) => state.user.userInfo);
   const myReview = useSelector((state) => state.mypage.myReview);
-
   const len = myReview.length;
-
   return (
     <Grid column height="auto" margin="0px" bg="white">
       {/* 프로필 수정, 알람 */}
@@ -37,7 +32,6 @@ const NameCard = () => {
           onClick={() => history.push("/signuploca")}
         />
       </Grid>
-
       {/* 프로필이미지 */}
       <Image
         shape="circle"
@@ -45,7 +39,6 @@ const NameCard = () => {
         src={userInfo.userImg}
         margin="19px 0px 8px 0px"
       />
-
       {/* 유저 닉네임 */}
       <Grid row justify="center">
         {len >= 60 ? (
@@ -69,14 +62,12 @@ const NameCard = () => {
           {userInfo.nickName}
         </Text>
       </Grid>
-
       {/* 유저 관심사 */}
       <Grid row height="auto" margin="8px 0px 16px 0px" justify="center">
         {userInfo.userInterest?.map((v, i) => {
           return <Cate key={v + i}>{v}</Cate>;
         })}
       </Grid>
-
       {/* 유저 소개글 */}
       <Text width="302px" color="#505050" margin="0px 0px 45px 0px">
         {userInfo.userContent}
@@ -84,23 +75,10 @@ const NameCard = () => {
     </Grid>
   );
 };
-
 const MyPage = () => {
   const myReview = useSelector((state) => state.mypage.myReview);
   const myExercise = useSelector((state) => state.mypage.myExercise);
   const len = myReview.length;
-
-  // const Grade = [
-  //   { key: 0, grade: "Iron" },
-  //   { key: 10, grade: "Bronze" },
-  //   { key: 20, grade: "Silver" },
-  //   { key: 30, grade: "Gold" },
-  //   { key: 40, grade: "Platinum" },
-  //   { key: 50, grade: "Diamond" },
-  // ];
-
-  // const levelUp = [10, 20, 30, 40, 50];
-
   if (
     len?.length === 10 ||
     len?.length === 20 ||
@@ -111,55 +89,13 @@ const MyPage = () => {
   ) {
     window.alert("레벨업 했습니다!");
   }
-
   return (
     <>
       <Grid bg="#0ED88B" height="auto">
         <NameCard />
-        <Grid height="117px" column margin="auto">
-          <Text
-            size="16px"
-            margin="30px 0px 0px 0px"
-            width="342px"
-            color="#FFFFFF"
-            bold
-          >
-            {len >= 50
-              ? "Purple"
-              : len >= 40
-              ? "Blue"
-              : len >= 30
-              ? "Skyblue"
-              : len >= 20
-              ? "Green"
-              : len >= 10
-              ? "Yellow"
-              : "Orange"}
-            레벨까지
-            {10 -
-              (len >= 60
-                ? len - 60
-                : len >= 50
-                ? len - 50
-                : len >= 40
-                ? len - 40
-                : len >= 30
-                ? len - 30
-                : len >= 20
-                ? len - 20
-                : len >= 10
-                ? len - 10
-                : len)}
-            회
-          </Text>
-
-          <Grid
-            bg="#FFFFFF"
-            height="12px"
-            width="342px"
-            margin="0px 0px 40px 0px"
-            br="12px"
-          >
+        <Grid height="117px" column justify="center">
+          <Grid bg="#FFFFFF" height="12px" width="342px" br="12px">
+            <Seuchin src="./img/seuchin.png" />
             <Highlight
               width={
                 len >= 40
@@ -173,27 +109,37 @@ const MyPage = () => {
                   : (len / 10) * 100 + "%"
               }
             />
-            <Text
-              size="16px"
-              margin="0px 0px 0px 310px"
-              width="342px"
-              color="#FFFFFF"
-              bold
-            >
-              {len >= 40
-                ? len - 40
+            <Text size="16px" width="342px" color="#FFFFFF" bold>
+              {len >= 50
+                ? "Purple"
+                : len >= 40
+                ? "Blue"
                 : len >= 30
-                ? len - 30
+                ? "Skyblue"
                 : len >= 20
-                ? len - 20
+                ? "Green"
                 : len >= 10
-                ? len - 10
-                : len}
-              /10
+                ? "Yellow"
+                : "Orange"}
+              레벨까지
+              {10 -
+                (len >= 60
+                  ? len - 60
+                  : len >= 50
+                  ? len - 50
+                  : len >= 40
+                  ? len - 40
+                  : len >= 30
+                  ? len - 30
+                  : len >= 20
+                  ? len - 20
+                  : len >= 10
+                  ? len - 10
+                  : len)}
+              포인트
             </Text>
           </Grid>
         </Grid>
-
         <Grid
           padding="10px 24px"
           margin="0px 10px 0px 0px"
@@ -206,7 +152,6 @@ const MyPage = () => {
           </Text>
           <ECslider myExercise={myExercise} />
         </Grid>
-
         <Grid row bg="white" height="62px" margin="0px" border="1px solid #ddd">
           <Text size="16px" margin="0px 0px 0px 24px" bold>
             내가 만든 모임
@@ -232,14 +177,18 @@ const MyPage = () => {
           />
         </Grid>
       </Grid>
-
       <FooterMenu />
     </>
   );
 };
-
 export default MyPage;
-
+const Seuchin = styled.img`
+  width: 79px;
+  height: 93px;
+  position: absolute;
+  top: 265px;
+  left: 50px;
+`;
 const Highlight = styled.div`
   background: #ffe926;
   transition: 1s width; //몇초동안 뭐를(생략하면 모든것을 바꿈)
@@ -247,7 +196,6 @@ const Highlight = styled.div`
   height: 12px;
   border-radius: 12px;
 `;
-
 //카테고리 한 개 css
 const Cate = styled.div`
   width: auto;

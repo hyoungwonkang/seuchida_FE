@@ -10,6 +10,7 @@ const MY_EXERCISE = "MY_EXERCISE";
 const MY_POST = "MY_POST";
 const MY_REVIEW = "MY_REVIEW";
 const ADD_REVIEW = "ADD_REVIEW";
+const ADD_REPORT = "ADD_REPORT";
 
 //Action Creators
 
@@ -23,12 +24,16 @@ const myReviewList = createAction(MY_REVIEW, (myReview) => ({
 const addReview = createAction(ADD_REVIEW, (review) => ({
   review,
 }));
+const addReport = createAction(ADD_REPORT, (report) => ({
+  report,
+}));
 
 //initialState (default props 같은 것, 기본값)
 const initialState = {
   myExercise: "",
   myPost: "",
   myReview: "",
+  myReport: "",
 };
 
 //Middleware
@@ -98,15 +103,15 @@ const myReviewDB = () => {
 
 //addreview
 const addReviewDB = (formData, postId) => {
+  console.log(postId);
   return async (dispatch, getState, { history }) => {
-    console.log(postId);
     await axios({
       method: "post",
       url: `https://seuchidabackend.shop/api/review/${postId}`,
       data: formData,
       headers: {
-        "Content-Type": `multipart/form-data;`,
         Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": `multipart/form-data;`,
       },
     })
       .then((res) => {
@@ -129,8 +134,8 @@ const deletePostDB = (postId) => {
       url: `https://seuchidabackend.shop/api/postDelete/${postId}`,
       data: { postId },
       headers: {
-        "Content-Type": `multipart/form-data;`,
         Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": `multipart/form-data;`,
       },
     })
       .then((res) => {
@@ -139,6 +144,33 @@ const deletePostDB = (postId) => {
       })
       .catch((err) => {
         console.log("에러발생", err);
+      });
+  };
+};
+
+//addreview
+const addReportDB = (rUserId, report) => {
+  console.log(rUserId, report);
+  return async (dispatch, getState, { history }) => {
+    await axios({
+      method: "post",
+      url: `https://seuchidabackend.shop/api/report`,
+      data: JSON.stringify({
+        userId: rUserId,
+        content: report,
+      }),
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": `application/json`,
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        const report = res.data;
+        dispatch(addReport(report));
+      })
+      .catch((err) => {
+        console.log("addReport에 실패했습니다.", err);
       });
   };
 };
@@ -158,11 +190,16 @@ export default handleActions(
       produce(state, (draft) => {
         draft.myReview = action.payload.myReview;
       }),
-    // [ADD_REVIEW]: (state, action) =>
-    //   produce(state, (draft) => {
-    //     draft.myPost.push(action.payload.review);
-    //     // console.log(action.payload.userInfo);
-    //   }),
+    [ADD_REVIEW]: (state, action) =>
+      produce(state, (draft) => {
+        draft.myPost.push(action.payload.review);
+        // console.log(action.payload.userInfo);
+      }),
+    [ADD_REPORT]: (state, action) =>
+      produce(state, (draft) => {
+        draft.myReport.push(action.payload.report);
+        // console.log(action.payload.userInfo);
+      }),
   },
   initialState
 );
@@ -174,5 +211,6 @@ const actionCreators = {
   myReviewDB,
   addReviewDB,
   deletePostDB,
+  addReportDB,
 };
 export { actionCreators };

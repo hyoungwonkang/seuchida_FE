@@ -61,7 +61,7 @@ const Main = () => {
       // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
       setState((prev) => ({
         ...prev,
-        errMsg: "geolocation을 사용할수 없어요..",
+        errMsg: 'geolocation을 사용할수 없어요..',
         isLoading: false,
       }));
     }
@@ -85,7 +85,7 @@ const Main = () => {
         <ReviewBox>
           <TitleBox
             onClick={() => {
-              window.location.href = "/reviewlist/1";
+              window.location.href = '/reviewlist/1';
             }}
           >
             <Title>함께한 스친들의 후기</Title> <Title>&gt;</Title>
@@ -98,7 +98,7 @@ const Main = () => {
 
         <TitleBox
           onClick={() => {
-            history.push("/postlist");
+            history.push('/postlist');
           }}
         >
           <Title>여기여기 붙어라</Title>
@@ -123,6 +123,9 @@ const Main = () => {
         </ListBox>
         <Button
           is_float
+          _onClick={() => {
+            history.push('/postcategory');
+          }}
         >
           +
         </Button>

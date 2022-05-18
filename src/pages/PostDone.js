@@ -3,27 +3,8 @@ import Button from '../elements/Button';
 import { Grid, Text } from '../elements/Index';
 
 const PostDone = () => {
-  //localStorage에 있는 데이터를 삭제합니다.
+  document.body.style.overscrollBehavior = 'none';
   const setDone = () => {
-    localStorage.removeItem('address');
-    localStorage.removeItem('spot');
-    localStorage.removeItem('latitude');
-    localStorage.removeItem('longitude');
-    localStorage.removeItem('datemate');
-    localStorage.removeItem('memberAge');
-    localStorage.removeItem('memberGender');
-    localStorage.removeItem('maxMember');
-    localStorage.removeItem('postCategory');
-    localStorage.removeItem('postTitle');
-    localStorage.removeItem('postDesc');
-    localStorage.removeItem('searchPlace');
-    localStorage.removeItem('value');
-    localStorage.removeItem('pageTime');
-    localStorage.removeItem('dayDate');
-    localStorage.removeItem('inputText');
-    localStorage.removeItem('showOptions');
-    localStorage.removeItem('dayDate');
-    localStorage.removeItem('dayDate');
     window.location.href = '/main';
   };
   return (
