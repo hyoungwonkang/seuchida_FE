@@ -139,7 +139,6 @@ const Modal = styled.div`
   height: 450px;
   position: fixed;
   z-index: 29;
-  background-color: green;
   bottom: 80px;
   animation-duration: 0.5s;
   animation-timing-function: ease-out;
