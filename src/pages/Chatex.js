@@ -35,7 +35,7 @@ function Chatex(props) {
     // document.body.style.overflow ="unset"
   };
 
-
+console.log(props)
   const roomInfo = props?.location.state;
   //유저리스트 키값 나우멤버로 수정 요청
   const TimeCheck = (t) => {
@@ -203,7 +203,7 @@ const HeaderContents = styled.div`
 
 
 const Body = styled.div`
-  margin: 90px 24px;
+  margin: 100px 24px;
   overflow: auto;
 `;
 

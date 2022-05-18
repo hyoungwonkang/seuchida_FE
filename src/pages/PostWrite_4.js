@@ -1,15 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import { Text, Grid } from '../elements/Index';
-import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
-import FooterMenu from '../shared/FooterMenu';
+import React, { useEffect, useState } from "react";
+import { Text, Grid } from "../elements/Index";
+import { useHistory, Link } from "react-router-dom";
+import styled from "styled-components";
+import FooterMenu from "../shared/FooterMenu";
+import Modal from "../components/Modal/Modal";
+import ModalData from "../components/Modal/ModalData";
 
-import { IconContext } from 'react-icons';
-import { FaMapMarkerAlt } from 'react-icons/fa';
+import { IconContext } from "react-icons";
+import { FaMapMarkerAlt } from "react-icons/fa";
 
 // 지도에서 위치찍어서 포스트 올리기!
 const PostWrite_4 = (props) => {
+  document.body.style.overscrollBehavior = "none";
   const history = useHistory();
+
+  if (history.action === "POP") {
+    history.replace("/main");
+  }
+
+  //모달 오픈 state
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const memberAge = props?.location?.state?.memberAge;
+  const memberGender = props?.location?.state?.memberGender;
+  const maxMember = props?.location?.state?.maxMember;
+  const postCategory = props?.location?.state?.postCategory;
+  const postTitle = props?.location?.state?.postTitle;
+  const postDesc = props?.location?.state?.postDesc;
 
   const { kakao } = window;
 
@@ -24,8 +41,8 @@ const PostWrite_4 = (props) => {
   const [searchLongitude, setSearchLongitude] = useState();
 
   // 지도 검색 기능
-  const [inputText, setInputText] = useState('');
-  let [searchPlace, setSearchPlace] = useState('');
+  const [inputText, setInputText] = useState("");
+  let [searchPlace, setSearchPlace] = useState("");
 
   const onChange = (e) => {
     setInputText(e.target.value);
@@ -42,7 +59,7 @@ const PostWrite_4 = (props) => {
       const lat = pos.coords.latitude; // 위도
       const lng = pos.coords.longitude; // 경도
 
-      const mapContainer = document.getElementById('map'), // 지도를 표시할 div
+      const mapContainer = document.getElementById("map"), // 지도를 표시할 div
         mapOption = {
           center: new kakao.maps.LatLng(lat, lng), // 지도의 중심좌표
           level: 3, // 지도의 확대 레벨
@@ -61,21 +78,21 @@ const PostWrite_4 = (props) => {
         infowindow = new kakao.maps.InfoWindow({ zindex: 1 }); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
 
       // 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
-      kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
+      kakao.maps.event.addListener(map, "click", function (mouseEvent) {
         searchDetailAddrFromCoords(
           mouseEvent.latLng,
           function (result, status) {
             if (status === kakao.maps.services.Status.OK) {
               let detailAddr = !!result[0].road_address
-                ? '<div>도로명주소 : ' +
+                ? "<div>도로명주소 : " +
                   result[0].road_address.address_name +
-                  '</div>'
-                : '';
+                  "</div>"
+                : "";
               detailAddr +=
-                '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
+                "<div>지번 주소 : " + result[0].address.address_name + "</div>";
               let home =
                 result[0].address.region_1depth_name +
-                ' ' +
+                " " +
                 result[0].address.region_2depth_name;
               let town = result[0].road_address?.building_name
                 ? result[0].road_address.building_name
@@ -85,7 +102,7 @@ const PostWrite_4 = (props) => {
                 '<div class="bAddr" style="padding:5px;font-size:12px;>' +
                 '<span class="title">약속 장소</span>' +
                 detailAddr +
-                '</div>';
+                "</div>";
 
               // 마커를 클릭한 위치에 표시합니다
               let la = mouseEvent.latLng.Ma;
@@ -123,8 +140,8 @@ const PostWrite_4 = (props) => {
       // 장소 검색 객체를 생성합니다
       let ps_search = new kakao.maps.services.Places();
       // 키워드로 장소를 검색합니다
-      if (searchPlace === '') {
-        searchPlace = ' ';
+      if (searchPlace === "") {
+        searchPlace = " ";
       }
       ps_search.keywordSearch(searchPlace, placesSearchCB);
       // 키워드 검색 완료 시 호출되는 콜백함수 입니다
@@ -152,21 +169,21 @@ const PostWrite_4 = (props) => {
         });
 
         // 마커에 클릭이벤트를 등록합니다
-        kakao.maps.event.addListener(marker_search, 'click', function () {
+        kakao.maps.event.addListener(marker_search, "click", function () {
           // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
           infowindow_search.setContent(
             '<div style="padding:5px;font-size:12px;">' +
               place.place_name +
-              '</div>' +
+              "</div>" +
               '<div style="padding:5px;font-size:12px;">도로명주소 : ' +
               place.road_address_name +
-              '</div>' +
+              "</div>" +
               '<div style="padding:5px;font-size:12px;">지번 주소 : ' +
               place.address_name +
-              '</div>'
+              "</div>"
           );
           infowindow_search.open(map, marker_search);
-          setSearchAddress(place.address_name.split(' ').slice(0, 2).join(' '));
+          setSearchAddress(place.address_name.split(" ").slice(0, 2).join(" "));
           setSearchSpot(place.place_name);
           setSearchLatitude(place.y);
           setSearchLongitude(place.x);
@@ -181,7 +198,7 @@ const PostWrite_4 = (props) => {
             }
           }
 
-          kakao.maps.event.addListener(marker, 'click', function () {
+          kakao.maps.event.addListener(marker, "click", function () {
             closeInfoWindow();
             infowindow.open(map, marker); //인포윈도우 열기
           });
@@ -201,11 +218,9 @@ const PostWrite_4 = (props) => {
             }
           }
 
-          kakao.maps.event.addListener(marker_search, 'click', function () {
+          kakao.maps.event.addListener(marker_search, "click", function () {
             deleteMarker();
             closeInfoWindow_search();
-
-            // infowindow_search.open(map, marker_search); //인포윈도우 열기
           });
         });
       }
@@ -221,89 +236,81 @@ const PostWrite_4 = (props) => {
 
   //유효성 검사
   const check = (e) => {
-    if (address === 'null' || undefined) {
-      window.alert('위치를 지정해 주세요');
+    if (!address) {
+      setIsOpen(true);
     } else {
-      history.push('/postwrite3');
+      history.push("/postwrite3");
     }
   };
-
-  if (searchPlace === null) {
-    window.localStorage.setItme('searchPlace', spot);
-  }
-
-  // 새로고침시 데이터를 유지합니다.
-  useEffect(() => {
-    setAddress(window.localStorage.getItem('address'));
-    setSpot(window.localStorage.getItem('spot'));
-    setLatitude(window.localStorage.getItem('latitude'));
-    setLongitude(window.localStorage.getItem('longitude'));
-    setSearchPlace(window.localStorage.getItem('searchPlace'));
-  }, []);
-
-  useEffect(() => {
-    window.localStorage.setItem('address', address);
-  }, [address]);
-  useEffect(() => {
-    window.localStorage.setItem('spot', spot);
-  }, [spot]);
-  useEffect(() => {
-    window.localStorage.setItem('latitude', latitude);
-  }, [latitude]);
-  useEffect(() => {
-    window.localStorage.setItem('longitude', longitude);
-  }, [longitude]);
-  useEffect(() => {
-    window.localStorage.setItem('searchPlace', searchPlace);
-  }, [searchPlace]);
 
   return (
     <Grid>
       {/* 검색 */}
-      <Grid margin='12px 0px 0px 24px'>
-        <form className='inputForm' onSubmit={handleSubmit}>
-          {/* <form className='inputForm'> */}
+      <Grid margin="12px 0px 0px 24px">
+        <form className="inputForm" onSubmit={handleSubmit}>
           <SearchContainer>
             <Search
-              placeholder='장소 또는 지역을 검색하세요'
+              placeholder="장소 또는 지역을 검색하세요"
               onChange={onChange}
-              value={inputText || ''}
+              value={inputText || ""}
             />
-            <img src='/img/search.png' alt='search' />
-            {/* <button type='submit'>
-              <AiOutlineSearch />
-            </button> */}
+            <img src="/img/search.png" alt="search" />
           </SearchContainer>
         </form>
       </Grid>
       <Grid
         row
-        margin='12px 0px'
-        height='auto'
-        padding='12px 24px 12px 0px'
-        justify='space-between'
+        margin="12px 0px"
+        height="auto"
+        padding="12px 24px 12px 0px"
+        justify="space-between"
       >
-        {' '}
-        <Grid row margin='12px 0px 0px 24px'>
-          <IconContext.Provider value={{ color: 'grey', size: '16px' }}>
+        {" "}
+        <Grid row margin="12px 0px 0px 24px">
+          <IconContext.Provider value={{ color: "grey", size: "16px" }}>
             <FaMapMarkerAlt />
           </IconContext.Provider>
-          <Text width='100px' margin='0px 12px' size='16px'>
+          <Text width="100px" margin="0px 12px" size="16px">
             현재위치
           </Text>
-          <Grid isFlex_end>{spot === 'null' ? '' : spot}</Grid>
+          <Grid isFlex_end>{spot === "null" ? "" : spot}</Grid>
         </Grid>
       </Grid>
 
       <div
-        id='map'
+        id="map"
         style={{
-          width: '100%',
-          height: '600px',
-          margin: '12px 0px',
+          width: "100%",
+          height: "600px",
+          margin: "12px 0px",
         }}
       ></div>
-      <FooterMenu next text='확인' state={check} />
+      <Link
+        to={{
+          state: {
+            maxMember,
+            memberAge,
+            memberGender,
+            postCategory,
+            postDesc,
+            postTitle,
+            address,
+            latitude,
+            longitude,
+            spot,
+          },
+        }}
+      >
+        <FooterMenu next text="확인" state={check} />
+      </Link>
+      {/* 경고창 모달 */}
+      <Modal open={isOpen}>
+        <ModalData
+          Alert
+          text="장소를 선택해주세요"
+          onClose={() => setIsOpen(false)}
+        />
+      </Modal>
     </Grid>
   );
 };
@@ -313,10 +320,6 @@ const SearchContainer = styled.div`
   height: 45px;
   position: relative;
   display: flex;
-  /* flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  border: 0; */
   img {
     position: absolute;
     right: 20px;

@@ -159,7 +159,7 @@ const Card = (props) => {
         </TitleBox>
 
         <TextBoxList>
-          <Status style={{ paddingBottom: "10px" }}>
+          <Status style={{ paddingBottom: "10px", border:"none"  }}>
             <StatusIcon>
               <span>
                 <BiDumbbell color="#787878" />
@@ -182,7 +182,7 @@ const Card = (props) => {
             </StatusIcon>
           </Status>
 
-          <Join>
+          <Join style={{ borderBottom: "1px solid #e9e9e9"}}>
             <ProfileBox style={{ paddingBottom: "3px" }}>
               <Profile src={props?.userImg} />
               <SmallFont style={{ margin: "12px 0px 0px 8px" }}>

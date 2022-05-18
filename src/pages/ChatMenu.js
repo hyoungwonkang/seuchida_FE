@@ -60,7 +60,7 @@ const Container = styled.section`
 min-height: 100vh;
 height: auto;
 background-color: white;
-width: 75vw;
+width: 83vw;
 position: fixed;
 right: 0;
 top:0;
