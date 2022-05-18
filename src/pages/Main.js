@@ -7,16 +7,23 @@ import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { history } from "../redux/configStore";
+import io from "socket.io-client";
+
+const token = localStorage.getItem("token");
+const socket = io.connect("https://seuchidabackend.shop", {
+  auth: {
+    auth: token,
+  },
+});
+
 
 const Main = () => {
+
   const catepost = useSelector((state) => state.post.list.caPost);
   const post_list = useSelector((state) => state.post.list.nearPost);
   const review = useSelector((state) => state.post.list.filterRe);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
-
-  console.log(catepost,post_list,review)
-
   const [state, setState] = React.useState({
     center: {
       lat: 33.450701,
@@ -25,6 +32,9 @@ const Main = () => {
     errMsg: null,
     isLoading: true,
   });
+
+
+
   React.useEffect(() => {
     if (navigator.geolocation) {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
@@ -113,16 +123,6 @@ const Main = () => {
         </ListBox>
         <Button
           is_float
-          _onClick={() => {
-            history.push("/postcategory");
-            localStorage.setItem("postCategory", "");
-            localStorage.setItem("postTitle", "");
-            localStorage.setItem("postDesc", "");
-            localStorage.setItem("maxMember", 2);
-            localStorage.setItem("memberGender", "");
-            localStorage.setItem("memberAge", "");
-            localStorage.setItem("searchPlace", "");
-          }}
         >
           +
         </Button>
