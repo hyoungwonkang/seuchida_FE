@@ -22,7 +22,7 @@ function ECslider(props) {
   return (
     <Sliders {...settings} style={{ height: "180px", margin: "0px" }}>
       {myEx?.map((p, i) => {
-        if (i < 20) {
+        if (i < 5) {
           return <EndCard {...p} key={p.id} _onClick={props._onClick} />;
         }
       })}

@@ -92,7 +92,6 @@ const EditProfile = (props) => {
     }
   }, [content]);
 
-  console.log(content.length);
   //앱에서 페이지 새로고침 막기
   document.body.style.overscrollBehavior = "none";
 

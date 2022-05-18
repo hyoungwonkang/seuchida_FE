@@ -8,23 +8,21 @@ import { actionCreators as userActions } from "../redux/modules/user";
 import { actionCreators as mypageActions } from "../redux/modules/mypage";
 import Modal from "../components/Modal/Modal"; //모달 창
 import ModalData from "../components/Modal/ModalData";
+import axios from "axios";
 
 const Evaluation = (props) => {
   console.log(props);
-  //1. 나를 제외한 다른 사람만 평가하게끔 ok
-  //2. input이 두개중 한개만 되도록 ok
-  //3. 신고하기 userId와 값 일치시키기 ok
   //4. input 값 배열로 한개씩만 들어가게끔..
   //5. 라디오 감추고 색으로 선택 + 디자인 수정
-  //6. 유효성 검사
-  //7. 신고하기 선택하면 버튼 신고완료로 바꾸기
+  //6. 유효성 검사 다 평가하게끔
+  //7. 신고하기 선택하면 취소/삭제로 바꾸기 ok
+  //8. 사람 클릭시 프로필 모달 띄우기
   const history = useHistory();
   const dispatch = useDispatch();
 
   //ReviewWrite에서 받아온 값
   const postInfo = props.location.state.postInfo;
   const postId = props.location.state.postInfo.postId;
-  console.log(postId);
   const review = props.location.state.review;
   const reviewImg = props.location.state.reviewImg;
 
@@ -35,14 +33,24 @@ const Evaluation = (props) => {
 
   //내 id
   const myId = useSelector((state) => state.user.userInfo.userId);
-  //평가할 사람들 목록
+  //평가할 사람들 목록(나 제외)
   const _postInfo = postInfo.nowMember.filter((v) => v.memberId !== myId);
   //다른 사람 id
   const otherId = postInfo.nowMember.map((v, i) => v.memberId);
 
   //좋아요||싫어요
   const [evalue, setEvalue] = useState([]);
-  console.log(evalue);
+  console.log(evalue, evalue.length);
+
+  //좋아요||싫어요 배열화
+  // const _userInterest = (checked, evalue) => {
+  //   if (checked) {
+  //     //checked 이미 선택되어 있으면
+  //     setEvalue([e.target.value]);
+  //   } else if (!checked) {
+  //     setEvalue([...evalue, e.target.value]);
+  //   }
+  // };
 
   //모달 오픈 state
   const [isOpen, setIsOpen] = useState(false);
@@ -51,11 +59,10 @@ const Evaluation = (props) => {
 
   //신고 대상 & 신고 내용 state
   const [report, setReport] = useState("");
-  console.log(report);
   const [rUserId, setRUserId] = useState("");
-  console.log(report, rUserId);
+  const [reportdone, setReportDone] = useState("");
 
-  //다른 사람 평가
+  //후기 작성 & 다른 사람 평가
   const addReview = () => {
     const formData = new FormData();
     formData.append("image", reviewImg);
@@ -63,8 +70,8 @@ const Evaluation = (props) => {
     for (var i = 0; i < otherId.length; i++) {
       formData.append("otherId[]", otherId[i]);
     }
-    for (var j = 0; j < evalue.length; j++) {
-      formData.append("evalues[]", evalue[j]);
+    for (var i = 0; i < evalue.length; i++) {
+      formData.append("evalues[]", evalue[i]);
     }
     for (var pair of formData.entries()) {
       console.log(pair[0] + ", " + pair[1]);
@@ -76,8 +83,25 @@ const Evaluation = (props) => {
 
   //신고하기
   const addReport = () => {
-    dispatch(mypageActions.addReportDB(rUserId, report));
-    // history.push("/mypage");
+    axios({
+      method: "post",
+      url: `https://seuchidabackend.shop/api/report`,
+      data: JSON.stringify({
+        userId: rUserId,
+        content: report,
+      }),
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": `application/json`,
+      },
+    })
+      .then((res) => {
+        setReportDone(res);
+        console.log("addReport에 성공했습니다.", res);
+      })
+      .catch((err) => {
+        console.log("addReport에 실패했습니다.", err);
+      });
   };
 
   return (
@@ -95,6 +119,7 @@ const Evaluation = (props) => {
         {/* 다른 사람 평가 */}
         <Grid width="342px" margin="auto" height="300px">
           {postInfo?.nowMember.map((m, i) => {
+            // console.log(evalue[i]);
             return (
               <div key={m._id}>
                 <Grid row>
@@ -120,16 +145,20 @@ const Evaluation = (props) => {
                         name={i}
                         value={1}
                         onChange={(e) => {
-                          setEvalue([...evalue, e.target.value]);
-                          if (evalue != e.target.value) {
+                          //배열안에서 그 위치에 값만 바뀌고
+                          //다음 클릭 시 계속 추가되는
+                          if (evalue[i] != null) {
                             //바꿔치기
-                            setEvalue([e.target.value]);
+                            setEvalue([...evalue]);
+                          } else {
+                            setEvalue([...evalue, e.target.value]);
                           }
                         }}
                       />
                       <label>
                         <Select>좋아요</Select>
                       </label>
+
                       {/* 싫어요 */}
                       <input
                         id={i}
@@ -137,10 +166,13 @@ const Evaluation = (props) => {
                         name={i}
                         value={-1}
                         onChange={(e) => {
-                          setEvalue([...evalue, e.target.value]);
-                          if (evalue != e.target.value) {
+                          //배열안에서 그 위치에 값만 바뀌고
+                          //다음 클릭 시 계속 추가되는
+                          if (evalue[i] != null) {
                             //바꿔치기
-                            setEvalue([e.target.value]);
+                            setEvalue([...evalue]);
+                          } else {
+                            setEvalue([...evalue, e.target.value]);
                           }
                         }}
                       />
@@ -148,30 +180,26 @@ const Evaluation = (props) => {
                         <Select>싫어요</Select>
                       </label>
                     </SelectBox>
+
+                    {/* 신고하기 */}
                     <Report
                       onClick={() => {
                         setIsOpen2(true);
                         setModalData(m);
                       }}
-                      report={report}
+                      report={reportdone}
                     >
-                      {report ? "신고완료" : "신고하기"}
+                      {reportdone ? "신고 완료" : "신고 하기"}
                     </Report>
-                    <button
-                      onClick={() => {
-                        addReport();
-                      }}
-                    >
-                      신고하기 test button
-                    </button>
                   </Grid>
                 </Grid>
-
+                {/* 신고창 모달 */}
                 <Modal open={isOpen2}>
                   <ModalData
                     Evaluate
                     _report={report}
                     report={setReport}
+                    addreport={() => addReport()}
                     rUserId={setRUserId}
                     post={modalData}
                     onClose={() => setIsOpen2(false)}
@@ -182,6 +210,8 @@ const Evaluation = (props) => {
           })}
         </Grid>
       </Grid>
+
+      {/* 푸터 */}
       <FooterMenu next text="후기 작성하기" event={addReview} />
 
       {/* 경고창 모달 */}
@@ -206,7 +236,7 @@ const SelectBox = styled.div`
     position: absolute;
     overflow: hidden;
     clip: rect(0, 0, 0, 0); */
-  }
+  /* } */
 `;
 
 //카테고리 한 개 css

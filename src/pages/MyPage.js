@@ -72,13 +72,23 @@ const NameCard = () => {
       <Text width="302px" color="#505050" margin="0px 0px 45px 0px">
         {userInfo.userContent}
       </Text>
+      <button
+        onClick={() => {
+          dispatch(mypageActions.signDownDB());
+          history.replace("/");
+        }}
+      >
+        회원탈퇴
+      </button>
     </Grid>
   );
 };
+
 const MyPage = () => {
   const myReview = useSelector((state) => state.mypage.myReview);
   const myExercise = useSelector((state) => state.mypage.myExercise);
-  const len = myReview.length;
+  const len = JSON.stringify(myReview.length);
+
   if (
     len?.length === 10 ||
     len?.length === 20 ||
@@ -93,52 +103,27 @@ const MyPage = () => {
     <>
       <Grid bg="#0ED88B" height="auto">
         <NameCard />
-        <Grid height="117px" column justify="center">
-          <Grid bg="#FFFFFF" height="12px" width="342px" br="12px">
+        <Grid height="117px" column justify="center" padding="30px 0px 0px 0px">
+          <ProgressBar>
+            <Highlight width={(len.charAt(len.length - 1) / 10) * 100 + "%"} />
             <Seuchin src="./img/seuchin.png" />
-            <Highlight
-              width={
-                len >= 40
-                  ? ((len - 40) / 10) * 100 + "%"
-                  : len >= 30
-                  ? ((len - 30) / 10) * 100 + "%"
-                  : len >= 20
-                  ? ((len - 20) / 10) * 100 + "%"
-                  : len >= 10
-                  ? ((len - 10) / 10) * 100 + "%"
-                  : (len / 10) * 100 + "%"
-              }
-            />
-            <Text size="16px" width="342px" color="#FFFFFF" bold>
-              {len >= 50
-                ? "Purple"
-                : len >= 40
-                ? "Blue"
-                : len >= 30
-                ? "Skyblue"
-                : len >= 20
-                ? "Green"
-                : len >= 10
-                ? "Yellow"
-                : "Orange"}
-              레벨까지
-              {10 -
-                (len >= 60
-                  ? len - 60
-                  : len >= 50
-                  ? len - 50
-                  : len >= 40
-                  ? len - 40
-                  : len >= 30
-                  ? len - 30
-                  : len >= 20
-                  ? len - 20
-                  : len >= 10
-                  ? len - 10
-                  : len)}
-              포인트
-            </Text>
-          </Grid>
+          </ProgressBar>
+          <Text size="16px" width="342px" color="#FFFFFF" bold margin="5px">
+            {len >= 50
+              ? "Purple"
+              : len >= 40
+              ? "Blue"
+              : len >= 30
+              ? "Skyblue"
+              : len >= 20
+              ? "Green"
+              : len >= 10
+              ? "Yellow"
+              : "Orange"}
+            레벨까지
+            {10 - len.charAt(len.length - 1)}
+            포인트
+          </Text>
         </Grid>
         <Grid
           padding="10px 24px"
@@ -181,13 +166,22 @@ const MyPage = () => {
     </>
   );
 };
+
 export default MyPage;
+const ProgressBar = styled.div`
+  background: #ffffff;
+  width: 342px;
+  height: 12px;
+  display: flex;
+  border-radius: 12px;
+`;
 const Seuchin = styled.img`
   width: 79px;
   height: 93px;
-  position: absolute;
+  margin: -95px 0px 0px -50px;
+  /* position: absolute;
   top: 265px;
-  left: 50px;
+  left: 50px; */
 `;
 const Highlight = styled.div`
   background: #ffe926;
