@@ -1,27 +1,29 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { useHistory, Link } from 'react-router-dom';
-import FooterMenu from '../shared/FooterMenu';
-import { Grid, Text, Input, GoBack } from '../elements/Index';
-import Modal from '../components/Modal/Modal';
-import ModalData from '../components/Modal/ModalData';
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import { useHistory, Link } from "react-router-dom";
+import FooterMenu from "../shared/FooterMenu";
+import { Grid, Text, Input, GoBack } from "../elements/Index";
+import Modal from "../components/Modal/Modal";
+import ModalData from "../components/Modal/ModalData";
 
 const PostWrite_1 = (props) => {
-  document.body.style.overscrollBehavior = 'none';
+  document.body.style.overscrollBehavior = "none";
   const history = useHistory();
 
-  if (history.action === 'POP') {
-    history.replace('/main');
+  if (history.action === "POP") {
+    history.replace("/main");
   }
 
   const postCategory = props?.location?.state?.postCategory;
 
   //모달 오픈 state
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen2, setIsOpen2] = useState(false);
+  const [isOpen3, setIsOpen3] = useState(false);
 
   //제목과 설명 state
-  const [postTitle, setPostTitle] = useState('');
-  const [postDesc, setPostDesc] = useState('');
+  let [postTitle, setPostTitle] = useState("");
+  let [postDesc, setPostDesc] = useState("");
 
   const selectPostTitle = (e) => {
     if (e.target.value.length >= 60) {
@@ -47,60 +49,65 @@ const PostWrite_1 = (props) => {
     if (!postTitle || !postDesc) {
       setIsOpen(true);
     } else {
-      history.push('/postwrite2');
+      history.push("/postwrite2");
     }
   };
 
-  if (postTitle?.length >= 60) {
-    window.alert('60글자 이내로 작성해주세요:)');
-  }
-  if (postDesc?.length >= 200) {
-    window.alert('200글자 이내로 작성해주세요:)');
-  }
+  useEffect(() => {
+    if (postTitle.length >= 20) {
+      setIsOpen2(true);
+    }
+  }, [postTitle]);
+
+  useEffect(() => {
+    if (postDesc.length >= 200) {
+      setIsOpen3(true);
+    }
+  }, [postDesc]);
 
   return (
-    <Grid>
-      <GoBack text='모임 만들기' path='/postcategory' />
-      <Grid margin='24px 0px 40px 0px'>
+    <div>
+      <GoBack text="모임 만들기" path="/postcategory" />
+      <Grid margin="24px 0px 40px 0px">
         <ProgressBar>
-          <HighLight width={(count / 3) * 100 + '%'} />
+          <HighLight width={(count / 3) * 100 + "%"} />
         </ProgressBar>
       </Grid>
-      <Text margin='0px 0px 0px 24px' size='16px'>
+      <Text margin="0px 0px 0px 24px" size="16px">
         제목
       </Text>
-      <Grid padding='8px 0px 20px 24px'>
+      <Grid padding="8px 0px 20px 24px">
         <Input
-          size='16px'
-          height='56px'
-          type='textarea'
+          size="16px"
+          height="56px"
+          type="textarea"
           value={postTitle}
-          maxLength='60'
+          maxLength="20"
           _onChange={selectPostTitle}
-          placeholder='어떤 활동을 같이하고 싶나요?'
+          placeholder="어떤 활동을 같이하고 싶나요?"
         />
-        <Grid margin='0px 0px 0px 310px'>
-          <Text size='12px' color='#787878'>
-            {postTitle.length}/60
+        <Grid isFlex_end>
+          <Text margin="4px 28px 0px 0px" size="12px" color="#787878">
+            {postTitle.length}/20
           </Text>
         </Grid>
       </Grid>
-      <Text margin='0px 0px 0px 24px' size='16px'>
+      <Text margin="0px 0px 0px 24px" size="16px">
         설명
       </Text>
-      <Grid padding='8px 0px 0px 24px'>
+      <Grid padding="8px 0px 0px 24px">
         <Input
-          size='16px'
+          size="16px"
           multiLine
-          height='160px'
-          type='textarea'
+          height="160px"
+          type="textarea"
           value={postDesc}
-          maxLength='200'
+          maxLength="200"
           _onChange={selectPostDesc}
-          placeholder='스친과 함께하고 싶은 운동에 대해 설명해주세요.'
+          placeholder="스친과 함께하고 싶은 운동에 대해 설명해주세요."
         />
-        <Grid margin='0px 0px 0px 310px'>
-          <Text size='12px' color='#787878'>
+        <Grid isFlex_end>
+          <Text margin="4px 28px 0px 0px" size="12px" color="#787878">
             {postDesc.length}/200
           </Text>
         </Grid>
@@ -114,13 +121,31 @@ const PostWrite_1 = (props) => {
           },
         }}
       >
-        <FooterMenu next text='다음' state={check} />
+        <FooterMenu next text="다음" state={check} />
       </Link>
       {/* 경고창 모달 */}
       <Modal open={isOpen}>
-        <ModalData Alert onClose={() => setIsOpen(false)} />
+        <ModalData
+          Alert
+          text="내용을 모두 입력해주세요"
+          onClose={() => setIsOpen(false)}
+        />
       </Modal>
-    </Grid>
+      <Modal open={isOpen2}>
+        <ModalData
+          Alert2
+          text="20자 이하만 가능해요"
+          onClose={() => setIsOpen2(false)}
+        />
+      </Modal>
+      <Modal open={isOpen3}>
+        <ModalData
+          Alert3
+          text="200자 이하만 가능해요"
+          onClose={() => setIsOpen3(false)}
+        />
+      </Modal>
+    </div>
   );
 };
 
