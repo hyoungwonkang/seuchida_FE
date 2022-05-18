@@ -208,8 +208,7 @@ const Button = (props) => {
   );
 };
 
-Button.defaultProps = {
-  text: false,
+Button.defaultProps = {  text: false,
   children: null,
   _onClick: () => {},
   is_float: false,

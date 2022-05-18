@@ -9,7 +9,6 @@ import { useParams } from "react-router-dom";
 import { history } from "../redux/configStore";
 import ChatMenu from "./ChatMenu";
 
-
 const token = localStorage.getItem("token");
 const socket = io.connect("https://seuchidabackend.shop", {
   auth: {
@@ -26,16 +25,16 @@ function Chatex(props) {
   const [chatlist, setChatlist] = useState([]);
   const [chat, setChat] = useState([]);
   const [comModalOn, setcomModalOn] = useState(false);
-  const openModal =() =>{
-    setcomModalOn(true)
+  const openModal = () => {
+    setcomModalOn(true);
     // document.body.style.overflow ="hidden"
-  }
+  };
   const closecomModal = (e) => {
     setcomModalOn(false);
     // document.body.style.overflow ="unset"
   };
 
-console.log(props)
+  // console.log(props)
   const roomInfo = props?.location.state;
   //유저리스트 키값 나우멤버로 수정 요청
   const TimeCheck = (t) => {
@@ -55,7 +54,7 @@ console.log(props)
     socket?.emit("join", {
       roomId,
     });
-    return 
+    return;
   }, [roomId]);
 
   useEffect(() => {
@@ -82,37 +81,36 @@ console.log(props)
 
   const leaveRoom = () => {
     socket.emit("leave", { roomId });
-    history.replace('/chatlist')
+    history.replace("/chatlist");
   };
 
   return (
     <div>
-        <ChatMenu
+      <ChatMenu
         comModalOn={comModalOn}
         closecomModal={closecomModal}
-        roomId ={roomId}
-        leaveRoom ={leaveRoom}
+        roomId={roomId}
+        leaveRoom={leaveRoom}
       />
-    
+
       <Header>
         <HeaderContents>
-         <RowBox>
-          <GoBack
-            gback
-            _onClick={() => {
-              history.goBack();
-            }}
-          />
-          <div style={{ margin: "3px 0px 0px 10px" }}>
-            {roomInfo?.postTitle}
-          </div>
-          <div style={{ margin: "3px 0px 0px 15px", color: "#C4C4C4" }}>
-            {roomInfo?.nowMember?.length}/{roomInfo?.maxMember}
-          </div> 
+          <RowBox>
+            <GoBack
+              gback
+              _onClick={() => {
+                history.goBack();
+              }}
+            />
+            <div style={{ margin: "3px 0px 0px 10px" }}>
+              {roomInfo?.postTitle}
+            </div>
+            <div style={{ margin: "3px 0px 0px 15px", color: "#C4C4C4" }}>
+              {roomInfo?.nowMember?.length}/{roomInfo?.maxMember}
+            </div>
           </RowBox>
-       
+
           <div onClick={openModal}>BUT</div>
-          
         </HeaderContents>
       </Header>
 
@@ -126,8 +124,8 @@ console.log(props)
               <TimeBox>{TimeCheck(prevChat.createdAt)}</TimeBox>
             </IsMe>
           ) : (
-            <div  key={`${prevChat.createdAt}+${index}`}>
-              <RowBox >
+            <div key={`${prevChat.createdAt}+${index}`}>
+              <RowBox>
                 <Image src={prevChat.userImg} size={32} />
                 <NameBox>{prevChat.name}</NameBox>
               </RowBox>
@@ -143,7 +141,7 @@ console.log(props)
         {/* 라이브 채팅 */}
         {chat.map((chat, index) => {
           return chat.name === "System" ? (
-            <SystemMsg  key={`${chat.createdAt}+${index}`}>{chat.msg}</SystemMsg>
+            <SystemMsg key={`${chat.createdAt}+${index}`}>{chat.msg}</SystemMsg>
           ) : chat.name === user.nickName ? (
             <IsMe key={`${chat.createdAt}+${index}`}>
               <TextBoxMe>{chat.msg}</TextBoxMe>
@@ -201,7 +199,6 @@ const HeaderContents = styled.div`
   padding: 20px 0px;
 `;
 
-
 const Body = styled.div`
   margin: 100px 24px;
   overflow: auto;
@@ -219,9 +216,9 @@ const Chatting = styled.div`
 `;
 
 const SystemMsg = styled.div`
-font-size: 14px;
-text-align: center;
-color: #787878;
+  font-size: 14px;
+  text-align: center;
+  color: #787878;
 `;
 
 const TextMsg = styled.input`
