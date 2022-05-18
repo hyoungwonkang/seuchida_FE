@@ -38,11 +38,6 @@ const PostDetail = (props) => {
     history.push("/main");
   };
 
-  //채팅방 이동
-  const movechat = (e) => {
-    history.push("/chatex");
-  };
-
   const [state, setState] = React.useState({
     center: {
       lat: 33.450701,
@@ -231,7 +226,6 @@ const PostDetail = (props) => {
           Check
           text="모임에 참여하시겠어요?"
           onClose={() => setIsOpen3(false)}
-          onCheck={() => movechat()}
         />
       </Modal>
     </>

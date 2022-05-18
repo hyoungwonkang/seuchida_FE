@@ -19,7 +19,7 @@ const socket = io.connect("https://seuchidabackend.shop", {
 function Chatex(props) {
   const params = useParams();
   const dispatch = useDispatch();
-
+  
   const user = useSelector((state) => state.user.userInfo);
   const roomId = params.roomId;
   const [message, setMessage] = useState("");
@@ -35,7 +35,6 @@ function Chatex(props) {
     // document.body.style.overflow ="unset"
   };
 
-console.log(props)
   const roomInfo = props?.location.state;
   //유저리스트 키값 나우멤버로 수정 요청
   const TimeCheck = (t) => {
@@ -63,6 +62,8 @@ console.log(props)
       setChat((chat) => chat.concat(data));
     });
   }, []);
+ 
+
 
   useEffect(() => {
     socket.on("chatlist", (data) => {
@@ -85,6 +86,7 @@ console.log(props)
     history.replace('/chatlist')
   };
 
+
   return (
     <div>
         <ChatMenu
@@ -92,6 +94,7 @@ console.log(props)
         closecomModal={closecomModal}
         roomId ={roomId}
         leaveRoom ={leaveRoom}
+        socket = {socket}
       />
     
       <Header>

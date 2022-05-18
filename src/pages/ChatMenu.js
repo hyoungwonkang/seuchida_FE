@@ -3,14 +3,29 @@ import styled, {keyframes} from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as roomActions } from '../redux/modules/room';
 import Image from '../elements/Image';
-const ChatMenu = ({ comModalOn, closecomModal, roomId, leaveRoom}) => {
+const ChatMenu = ({ comModalOn, closecomModal, roomId, leaveRoom, socket}) => {
   const dispatch = useDispatch();
-  const user_list = useSelector((state) => state.room.list.chatUserList)
-
+  const user_list = useSelector((state) => state.room.list.nowMember)
+  const [kick , setKick] = React.useState(false)
+  
   React.useEffect(()=>{
     dispatch(roomActions.getchatMemberDB(roomId))
   },[])
 
+  React.useEffect(() => {
+    socket.on('ban',(data)=>{
+      if(data===true){
+        console.log(data)
+        setKick(true)
+      }
+    })
+  },[])
+
+  React.useEffect(()=>{
+    if(kick===true){
+      socket.emit('banUserOut',{roomId})
+    }
+  },[])
 
 
   return comModalOn? (
@@ -18,13 +33,17 @@ const ChatMenu = ({ comModalOn, closecomModal, roomId, leaveRoom}) => {
       <Container  onClick={(e) => e.stopPropagation()} >
       <div> 채팅참여자  </div>
       <div> 게시글보기</div>
-      {user_list.map((user,index) => {
-        return ( <div key={user.user_id}>
+      {user_list?.map((user,index) => {
+          const banUser = ()=>{
+            socket.emit('banUser',{data:user.userId})
+            
+           }
+        return ( <div key={user?._id}>
             <RowBox>
            
-            <Image src={user.userImg} size={50}/>
-            <div>{user.nickName}</div>
-            
+            <Image src={user?.userImg} size={50}/>
+            <div>{user?.nickName}</div>
+            <button  onClick={banUser}>강태연습</button>
             </RowBox>
            </div>)
 

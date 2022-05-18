@@ -58,13 +58,12 @@ const ChatList = () => {
 export default ChatList;
 
 const Header = styled.div`
-  height: 77px;
+  height: 68px;
   top: 0;
   position: fixed;
   font-weight: bold;
   font-size: 20px;
-  margin: 24px 0px;
-  padding: 0px 24px;
+  padding: 24px 24px 0px 24px;
   background-color: white;
   width: 100%;
 `;
