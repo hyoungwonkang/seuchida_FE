@@ -118,7 +118,7 @@ const PostWrite_2 = (props) => {
             <IconContext.Provider value={{ color: "#787878", size: "16px" }}>
               <BsFillPeopleFill />
             </IconContext.Provider>
-            <Text width="40px" margin="0px 12px" size="16px">
+            <Text bold width="40px" margin="0px 12px" size="16px">
               인원
             </Text>
           </Grid>
@@ -140,17 +140,11 @@ const PostWrite_2 = (props) => {
           </Grid>
         </Grid>
       </LineBox>
-      <Grid
-        row
-        margin="12px 0px 20px 24px"
-        height="auto"
-        padding="0px 52px 4px 0px"
-        justify="space-between"
-      >
+      <Grid row margin="12px 0px 20px 0px" padding="0px 24px 4px 24px">
         <IconContext.Provider value={{ color: "#787878", size: "24px" }}>
           <MdEdit />
         </IconContext.Provider>
-        <Text width="100px" margin="0px 12px">
+        <Text bold width="100px" margin="0px 12px">
           모집조건
         </Text>
         <Grid _onClick={() => setShow(!show)} isFlex_end>
@@ -178,10 +172,6 @@ const PostWrite_2 = (props) => {
                   onChange={(e) => {
                     setMemberGender(e.target.value);
                   }}
-                  style={{
-                    display: "flex",
-                    width: "100%",
-                  }}
                 >
                   <Grid>
                     <RadioInput type="radio" name="state" value="성별무관" />{" "}
@@ -199,11 +189,6 @@ const PostWrite_2 = (props) => {
               <form
                 onChange={(e) => {
                   setMemberAge(e.target.value);
-                }}
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  width: "100%",
                 }}
               >
                 <Grid>
@@ -306,12 +291,10 @@ const LineBox = styled.div`
 `;
 
 const GenderBox = styled.div`
-  margin: 20px 0px;
   padding: 0px 24px;
 `;
 
 const AgeBox = styled.div`
-  margin: 20px 0px;
   padding: 0px 24px;
 `;
 
@@ -351,7 +334,6 @@ const RadioInput = styled.input`
   height: 20px;
 
   border: 2px solid #999;
-  transition: 0.2s all linear;
   margin-right: 5px;
 
   position: relative;

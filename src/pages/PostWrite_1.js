@@ -73,7 +73,7 @@ const PostWrite_1 = (props) => {
           <HighLight width={(count / 3) * 100 + "%"} />
         </ProgressBar>
       </Grid>
-      <Text margin="0px 0px 0px 24px" size="16px">
+      <Text bold margin="0px 0px 0px 24px" size="16px">
         제목
       </Text>
       <Grid padding="8px 0px 20px 24px">
@@ -92,7 +92,7 @@ const PostWrite_1 = (props) => {
           </Text>
         </Grid>
       </Grid>
-      <Text margin="0px 0px 0px 24px" size="16px">
+      <Text bold margin="0px 0px 0px 24px" size="16px">
         설명
       </Text>
       <Grid padding="8px 0px 0px 24px">

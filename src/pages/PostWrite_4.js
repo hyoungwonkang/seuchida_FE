@@ -246,7 +246,7 @@ const PostWrite_4 = (props) => {
   return (
     <Grid>
       {/* 검색 */}
-      <Grid margin="12px 0px 0px 24px">
+      <Grid margin="12px 0px 0px 0px" padding="0px 0px 0px 24px">
         <form className="inputForm" onSubmit={handleSubmit}>
           <SearchContainer>
             <Search
@@ -267,10 +267,10 @@ const PostWrite_4 = (props) => {
       >
         {" "}
         <Grid row margin="12px 0px 0px 24px">
-          <IconContext.Provider value={{ color: "grey", size: "16px" }}>
+          <IconContext.Provider value={{ color: "#FF6B52", size: "16px" }}>
             <FaMapMarkerAlt />
           </IconContext.Provider>
-          <Text width="100px" margin="0px 12px" size="16px">
+          <Text bold width="100px" margin="0px 12px" size="16px">
             현재위치
           </Text>
           <Grid isFlex_end>{spot === "null" ? "" : spot}</Grid>
@@ -316,20 +316,20 @@ const PostWrite_4 = (props) => {
 };
 
 const SearchContainer = styled.div`
-  width: 87%;
-  height: 45px;
-  position: relative;
   display: flex;
+  width: 94%;
+  height: 56px;
+  position: relative;
   img {
     position: absolute;
     right: 20px;
-    top: 16px;
+    top: 18px;
   }
 `;
 
 const Search = styled.input`
   border: 0;
-  padding-left: 10px;
+  padding-left: 12px;
   background-color: #eaeaea;
   width: 100%;
   height: 100%;

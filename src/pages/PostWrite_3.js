@@ -199,7 +199,7 @@ const PostWrite_3 = (props) => {
             <IconContext.Provider value={{ color: "#787878", size: "16px" }}>
               <FaMapMarkerAlt />
             </IconContext.Provider>
-            <Text margin="0px 13px" size="16px">
+            <Text bold margin="0px 13px" size="16px">
               장소
             </Text>
           </Grid>
@@ -254,11 +254,11 @@ const PostWrite_3 = (props) => {
           justify="space-between"
         >
           <Grid>
-            <Grid row margin="0px 26px" padding="0px 26px 0px 0px">
+            <Grid row padding="0px 0px 0px 26px">
               <IconContext.Provider value={{ color: "#787878", size: "16px" }}>
                 <BsFillCalendarFill />
               </IconContext.Provider>
-              <Text width="80px" margin="0px 0px 0px 14px" size="16px">
+              <Text bold width="80px" margin="0px 0px 0px 14px" size="16px">
                 날짜
               </Text>
               <Grid isFlex_end>
@@ -305,7 +305,7 @@ const PostWrite_3 = (props) => {
           <IconContext.Provider value={{ color: "#787878", size: "16px" }}>
             <AiFillClockCircle />
           </IconContext.Provider>
-          <Text width="32px" margin="0px 12px">
+          <Text bold width="32px" margin="0px 12px">
             시간
           </Text>
         </Grid>
