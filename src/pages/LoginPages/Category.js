@@ -4,11 +4,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as userActions } from "../../redux/modules/user";
 import { Grid, Text, GoBack } from "../../elements/Index";
 import FooterMenu from "../../shared/FooterMenu";
+import { useHistory } from "react-router-dom";
 
 const Category = (props) => {
-  //AddProfile에서 받은 프로필 값
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  //AddProfile에서 받은 값
   const get = props.location.state;
+  const address = get?.address;
   const profile = get?.profile;
+  const nickName = get?.nickName;
+  const gender = get?.gender;
+  const age = get?.age;
+  const content = get?.content;
 
   //카테고리 리스트
   const CategoryList = [
@@ -40,8 +49,6 @@ const Category = (props) => {
     { id: 25, data: "기타" },
   ];
 
-  const dispatch = useDispatch();
-
   //작성 || 수정 구분
   const userInfo = useSelector((state) => state.user.userInfo);
   const edit = useSelector((state) => state.user?.userInfo.userImg);
@@ -52,18 +59,13 @@ const Category = (props) => {
     dispatch(userActions.isLoginDB());
   }, []);
 
+  //수정시, 유저의 이전 관심 태그 보여주기
   React.useEffect(() => {
     setUserInterest(userInfo?.userInterest);
   }, [userInfo]);
 
+  //유저의 관심 태그 값
   const [userInterest, setUserInterest] = useState([]);
-
-  //저장한 값 불러오기
-  const _address = localStorage.getItem("address");
-  const _nickName = localStorage.getItem("nickName");
-  const _gender = localStorage.getItem("gender");
-  const _age = localStorage.getItem("age");
-  const _content = localStorage.getItem("content");
 
   //선택된 카테고리 배열화
   const _userInterest = (checked, item) => {
@@ -82,12 +84,11 @@ const Category = (props) => {
   const addProfile = () => {
     const formData = new FormData();
     formData.append("userImg", profile);
-    formData.append("nickName", _nickName);
-    formData.append("userGender", _gender);
-    formData.append("userAge", _age);
-    formData.append("userContent", _content);
-    formData.append("address", _address);
-
+    formData.append("nickName", nickName);
+    formData.append("userGender", gender);
+    formData.append("userAge", age);
+    formData.append("userContent", content);
+    formData.append("address", address);
     for (var i = 0; i < userInterest.length; i++) {
       formData.append("userInterest[]", userInterest[i]);
     }
@@ -98,19 +99,30 @@ const Category = (props) => {
   const editProfile = () => {
     const formData = new FormData();
     formData.append("newUserImg", profile);
-    formData.append("nickName", _nickName);
-    formData.append("userGender", _gender);
-    formData.append("userAge", _age);
-    formData.append("userContent", _content);
-    formData.append("address", _address);
+    formData.append("nickName", nickName);
+    formData.append("userGender", gender);
+    formData.append("userAge", age);
+    formData.append("userContent", content);
+    formData.append("address", address);
     for (var i = 0; i < userInterest.length; i++) {
       formData.append("userInterest[]", userInterest[i]);
     }
     dispatch(userActions.editUserDB(formData));
   };
 
+  //앱에서 페이지 새로고침 막기
+  document.body.style.overscrollBehavior = "none";
+
+  //새로고침 시 작성 첫 번째 페이지로 이동
+  if (document.readyState === "interactive") {
+    window.onbeforeunload = function () {
+      return "새로고침 경고";
+    };
+    history.replace("/signuploca");
+  }
+
   return (
-    <Grid>
+    <Grid stop>
       <GoBack text="상세 관심사 선택" path="/addprofile" />
       <Text margin="0px 0px 0px 30px" size="24px" bold>
         관심있는 <br />

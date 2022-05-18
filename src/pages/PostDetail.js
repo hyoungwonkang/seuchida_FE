@@ -93,7 +93,7 @@ const PostDetail = (props) => {
         authorization: `Bearer ${token}`,
       },
     }).then((response) => {
-      setPost(response.data.post);
+      setPost(response.data.newPost);
     });
 
     dispatch(userActions.isLoginDB());
@@ -104,7 +104,7 @@ const PostDetail = (props) => {
     u.memberId.includes(user.userId)
   );
 
-  console.log(userCheck)
+  console.log(userCheck);
 
   return (
     <>
@@ -190,29 +190,35 @@ const PostDetail = (props) => {
 
         <KakaoMap {...post} />
         {/* && userCheck[0]===false &&post.nowMember.length<=post.maxMember  */}
- 
-        {isMe===true || userCheck.length===1?   <ButtonBox>
-            <FooterMenu next text={"채팅하기"} path={{
-              pathname: `/chatex/${post.roomId}`,
-              state: { ...post },
-            }}></FooterMenu>
-          </ButtonBox> :
-        // 방장이고 참여자일때 채팅하기 버튼
-        
-        post.status === false &&post.nowMember.length === post.maxMember ?       
+
+        {isMe === true || userCheck.length === 1 ? (
+          <ButtonBox>
+            <FooterMenu
+              next
+              text={"채팅하기"}
+              path={{
+                pathname: `/chatex/${post.roomId}`,
+                state: { ...post },
+              }}
+            ></FooterMenu>
+          </ButtonBox>
+        ) : // 방장이고 참여자일때 채팅하기 버튼
+
+        post.status === false && post.nowMember.length === post.maxMember ? (
           <ButtonBox>
             <FooterMenu is_check text={"참여불가"}></FooterMenu>
-         </ButtonBox>
-         :
-        // 모집이 완료되었거나 참여자가 최대인원과 같으면 참여불가 버튼
-        
-        //참여중이 아니거나 모집중일경우 참여하기 버튼
-        userCheck.length === 0 && post.status ===true &&    
-          <ButtonBox>
-             <FooterMenu next text={"참여하기"} event={joinRoom}></FooterMenu>
-           </ButtonBox>
-           }
-           
+          </ButtonBox>
+        ) : (
+          // 모집이 완료되었거나 참여자가 최대인원과 같으면 참여불가 버튼
+
+          //참여중이 아니거나 모집중일경우 참여하기 버튼
+          userCheck.length === 0 &&
+          post.status === true && (
+            <ButtonBox>
+              <FooterMenu next text={"참여하기"} event={joinRoom}></FooterMenu>
+            </ButtonBox>
+          )
+        )}
       </Container>
 
       {/* 모달 삭제 확인 창 */}

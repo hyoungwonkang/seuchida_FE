@@ -5,12 +5,11 @@ import axios from "axios";
 import { Grid, Text, Image, GoBack } from "../../elements/Index";
 import FooterMenu from "../../shared/FooterMenu";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { actionCreators as userActions } from "../../redux/modules/user";
+import { Link } from "react-router-dom";
 
 const SignupLoca = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
 
   //작성||수정 구분
   const edit = useSelector((state) => state.user?.userInfo.userImg);
@@ -31,9 +30,6 @@ const SignupLoca = () => {
     errMsg: null,
     isLoading: true,
   });
-
-  //주소 로컬에 저장
-  localStorage.setItem("address", address);
 
   //현재 내 위치
   React.useEffect(() => {
@@ -132,11 +128,19 @@ const SignupLoca = () => {
         </Map>
 
         {/* 푸터*/}
-        {is_edit ? (
-          <FooterMenu next text="다음" path="/editprofile" />
-        ) : (
-          <FooterMenu next text="다음" path="/addprofile" />
-        )}
+        <Link
+          to={{
+            state: {
+              address,
+            },
+          }}
+        >
+          {is_edit ? (
+            <FooterMenu next text="다음" path="/editprofile" />
+          ) : (
+            <FooterMenu next text="다음" path="/addprofile" />
+          )}
+        </Link>
       </Grid>
     </Grid>
   );

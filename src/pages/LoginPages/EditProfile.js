@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { Grid, Image, Input, Text, GoBack } from '../../elements/Index';
-import { actionCreators as userActions } from '../../redux/modules/user';
-import { useHistory } from 'react-router-dom';
-import FooterMenu from '../../shared/FooterMenu';
-import Modal from '../../components/Modal/Modal'; //모달 창
-import ModalData from '../../components/Modal/ModalData';
-import { AiFillPlusCircle } from 'react-icons/ai';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { Grid, Image, Input, Text, GoBack } from "../../elements/Index";
+import { actionCreators as userActions } from "../../redux/modules/user";
+import { useHistory } from "react-router-dom";
+import FooterMenu from "../../shared/FooterMenu";
+import Modal from "../../components/Modal/Modal"; //모달 창
+import ModalData from "../../components/Modal/ModalData";
+import { AiFillPlusCircle } from "react-icons/ai";
 
 const EditProfile = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
+
+  //SignupLoca에서 받은 값
+  const address = props?.location?.state?.address;
 
   //유저 정보
   React.useEffect(() => {
@@ -32,14 +35,15 @@ const EditProfile = (props) => {
 
   //모달 오픈 state
   const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen2, setIsOpen2] = React.useState(false);
 
   //입력값 state
-  const [preview, setPreview] = useState('');
-  const [profile, setProfile] = useState('');
-  const [nickName, setNickName] = useState('');
-  const [gender, setGender] = useState('');
-  const [age, setAge] = useState('');
-  const [content, setContent] = useState('');
+  const [preview, setPreview] = useState("");
+  const [profile, setProfile] = useState("");
+  const [nickName, setNickName] = useState("");
+  const [gender, setGender] = useState("");
+  const [age, setAge] = useState("");
+  const [content, setContent] = useState("");
 
   const selectPreview = (e) => {
     setPreview(window.webkitURL.createObjectURL(e.target.files[0]));
@@ -68,47 +72,58 @@ const EditProfile = (props) => {
 
   //빈값 유효성 검사
   const alert = (e) => {
-    localStorage.setItem('nickName', nickName);
-    localStorage.setItem('gender', gender);
-    localStorage.setItem('age', age);
-    localStorage.setItem('content', content);
     if (
-      profile === '' ||
-      nickName === '' ||
-      gender === '' ||
-      age === '' ||
-      content === ''
+      profile === "" ||
+      nickName === "" ||
+      gender === "" ||
+      age === "" ||
+      content === ""
     ) {
       setIsOpen(true);
     } else {
-      history.push('/category');
+      history.push("/category");
     }
   };
 
-  if (content?.length >= 100) {
-    window.alert('100글자 이내로 작성해주세요:)');
+  //글자수 100글자 제한
+  useEffect(() => {
+    if (content?.length >= 100) {
+      setIsOpen2(true);
+    }
+  }, [content]);
+
+  console.log(content.length);
+  //앱에서 페이지 새로고침 막기
+  document.body.style.overscrollBehavior = "none";
+
+  //새로고침 시 작성 첫 번째 페이지로 이동
+  if (document.readyState === "interactive") {
+    window.onbeforeunload = function () {
+      return "새로고침 경고";
+    };
+    history.replace("/signuploca");
   }
 
   return (
     <Grid>
-      <GoBack text='프로필 수정' path='/signuploca' />
+      <GoBack text="프로필 수정" path="/signuploca" />
 
-      <Grid column height='650px'>
-        <Grid height='auto' column margin='30px 0px'>
+      <Grid column height="650px">
+        <Grid height="auto" column margin="30px 0px">
           {/* 프로필 이미지 */}
           <Image
             size={80}
-            position='relative'
-            alt='profile'
+            position="relative"
+            alt="profile"
             src={preview ? preview : userInfo.userImg}
           />
           <FileUpload>
-            <label htmlFor='image'>
+            <label htmlFor="image">
               <AiFillPlusCircle size={32} />
             </label>
             <input
-              type='file'
-              id='image'
+              type="file"
+              id="image"
               onChange={(e) => {
                 selectPreview(e);
                 selectImage(e);
@@ -118,53 +133,54 @@ const EditProfile = (props) => {
 
           {/* 닉네임 */}
           <Input
-            height='56px'
-            type='text'
-            placeholder='닉네임'
+            height="56px"
+            type="text"
+            placeholder="닉네임"
             _onChange={selectNickName}
-            value={nickName || ''}
+            value={nickName || ""}
           />
 
           {/* 성별 */}
           <Option>
-            <select onChange={selectGender} defaultValue='default'>
-              <option className='title' value='default' disabled>
-                {userInfo.userGender ? userInfo.userGender : '성별'}
+            <select onChange={selectGender} defaultValue="default">
+              <option className="title" value="default" disabled>
+                {userInfo.userGender ? userInfo.userGender : "성별"}
               </option>
-              <option value='남성'>남성</option>
-              <option value='여성'>여성</option>
+              <option value="남성">남성</option>
+              <option value="여성">여성</option>
             </select>
 
             {/* 나이 */}
-            <div className='calendarBox'>
+            <div className="calendarBox">
               <Age
-                type='number'
+                type="number"
                 style={{
-                  width: '213px',
-                  height: '56px',
-                  boxSizing: 'border-box',
-                  borderRadius: '5px',
-                  border: '1px solid #ddd',
-                  placeholder: '나이',
+                  width: "213px",
+                  height: "56px",
+                  boxSizing: "border-box",
+                  borderRadius: "5px",
+                  border: "1px solid #ddd",
+                  placeholder: "나이",
                 }}
                 onChange={selectAge}
-                value={age || ''}
-                pattern='[0-9]+'
+                value={age || ""}
+                pattern="/[^ㄱ-ㅎ가-힣]/g"
               />
             </div>
           </Option>
 
           {/* 자기소개 한 줄 */}
           <Input
+            bg="#F1F1F5"
             multiLine
-            height='160px'
-            margin='0px 0px 100px 100px'
-            type='text'
-            placeholder='당신에 대해 조금 더 알려주세요!'
+            height="160px"
+            margin="0px 0px 100px 100px"
+            type="text"
+            placeholder="당신에 대해 조금 더 알려주세요!"
             _onChange={selectContent}
-            value={content || ''}
+            value={content || ""}
           />
-          <Text size='16px' color='#787878' margin='0px 0px 0px 300px'>
+          <Text size="16px" color="#787878" margin="0px 0px 0px 300px">
             {content?.length}/100
           </Text>
 
@@ -172,20 +188,33 @@ const EditProfile = (props) => {
           <Link
             to={{
               state: {
+                address,
                 profile,
+                nickName,
+                gender,
+                age,
+                content,
               },
             }}
           >
-            <FooterMenu
-              next
-              text='다음'
-              state={alert}
-              // event={setIsOpen(true)}
-            />
+            <FooterMenu next text="다음" state={alert} />
           </Link>
           {/* 경고창 모달 */}
           <Modal open={isOpen}>
-            <ModalData Alert onClose={() => setIsOpen(false)} />
+            <ModalData
+              Alert
+              onClose={() => setIsOpen(false)}
+              text="내용을 모두 입력해 주세요!"
+            />
+          </Modal>
+
+          {/* 글자수 모달 */}
+          <Modal open={isOpen2}>
+            <ModalData
+              Alert
+              onClose={() => setIsOpen2(false)}
+              text="100글자 이하로 작성해주세요!"
+            />
           </Modal>
         </Grid>
       </Grid>
@@ -232,7 +261,7 @@ const Option = styled.div`
     border-radius: 5px;
     border: 1px solid #ddd;
   }
-  .title[value='default'][disabled] {
+  .title[value="default"][disabled] {
     display: none;
   }
 `;

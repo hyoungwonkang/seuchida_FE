@@ -1,24 +1,12 @@
 import React from "react";
 import { Grid, Text } from "../../elements/Index";
 import FooterMenu from "../../shared/FooterMenu";
-import { useHistory } from "react-router-dom";
 
 const Done = () => {
-  const history = useHistory();
-
-  const removeToken = () => {
-    localStorage.removeItem("address");
-    localStorage.removeItem("profile");
-    localStorage.removeItem("nickName");
-    localStorage.removeItem("gender");
-    localStorage.removeItem("age");
-    localStorage.removeItem("content");
-    localStorage.removeItem("userInterest");
-    history.push("/main");
-  };
+  document.body.style.overscrollBehavior = "none";
 
   return (
-    <Grid column margin="167px auto 0px auto">
+    <Grid column margin="167px auto 0px auto" stop>
       <img src="./img/seuchin.png" />
       <Text size="24px" bold>
         프로필 작성이 <br />
@@ -30,7 +18,7 @@ const Done = () => {
       <Text size="16px" color="gray" margin="0px">
         찾으러 떠나 볼까요?
       </Text>
-      <FooterMenu next event={removeToken} text="확인" />
+      <FooterMenu next path="/main" text="확인" />
     </Grid>
   );
 };
