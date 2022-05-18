@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const Button = (props) => {
   const {
@@ -7,6 +7,7 @@ const Button = (props) => {
     _onClick,
     is_float,
     is_delete,
+    is_close,
     children,
     margin,
     width,
@@ -15,6 +16,7 @@ const Button = (props) => {
     right,
     bold,
     bg,
+    border_right,
   } = props;
 
   const styles = {
@@ -25,6 +27,7 @@ const Button = (props) => {
     bold: bold,
     right: right,
     bg: bg,
+    border_right: border_right,
   };
   if (is_float) {
     return (
@@ -39,6 +42,16 @@ const Button = (props) => {
         <DeleteButton {...styles} onClick={_onClick}>
           {text ? text : children}
         </DeleteButton>
+      </React.Fragment>
+    );
+  }
+
+  if (is_close) {
+    return (
+      <React.Fragment>
+        <CloseButton {...styles} onClick={_onClick}>
+          {text ? text : children}
+        </CloseButton>
       </React.Fragment>
     );
   }
@@ -58,8 +71,8 @@ Button.defaultProps = {
   _onClick: () => {},
   is_float: false,
   margin: false,
-  width: '100%',
-  padding: '12px 0px',
+  width: "100%",
+  padding: "12px 0px",
   border: false,
   bg: false,
 };
@@ -75,8 +88,8 @@ const ElButton = styled.button`
   box-sizing: border-box;
   border: none;
   border-radius: 5px;
-  ${(props) => (props.margin ? `margin: ${props.margin};` : '')}
-  ${(props) => (props.right ? `float: right` : '')} /* &:hover {
+  ${(props) => (props.margin ? `margin: ${props.margin};` : "")}
+  ${(props) => (props.right ? `float: right` : "")} /* &:hover {
     box-shadow: 0px 0px 5px 0px gray;
   }
   font-family: "Cafe24Ohsquareair"; */
@@ -109,9 +122,21 @@ const DeleteButton = styled.button`
   font-weight: 800;
   position: fixed;
   top: 25px;
-  right: 70px;
+  left: 320px;
   text-align: center;
   border: none;
+`;
+
+const CloseButton = styled.button`
+  width: auto;
+  height: 22px;
+  background-color: #fff;
+  box-sizing: border-box;
+  font-size: 16px;
+  text-align: center;
+  border: none;
+  ${(props) => (props.margin ? `margin: ${props.margin};` : "")}
+  border-right: ${(props) => props.border_right}
 `;
 
 export default Button;

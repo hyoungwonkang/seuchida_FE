@@ -1,15 +1,14 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
-import "react-datepicker/dist/react-datepicker.css";
-import { Link } from "react-router-dom";
-import { Grid, Image, Input, Text, GoBack } from "../../elements/Index";
-import { actionCreators as userActions } from "../../redux/modules/user";
-import { useHistory } from "react-router-dom";
-import FooterMenu from "../../shared/FooterMenu";
-import Modal from "../../components/Modal/Modal"; //모달 창
-import ModalData from "../../components/Modal/ModalData";
-import { AiFillPlusCircle } from "react-icons/ai";
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { Grid, Image, Input, Text, GoBack } from '../../elements/Index';
+import { actionCreators as userActions } from '../../redux/modules/user';
+import { useHistory } from 'react-router-dom';
+import FooterMenu from '../../shared/FooterMenu';
+import Modal from '../../components/Modal/Modal'; //모달 창
+import ModalData from '../../components/Modal/ModalData';
+import { AiFillPlusCircle } from 'react-icons/ai';
 
 const EditProfile = (props) => {
   const history = useHistory();
@@ -35,12 +34,12 @@ const EditProfile = (props) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
   //입력값 state
-  const [preview, setPreview] = useState("");
-  const [profile, setProfile] = useState("");
-  const [nickName, setNickName] = useState("");
-  const [gender, setGender] = useState("");
-  const [age, setAge] = useState("");
-  const [content, setContent] = useState("");
+  const [preview, setPreview] = useState('');
+  const [profile, setProfile] = useState('');
+  const [nickName, setNickName] = useState('');
+  const [gender, setGender] = useState('');
+  const [age, setAge] = useState('');
+  const [content, setContent] = useState('');
 
   const selectPreview = (e) => {
     setPreview(window.webkitURL.createObjectURL(e.target.files[0]));
@@ -69,47 +68,47 @@ const EditProfile = (props) => {
 
   //빈값 유효성 검사
   const alert = (e) => {
-    localStorage.setItem("nickName", nickName);
-    localStorage.setItem("gender", gender);
-    localStorage.setItem("age", age);
-    localStorage.setItem("content", content);
+    localStorage.setItem('nickName', nickName);
+    localStorage.setItem('gender', gender);
+    localStorage.setItem('age', age);
+    localStorage.setItem('content', content);
     if (
-      profile === "" ||
-      nickName === "" ||
-      gender === "" ||
-      age === "" ||
-      content === ""
+      profile === '' ||
+      nickName === '' ||
+      gender === '' ||
+      age === '' ||
+      content === ''
     ) {
       setIsOpen(true);
     } else {
-      history.push("/category");
+      history.push('/category');
     }
   };
 
   if (content?.length >= 100) {
-    window.alert("100글자 이내로 작성해주세요:)");
+    window.alert('100글자 이내로 작성해주세요:)');
   }
 
   return (
     <Grid>
-      <GoBack text="프로필 수정" path="/signuploca" />
+      <GoBack text='프로필 수정' path='/signuploca' />
 
-      <Grid column height="650px">
-        <Grid height="auto" column margin="30px 0px">
+      <Grid column height='650px'>
+        <Grid height='auto' column margin='30px 0px'>
           {/* 프로필 이미지 */}
           <Image
             size={80}
-            position="relative"
-            alt="profile"
+            position='relative'
+            alt='profile'
             src={preview ? preview : userInfo.userImg}
           />
           <FileUpload>
-            <label htmlFor="image">
+            <label htmlFor='image'>
               <AiFillPlusCircle size={32} />
             </label>
             <input
-              type="file"
-              id="image"
+              type='file'
+              id='image'
               onChange={(e) => {
                 selectPreview(e);
                 selectImage(e);
@@ -119,38 +118,38 @@ const EditProfile = (props) => {
 
           {/* 닉네임 */}
           <Input
-            height="56px"
-            type="text"
-            placeholder="닉네임"
+            height='56px'
+            type='text'
+            placeholder='닉네임'
             _onChange={selectNickName}
-            value={nickName || ""}
+            value={nickName || ''}
           />
 
           {/* 성별 */}
           <Option>
-            <select onChange={selectGender} defaultValue="default">
-              <option className="title" value="default" disabled>
-                {userInfo.userGender ? userInfo.userGender : "성별"}
+            <select onChange={selectGender} defaultValue='default'>
+              <option className='title' value='default' disabled>
+                {userInfo.userGender ? userInfo.userGender : '성별'}
               </option>
-              <option value="남성">남성</option>
-              <option value="여성">여성</option>
+              <option value='남성'>남성</option>
+              <option value='여성'>여성</option>
             </select>
 
             {/* 나이 */}
-            <div className="calendarBox">
+            <div className='calendarBox'>
               <Age
-                type="number"
+                type='number'
                 style={{
-                  width: "213px",
-                  height: "56px",
-                  boxSizing: "border-box",
-                  borderRadius: "5px",
-                  border: "1px solid #ddd",
-                  placeholder: "나이",
+                  width: '213px',
+                  height: '56px',
+                  boxSizing: 'border-box',
+                  borderRadius: '5px',
+                  border: '1px solid #ddd',
+                  placeholder: '나이',
                 }}
                 onChange={selectAge}
-                value={age || ""}
-                pattern="[0-9]+"
+                value={age || ''}
+                pattern='[0-9]+'
               />
             </div>
           </Option>
@@ -158,14 +157,14 @@ const EditProfile = (props) => {
           {/* 자기소개 한 줄 */}
           <Input
             multiLine
-            height="160px"
-            margin="0px 0px 100px 100px"
-            type="text"
-            placeholder="당신에 대해 조금 더 알려주세요!"
+            height='160px'
+            margin='0px 0px 100px 100px'
+            type='text'
+            placeholder='당신에 대해 조금 더 알려주세요!'
             _onChange={selectContent}
-            value={content || ""}
+            value={content || ''}
           />
-          <Text size="16px" color="#787878" margin="0px 0px 0px 300px">
+          <Text size='16px' color='#787878' margin='0px 0px 0px 300px'>
             {content?.length}/100
           </Text>
 
@@ -179,7 +178,7 @@ const EditProfile = (props) => {
           >
             <FooterMenu
               next
-              text="다음"
+              text='다음'
               state={alert}
               // event={setIsOpen(true)}
             />
@@ -233,7 +232,7 @@ const Option = styled.div`
     border-radius: 5px;
     border: 1px solid #ddd;
   }
-  .title[value="default"][disabled] {
+  .title[value='default'][disabled] {
     display: none;
   }
 `;
