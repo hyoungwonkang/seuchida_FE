@@ -1,75 +1,76 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
-import FooterMenu from '../shared/FooterMenu';
-import { Grid, Text, GoBack } from '../elements/Index';
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import { useHistory } from "react-router-dom";
+import FooterMenu from "../shared/FooterMenu";
+import { Grid, Text, GoBack } from "../elements/Index";
 
 const PostCategory = (prop) => {
+  document.body.style.overscrollBehavior = "none";
   const history = useHistory();
   const CategoryList = [
-    { id: 0, data: '자전거' },
-    { id: 1, data: '배드민턴' },
-    { id: 2, data: '볼링' },
-    { id: 3, data: '골프' },
-    { id: 4, data: '테니스/스쿼시' },
-    { id: 5, data: '스키/보드' },
-    { id: 6, data: '탁구' },
-    { id: 7, data: '다이어트' },
-    { id: 8, data: '헬스/크로스핏' },
-    { id: 9, data: '복싱' },
-    { id: 10, data: '요가/필라테스' },
-    { id: 11, data: '당구/포켓볼' },
-    { id: 12, data: '축구/풋살' },
-    { id: 13, data: '러닝/마라톤' },
-    { id: 14, data: '수영/스쿠버다이빙' },
-    { id: 15, data: '서핑/웨이크보드/요트' },
-    { id: 16, data: '농구' },
-    { id: 17, data: '야구' },
-    { id: 18, data: '배구' },
-    { id: 19, data: '족구' },
-    { id: 20, data: '검도' },
-    { id: 21, data: '태권도/유도' },
-    { id: 22, data: '클라이밍' },
-    { id: 23, data: '크루즈보드' },
-    { id: 24, data: '스케이트/인라인' },
-    { id: 25, data: '기타' },
+    { id: 0, data: "자전거" },
+    { id: 1, data: "배드민턴" },
+    { id: 2, data: "볼링" },
+    { id: 3, data: "골프" },
+    { id: 4, data: "테니스/스쿼시" },
+    { id: 5, data: "스키/보드" },
+    { id: 6, data: "탁구" },
+    { id: 7, data: "다이어트" },
+    { id: 8, data: "헬스/크로스핏" },
+    { id: 9, data: "복싱" },
+    { id: 10, data: "요가/필라테스" },
+    { id: 11, data: "당구/포켓볼" },
+    { id: 12, data: "축구/풋살" },
+    { id: 13, data: "러닝/마라톤" },
+    { id: 14, data: "수영/스쿠버다이빙" },
+    { id: 15, data: "서핑/웨이크보드/요트" },
+    { id: 16, data: "농구" },
+    { id: 17, data: "야구" },
+    { id: 18, data: "배구" },
+    { id: 19, data: "족구" },
+    { id: 20, data: "검도" },
+    { id: 21, data: "태권도/유도" },
+    { id: 22, data: "클라이밍" },
+    { id: 23, data: "크루즈보드" },
+    { id: 24, data: "스케이트/인라인" },
+    { id: 25, data: "기타" },
   ];
 
   // 데이터를 넣을 빈배열
-  const [postCate, setPostCate] = useState('');
+  const [postCate, setPostCate] = useState("");
   let postCategory = postCate.toString();
 
   //유효성 검사
   const check = () => {
     if (!postCategory) {
-      window.alert('카테고리를 선택해주세요');
+      window.alert("카테고리를 선택해주세요");
     } else {
-      history.push('/postwrite1');
+      history.push("/postwrite1");
     }
   };
 
   // 새로고침시 데이터 유지
   useEffect(() => {
-    setPostCate(window.localStorage.getItem('postCategory'));
+    setPostCate(window.localStorage.getItem("postCategory"));
   }, []);
 
   useEffect(() => {
-    window.localStorage.setItem('postCategory', postCategory);
+    window.localStorage.setItem("postCategory", postCategory);
   }, [postCategory]);
 
   //localStorage 저장
   if (postCategory) {
-    localStorage.setItem('postCategory', postCategory);
+    localStorage.setItem("postCategory", postCategory);
   }
 
   return (
-    <Grid>
-      <GoBack text='모임 만들기' path='/main' />
-      <Text margin='24px 0px 10px 30px' size='24px'>
+    <Grid stop>
+      <GoBack text="모임 만들기" path="/main" />
+      <Text margin="24px 0px 10px 30px" size="24px">
         함께하고 싶은 <br />
         운동을 선택해주세요
       </Text>
-      <Grid height='auto' column margin='40px 0px 0px 0px'>
+      <Grid height="auto" column margin="40px 0px 0px 0px">
         <CateBox>
           {CategoryList.map((item) => {
             // console.log(item);
@@ -77,7 +78,7 @@ const PostCategory = (prop) => {
               <div key={item.id}>
                 <input
                   id={item.id}
-                  type='checkbox'
+                  type="checkbox"
                   value={item.data}
                   onChange={(e) => {
                     setPostCate(e.target.value);
@@ -91,7 +92,7 @@ const PostCategory = (prop) => {
               </div>
             );
           })}
-          <FooterMenu next text='다음' state={check} />
+          <FooterMenu next text="다음" state={check} />
         </CateBox>
       </Grid>
     </Grid>
@@ -123,8 +124,8 @@ const Cate = styled.div`
   border: 1px solid #ddd;
   border-radius: 30px;
   font-size: 16px;
-  background: ${(props) => (props.color ? 'lightgreen' : 'white')};
-  color: ${(props) => (props.click ? 'white' : 'black')};
+  background: ${(props) => (props.color ? "lightgreen" : "white")};
+  color: ${(props) => (props.click ? "white" : "black")};
 `;
 
 export default PostCategory;

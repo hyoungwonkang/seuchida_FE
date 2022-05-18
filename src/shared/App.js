@@ -28,6 +28,8 @@ import {
   MyPost,
   MyReview,
   ReviewWrite,
+  Evaluate,
+  ReviewDone,
 } from "../pages/Index";
 import Chatex from "../pages/Chatex";
 import ChatList from "../pages/ChatList";
@@ -49,6 +51,8 @@ function App() {
           <Route path="/ReviewList/:reviewId" exact component={ReviewList} />
           <Route path="/mypage" exact component={MyPage} />
           <Route path="/reviewwrite/:postId" exact component={ReviewWrite} />
+          <Route path="/revieweval" exact component={Evaluate} />
+          <Route path="/reviewdone" exact component={ReviewDone} />
           <Route path="/mypost" exact component={MyPost} />
           <Route path="/myreview" exact component={MyReview} />
           <Route path="/map" exact component={Map} />
@@ -62,7 +66,7 @@ function App() {
           <Route path="/postwrite4" exact component={PostWrite_4} />
           <Route path="/postdone" exact component={PostDone} />
           <Route path="/ChatList" exact component={ChatList} />
-          <Route path="/chatex" exact component={Chatex} />
+          <Route path="/chatex/:roomId" exact component={Chatex} />
         </ConnectedRouter>
       </Container>
     </>

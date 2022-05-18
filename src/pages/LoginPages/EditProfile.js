@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
 import { Grid, Image, Input, Text, GoBack } from "../../elements/Index";
 import { actionCreators as userActions } from "../../redux/modules/user";
@@ -14,6 +13,9 @@ import { AiFillPlusCircle } from "react-icons/ai";
 const EditProfile = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
+
+  //SignupLoca에서 받은 값
+  const address = props?.location?.state?.address;
 
   //유저 정보
   React.useEffect(() => {
@@ -33,6 +35,7 @@ const EditProfile = (props) => {
 
   //모달 오픈 state
   const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen2, setIsOpen2] = React.useState(false);
 
   //입력값 state
   const [preview, setPreview] = useState("");
@@ -69,10 +72,6 @@ const EditProfile = (props) => {
 
   //빈값 유효성 검사
   const alert = (e) => {
-    localStorage.setItem("nickName", nickName);
-    localStorage.setItem("gender", gender);
-    localStorage.setItem("age", age);
-    localStorage.setItem("content", content);
     if (
       profile === "" ||
       nickName === "" ||
@@ -86,8 +85,23 @@ const EditProfile = (props) => {
     }
   };
 
-  if (content?.length >= 100) {
-    window.alert("100글자 이내로 작성해주세요:)");
+  //글자수 100글자 제한
+  useEffect(() => {
+    if (content?.length >= 100) {
+      setIsOpen2(true);
+    }
+  }, [content]);
+
+  console.log(content.length);
+  //앱에서 페이지 새로고침 막기
+  document.body.style.overscrollBehavior = "none";
+
+  //새로고침 시 작성 첫 번째 페이지로 이동
+  if (document.readyState === "interactive") {
+    window.onbeforeunload = function () {
+      return "새로고침 경고";
+    };
+    history.replace("/signuploca");
   }
 
   return (
@@ -150,13 +164,14 @@ const EditProfile = (props) => {
                 }}
                 onChange={selectAge}
                 value={age || ""}
-                pattern="[0-9]+"
+                pattern="/[^ㄱ-ㅎ가-힣]/g"
               />
             </div>
           </Option>
 
           {/* 자기소개 한 줄 */}
           <Input
+            bg="#F1F1F5"
             multiLine
             height="160px"
             margin="0px 0px 100px 100px"
@@ -173,20 +188,33 @@ const EditProfile = (props) => {
           <Link
             to={{
               state: {
+                address,
                 profile,
+                nickName,
+                gender,
+                age,
+                content,
               },
             }}
           >
-            <FooterMenu
-              next
-              text="다음"
-              state={alert}
-              // event={setIsOpen(true)}
-            />
+            <FooterMenu next text="다음" state={alert} />
           </Link>
           {/* 경고창 모달 */}
           <Modal open={isOpen}>
-            <ModalData Alert onClose={() => setIsOpen(false)} />
+            <ModalData
+              Alert
+              onClose={() => setIsOpen(false)}
+              text="내용을 모두 입력해 주세요!"
+            />
+          </Modal>
+
+          {/* 글자수 모달 */}
+          <Modal open={isOpen2}>
+            <ModalData
+              Alert
+              onClose={() => setIsOpen2(false)}
+              text="100글자 이하로 작성해주세요!"
+            />
           </Modal>
         </Grid>
       </Grid>

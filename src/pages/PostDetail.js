@@ -93,7 +93,7 @@ const PostDetail = (props) => {
         authorization: `Bearer ${token}`,
       },
     }).then((response) => {
-      setPost(response.data.post);
+      setPost(response.data.newPost);
     });
 
     dispatch(userActions.isLoginDB());
@@ -227,7 +227,7 @@ const PostDetail = (props) => {
         <ModalData
           Check
           text="모임에 참여하시겠어요?"
-          onClose={() => setIsOpen3(false)}
+          onClose={() => setIsOpen4(false)}
           onCheck={() => movechat()}
         />
       </Modal>

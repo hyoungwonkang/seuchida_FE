@@ -13,6 +13,16 @@ const PostList = () => {
 
   const post_list = useSelector((state) => state.post.list.nearPosts);
 
+  // const i = post_list?.map((p, i) => i);
+
+  // const [loading, setLoading] = React.useState(false);
+
+  // React.useEffect(()=>{
+  //   if(loading){
+  //     const observe = new IntersectionObserver({}, {threshold: 1})
+  //   }
+  // })
+
   const [state, setState] = React.useState({
     center: {
       lat: 33.450701,
@@ -21,6 +31,10 @@ const PostList = () => {
     errMsg: null,
     isLoading: true,
   });
+
+  React.useEffect(() => {
+    dispatch(postActions.getPostlistDB());
+  }, []);
 
   React.useEffect(() => {
     if (navigator.geolocation) {
@@ -52,7 +66,11 @@ const PostList = () => {
         isLoading: false,
       }));
     }
-    dispatch(postActions.getPostlistDB());
+
+    // if (post_list?.length < 1) {
+
+    // }
+
     // dispatch(userActions.getUser(state.state))
   }, []);
 
@@ -74,16 +92,17 @@ const PostList = () => {
 
       <ListBox>
         {post_list?.map((p, i) => {
-          return (
-            <Card
-              {...p}
-              key={p.id}
-              center={state.center}
-              _onClick={() => {
-                history.push(`/postdetail/${p._id}`);
-              }}
-            />
-          );
+          if (i < 3)
+            return (
+              <Card
+                {...p}
+                key={p.id}
+                center={state.center}
+                _onClick={() => {
+                  history.push(`/postdetail/${p._id}`);
+                }}
+              />
+            );
         })}
       </ListBox>
 
