@@ -7,7 +7,7 @@ import styled from "styled-components";
 
 function ECslider(props) {
   const myEx = props?.myExercise;
-  console.log(myEx);
+  // console.log(myEx);
   const settings = {
     dots: true,
     infinite: true,
@@ -22,8 +22,8 @@ function ECslider(props) {
   return (
     <Sliders {...settings} style={{ height: "180px", margin: "0px" }}>
       {myEx?.map((p, i) => {
-        if (i < 10) {
-          return <EndCard {...p} key={p + i} _onClick={props._onClick} />;
+        if (i < 20) {
+          return <EndCard {...p} key={p.id} _onClick={props._onClick} />;
         }
       })}
     </Sliders>

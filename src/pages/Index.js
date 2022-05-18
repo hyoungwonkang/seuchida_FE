@@ -23,7 +23,7 @@ import ReviewWrite from "../pages/ReviewWrite";
 import EditDone from "./LoginPages/EditDone";
 import ChatRoom from "./ChatRoom";
 import EditProfile from "./LoginPages/EditProfile";
-import Evaluation from "./Evaluation";
+import Evaluation from "../pages/Evaluation";
 import ReviewDone from "./ReviewDone";
 
 export {
