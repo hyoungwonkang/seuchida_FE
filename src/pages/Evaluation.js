@@ -24,7 +24,6 @@ const Evaluation = (props) => {
   //ReviewWrite에서 받아온 값
   const postInfo = props.location.state.postInfo;
   const postId = props.location.state.postInfo.postId;
-  console.log(postId);
   const review = props.location.state.review;
   const reviewImg = props.location.state.reviewImg;
 
@@ -199,14 +198,6 @@ const SelectBox = styled.div`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  /* label {
-    display: inline-block;
-  }
-  input {
-    position: absolute;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0); */
-  }
 `;
 
 //카테고리 한 개 css
