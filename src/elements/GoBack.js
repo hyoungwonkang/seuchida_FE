@@ -1,10 +1,9 @@
 import React from "react";
 import { IoIosArrowBack } from "react-icons/io";
-import { useHistory } from "react-router-dom";
+import { history } from "../redux/configStore";
 import { Grid, Text } from "./Index";
 
 const GoBack = (props) => {
-  const history = useHistory();
   if (props.gback) {
     return (
       <>

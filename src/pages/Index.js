@@ -20,8 +20,6 @@ import MyPage from "../pages/MyPage";
 import MyPost from "../pages/MyPost";
 import MyReview from "../pages/MyReview";
 import ReviewWrite from "../pages/ReviewWrite";
-import Evaluate from "./Evaluate";
-import ReviewDone from "./ReviewDone";
 import EditDone from "./LoginPages/EditDone";
 import ChatRoom from "./ChatRoom";
 import EditProfile from "./LoginPages/EditProfile";
@@ -51,7 +49,5 @@ export {
   MyPost,
   MyReview,
   ReviewWrite,
-  Evaluate,
-  ReviewDone,
   ChatRoom,
 };

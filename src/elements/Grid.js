@@ -22,7 +22,6 @@ const Grid = (props) => {
     justify,
     isFlex_end,
     shadow,
-    stop,
   } = props;
 
   const styles = {
@@ -44,7 +43,6 @@ const Grid = (props) => {
     justify: justify,
     isFlex_end: isFlex_end,
     shadow: shadow,
-    stop: stop,
   };
 
   return (
@@ -101,7 +99,6 @@ const GridBox = styled.div`
     props.isFlex_end
       ? `display: flex; align-items: center; justify-content: end;`
       : null}
-  ${(props) => (props.stop ? `overscroll-behavior: none` : "")}
 `;
 
 export default Grid;

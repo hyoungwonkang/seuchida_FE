@@ -1,46 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Text, Grid, Image } from "../../elements/Index";
-import styled from "styled-components";
-import ReviewWrite from "../../pages/ReviewWrite";
 
 const ModalData = (props) => {
-  const { Members, Alert, Check, text, onClose, onCheck, Evaluate } = props;
-  console.log(props);
+  const { Members, Alert, Check, text, onClose, onCheck } = props;
 
   //재확인 창
   if (Check) {
     return (
-      <Grid width="240px" height="156px" column padding="17px">
-        <Text margin="20px 0px 0px 0px">{text}</Text>
-        <hr
-          style={{
-            width: "240px",
-            borderTop: "1px solid gray",
-            borderBottom: "none",
-            borderLeft: "none",
-            borderRight: "none",
-            margin: "40px 0px 0px 0px",
-          }}
-        />
-        <Grid row justify="center">
-          <Button is_close _onClick={onClose} margin="10px 38px 0px 0px">
-            취소
-          </Button>
-          <div
-            style={{
-              display: "block",
-              width: "1px",
-              height: "57px",
-              backgroundColor: "gray",
-              position: "absolute",
-              bottom: 0,
-              left: "120px",
-            }}
-          />
-          <Button is_close _onClick={onCheck} margin="10px 0px 0px 38px">
-            확인
-          </Button>
-        </Grid>
+      <Grid width="240px" height="156px">
+        <Text>{text}</Text>
+        <button onClick={onClose}>취소</button>
+        <button onClick={onCheck}>삭제</button>
       </Grid>
     );
   }
@@ -48,68 +18,9 @@ const ModalData = (props) => {
   //alert 창
   if (Alert) {
     return (
-      <Grid width="240px" height="156px" column padding="17px">
-        <Grid column height="44px">
-          <Text margin="20px 0px 0px 0px">앗!</Text>
-          <Text margin="0px">{text}</Text>
-        </Grid>
-        <hr
-          style={{
-            width: "240px",
-            borderTop: "1px solid gray",
-            borderBottom: "none",
-            borderLeft: "none",
-            borderRight: "none",
-            margin: "30px 0px 0px 0px",
-          }}
-        />
-        <Button is_close _onClick={onClose}>
-          확인
-        </Button>
-      </Grid>
-    );
-  }
-
-  //참여자 평가 창
-  if (Evaluate) {
-    // const [userInterest, setUserInterest] = useState([]);
-
-    //신고하기
-    const BadList = [
-      { id: 0, data: "약속시간에 나타나지 않았어요." },
-      { id: 1, data: "불친절해요." },
-      { id: 2, data: "운동에 열심히 참여하지 않았어요." },
-      { id: 3, data: "이성적인 만남을 유도해요." },
-    ];
-
-    return (
-      <Grid width="342px" height="356px" padding="10px">
-        <SelectBox>
-          {BadList.map((item) => {
-            return (
-              <Content key={item.id} row>
-                <input
-                  id={item.id}
-                  type="radio"
-                  name="report"
-                  value={item.data}
-                  onChange={(e) => {
-                    props.report(e.target.value);
-                    props.rUserId(props.post.memberId);
-                  }}
-                  onClick={() => {
-                    onClose();
-                  }}
-                />
-                <label htmlFor={item.id}>
-                  <Select color={+props._report.includes(item.data)}>
-                    {item.data}
-                  </Select>
-                </label>
-              </Content>
-            );
-          })}
-        </SelectBox>
+      <Grid>
+        <Text>앗! 입력값을 모두 입력해 주세요!</Text>
+        <button onClick={onClose}>Close</button>
       </Grid>
     );
   }
@@ -198,31 +109,3 @@ const ModalData = (props) => {
 };
 
 export default ModalData;
-const SelectBox = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: left;
-  /* flex-wrap: wrap; */
-`;
-const Content = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin: 10px;
-`;
-
-const Select = styled.div`
-  width: auto;
-  height: auto;
-  box-sizing: border-box;
-  border: none;
-  font-size: 16px;
-`;
-
-const Line = styled.hr`
-  width: "500px";
-  height: "50%";
-  border: 1px solid black;
-`;

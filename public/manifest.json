@@ -1,6 +1,6 @@
 {
-  "short_name": "스치다!",
-  "name": "스치다!를 다운로드 하세요!",
+  "short_name": "React App",
+  "name": "Create React App Sample",
   "icons": [
     {
       "src": "favicon.ico",
@@ -15,12 +15,11 @@
     {
       "src": "logo512.png",
       "type": "image/png",
-      "sizes": "512x512"  
+      "sizes": "512x512"
     }
   ],
-  "start_url": "https://carrot31.shop/",
-  "scope": "." ,
+  "start_url": ".",
   "display": "standalone",
-  "theme_color": "#ddddd",
+  "theme_color": "#000000",
   "background_color": "#ffffff"
 }

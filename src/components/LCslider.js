@@ -37,7 +37,8 @@ function LCslider(props) {
           {props.user}님
           <br />
           방금 개설된 가까운 <br />
-          <Sports>{state}</Sports> 매칭이에요!
+          <Sports>{state}</Sports>
+          매칭이에요!
         </Wellcome>
         <img
           alt="point"

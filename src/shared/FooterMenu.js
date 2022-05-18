@@ -6,7 +6,6 @@ import { Button, Image } from "../elements/Index";
 const FooterMenu = (props) => {
   const history = useHistory();
   const { next, is_check, __onClick } = props;
-  // console.log(props);
 
   if (next) {
     return (
@@ -48,16 +47,14 @@ const FooterMenu = (props) => {
       <MenuBox>
         <Menu
           onClick={() => {
-            // history.push("/main");
-            document.location.href = "/main";
+            history.push("/main");
           }}
         >
           홈
         </Menu>
         <Menu
           onClick={() => {
-            // history.replace("/map");
-            document.location.href = "/map";
+            history.push("/map");
           }}
         >
           내주변

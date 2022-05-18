@@ -5,7 +5,6 @@ import { KakaoMap } from "../components";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { Card } from "../components/index";
-
 const Map = () => {
   const history = useHistory();
   const token = localStorage.getItem("token");

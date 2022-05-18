@@ -4,9 +4,9 @@ import { useHistory } from "react-router-dom";
 import { Grid, Image, Input, Text, GoBack } from "../elements/Index";
 import FooterMenu from "../shared/FooterMenu";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { HiPlus } from "react-icons/hi";
 import { AiFillCalendar } from "react-icons/ai";
-import { MdPlace } from "react-icons/md";
+import { FaPen } from "react-icons/fa";
 import { BiDumbbell } from "react-icons/bi";
 import { actionCreators as mypageActions } from "../redux/modules/mypage";
 import Modal from "../components/Modal/Modal"; //모달 창
@@ -27,7 +27,7 @@ const ReviewWrite = (props) => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `https://seuchidabackend.shop/api/reviewPost/${postId}`,
+      url: `https://seuchidabackend.shop/api//reviewPost/${postId}`,
       headers: {
         "Content-Type": `multipart/form-data;`,
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -41,11 +41,24 @@ const ReviewWrite = (props) => {
       .catch((err) => {
         console.log("mypostone에 실패했습니다.", err);
       });
+    dispatch(mypageActions.myExerciseDB());
   }, []);
 
-  const [preview, setPreview] = useState("");
+  // const GoodList = [
+  //   { id: 0, data: "친절하고 매너가 좋아요" },
+  //   { id: 1, data: "시간약속을 잘 지켜요" },
+  //   { id: 2, data: "다음에도 같이 하고 싶어요" },
+  // ];
+  // const BadList = [
+  //   { id: 0, data: "불친절하고 매너가 좋지 않아요" },
+  //   { id: 1, data: "노쇼했어요:(" },
+  //   { id: 2, data: "다음에 같이 하고 싶지 않아요" },
+  // ];
+
   const [review, setReview] = useState("");
+  const [preview, setPreview] = useState("");
   const [reviewImg, setReviewImg] = useState("");
+  // const [userEvalu, setUserEvalu] = useState();
 
   const selectPreview = (e) => {
     setPreview(window.webkitURL.createObjectURL(e.target.files[0]));
@@ -62,52 +75,64 @@ const ReviewWrite = (props) => {
     setReview(e.target.value);
   };
 
-  //빈값 유효성 검사
-  const alert = (e) => {
-    if (review === "" || reviewImg === "") {
+  const addReview = () => {
+    console.log(postId);
+    if (reviewImg === "" || review === "") {
       setIsOpen(true);
     } else {
-      history.push("/revieweval");
+      const formData = new FormData();
+      formData.append("image", reviewImg);
+      formData.append("content", review);
+      for (var pair of formData.entries()) {
+        console.log(pair[0] + ", " + pair[1]);
+      }
+      dispatch(mypageActions.addReviewDB(formData, postId));
+      history.push("/mypage");
     }
   };
-
-  if (review?.length >= 100) {
-    window.alert("100글자 이내로 작성해주세요:)");
-  }
 
   return (
     <Grid>
       <GoBack text="후기 작성하기" path="/mypage" />
       <Grid height="950px">
         {/* 포스트 내용  */}
-        <Grid height="46px" width="342px" margin="0px 0px 0px 25px">
-          <Text size="18px" bold>
+        <Grid height="46px" width="342px" margin="auto">
+          <Text color="gray" size="16px">
             {postInfo?.postTitle}
           </Text>
         </Grid>
         <Grid border="1px solid gray" height="92px" padding="15px 22px">
           <Text margin="0px" size="14px">
-            <MdPlace color="#787878" /> {postInfo?.spot}
+            <BiDumbbell color="#787878" />
+            {postInfo?.postCategory}
           </Text>
           <Text margin="0px" size="14px">
-            <BiDumbbell color="#787878" /> {postInfo?.postCategory}
+            <AiFillCalendar color="#787878" />
+
+            {postInfo?.datemate}
           </Text>
           <Text margin="0px" size="14px">
-            <AiFillCalendar color="#787878" /> {postInfo?.datemate}
+            <FaPen color="#787878" size="14px" />
+            {postInfo?.memberGender}, {postInfo?.memberAge}
           </Text>
         </Grid>
 
         {/* 사진추가 */}
+        <Image
+          shape="rectangle"
+          size={39}
+          position="relative"
+          alt="profile"
+          src={preview ? preview : "../img/blank_img.png"}
+        />
         <FileUpload>
           <label htmlFor="image">
-            <Image
-              shape="rectangle"
-              size={39}
-              position="relative"
-              alt="profile"
-              // z-index
-              src={preview ? preview : "../img/addimage.png"}
-            />
+            <Grid column>
+              <HiPlus size={60} />
+              <Text size="16px" color="gray" margin="auto">
+                사진 추가하기
+              </Text>
+            </Grid>
           </label>
           <input
             type="file"
@@ -138,28 +163,37 @@ const ReviewWrite = (props) => {
             {review?.length}/100
           </Text>
         </Grid>
+        {/* 
+        <Grid width="342px" margin="auto" height="300px">
+          <Text>함께한 운동메이트는 어땠나요?</Text>
+          <Text size="14px">칭찬하고 싶은 사람을 칭찬해 주세요!</Text>
+          <Grid row bg="green">
+            <Image
+              shape="circle"
+              src="https://t1.daumcdn.net/cfile/tistory/212E043B5815E35605"
+              size={32}
+              margin="3px"
+            />
+            <Image
+              shape="circle"
+              src="https://t1.daumcdn.net/cfile/tistory/212E043B5815E35605"
+              size={32}
+              margin="3px"
+            />
+            <Image
+              shape="circle"
+              src="https://t1.daumcdn.net/cfile/tistory/212E043B5815E35605"
+              size={32}
+              margin="3px"
+            />
+          </Grid>
+        </Grid> */}
       </Grid>
-
-      {/* 다음 버튼 */}
-      <Link
-        to={{
-          state: {
-            review,
-            reviewImg,
-            postInfo,
-          },
-        }}
-      >
-        <FooterMenu next text="다음" state={alert} />
-      </Link>
+      <FooterMenu next text="후기 작성하기" event={addReview} />
 
       {/* 경고창 모달 */}
       <Modal open={isOpen}>
-        <ModalData
-          Alert
-          onClose={() => setIsOpen(false)}
-          text="내용을 모두 입력해 주세요!"
-        />
+        <ModalData Alert onClose={() => setIsOpen(false)} />
       </Modal>
     </Grid>
   );
@@ -169,6 +203,11 @@ export default ReviewWrite;
 
 const FileUpload = styled.div`
   margin: 0px 0px 50px 0px;
+  label {
+    position: absolute;
+    top: 360px;
+    right: 160px;
+  }
   input {
     position: absolute;
     width: 1px;

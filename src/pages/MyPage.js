@@ -90,6 +90,17 @@ const MyPage = () => {
   const myExercise = useSelector((state) => state.mypage.myExercise);
   const len = myReview.length;
 
+  // const Grade = [
+  //   { key: 0, grade: "Iron" },
+  //   { key: 10, grade: "Bronze" },
+  //   { key: 20, grade: "Silver" },
+  //   { key: 30, grade: "Gold" },
+  //   { key: 40, grade: "Platinum" },
+  //   { key: 50, grade: "Diamond" },
+  // ];
+
+  // const levelUp = [10, 20, 30, 40, 50];
+
   if (
     len?.length === 10 ||
     len?.length === 20 ||
@@ -105,9 +116,50 @@ const MyPage = () => {
     <>
       <Grid bg="#0ED88B" height="auto">
         <NameCard />
-        <Grid height="117px" column justify="center">
-          <Grid bg="#FFFFFF" height="12px" width="342px" br="12px">
-            <Seuchin src="./img/seuchin.png" />
+        <Grid height="117px" column margin="auto">
+          <Text
+            size="16px"
+            margin="30px 0px 0px 0px"
+            width="342px"
+            color="#FFFFFF"
+            bold
+          >
+            {len >= 50
+              ? "Purple"
+              : len >= 40
+              ? "Blue"
+              : len >= 30
+              ? "Skyblue"
+              : len >= 20
+              ? "Green"
+              : len >= 10
+              ? "Yellow"
+              : "Orange"}
+            레벨까지
+            {10 -
+              (len >= 60
+                ? len - 60
+                : len >= 50
+                ? len - 50
+                : len >= 40
+                ? len - 40
+                : len >= 30
+                ? len - 30
+                : len >= 20
+                ? len - 20
+                : len >= 10
+                ? len - 10
+                : len)}
+            회
+          </Text>
+
+          <Grid
+            bg="#FFFFFF"
+            height="12px"
+            width="342px"
+            margin="0px 0px 40px 0px"
+            br="12px"
+          >
             <Highlight
               width={
                 len >= 40
@@ -121,34 +173,23 @@ const MyPage = () => {
                   : (len / 10) * 100 + "%"
               }
             />
-            <Text size="16px" width="342px" color="#FFFFFF" bold>
-              {len >= 50
-                ? "Purple"
-                : len >= 40
-                ? "Blue"
+            <Text
+              size="16px"
+              margin="0px 0px 0px 310px"
+              width="342px"
+              color="#FFFFFF"
+              bold
+            >
+              {len >= 40
+                ? len - 40
                 : len >= 30
-                ? "Skyblue"
+                ? len - 30
                 : len >= 20
-                ? "Green"
+                ? len - 20
                 : len >= 10
-                ? "Yellow"
-                : "Orange"}
-              레벨까지
-              {10 -
-                (len >= 60
-                  ? len - 60
-                  : len >= 50
-                  ? len - 50
-                  : len >= 40
-                  ? len - 40
-                  : len >= 30
-                  ? len - 30
-                  : len >= 20
-                  ? len - 20
-                  : len >= 10
-                  ? len - 10
-                  : len)}
-              포인트
+                ? len - 10
+                : len}
+              /10
             </Text>
           </Grid>
         </Grid>
@@ -198,14 +239,6 @@ const MyPage = () => {
 };
 
 export default MyPage;
-
-const Seuchin = styled.img`
-  width: 79px;
-  height: 93px;
-  position: absolute;
-  top: 265px;
-  left: 50px;
-`;
 
 const Highlight = styled.div`
   background: #ffe926;
