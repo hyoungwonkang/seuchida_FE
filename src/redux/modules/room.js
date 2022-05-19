@@ -29,14 +29,15 @@ const initialState = {
 //middleware
 
 const joinRoomDB = (postId) => {
+  
   return async function (dispatch, getState) {
     try {
       await axios({
         method: "post",
         url: `https://seuchidabackend.shop/api/postPush/${postId}`,
-        data: JSON.stringify({
-          postId: postId,
-        }),
+        // data: JSON.stringify({
+        //   postId: postId,
+        // }),
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -87,6 +88,28 @@ const getchatMemberDB = (roomId) => {
   };
 };
 
+
+
+const roomDoneDB = (roomId) => {
+  return async function (dispatch, getState) {
+    try {
+      await axios({
+        method: "post",
+        url: `https://seuchidabackend.shop/api//${roomId}`,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }).then((response) => {
+        console.log(response.data);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+
+
 //reducer
 export default handleActions(
   {
@@ -104,6 +127,7 @@ const actionCreators = {
   getchatRoomDB,
   chatRoom,
   getchatMemberDB,
+  roomDoneDB,
 };
 
 export { actionCreators };

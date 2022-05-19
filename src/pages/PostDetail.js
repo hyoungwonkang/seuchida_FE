@@ -38,6 +38,8 @@ const PostDetail = (props) => {
     history.push("/main");
   };
 
+ 
+
   const [state, setState] = React.useState({
     center: {
       lat: 33.450701,
@@ -47,8 +49,12 @@ const PostDetail = (props) => {
     isLoading: true,
   });
 
-  function joinRoom() {
+ const joinRoom= () =>{
     dispatch(roomActions.joinRoomDB(params.postId));
+  }
+  const roomDone = () =>{
+    dispatch(roomActions.roomDoneDB(params.postId))
+
   }
 
   React.useEffect(() => {
@@ -96,10 +102,9 @@ const PostDetail = (props) => {
 
   if (!post) return;
   const userCheck = post?.nowMember?.filter((u) =>
-    u.memberId.includes(user.userId)
+    u.memberId?.includes(user.userId)
   );
 
-  console.log(userCheck);
 
   return (
     <>
@@ -108,6 +113,8 @@ const PostDetail = (props) => {
 
         {/*  삭제버튼  */}
         {isMe ? (
+          <>
+          <EndBtn onClick={roomDone}>모집완료</EndBtn>
           <Button
             is_delete
             _onClick={() => {
@@ -116,6 +123,7 @@ const PostDetail = (props) => {
           >
             삭제
           </Button>
+       </>
         ) : (
           ""
         )}
@@ -306,3 +314,14 @@ const LiveBox = styled.div`
 const DetailMap = styled.div`
   padding: 0px 24px 130px 24px;
 `;
+
+const EndBtn = styled.div`
+background-color: #0ED88B;
+display: flex;
+align-items: center;
+color: white;
+padding: 4px 12px;
+margin: 0px;
+border-radius: 5px;
+height: 22px;
+`

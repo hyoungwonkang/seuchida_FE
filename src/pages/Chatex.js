@@ -25,6 +25,7 @@ function Chatex(props) {
   const [message, setMessage] = useState("");
   const [chatlist, setChatlist] = useState([]);
   const [chat, setChat] = useState([]);
+  const [nowM, setnowM] = useState(1)
   const [comModalOn, setcomModalOn] = useState(false);
   const openModal =() =>{
     setcomModalOn(true)
@@ -61,6 +62,7 @@ function Chatex(props) {
     socket.on("broadcast", (data) => {
       setChat((chat) => chat.concat(data));
     });
+    setnowM(roomInfo?.nowMember?.length)
   }, []);
  
 
@@ -110,7 +112,7 @@ function Chatex(props) {
             {roomInfo?.postTitle}
           </div>
           <div style={{ margin: "3px 0px 0px 15px", color: "#C4C4C4" }}>
-            {roomInfo?.nowMember?.length}/{roomInfo?.maxMember}
+            {nowM}/{roomInfo?.maxMember}
           </div> 
           </RowBox>
        
@@ -177,7 +179,7 @@ function Chatex(props) {
             onChange={(e) => setMessage(e.target.value)}
           />
 
-          <Send onClick={sendMessage}>전송</Send>
+          <Send onClick={sendMessage}><Image src="./img/send.png"/></Send>
         </div>
       </Chatting>
     </div>
