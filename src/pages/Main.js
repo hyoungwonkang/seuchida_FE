@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { history } from "../redux/configStore";
+import { HiPlus } from "react-icons/hi";
 
 const Main = () => {
   const catepost = useSelector((state) => state.post.list.caPost);
@@ -15,6 +16,8 @@ const Main = () => {
   const post_list = useSelector((state) => state.post.list.nearPost);
   const review = useSelector((state) => state.post.list.filterRe);
   const user = useSelector((state) => state.user);
+  const post = useSelector((state) => state.post.list);
+  console.log(post);
   const dispatch = useDispatch();
 
   const [state, setState] = React.useState({
@@ -57,6 +60,7 @@ const Main = () => {
     }
     dispatch(userActions.isLoginDB());
     dispatch(postActions.getMainDB());
+    // dispatch(postActions.getPostlistDB());
   }, []);
 
   return (
@@ -97,7 +101,6 @@ const Main = () => {
         <ListBox>
           <CardBox>
             {post_list?.map((p, l) => {
-              console.log(p);
               return (
                 <Card
                   MainCard
@@ -118,7 +121,7 @@ const Main = () => {
             history.push("/postcategory");
           }}
         >
-          +
+          <HiPlus color="white" padding="10px" />
         </Button>
         {/* 푸터 */}
       </Container>

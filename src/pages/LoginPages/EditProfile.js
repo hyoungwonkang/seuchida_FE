@@ -11,6 +11,7 @@ import ModalData from "../../components/Modal/ModalData";
 import { AiFillPlusCircle } from "react-icons/ai";
 
 const EditProfile = (props) => {
+  console.log(props);
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -105,7 +106,7 @@ const EditProfile = (props) => {
 
   return (
     <Grid>
-      <GoBack text="프로필 수정" path="/signuploca" />
+      <GoBack text="프로필 수정" />
 
       <Grid column height="650px">
         <Grid height="auto" column margin="30px 0px">

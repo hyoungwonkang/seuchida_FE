@@ -77,9 +77,8 @@ const GridBox = styled.div`
   width: 390px;
   width: ${(props) => props.width};
   height: ${(props) => props.height};
-  box-sizing: border-box; //총 넓이에 padding과 border를 포함하는가? //yes
+  box-sizing: border-box;
   box-shadow: ${(props) => props.shadow};
-  ${(props) => (props.padding ? `padding: ${props.padding};` : "")}
   ${(props) => (props.padding ? `padding: ${props.padding};` : "")}
   ${(props) => (props.margin ? `margin: ${props.margin};` : "")}
   ${(props) => (props.bg ? `background-color: ${props.bg};` : "")}

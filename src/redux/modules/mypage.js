@@ -148,31 +148,6 @@ const deletePostDB = (postId) => {
   };
 };
 
-//회원 신고(리덕스 확인 필요)
-// const addReportDB = (rUserId, report) => {
-//   console.log(rUserId, report);
-//   return async (dispatch, getState, { history }) => {
-//     await axios({
-//       method: "post",
-//       url: `https://seuchidabackend.shop/api/report`,
-//       data: JSON.stringify({
-//         userId: rUserId,
-//         content: report,
-//       }),
-//       headers: {
-//         Authorization: `Bearer ${localStorage.getItem("token")}`,
-//         "Content-Type": `application/json`,
-//       },
-//     })
-//       .then((res) => {
-//         console.log("addReport에 성공했습니다.", res);
-//       })
-//       .catch((err) => {
-//         console.log("addReport에 실패했습니다.", err);
-//       });
-//   };
-// };
-
 //회원 탈퇴
 const signDownDB = () => {
   return async (dispatch, getState, { history }) => {
@@ -213,11 +188,6 @@ export default handleActions(
         draft.myPost.push(action.payload.review);
         // console.log(action.payload.userInfo);
       }),
-    // [ADD_REPORT]: (state, action) =>
-    //   produce(state, (draft) => {
-    //     draft.myReport.push(action.payload.report);
-    //     // console.log(action.payload.userInfo);
-    //   }),
   },
   initialState
 );
@@ -229,7 +199,6 @@ const actionCreators = {
   myReviewDB,
   addReviewDB,
   deletePostDB,
-  // addReportDB,
   signDownDB,
 };
 export { actionCreators };

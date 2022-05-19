@@ -81,53 +81,53 @@ const ModalData = (props) => {
     );
   }
 
-  if (Alert2) {
-    return (
-      <Grid width="240px" height="156px" column padding="17px">
-        <Grid column height="44px">
-          <Text margin="20px 0px 0px 0px">앗!</Text>
-          <Text margin="0px">{text}</Text>
-        </Grid>
-        <hr
-          style={{
-            width: "240px",
-            borderTop: "1px solid gray",
-            borderBottom: "none",
-            borderLeft: "none",
-            borderRight: "none",
-            margin: "30px 0px 0px 0px",
-          }}
-        />
-        <Button is_close _onClick={onClose}>
-          확인
-        </Button>
-      </Grid>
-    );
-  }
+  // if (Alert2) {
+  //   return (
+  //     <Grid width="240px" height="156px" column padding="17px">
+  //       <Grid column height="44px">
+  //         <Text margin="20px 0px 0px 0px">앗!</Text>
+  //         <Text margin="0px">{text}</Text>
+  //       </Grid>
+  //       <hr
+  //         style={{
+  //           width: "240px",
+  //           borderTop: "1px solid gray",
+  //           borderBottom: "none",
+  //           borderLeft: "none",
+  //           borderRight: "none",
+  //           margin: "30px 0px 0px 0px",
+  //         }}
+  //       />
+  //       <Button is_close _onClick={onClose}>
+  //         확인
+  //       </Button>
+  //     </Grid>
+  //   );
+  // }
 
-  if (Alert3) {
-    return (
-      <Grid width="240px" height="156px" column padding="17px">
-        <Grid column height="44px">
-          <Text margin="20px 0px 0px 0px">앗!</Text>
-          <Text margin="0px">{text}</Text>
-        </Grid>
-        <hr
-          style={{
-            width: "240px",
-            borderTop: "1px solid gray",
-            borderBottom: "none",
-            borderLeft: "none",
-            borderRight: "none",
-            margin: "30px 0px 0px 0px",
-          }}
-        />
-        <Button is_close _onClick={onClose}>
-          확인
-        </Button>
-      </Grid>
-    );
-  }
+  // if (Alert3) {
+  //   return (
+  //     <Grid width="240px" height="156px" column padding="17px">
+  //       <Grid column height="44px">
+  //         <Text margin="20px 0px 0px 0px">앗!</Text>
+  //         <Text margin="0px">{text}</Text>
+  //       </Grid>
+  //       <hr
+  //         style={{
+  //           width: "240px",
+  //           borderTop: "1px solid gray",
+  //           borderBottom: "none",
+  //           borderLeft: "none",
+  //           borderRight: "none",
+  //           margin: "30px 0px 0px 0px",
+  //         }}
+  //       />
+  //       <Button is_close _onClick={onClose}>
+  //         확인
+  //       </Button>
+  //     </Grid>
+  //   );
+  // }
 
   //참여자 평가 창
   if (Evaluate) {

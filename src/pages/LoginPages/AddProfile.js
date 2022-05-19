@@ -9,6 +9,7 @@ import ModalData from "../../components/Modal/ModalData";
 import { AiFillPlusCircle } from "react-icons/ai";
 
 const AddProfile = (props) => {
+  console.log(props);
   const history = useHistory();
 
   //SignupLoca에서 받은 값
@@ -88,7 +89,7 @@ const AddProfile = (props) => {
 
   return (
     <Grid stop>
-      <GoBack text="프로필 작성" path="/signuploca" />
+      <GoBack text="프로필 작성" />
 
       <Grid column height="650px">
         <Grid height="auto" column margin="30px 0px">
@@ -145,7 +146,7 @@ const AddProfile = (props) => {
                   placeholder: "나이",
                 }}
                 onChange={selectAge}
-                pattern="/[^ㄱ-힣]/g"
+                pattern="/[^ㄱ-ㅎ가-힣]/g"
                 value={age || ""}
               />
             </div>

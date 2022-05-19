@@ -101,7 +101,7 @@ const PostDetail = (props) => {
 
   if (!post) return;
   const userCheck = post?.nowMember?.filter((u) =>
-    u.memberId.includes(user.userId)
+    u.memberId?.includes(user.userId)
   );
 
   console.log(userCheck);

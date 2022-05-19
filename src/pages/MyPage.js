@@ -99,6 +99,7 @@ const MyPage = () => {
   ) {
     window.alert("레벨업 했습니다!");
   }
+
   return (
     <>
       <Grid bg="#0ED88B" height="auto">

@@ -21,7 +21,7 @@ const EndCard = (props) => {
 
       <Text size="16px">{props.postDesc}</Text>
       <Grid row height="auto" padding="5px">
-        {props.nowMember.map((v, i) => {
+        {props.nowMember?.map((v, i) => {
           return (
             <div key={v + i}>
               <Image shape="circle" src={v.memberImg} size={32} margin="3px" />

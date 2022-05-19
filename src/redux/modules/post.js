@@ -1,20 +1,18 @@
-import { createAction, handleActions } from 'redux-actions';
-import { produce } from 'immer';
-import axios from 'axios';
+import { createAction, handleActions } from "redux-actions";
+import { produce } from "immer";
+import axios from "axios";
 
-const token = localStorage.getItem('token');
+const token = localStorage.getItem("token");
 
 //Action
-const SET_POST = 'SET_POST';
-const SET_REVIEW = 'SET_REVIEW';
-const ADD_POST = 'ADD_POST';
-const DELETE_POST = 'DELETE_POST';
+const SET_POST = "SET_POST";
+const SET_REVIEW = "SET_REVIEW";
+const ADD_POST = "ADD_POST";
 
 //Action Creators
 const setReview = createAction(SET_REVIEW, (review_list) => ({ review_list }));
 const setPost = createAction(SET_POST, (post_list) => ({ post_list }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
-const deletePost = createAction(DELETE_POST, (post) => ({ post }));
 
 //initialState
 const initialState = {
@@ -43,8 +41,8 @@ const addPostDB = (
 ) => {
   return async function (dispatch, getState, { history }) {
     await axios({
-      method: 'post',
-      url: 'https://seuchidabackend.shop/api/postWrite',
+      method: "post",
+      url: "https://seuchidabackend.shop/api/postWrite",
       data: JSON.stringify({
         address: address,
         datemate: datemate,
@@ -59,19 +57,19 @@ const addPostDB = (
         spot: spot,
       }),
       headers: {
-        'Content-Type': `application/json`,
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        "Content-Type": `application/json`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     })
       .then((res) => {
         console.log(res);
 
         dispatch(addPost());
-        console.log('게시물 등록 성공');
-        history.push('/postdone');
+        console.log("게시물 등록 성공");
+        history.push("/postdone");
       })
       .catch((err) => {
-        console.log('게시물 등록 실패', err);
+        console.log("게시물 등록 실패", err);
       });
   };
 };
@@ -80,10 +78,10 @@ const getMainDB = () => {
   return async function (dispatch, getState) {
     try {
       await axios({
-        method: 'get',
+        method: "get",
         url: `https://seuchidabackend.shop/api/postList`,
         headers: {
-          authorization: `Bearer ${localStorage.getItem('token')}`,
+          authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }).then((response) => {
         console.log(response);
@@ -99,7 +97,7 @@ const getPostlistDB = () => {
   return async function (dispatch, getState) {
     try {
       await axios({
-        method: 'get',
+        method: "get",
         url: `https://seuchidabackend.shop/api/nearPostList`,
         headers: {
           authorization: `Bearer ${token}`,
@@ -118,7 +116,7 @@ const getReviewlistDB = () => {
   return async function (dispatch, getState) {
     try {
       await axios({
-        method: 'get',
+        method: "get",
         url: `https://seuchidabackend.shop/api/review`,
         headers: {
           authorization: `Bearer ${token}`,
@@ -147,13 +145,6 @@ export default handleActions(
       produce(state, (draft) => {
         draft.list = action.payload.post;
       }),
-    [DELETE_POST]: (state, action) =>
-      produce(state, (draft) => {
-        let list = draft.list.posts.filter(
-          (p) => p.postId !== action.payload.post
-        );
-        draft.list = [...list];
-      }),
   },
 
   initialState
@@ -164,11 +155,8 @@ const actionCreators = {
   getMainDB,
   getPostlistDB,
   getReviewlistDB,
-
   addPost,
   addPostDB,
-  deletePost,
-  // deletePostDB,
 };
 
 export { actionCreators };
