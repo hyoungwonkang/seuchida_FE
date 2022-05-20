@@ -122,7 +122,7 @@ const Btn = styled.div`
   align-items: center;
   margin: auto;
   background-color: white;
-  min-width: 370px;
   box-shadow: 0px -2px 4px 2.5px #ddd;
+  min-width: 390px;
   z-index: 5;
 `;
