@@ -34,7 +34,7 @@ const ReviewWrite = (props) => {
       },
     })
       .then((res) => {
-        // console.log(res.data.post);
+  
         const _postInfo = res.data.post;
         setPostInfo(_postInfo);
       })

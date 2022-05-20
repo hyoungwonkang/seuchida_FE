@@ -4,17 +4,7 @@ import styled from "styled-components";
 import ReviewWrite from "../../pages/ReviewWrite";
 
 const ModalData = (props) => {
-  const {
-    Members,
-    Alert,
-    Alert2,
-    Alert3,
-    Check,
-    text,
-    onClose,
-    onCheck,
-    Evaluate,
-  } = props;
+  const { Members, Alert, Check, text, onClose, onCheck, Evaluate } = props;
 
   //재확인 창
   if (Check) {
@@ -56,54 +46,6 @@ const ModalData = (props) => {
 
   //alert 창
   if (Alert) {
-    return (
-      <Grid width="240px" height="156px" column padding="17px">
-        <Grid column height="44px">
-          <Text margin="20px 0px 0px 0px">앗!</Text>
-          <Text margin="0px">{text}</Text>
-        </Grid>
-        <hr
-          style={{
-            width: "240px",
-            borderTop: "1px solid gray",
-            borderBottom: "none",
-            borderLeft: "none",
-            borderRight: "none",
-            margin: "30px 0px 0px 0px",
-          }}
-        />
-        <Button is_close _onClick={onClose}>
-          확인
-        </Button>
-      </Grid>
-    );
-  }
-
-  if (Alert2) {
-    return (
-      <Grid width="240px" height="156px" column padding="17px">
-        <Grid column height="44px">
-          <Text margin="20px 0px 0px 0px">앗!</Text>
-          <Text margin="0px">{text}</Text>
-        </Grid>
-        <hr
-          style={{
-            width: "240px",
-            borderTop: "1px solid gray",
-            borderBottom: "none",
-            borderLeft: "none",
-            borderRight: "none",
-            margin: "30px 0px 0px 0px",
-          }}
-        />
-        <Button is_close _onClick={onClose}>
-          확인
-        </Button>
-      </Grid>
-    );
-  }
-
-  if (Alert3) {
     return (
       <Grid width="240px" height="156px" column padding="17px">
         <Grid column height="44px">

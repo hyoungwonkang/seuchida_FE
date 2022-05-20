@@ -12,11 +12,13 @@ import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 import FooterMenu from "../shared/FooterMenu";
 import GoBack from "../elements/GoBack";
+import { AiOutlineConsoleSql } from "react-icons/ai";
 
 const PostDetail = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.userInfo);
+  const userId = useSelector((state) => state.user.userInfo.userId);
   const [isOpen, setIsOpen] = React.useState(false);
   const [isOpen2, setIsOpen2] = React.useState(false);
   const [isOpen3, setIsOpen3] = React.useState(false);
@@ -25,23 +27,17 @@ const PostDetail = (props) => {
   const [post, setPost] = React.useState(null);
   const token = localStorage.getItem("token");
   const params = useParams();
-
-  const userId = useSelector((state) => state.user.userInfo.userId);
   const postOwner = post?.userId;
-
   const isMe = userId === postOwner ? true : false;
   const postId = params.postId; //게시물 번호
-
+  
   //게시물 삭제
   const deleteone = (e) => {
     dispatch(mypageActions.deletePostDB(postId));
     history.push("/main");
   };
 
-  //채팅방 이동
-  const movechat = (e) => {
-    history.push("/chatex");
-  };
+
 
   const [state, setState] = React.useState({
     center: {
@@ -52,8 +48,12 @@ const PostDetail = (props) => {
     isLoading: true,
   });
 
-  function joinRoom() {
-    dispatch(roomActions.joinRoomDB(params.postId));
+ const joinRoom= () =>{
+    dispatch(roomActions.joinRoomDB(post.roomId,params.postId));
+  }
+  const roomDone = () =>{
+    dispatch(roomActions.roomDoneDB(params.postId))
+
   }
 
   React.useEffect(() => {
@@ -101,10 +101,9 @@ const PostDetail = (props) => {
 
   if (!post) return;
   const userCheck = post?.nowMember?.filter((u) =>
-    u.memberId.includes(user.userId)
+    u.memberId?.includes(user.userId)
   );
 
-  console.log(userCheck);
 
   return (
     <>
@@ -113,6 +112,8 @@ const PostDetail = (props) => {
 
         {/*  삭제버튼  */}
         {isMe ? (
+          <>
+          <EndBtn onClick={roomDone}>모집완료</EndBtn>
           <Button
             is_delete
             _onClick={() => {
@@ -121,6 +122,7 @@ const PostDetail = (props) => {
           >
             삭제
           </Button>
+       </>
         ) : (
           ""
         )}
@@ -237,7 +239,6 @@ const PostDetail = (props) => {
           Check
           text="모임에 참여하시겠어요?"
           onClose={() => setIsOpen3(false)}
-          onCheck={() => movechat()}
         />
       </Modal>
     </>
@@ -312,3 +313,14 @@ const LiveBox = styled.div`
 const DetailMap = styled.div`
   padding: 0px 24px 130px 24px;
 `;
+
+const EndBtn = styled.div`
+background-color: #0ED88B;
+display: flex;
+align-items: center;
+color: white;
+padding: 4px 12px;
+margin: 0px;
+border-radius: 5px;
+height: 22px;
+`
