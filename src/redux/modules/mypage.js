@@ -115,9 +115,7 @@ const addReviewDB = (formData, postId) => {
       },
     })
       .then((res) => {
-        console.log(res);
-        const review = res.data;
-        dispatch(addReview(review));
+        console.log("addReview에 성공했습니다.", res);
       })
       .catch((err) => {
         console.log("addReview에 실패했습니다.", err);
@@ -181,11 +179,6 @@ export default handleActions(
     [MY_REVIEW]: (state, action) =>
       produce(state, (draft) => {
         draft.myReview = action.payload.myReview;
-      }),
-    [ADD_REVIEW]: (state, action) =>
-      produce(state, (draft) => {
-        draft.myPost.push(action.payload.review);
-        // console.log(action.payload.userInfo);
       }),
   },
   initialState

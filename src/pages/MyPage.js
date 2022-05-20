@@ -56,7 +56,8 @@ const NameCard = () => {
       {/* 유저 레벨 & 닉네임 */}
       <Grid row justify="center">
         {level.map((v, i) => {
-          if (v.level == userInfo.level) return v.image;
+          if (v.level == userInfo.level)
+            return <div key={v + i}>{v.image}</div>;
         })}
         <Text size="24px" margin="0px" color="#323232" bold>
           {userInfo.nickName}
@@ -72,6 +73,13 @@ const NameCard = () => {
       <Text width="302px" color="#505050" margin="0px 0px 45px 0px">
         {userInfo.userContent}
       </Text>
+      <button
+        onClick={() => {
+          dispatch(mypageActions.signDownDB());
+        }}
+      >
+        탈퇴
+      </button>
     </Grid>
   );
 };
@@ -84,11 +92,13 @@ const MyPage = () => {
   const userInfo = useSelector((state) => state.user.userInfo);
   const point = JSON.stringify(userInfo?.userEvalue);
 
+  //모달창 state
   const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen2, setIsOpen2] = React.useState(false);
 
   const singdown = () => {
     dispatch(mypageActions.signDownDB());
-    history.push("/");
+    // history.push("/");
   };
 
   const level = [
@@ -140,7 +150,7 @@ const MyPage = () => {
           <RiBarChartFill color="#FF6B52" />
           운동 후기 남기고 스친 레벨 올리자!
         </Text>
-        {myExercise.length != 0 ? (
+        {myExercise.length !== 0 ? (
           <ECslider myExercise={myExercise} />
         ) : (
           <Grid
@@ -167,34 +177,43 @@ const MyPage = () => {
       </Grid>
 
       {/* 내가 만든 목록 */}
-      <Grid row bg="white" height="62px" margin="0px" border="1px solid #ddd">
-        <Text size="16px" margin="0px 0px 0px 24px" bold>
+      <Grid
+        row
+        bg="white"
+        height="62px"
+        margin="0px"
+        padding="0px 20px"
+        border="1px solid #ddd"
+        justify="space-between"
+        _onClick={() => {
+          history.push("/mypost");
+        }}
+      >
+        <Text size="16px" bold>
           내가 만든 모임
         </Text>
-        <IoIosArrowForward
-          size={30}
-          style={{ margin: "0px 0px 0px 220px" }}
-          onClick={() => {
-            history.push("/mypost");
-          }}
-        />
+        <IoIosArrowForward size={30} />
       </Grid>
-      <Grid row bg="white" height="62px" margin="0px" border="1px solid #ddd">
-        <Text size="16px" margin="0px 0px 0px 24px" bold>
+      <Grid
+        row
+        bg="white"
+        height="62px"
+        padding="0px 20px"
+        border="1px solid #ddd"
+        justify="space-between"
+        _onClick={() => {
+          history.push("/myreview");
+        }}
+      >
+        <Text size="16px" bold>
           내가 쓴 후기
         </Text>
-        <IoIosArrowForward
-          size={30}
-          style={{ margin: "0px 0px 0px 233px" }}
-          onClick={() => {
-            history.push("/myreview");
-          }}
-        />
+        <IoIosArrowForward size={30} />
       </Grid>
 
-      <Grid padding="50px 0px 100px 0px" column>
+      <Grid padding="100px 20px 120px 20px" row justify="space-between">
         <Button
-          wd="342px"
+          wd="171px"
           bg="#fff"
           br="1px solid #C4C4C4"
           color=" #C4C4C4"
@@ -203,6 +222,17 @@ const MyPage = () => {
           }}
         >
           탈퇴하기
+        </Button>
+        <Button
+          wd="171px"
+          bg="#fff"
+          br="1px solid #C4C4C4"
+          color=" #C4C4C4"
+          _onClick={() => {
+            setIsOpen2(true);
+          }}
+        >
+          로그아웃
         </Button>
       </Grid>
 
@@ -213,6 +243,15 @@ const MyPage = () => {
           yes={() => singdown()}
           onClose={() => setIsOpen(false)}
           text="정말로 탈퇴하시겠습니까?"
+        />
+      </Modal>
+
+      {/* 로그아웃 경고창 모달 */}
+      <Modal open={isOpen2}>
+        <ModalData
+          Check
+          onClose={() => setIsOpen2(false)}
+          text="로그아웃 하시겠습니까?"
         />
       </Modal>
 

@@ -6,7 +6,6 @@ import GoBack from "../elements/GoBack";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { useHistory } from "react-router-dom";
-import axios from "axios";
 
 const PostList = ({ list, params }) => {
   const dispatch = useDispatch();

@@ -23,6 +23,7 @@ const PostDetail = (props) => {
   const [isOpen2, setIsOpen2] = React.useState(false);
   const [isOpen3, setIsOpen3] = React.useState(false);
   const [isOpen4, setIsOpen4] = React.useState(false);
+  const [isOpen5, setIsOpen5] = React.useState(false);
   const [modalData, setModalData] = React.useState(null);
   const [post, setPost] = React.useState(null);
   const token = localStorage.getItem("token");
@@ -33,11 +34,11 @@ const PostDetail = (props) => {
   //강퇴당한유저 킥 데이터가 이상하게 배열로 2겹임 ..
   const banUser = post?.banUserList[0]?.filter((u) => u.includes([userId]));
 
-  const postId = post?.roomId; //게시물 번호(룸 아이디)
+  const postId = params.postId;
 
   //게시물 삭제
   const deleteone = (e) => {
-    dispatch(mypageActions.deletePostDB(postId));
+    dispatch(mypageActions.deletePostDB(post?.roomId));
     history.push("/main");
   };
 
@@ -145,7 +146,15 @@ const PostDetail = (props) => {
       <Container>
         <ProfileBox>
           {!isMe && userCheck.length === 1 && (
-            <button onClick={joinCancle}> 참여취소</button>
+            <button
+              onClick={() => {
+                joinCancle();
+                setIsOpen5(true);
+              }}
+            >
+              {" "}
+              참여취소
+            </button>
           )}
           <Image
             margin="0px 15px 0px 0px"
@@ -258,6 +267,16 @@ const PostDetail = (props) => {
           text="모임에 참여하시겠어요?"
           onClose={() => setIsOpen4(false)}
           join={() => joinRoom()}
+        />
+      </Modal>
+
+      {/* 참여취소 모달 */}
+      <Modal open={isOpen5}>
+        <ModalData
+          Check
+          text="참여 취소하시겠어요?"
+          onClose={() => setIsOpen5(false)}
+          out={() => joinCancle()}
         />
       </Modal>
     </>

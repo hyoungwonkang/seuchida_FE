@@ -22,10 +22,17 @@ const AddProfile = (props) => {
   //입력값 state
   const [preview, setPreview] = useState("");
   const [profile, setProfile] = useState("");
-  const [nickName, setNickName] = useState("");
-  const [gender, setGender] = useState("");
-  const [age, setAge] = useState("");
-  const [content, setContent] = useState("");
+  const [nickName, setNickName] = useState(localStorage.getItem("nickName"));
+  const [gender, setGender] = useState(localStorage.getItem("gender"));
+  const [age, setAge] = useState(localStorage.getItem("age"));
+  const [content, setContent] = useState(localStorage.getItem("content"));
+
+  //로컬 값 저장
+  // localStorage.setItem("profile", profile);
+  localStorage.setItem("nickName", nickName);
+  localStorage.setItem("gender", gender);
+  localStorage.setItem("age", age);
+  localStorage.setItem("content", content);
 
   const selectPreview = (e) => {
     setPreview(window.webkitURL.createObjectURL(e.target.files[0]));
@@ -89,7 +96,7 @@ const AddProfile = (props) => {
 
   return (
     <Grid stop>
-      <GoBack text="프로필 작성" />
+      <GoBack text="프로필 작성" path="/signuploca" />
 
       <Grid column height="650px">
         <Grid height="auto" column margin="30px 0px">
@@ -173,12 +180,12 @@ const AddProfile = (props) => {
           <Link
             to={{
               state: {
-                address,
+                // address,
                 profile,
-                nickName,
-                gender,
-                age,
-                content,
+                // nickName,
+                // gender,
+                // age,
+                // content,
               },
             }}
           >

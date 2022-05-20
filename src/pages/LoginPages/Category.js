@@ -5,6 +5,8 @@ import { actionCreators as userActions } from "../../redux/modules/user";
 import { Grid, Text, GoBack } from "../../elements/Index";
 import FooterMenu from "../../shared/FooterMenu";
 import { useHistory } from "react-router-dom";
+import Modal from "../../components/Modal/Modal"; //모달 창
+import ModalData from "../../components/Modal/ModalData";
 
 const Category = (props) => {
   // console.log(props);
@@ -12,13 +14,14 @@ const Category = (props) => {
   const dispatch = useDispatch();
 
   //AddProfile에서 받은 값
-  const get = props.location.state;
-  const address = get?.address;
-  const profile = get?.profile;
-  const nickName = get?.nickName;
-  const gender = get?.gender;
-  const age = get?.age;
-  const content = get?.content;
+  // const get = props.location.state;
+  const address = localStorage.getItem("address");
+  //localStorage.setItem("profile", profile);
+  const profile = props.location.state.profile;
+  const nickName = localStorage.getItem("nickName");
+  const gender = localStorage.getItem("gender");
+  const age = localStorage.getItem("age");
+  const content = localStorage.getItem("content");
 
   //카테고리 리스트
   const CategoryList = [
@@ -65,6 +68,9 @@ const Category = (props) => {
     setUserInterest(userInfo?.userInterest);
   }, [userInfo]);
 
+  //모달 오픈 state
+  const [isOpen, setIsOpen] = React.useState(false);
+
   //유저의 관심 태그 값
   const [userInterest, setUserInterest] = useState([]);
 
@@ -74,7 +80,7 @@ const Category = (props) => {
       if (userInterest?.length < 3) {
         setUserInterest([...userInterest, item]);
       } else {
-        window.alert("최대 3개까지 선택 가능합니다:)");
+        setIsOpen(true);
       }
     } else if (!checked) {
       setUserInterest(userInterest?.filter((el) => el !== item));
@@ -124,7 +130,7 @@ const Category = (props) => {
 
   return (
     <Grid stop>
-      <GoBack text="상세 관심사 선택" />
+      <GoBack text="상세 관심사 선택" path="/addprofile" />
       <Text margin="0px 0px 0px 30px" size="24px" bold>
         관심있는 <br />
         운동을 알려주세요
@@ -165,6 +171,15 @@ const Category = (props) => {
           ) : (
             <FooterMenu next path="/done" text="다음" event={addProfile} />
           )}
+
+          {/* 경고창 모달 */}
+          <Modal open={isOpen}>
+            <ModalData
+              Alert
+              onClose={() => setIsOpen(false)}
+              text="최대 3개까지 선택 가능합니다."
+            />
+          </Modal>
         </CateBox>
       </Grid>
     </Grid>

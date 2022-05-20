@@ -33,7 +33,7 @@ const Grid = (props) => {
     padding: padding,
     bg: bg,
     center: center,
-    _onClick: _onClick,
+    onClick: _onClick,
     height: height,
     border: border,
     border_bottom,

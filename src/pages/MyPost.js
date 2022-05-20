@@ -61,7 +61,7 @@ const MyPost = () => {
     <Grid>
       <GoBack text="내가 만든 모임" path="/mypage" />
 
-      <Grid>
+      <Grid padding="0px 0px 80px 0px">
         {myPostList.map((p, i) => {
           return (
             <Card

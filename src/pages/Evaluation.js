@@ -36,7 +36,7 @@ const Evaluation = (props) => {
   //평가할 사람들 목록(나 제외)
   const _postInfo = postInfo.nowMember.filter((v) => v !== myId);
   //다른 사람 id
-  const otherId = postInfo?.nowMember?.map((v, i) => v);
+  const otherId = postInfo?.nowMember?.map((v, i) => v.memberId);
 
   //좋아요||싫어요
   // const [checked, setChecked] = useState(false);
@@ -162,7 +162,7 @@ const Evaluation = (props) => {
                           name={i}
                           value={1}
                           onChange={(e) => {
-                            setEvalue(e.target.value);
+                            setEvalue([...evalue, e.target.value]);
                           }}
                         />
                         <label>
@@ -176,7 +176,7 @@ const Evaluation = (props) => {
                           name={i}
                           value={-1}
                           onChange={(e) => {
-                            setEvalue(e.target.value);
+                            setEvalue([...evalue, e.target.value]);
                           }}
                         />
                         <label>

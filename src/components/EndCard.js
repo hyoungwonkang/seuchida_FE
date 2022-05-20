@@ -14,33 +14,53 @@ const EndCard = (props) => {
       width="342px"
       height="168px"
       br="12px"
-      padding="0px 10px"
+      padding="10px 20px"
       bg="white"
     >
-      <Text size="16px">* 모집완료 {props?.postTitle}</Text>
+      <Grid row height="auto">
+        <Text size="16px" bold color="#FF6B52" margin="0px 10px 0px 0px">
+          · {props?.status === true ? "모집중" : "모집완료"}
+        </Text>
+        <Text size="16px" bold>
+          {props?.postTitle}
+        </Text>
+      </Grid>
 
-      <Text size="16px">{props?.postDesc}</Text>
-      <Grid row height="auto" padding="5px">
-        {props.nowMember?.map((v, i) => {
-          return (
-            <div key={v + i}>
-              <Image shape="circle" src={v.memberImg} size={32} margin="3px" />
-            </div>
-          );
-        })}
+      <Text size="16px" margin="0px 0px 25px 0px">
+        {props?.postDesc}
+      </Text>
 
-        <Text
-          size="12px"
-          margin="0px 0px 0px 150px"
-          _onClick={() => history.push(`/reviewwrite/${props.postId}`)}
-          post={props.PostId}
-        >
+      <Grid row height="auto" justify="space-between">
+        <Grid row>
+          {props.nowMember?.map((v, i) => {
+            return (
+              <div key={v + i}>
+                <Image
+                  shape="circle"
+                  src={v.memberImg}
+                  size={32}
+                  margin="0px 0px 0px 3px"
+                />
+              </div>
+            );
+          })}
+        </Grid>
+
+        <Grid row padding="0px 0px 0px 80px">
           <FaPen
+            color="#C4C4C4"
             size={14}
             onClick={() => history.push(`/reviewwrite/${props.postId}`)}
           />
-          후기 작성하기
-        </Text>
+          <Text
+            size="12px"
+            // margin="0px 0px 0px 150px"
+            _onClick={() => history.push(`/reviewwrite/${props.postId}`)}
+            post={props.PostId}
+          >
+            후기 작성하기
+          </Text>
+        </Grid>
       </Grid>
     </Grid>
   );

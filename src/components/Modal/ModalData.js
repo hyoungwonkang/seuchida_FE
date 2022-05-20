@@ -48,6 +48,11 @@ const ModalData = (props) => {
               }
               if (props.join) {
                 props.join();
+                onClose();
+              }
+              if (props.out) {
+                props.out();
+                onClose();
               }
             }}
             margin="10px 0px 0px 38px"

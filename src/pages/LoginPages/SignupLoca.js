@@ -31,6 +31,9 @@ const SignupLoca = () => {
     isLoading: true,
   });
 
+  //로컬 값 저장
+  localStorage.setItem("address", address);
+
   //현재 내 위치
   React.useEffect(() => {
     if (navigator.geolocation) {
@@ -84,7 +87,7 @@ const SignupLoca = () => {
   return (
     <Grid column height="700px">
       {is_edit ? (
-        <GoBack text="동네 설정하기" />
+        <GoBack text="동네 설정하기" path="/mypage" />
       ) : (
         <GoBack text="동네 설정하기" path="/signupdone" />
       )}
@@ -128,19 +131,19 @@ const SignupLoca = () => {
         </Map>
 
         {/* 푸터*/}
-        <Link
+        {/* <Link
           to={{
             state: {
               address,
             },
           }}
-        >
-          {is_edit ? (
-            <FooterMenu next text="다음" path="/editprofile" />
-          ) : (
-            <FooterMenu next text="다음" path="/addprofile" />
-          )}
-        </Link>
+        > */}
+        {is_edit ? (
+          <FooterMenu next text="다음" path="/editprofile" />
+        ) : (
+          <FooterMenu next text="다음" path="/addprofile" />
+        )}
+        {/* </Link> */}
       </Grid>
     </Grid>
   );

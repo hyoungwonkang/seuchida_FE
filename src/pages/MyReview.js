@@ -18,18 +18,15 @@ const MyReview = () => {
   if (!myReviewList) return;
 
   return (
-    <>
-      <Grid height="auto">
-        <GoBack text="내가 쓴 후기" path="/mypage" />
-
-        <Grid height="auto">
-          {myReviewList.map((p, i) => {
-            return <ReviewCardD {...p} key={p.id} />;
-          })}
-        </Grid>
+    <Grid>
+      <GoBack text="내가 쓴 후기" path="/mypage" />
+      <Grid padding="0px 0px 80px 0px">
+        {myReviewList.map((p, i) => {
+          return <ReviewCardD {...p} key={p.id} />;
+        })}
       </Grid>
       <FooterMenu />
-    </>
+    </Grid>
   );
 };
 
