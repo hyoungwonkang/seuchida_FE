@@ -33,7 +33,6 @@ const ChatMenu = ({ comModalOn, closecomModal, roomId, leaveRoom, socket }) => {
           style={{ marginTop: "40px" }}
           onClick={() => history.push(`/postdetail/${postId}`)}
         >
-          {" "}
           게시글보기
         </Menu>
         <Menu> 참여자 목록 </Menu>

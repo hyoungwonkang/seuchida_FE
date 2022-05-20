@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { Button, Text, Grid, Image } from "../../elements/Index";
 import styled from "styled-components";
-import ReviewWrite from "../../pages/ReviewWrite";
+import { HiOutlineX } from "react-icons/hi";
 
 const ModalData = (props) => {
-  const { Members, Alert, Check, text, onClose, onCheck, Evaluate } = props;
-
   console.log(props);
+  const { Members, Alert, Check, text, onClose, Evaluate } = props;
 
   //재확인 창
   if (Check) {
@@ -38,7 +37,22 @@ const ModalData = (props) => {
               left: "120px",
             }}
           />
-          <Button is_close _onClick={onCheck} margin="10px 0px 0px 38px">
+          <Button
+            is_close
+            _onClick={() => {
+              if (props.onCheck) {
+                props.onCheck();
+              }
+
+              if (props.yes) {
+                props.yes();
+              }
+              if (props.join) {
+                props.join();
+              }
+            }}
+            margin="10px 0px 0px 38px"
+          >
             확인
           </Button>
         </Grid>
@@ -129,27 +143,96 @@ const ModalData = (props) => {
     );
   }
 
-  //참여중인 운동 메이트 프로필s
+  const level = [
+    { id: 1, level: 1, image: <Image src="../img/red.png" /> },
+    { id: 2, level: 2, image: <Image src="../img/orange.png" /> },
+    { id: 3, level: 3, image: <Image src="../img/yellow.png" /> },
+    { id: 4, level: 4, image: <Image src="../img/green.png" /> },
+    { id: 5, level: 5, image: <Image src="../img/skyblue.png" /> },
+    { id: 6, level: 6, image: <Image src="../img/blue.png" /> },
+    { id: 7, level: 7, image: <Image src="../img/purple.png" /> },
+  ];
+
+  //참여중인 운동 메이트 프로필(레벨 넣어야함)
   if (Members) {
     return (
-      <Grid width="342px" height="356px">
-        <Grid height="auto" row>
+      <Grid width="342px" height="356px" padding="20px">
+        {/* close버튼 */}
+        <Grid row justify="right" height="30px">
+          <HiOutlineX size={35} onClick={onClose} />
+        </Grid>
+        {/* 프로필내용 */}
+        <Grid column height="200px">
+          <Grid column height="100px">
+            <Image
+              shape="circle"
+              src={props.post.memberImg}
+              size={60}
+              margin="3px"
+            />
+            <Grid row justify="center" height="auto">
+              {level.map((v, i) => {
+                if (v.level == props.post.memberLevel) return v.image;
+              })}
+              <Text margin="0px" bold size="24px">
+                {props.post.memberNickname}
+              </Text>
+            </Grid>
+          </Grid>
+
+          {/* 카테고리 */}
+          <Grid row height="auto" justify="center">
+            {props.post.memberCategory?.map((h, i) => {
+              return (
+                <Text
+                  br
+                  key={h + i}
+                  color="#000000"
+                  width="auto"
+                  row
+                  margin="20px 3px 5px 3px"
+                >
+                  {h}
+                </Text>
+              );
+            })}
+          </Grid>
+          <Text margin="20px 0px 0px 3px">{props.post.memberDesc}</Text>
+        </Grid>
+      </Grid>
+    );
+  }
+
+  //게시물 작성자 프로필(레벨 넣어야함//카테고리 왜 빠짐?)
+  return (
+    <Grid width="342px" height="356px" padding="20px">
+      {/* close버튼 */}
+      <Grid row justify="right" height="30px">
+        <HiOutlineX size={35} onClick={onClose} />
+      </Grid>
+
+      {/* 프로필내용 */}
+      <Grid column height="200px">
+        <Grid column height="100px">
           <Image
             shape="circle"
-            src={props?.post?.memberImg}
+            src={props.post[0].memberImg}
             size={60}
             margin="3px"
           />
-          <Grid column width="auto" height="60px">
-            <Image src="./img/red_medal.png" />
-            <Text margin="0px">{props?.post?.memberNickname}</Text>
-            <Text margin="0px">
-              {props?.post?.memberGen}/{props?.post?.memberAgee}
+          <Grid row justify="center" height="auto">
+            {level.map((v, i) => {
+              if (v.level == props.post[0].memberLevel) return v.image;
+            })}
+            <Text margin="0px" bold size="24px">
+              {props.post[0].memberNickname}
             </Text>
           </Grid>
         </Grid>
-        <Grid row height="auto">
-          {props?.post?.memberCategory.map((h, i) => {
+
+        {/* 카테고리 */}
+        <Grid row height="auto" justify="center">
+          {props.post[0].memberCategory?.map((h, i) => {
             return (
               <Text
                 br
@@ -164,50 +247,8 @@ const ModalData = (props) => {
             );
           })}
         </Grid>
-
-        <Text margin="20px 0px 0px 3px">{props?.post?.memberDesc}</Text>
-        <button onClick={onClose}>Close</button>
+        <Text margin="20px 0px 0px 3px">{props.post[0].memberDesc}</Text>
       </Grid>
-    );
-  }
-
-  //게시물 작성자 프로필
-  return (
-    <Grid width="342px" height="356px">
-      <Grid height="auto" row>
-        <Image
-          shape="circle"
-          src={props.post[0].memberImg}
-          size={60}
-          margin="3px"
-        />
-        <Grid column width="auto" height="60px">
-          {/* 임의 */}
-          <Image src="../img/purple.png" />
-          <Text margin="0px">{props.post[0].memberNickname}</Text>
-          <Text margin="0px">
-            {props.post[0].memberGen}/{props.post[0].memberAgee}
-          </Text>
-        </Grid>
-      </Grid>
-      <Grid row height="auto">
-        {props.post[0].memberCategory.map((h, i) => {
-          return (
-            <Text
-              br
-              key={h + i}
-              color="#000000"
-              width="auto"
-              row
-              margin="20px 3px 5px 3px"
-            >
-              {h}
-            </Text>
-          );
-        })}
-      </Grid>
-      <Text margin="20px 0px 0px 3px">{props.post[0].memberDesc}</Text>
-      <button onClick={onClose}>Close</button>
     </Grid>
   );
 };

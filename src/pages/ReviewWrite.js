@@ -20,6 +20,7 @@ const ReviewWrite = (props) => {
   const postId = props.match.params.postId;
 
   const [postInfo, setPostInfo] = useState();
+  console.log(postInfo);
 
   //모달 오픈 state
   const [isOpen, setIsOpen] = React.useState(false);
@@ -34,7 +35,6 @@ const ReviewWrite = (props) => {
       },
     })
       .then((res) => {
-  
         const _postInfo = res.data.post;
         setPostInfo(_postInfo);
       })

@@ -12,13 +12,13 @@ import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 import FooterMenu from "../shared/FooterMenu";
 import GoBack from "../elements/GoBack";
-import { AiOutlineConsoleSql } from "react-icons/ai";
 
 const PostDetail = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.userInfo);
   const userId = useSelector((state) => state.user.userInfo.userId);
+
   const [isOpen, setIsOpen] = React.useState(false);
   const [isOpen2, setIsOpen2] = React.useState(false);
   const [isOpen3, setIsOpen3] = React.useState(false);
@@ -29,7 +29,7 @@ const PostDetail = (props) => {
   const params = useParams();
   const postOwner = post?.userId;
   const isMe = userId === postOwner ? true : false;
-  const postId = params.postId; //게시물 번호
+  const postId = post?.roomId; //게시물 번호(룸 아이디)
 
   //게시물 삭제
   const deleteone = (e) => {
@@ -49,6 +49,7 @@ const PostDetail = (props) => {
   const joinRoom = () => {
     dispatch(roomActions.joinRoomDB(post.roomId, params.postId));
   };
+
   const roomDone = () => {
     dispatch(roomActions.roomDoneDB(params.postId));
   };
@@ -136,6 +137,7 @@ const PostDetail = (props) => {
               setIsOpen(true);
             }}
           />
+          {/* 작성자 프로필 모달 */}
           <Modal open={isOpen}>
             <ModalData post={post.nowMember} onClose={() => setIsOpen(false)} />
           </Modal>
@@ -173,6 +175,7 @@ const PostDetail = (props) => {
                       setIsOpen2(true);
                     }}
                   />
+                  {/* 참여자 프로필 모달 */}
                   <Modal open={isOpen2}>
                     <ModalData
                       Members
@@ -202,7 +205,7 @@ const PostDetail = (props) => {
           </ButtonBox>
         ) : // 방장이고 참여자일때 채팅하기 버튼
 
-        post.status === false && post.nowMember.length === post.maxMember ? (
+        post.status === false || post.nowMember.length === post.maxMember ? (
           <ButtonBox>
             <FooterMenu is_check text={"참여불가"}></FooterMenu>
           </ButtonBox>
@@ -212,8 +215,12 @@ const PostDetail = (props) => {
           //참여중이 아니거나 모집중일경우 참여하기 버튼
           userCheck.length === 0 &&
           post.status === true && (
-            <ButtonBox>
-              <FooterMenu next text={"참여하기"} event={joinRoom}></FooterMenu>
+            <ButtonBox
+              onClick={() => {
+                setIsOpen4(true);
+              }}
+            >
+              <FooterMenu next text={"참여하기"}></FooterMenu>
             </ButtonBox>
           )
         )}
@@ -234,7 +241,8 @@ const PostDetail = (props) => {
         <ModalData
           Check
           text="모임에 참여하시겠어요?"
-          onClose={() => setIsOpen3(false)}
+          onClose={() => setIsOpen4(false)}
+          join={() => joinRoom()}
         />
       </Modal>
     </>
