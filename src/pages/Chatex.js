@@ -5,9 +5,11 @@ import GoBack from "../elements/GoBack";
 import Image from "../elements/Image";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
+import { actionCreators as roomActions } from "../redux/modules/room";
 import { useParams } from "react-router-dom";
 import { history } from "../redux/configStore";
 import ChatMenu from "./ChatMenu";
+
 
 const token = localStorage.getItem("token");
 const socket = io.connect("https://seuchidabackend.shop", {
@@ -60,6 +62,7 @@ function Chatex(props) {
   useEffect(() => {
     socket.on("broadcast", (data) => {
       setChat((chat) => chat.concat(data));
+
     });
     setnowM(roomInfo?.nowMember?.length);
   }, []);

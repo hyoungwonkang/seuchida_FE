@@ -103,7 +103,7 @@ const MyPage = () => {
 
   return (
     <>
-      <Grid bg="#0ED88B" height="auto">
+      <Grid bg="#0ED88B" height="auto" margin="0px 0px 70px 0px">
         <NameCard />
         <Grid height="117px" column justify="center" padding="30px 0px 0px 0px">
           <ProgressBar>

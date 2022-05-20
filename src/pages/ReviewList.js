@@ -8,10 +8,9 @@ import { actionCreators as postActions } from "../redux/modules/post";
 import { useParams } from "react-router-dom";
 import { BiDumbbell } from "react-icons/bi";
 import { MdPlace } from "react-icons/md";
-
+import GoBack from "../elements/GoBack";
 const ReviewList = () => {
   const review = useSelector((state) => state.post.review);
-
   const dispatch = useDispatch();
   const params = useParams();
 
@@ -19,8 +18,6 @@ const ReviewList = () => {
     ...review.filter((d) => d._id === params.reviewId),
     ...review.filter((d) => d._id !== params.reviewId),
   ]; //선택된 리뷰를 가장 먼저 보여지도록 정렬을 수정
-
-  const hi = review.filter((d) => d.postCategory !== "농구");
 
   const [modalOn, setModalOn] = React.useState(false);
   const openModal = (e) => {
@@ -39,7 +36,9 @@ const ReviewList = () => {
 
   return (
     <>
-      <div style={{ marginBottom: "80px" }}>
+    
+    <Header><GoBack text={'함께한 스친들의 후기'}></GoBack></Header>
+      <div style={{ margin: "80px 0px" }}>
         {review_list?.map((review, index) => {
           return (
             <div key={review._id}>
@@ -85,6 +84,10 @@ const ReviewList = () => {
 };
 
 export default ReviewList;
+
+const Header = styled.div`
+padding: 8px 0px;
+`
 
 const ProfileBox = styled.div`
   padding: 24px 24px 10px 24px;
