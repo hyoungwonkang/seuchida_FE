@@ -116,7 +116,7 @@ const Btn = styled.div`
   left: 0;
   height: 100px;
   border-top: 1px solid #e9e9e9;
-  width: 390px;
+  width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;

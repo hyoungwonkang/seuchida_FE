@@ -92,7 +92,6 @@ const EditProfile = (props) => {
     }
   }, [content]);
 
-
   //앱에서 페이지 새로고침 막기
   document.body.style.overscrollBehavior = "none";
 
@@ -106,7 +105,7 @@ const EditProfile = (props) => {
 
   return (
     <Grid>
-      <GoBack text="프로필 수정" path="/signuploca" />
+      <GoBack text="프로필 수정" />
 
       <Grid column height="650px">
         <Grid height="auto" column margin="30px 0px">
@@ -154,13 +153,13 @@ const EditProfile = (props) => {
             <div className="calendarBox">
               <Age
                 type="number"
+                placeholder="나이"
                 style={{
                   width: "213px",
                   height: "56px",
                   boxSizing: "border-box",
                   borderRadius: "5px",
                   border: "1px solid #ddd",
-                  placeholder: "나이",
                 }}
                 onChange={selectAge}
                 value={age || ""}

@@ -7,6 +7,7 @@ import FooterMenu from "../../shared/FooterMenu";
 import { useHistory } from "react-router-dom";
 
 const Category = (props) => {
+  // console.log(props);
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -123,7 +124,7 @@ const Category = (props) => {
 
   return (
     <Grid stop>
-      <GoBack text="상세 관심사 선택" path="/addprofile" />
+      <GoBack text="상세 관심사 선택" />
       <Text margin="0px 0px 0px 30px" size="24px" bold>
         관심있는 <br />
         운동을 알려주세요

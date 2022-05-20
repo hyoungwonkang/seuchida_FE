@@ -84,7 +84,7 @@ const SignupLoca = () => {
   return (
     <Grid column height="700px">
       {is_edit ? (
-        <GoBack text="동네 설정하기" path="/mypage" />
+        <GoBack text="동네 설정하기" />
       ) : (
         <GoBack text="동네 설정하기" path="/signupdone" />
       )}

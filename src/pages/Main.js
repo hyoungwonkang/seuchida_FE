@@ -8,6 +8,7 @@ import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { history } from "../redux/configStore";
 import io from "socket.io-client";
+import { HiPlus } from "react-icons/hi";
 
 const token = localStorage.getItem("token");
 const socket = io.connect("https://seuchidabackend.shop", {
@@ -16,13 +17,15 @@ const socket = io.connect("https://seuchidabackend.shop", {
   },
 });
 
-
 const Main = () => {
-
   const catepost = useSelector((state) => state.post.list.caPost);
+  //이미지 업데이트가 바로 되지 않음
+  //참여하기 버튼 후에도 확인 필요
   const post_list = useSelector((state) => state.post.list.nearPost);
   const review = useSelector((state) => state.post.list.filterRe);
   const user = useSelector((state) => state.user);
+  const post = useSelector((state) => state.post.list);
+  // console.log(post);
   const dispatch = useDispatch();
   const [state, setState] = React.useState({
     center: {
@@ -32,8 +35,6 @@ const Main = () => {
     errMsg: null,
     isLoading: true,
   });
-
-
 
   React.useEffect(() => {
     if (navigator.geolocation) {
@@ -61,12 +62,13 @@ const Main = () => {
       // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
       setState((prev) => ({
         ...prev,
-        errMsg: 'geolocation을 사용할수 없어요..',
+        errMsg: "geolocation을 사용할수 없어요..",
         isLoading: false,
       }));
     }
     dispatch(userActions.isLoginDB());
     dispatch(postActions.getMainDB());
+    // dispatch(postActions.getPostlistDB());
   }, []);
 
   return (
@@ -85,7 +87,7 @@ const Main = () => {
         <ReviewBox>
           <TitleBox
             onClick={() => {
-              window.location.href = '/reviewlist/1';
+              window.location.href = "/reviewlist/1";
             }}
           >
             <Title>함께한 스친들의 후기</Title> <Title>&gt;</Title>
@@ -98,7 +100,7 @@ const Main = () => {
 
         <TitleBox
           onClick={() => {
-            history.push('/postlist');
+            history.push("/postlist");
           }}
         >
           <Title>여기여기 붙어라</Title>
@@ -124,10 +126,10 @@ const Main = () => {
         <Button
           is_float
           _onClick={() => {
-            history.push('/postcategory');
+            history.push("/postcategory");
           }}
         >
-          +
+          <HiPlus color="white" padding="10px" />
         </Button>
         {/* 푸터 */}
       </Container>

@@ -22,8 +22,16 @@ const PostWrite_3 = (props) => {
   const dispatch = useDispatch();
 
   if (history.action === "POP") {
-    history.replace("/main");
+    history.replace("/postcategory");
   }
+
+  //새로고침 시 작성 첫 번째 페이지로 이동
+  // if (document.readyState === "interactive") {
+  //   window.onbeforeunload = function () {
+  //     return "새로고침 경고";
+  //   };
+  //   history.replace("/postcategory");
+  // }
 
   //모달 오픈 state
   const [isOpen, setIsOpen] = React.useState(false);
@@ -138,6 +146,7 @@ const PostWrite_3 = (props) => {
     count++;
   }
 
+  //datemate 만들기
   if (!show) {
     datemate = null;
     if (showDate && showTime) {
@@ -146,7 +155,8 @@ const PostWrite_3 = (props) => {
   }
 
   const addPost = () => {
-    if (!address || !datemate) {
+    if (!address || !showDate || !showTime) {
+      //유효성 검사
       setIsOpen(true);
     } else {
       dispatch(
@@ -178,6 +188,7 @@ const PostWrite_3 = (props) => {
   // console.log(postDesc);
   // console.log(postTitle);
   // console.log(spot);
+  // console.log(valueGroups);
 
   return (
     <Grid>
@@ -199,7 +210,7 @@ const PostWrite_3 = (props) => {
             <IconContext.Provider value={{ color: "#787878", size: "16px" }}>
               <FaMapMarkerAlt />
             </IconContext.Provider>
-            <Text margin="0px 13px" size="16px">
+            <Text bold margin="0px 13px" size="16px">
               장소
             </Text>
           </Grid>
@@ -254,11 +265,11 @@ const PostWrite_3 = (props) => {
           justify="space-between"
         >
           <Grid>
-            <Grid row margin="0px 26px" padding="0px 26px 0px 0px">
+            <Grid row padding="0px 0px 0px 26px">
               <IconContext.Provider value={{ color: "#787878", size: "16px" }}>
                 <BsFillCalendarFill />
               </IconContext.Provider>
-              <Text width="80px" margin="0px 0px 0px 14px" size="16px">
+              <Text bold width="80px" margin="0px 0px 0px 14px" size="16px">
                 날짜
               </Text>
               <Grid isFlex_end>
@@ -305,7 +316,7 @@ const PostWrite_3 = (props) => {
           <IconContext.Provider value={{ color: "#787878", size: "16px" }}>
             <AiFillClockCircle />
           </IconContext.Provider>
-          <Text width="32px" margin="0px 12px">
+          <Text bold width="32px" margin="0px 12px">
             시간
           </Text>
         </Grid>
@@ -376,6 +387,12 @@ const CalendarContainer = styled.div`
   }
   .react-calendar__month-view__weekdays__weekday abbr {
     text-decoration: none;
+  }
+  .react-calendar__tile--active {
+    background-color: #0ed88b;
+  }
+  .react-calendar__tile--active:enabled:focus {
+    background-color: #0ed88b;
   }
 `;
 

@@ -12,24 +12,19 @@ const SET_CHAT = "SET_CHAT";
 
 const chatRoom = createAction(SET_CHAT, (chat_list) => ({ chat_list }));
 
-
 //initialState (default props 같은 것, 기본값)
 
 const initialState = {
   list: {
-    chatUserList:[],
-    chattingRoom:[],
-    lastChatting:[]
+    chatUserList: [],
+    chattingRoom: [],
+    lastChatting: [],
   },
- 
-
-  
 };
 
 //middleware
 
-const joinRoomDB = (roomId,postId) => {
-  
+const joinRoomDB = (roomId, postId) => {
   return async function (dispatch, getState) {
     try {
       await axios({
@@ -88,8 +83,6 @@ const getchatMemberDB = (roomId) => {
   };
 };
 
-
-
 const roomDoneDB = (roomId) => {
   return async function (dispatch, getState) {
     try {
@@ -107,8 +100,6 @@ const roomDoneDB = (roomId) => {
     }
   };
 };
-
-
 
 //reducer
 export default handleActions(

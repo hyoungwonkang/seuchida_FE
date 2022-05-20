@@ -4,17 +4,9 @@ import styled from "styled-components";
 import ReviewWrite from "../../pages/ReviewWrite";
 
 const ModalData = (props) => {
-  const {
-    Members,
-    Alert,
-    Alert2,
-    Alert3,
-    Check,
-    text,
-    onClose,
-    onCheck,
-    Evaluate,
-  } = props;
+  const { Members, Alert, Check, text, onClose, onCheck, Evaluate } = props;
+
+  console.log(props);
 
   //재확인 창
   if (Check) {
@@ -79,58 +71,8 @@ const ModalData = (props) => {
     );
   }
 
-  if (Alert2) {
-    return (
-      <Grid width="240px" height="156px" column padding="17px">
-        <Grid column height="44px">
-          <Text margin="20px 0px 0px 0px">앗!</Text>
-          <Text margin="0px">{text}</Text>
-        </Grid>
-        <hr
-          style={{
-            width: "240px",
-            borderTop: "1px solid gray",
-            borderBottom: "none",
-            borderLeft: "none",
-            borderRight: "none",
-            margin: "30px 0px 0px 0px",
-          }}
-        />
-        <Button is_close _onClick={onClose}>
-          확인
-        </Button>
-      </Grid>
-    );
-  }
-
-  if (Alert3) {
-    return (
-      <Grid width="240px" height="156px" column padding="17px">
-        <Grid column height="44px">
-          <Text margin="20px 0px 0px 0px">앗!</Text>
-          <Text margin="0px">{text}</Text>
-        </Grid>
-        <hr
-          style={{
-            width: "240px",
-            borderTop: "1px solid gray",
-            borderBottom: "none",
-            borderLeft: "none",
-            borderRight: "none",
-            margin: "30px 0px 0px 0px",
-          }}
-        />
-        <Button is_close _onClick={onClose}>
-          확인
-        </Button>
-      </Grid>
-    );
-  }
-
   //참여자 평가 창
   if (Evaluate) {
-    // const [userInterest, setUserInterest] = useState([]);
-
     //신고하기
     const BadList = [
       { id: 0, data: "약속시간에 나타나지 않았어요." },
@@ -140,7 +82,7 @@ const ModalData = (props) => {
     ];
 
     return (
-      <Grid width="342px" height="356px" padding="10px">
+      <Grid width="342px" height="250px" padding="10px">
         <SelectBox>
           {BadList.map((item) => {
             return (
@@ -154,9 +96,6 @@ const ModalData = (props) => {
                     props.report(e.target.value);
                     props.rUserId(props.post.memberId);
                   }}
-                  onClick={() => {
-                    onClose();
-                  }}
                 />
                 <label htmlFor={item.id}>
                   <Select color={+props._report.includes(item.data)}>
@@ -166,6 +105,25 @@ const ModalData = (props) => {
               </Content>
             );
           })}
+          <Grid row height="20px" justify="right" padding="20px 5px 0px 0px">
+            <Button
+              is_close
+              _onClick={() => {
+                onClose();
+              }}
+            >
+              취소
+            </Button>
+            <Button
+              is_close
+              _onClick={() => {
+                props.addreport();
+                onClose();
+              }}
+            >
+              신고
+            </Button>
+          </Grid>
         </SelectBox>
       </Grid>
     );
