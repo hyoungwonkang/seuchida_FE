@@ -7,7 +7,7 @@ import styled from "styled-components";
 
 function ECslider(props) {
   const myEx = props?.myExercise;
-  // console.log(myEx);
+
   const settings = {
     dots: true,
     infinite: true,

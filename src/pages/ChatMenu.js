@@ -25,7 +25,7 @@ const ChatMenu = ({ comModalOn, closecomModal, roomId, leaveRoom, socket}) => {
     })
   },[])
   if(kick===true){
-    console.log(roomId)
+
     socket.emit('banUserOut',{roomId:roomId})
     setKick(false)
   }

@@ -7,7 +7,7 @@ import styled from "styled-components";
 
 function LCslider(props) {
   const post = props.catepost;
-console.log(props)
+
   const [state, setState] = useState("");
 
   React.useEffect(() => {

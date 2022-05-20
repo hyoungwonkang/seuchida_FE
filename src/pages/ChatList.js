@@ -12,7 +12,7 @@ const ChatList = () => {
   const dispatch = useDispatch();
   const room_list = useSelector((state) => state.room.list.chattingRoom);
   const last_chat = useSelector((state) => state.room.list.lastChatting);
-  console.log(room_list);
+
 
   React.useEffect(() => {
     dispatch(roomCreators.getchatRoomDB());
