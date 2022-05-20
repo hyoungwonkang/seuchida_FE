@@ -161,7 +161,7 @@ function Chatex(props) {
                   <Image src={chat.userImg} size={32} />
                   <NameBox>{chat.name}</NameBox>
                 </RowBox>
-
+              
                 <RowBox>
                   <TextBox>{chat.msg}</TextBox>
                   <TimeBox>{TimeCheck(chat.createdAt)}</TimeBox>
@@ -179,7 +179,8 @@ function Chatex(props) {
             onChange={(e) => setMessage(e.target.value)}
           />
 
-          <Send onClick={sendMessage}><Image src="./img/send.png"/></Send>
+          <Send onClick={sendMessage}>전송하기
+</Send>
         </div>
       </Chatting>
     </div>

@@ -28,13 +28,13 @@ const initialState = {
 
 //middleware
 
-const joinRoomDB = (postId) => {
+const joinRoomDB = (roomId,postId) => {
   
   return async function (dispatch, getState) {
     try {
       await axios({
-        method: "post",
-        url: `https://seuchidabackend.shop/api/postPush/${postId}`,
+        method: "get",
+        url: `https://seuchidabackend.shop/api/postPush/${roomId}`,
         // data: JSON.stringify({
         //   postId: postId,
         // }),

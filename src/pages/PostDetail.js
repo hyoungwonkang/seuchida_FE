@@ -12,11 +12,13 @@ import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 import FooterMenu from "../shared/FooterMenu";
 import GoBack from "../elements/GoBack";
+import { AiOutlineConsoleSql } from "react-icons/ai";
 
 const PostDetail = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.userInfo);
+  const userId = useSelector((state) => state.user.userInfo.userId);
   const [isOpen, setIsOpen] = React.useState(false);
   const [isOpen2, setIsOpen2] = React.useState(false);
   const [isOpen3, setIsOpen3] = React.useState(false);
@@ -25,20 +27,17 @@ const PostDetail = (props) => {
   const [post, setPost] = React.useState(null);
   const token = localStorage.getItem("token");
   const params = useParams();
-
-  const userId = useSelector((state) => state.user.userInfo.userId);
   const postOwner = post?.userId;
-
   const isMe = userId === postOwner ? true : false;
   const postId = params.postId; //게시물 번호
-
+  
   //게시물 삭제
   const deleteone = (e) => {
     dispatch(mypageActions.deletePostDB(postId));
     history.push("/main");
   };
 
- 
+
 
   const [state, setState] = React.useState({
     center: {
@@ -50,7 +49,7 @@ const PostDetail = (props) => {
   });
 
  const joinRoom= () =>{
-    dispatch(roomActions.joinRoomDB(params.postId));
+    dispatch(roomActions.joinRoomDB(post.roomId,params.postId));
   }
   const roomDone = () =>{
     dispatch(roomActions.roomDoneDB(params.postId))
