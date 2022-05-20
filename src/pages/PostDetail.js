@@ -30,14 +30,12 @@ const PostDetail = (props) => {
   const postOwner = post?.userId;
   const isMe = userId === postOwner ? true : false;
   const postId = params.postId; //게시물 번호
-  
+
   //게시물 삭제
   const deleteone = (e) => {
     dispatch(mypageActions.deletePostDB(postId));
     history.push("/main");
   };
-
-
 
   const [state, setState] = React.useState({
     center: {
@@ -48,13 +46,12 @@ const PostDetail = (props) => {
     isLoading: true,
   });
 
- const joinRoom= () =>{
-    dispatch(roomActions.joinRoomDB(post.roomId,params.postId));
-  }
-  const roomDone = () =>{
-    dispatch(roomActions.roomDoneDB(params.postId))
-
-  }
+  const joinRoom = () => {
+    dispatch(roomActions.joinRoomDB(post.roomId, params.postId));
+  };
+  const roomDone = () => {
+    dispatch(roomActions.roomDoneDB(params.postId));
+  };
 
   React.useEffect(() => {
     if (navigator.geolocation) {
@@ -104,7 +101,6 @@ const PostDetail = (props) => {
     u.memberId?.includes(user.userId)
   );
 
-
   return (
     <>
       <Header>
@@ -113,16 +109,16 @@ const PostDetail = (props) => {
         {/*  삭제버튼  */}
         {isMe ? (
           <>
-          <EndBtn onClick={roomDone}>모집완료</EndBtn>
-          <Button
-            is_delete
-            _onClick={() => {
-              setIsOpen3(true);
-            }}
-          >
-            삭제
-          </Button>
-       </>
+            <EndBtn onClick={roomDone}>모집완료</EndBtn>
+            <Button
+              is_delete
+              _onClick={() => {
+                setIsOpen3(true);
+              }}
+            >
+              삭제
+            </Button>
+          </>
         ) : (
           ""
         )}
@@ -166,7 +162,7 @@ const PostDetail = (props) => {
           <div className="otherProfile">
             {post?.nowMember?.map((m, i) => {
               return (
-                <div key={m._id}>
+                <div key={m + i}>
                   <Image
                     shape="circle"
                     src={m.memberImg}
@@ -315,12 +311,12 @@ const DetailMap = styled.div`
 `;
 
 const EndBtn = styled.div`
-background-color: #0ED88B;
-display: flex;
-align-items: center;
-color: white;
-padding: 4px 12px;
-margin: 0px;
-border-radius: 5px;
-height: 22px;
-`
+  background-color: #0ed88b;
+  display: flex;
+  align-items: center;
+  color: white;
+  padding: 4px 12px;
+  margin: 0px;
+  border-radius: 5px;
+  height: 22px;
+`;

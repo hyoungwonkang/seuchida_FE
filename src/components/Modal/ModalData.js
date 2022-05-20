@@ -6,6 +6,8 @@ import ReviewWrite from "../../pages/ReviewWrite";
 const ModalData = (props) => {
   const { Members, Alert, Check, text, onClose, onCheck, Evaluate } = props;
 
+  console.log(props);
+
   //재확인 창
   if (Check) {
     return (
@@ -71,8 +73,6 @@ const ModalData = (props) => {
 
   //참여자 평가 창
   if (Evaluate) {
-    // const [userInterest, setUserInterest] = useState([]);
-
     //신고하기
     const BadList = [
       { id: 0, data: "약속시간에 나타나지 않았어요." },
@@ -82,7 +82,7 @@ const ModalData = (props) => {
     ];
 
     return (
-      <Grid width="342px" height="356px" padding="10px">
+      <Grid width="342px" height="250px" padding="10px">
         <SelectBox>
           {BadList.map((item) => {
             return (
@@ -96,9 +96,6 @@ const ModalData = (props) => {
                     props.report(e.target.value);
                     props.rUserId(props.post.memberId);
                   }}
-                  onClick={() => {
-                    onClose();
-                  }}
                 />
                 <label htmlFor={item.id}>
                   <Select color={+props._report.includes(item.data)}>
@@ -108,6 +105,25 @@ const ModalData = (props) => {
               </Content>
             );
           })}
+          <Grid row height="20px" justify="right" padding="20px 5px 0px 0px">
+            <Button
+              is_close
+              _onClick={() => {
+                onClose();
+              }}
+            >
+              취소
+            </Button>
+            <Button
+              is_close
+              _onClick={() => {
+                props.addreport();
+                onClose();
+              }}
+            >
+              신고
+            </Button>
+          </Grid>
         </SelectBox>
       </Grid>
     );

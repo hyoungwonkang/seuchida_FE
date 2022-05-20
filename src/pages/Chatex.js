@@ -9,7 +9,6 @@ import { useParams } from "react-router-dom";
 import { history } from "../redux/configStore";
 import ChatMenu from "./ChatMenu";
 
-
 const token = localStorage.getItem("token");
 const socket = io.connect("https://seuchidabackend.shop", {
   auth: {
@@ -19,18 +18,18 @@ const socket = io.connect("https://seuchidabackend.shop", {
 function Chatex(props) {
   const params = useParams();
   const dispatch = useDispatch();
-  
+
   const user = useSelector((state) => state.user.userInfo);
   const roomId = params.roomId;
   const [message, setMessage] = useState("");
   const [chatlist, setChatlist] = useState([]);
   const [chat, setChat] = useState([]);
-  const [nowM, setnowM] = useState(1)
+  const [nowM, setnowM] = useState(1);
   const [comModalOn, setcomModalOn] = useState(false);
-  const openModal =() =>{
-    setcomModalOn(true)
+  const openModal = () => {
+    setcomModalOn(true);
     // document.body.style.overflow ="hidden"
-  }
+  };
   const closecomModal = (e) => {
     setcomModalOn(false);
     // document.body.style.overflow ="unset"
@@ -55,17 +54,15 @@ function Chatex(props) {
     socket?.emit("join", {
       roomId,
     });
-    return 
+    return;
   }, [roomId]);
 
   useEffect(() => {
     socket.on("broadcast", (data) => {
       setChat((chat) => chat.concat(data));
     });
-    setnowM(roomInfo?.nowMember?.length)
+    setnowM(roomInfo?.nowMember?.length);
   }, []);
- 
-
 
   useEffect(() => {
     socket.on("chatlist", (data) => {
@@ -85,39 +82,37 @@ function Chatex(props) {
 
   const leaveRoom = () => {
     socket.emit("leave", { roomId });
-    history.replace('/chatlist')
+    history.replace("/chatlist");
   };
-
 
   return (
     <div>
-        <ChatMenu
+      <ChatMenu
         comModalOn={comModalOn}
         closecomModal={closecomModal}
-        roomId ={roomId}
-        leaveRoom ={leaveRoom}
-        socket = {socket}
+        roomId={roomId}
+        leaveRoom={leaveRoom}
+        socket={socket}
       />
-    
+
       <Header>
         <HeaderContents>
-         <RowBox>
-          <GoBack
-            gback
-            _onClick={() => {
-              history.goBack();
-            }}
-          />
-          <div style={{ margin: "3px 0px 0px 10px" }}>
-            {roomInfo?.postTitle}
-          </div>
-          <div style={{ margin: "3px 0px 0px 15px", color: "#C4C4C4" }}>
-            {nowM}/{roomInfo?.maxMember}
-          </div> 
+          <RowBox>
+            <GoBack
+              gback
+              _onClick={() => {
+                history.goBack();
+              }}
+            />
+            <div style={{ margin: "3px 0px 0px 10px" }}>
+              {roomInfo?.postTitle}
+            </div>
+            <div style={{ margin: "3px 0px 0px 15px", color: "#C4C4C4" }}>
+              {nowM}/{roomInfo?.maxMember}
+            </div>
           </RowBox>
-       
+
           <div onClick={openModal}>BUT</div>
-          
         </HeaderContents>
       </Header>
 
@@ -131,8 +126,8 @@ function Chatex(props) {
               <TimeBox>{TimeCheck(prevChat.createdAt)}</TimeBox>
             </IsMe>
           ) : (
-            <div  key={`${prevChat.createdAt}+${index}`}>
-              <RowBox >
+            <div key={`${prevChat.createdAt}+${index}`}>
+              <RowBox>
                 <Image src={prevChat.userImg} size={32} />
                 <NameBox>{prevChat.name}</NameBox>
               </RowBox>
@@ -148,7 +143,7 @@ function Chatex(props) {
         {/* 라이브 채팅 */}
         {chat.map((chat, index) => {
           return chat.name === "System" ? (
-            <SystemMsg  key={`${chat.createdAt}+${index}`}>{chat.msg}</SystemMsg>
+            <SystemMsg key={`${chat.createdAt}+${index}`}>{chat.msg}</SystemMsg>
           ) : chat.name === user.nickName ? (
             <IsMe key={`${chat.createdAt}+${index}`}>
               <TextBoxMe>{chat.msg}</TextBoxMe>
@@ -161,7 +156,7 @@ function Chatex(props) {
                   <Image src={chat.userImg} size={32} />
                   <NameBox>{chat.name}</NameBox>
                 </RowBox>
-              
+
                 <RowBox>
                   <TextBox>{chat.msg}</TextBox>
                   <TimeBox>{TimeCheck(chat.createdAt)}</TimeBox>
@@ -179,8 +174,7 @@ function Chatex(props) {
             onChange={(e) => setMessage(e.target.value)}
           />
 
-          <Send onClick={sendMessage}>전송하기
-</Send>
+          <Send onClick={sendMessage}>전송하기</Send>
         </div>
       </Chatting>
     </div>
@@ -207,7 +201,6 @@ const HeaderContents = styled.div`
   padding: 20px 0px;
 `;
 
-
 const Body = styled.div`
   margin: 100px 24px;
   overflow: auto;
@@ -225,9 +218,9 @@ const Chatting = styled.div`
 `;
 
 const SystemMsg = styled.div`
-font-size: 14px;
-text-align: center;
-color: #787878;
+  font-size: 14px;
+  text-align: center;
+  color: #787878;
 `;
 
 const TextMsg = styled.input`

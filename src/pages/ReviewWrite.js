@@ -67,7 +67,7 @@ const ReviewWrite = (props) => {
     if (review === "" || reviewImg === "") {
       setIsOpen(true);
     } else {
-      history.push("/revieweval");
+      history.push("/reviewevalue");
     }
   };
 

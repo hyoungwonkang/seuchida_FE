@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import styled from "styled-components";
 import { KAKAO_AUTH_URL, GOOGLE_AUTH_URL } from "../../shared/OAuth";
 import { Grid, Button, Image, Text } from "../../elements/Index";
-import GoogleLogin from "react-google-login";
+// import GoogleLogin from "react-google-login";
 
 const Login = (props) => {
   // const googleLogin = () => {

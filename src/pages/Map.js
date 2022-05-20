@@ -34,6 +34,7 @@ const Map = () => {
     if (navigator.geolocation) {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
       navigator.geolocation.watchPosition(
+        //REcheck 필요~! //react-lazy활용해보자 geolocation값이 채워질 타이밍을 더 찾아봅시당
         (position) => {
           setState((prev) => ({
             ...prev,

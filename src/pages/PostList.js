@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card } from "../components/index";
 import styled from "styled-components";
 import FooterMenu from "../shared/FooterMenu";
@@ -6,14 +6,20 @@ import GoBack from "../elements/GoBack";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 
-const PostList = () => {
+const PostList = ({ list, params }) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  // 포스트 목록
   const post_list = useSelector((state) => state.post.list.nearPosts);
 
-  const [state, setState] = React.useState({
+  const [pageNumber, setPageNumber] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
+  const pageEnd = React.useRef(null);
+
+  const [state, setState] = useState({
     center: {
       lat: 33.450701,
       lng: 126.570667,
@@ -53,8 +59,27 @@ const PostList = () => {
       }));
     }
     dispatch(postActions.getPostlistDB());
-    // dispatch(userActions.getUser(state.state))
-  }, []);
+    setIsLoading(false);
+  }, [pageNumber]);
+
+  const onIntersect = (entries) => {
+    entries.forEach((element) => {
+      if (element.isIntersecting) {
+        setPageNumber((prev) => prev + 1);
+      }
+    });
+  };
+
+  React.useEffect(() => {
+    const options = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.25,
+    };
+    const observer = new IntersectionObserver(onIntersect, options);
+    observer.observe(pageEnd.current);
+    return () => observer.disconnect();
+  }, [pageEnd]);
 
   return (
     <>
@@ -85,6 +110,9 @@ const PostList = () => {
             />
           );
         })}
+        <div ref={pageEnd} className="pageEnd">
+          {isLoading && <img alt="loading" src="./img/loading.gif" />}
+        </div>
       </ListBox>
 
       <FooterMenu />

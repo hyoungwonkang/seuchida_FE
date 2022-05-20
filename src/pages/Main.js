@@ -8,6 +8,7 @@ import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { history } from "../redux/configStore";
 import io from "socket.io-client";
+import { HiPlus } from "react-icons/hi";
 
 const token = localStorage.getItem("token");
 const socket = io.connect("https://seuchidabackend.shop", {
@@ -18,9 +19,13 @@ const socket = io.connect("https://seuchidabackend.shop", {
 
 const Main = () => {
   const catepost = useSelector((state) => state.post.list.caPost);
+  //이미지 업데이트가 바로 되지 않음
+  //참여하기 버튼 후에도 확인 필요
   const post_list = useSelector((state) => state.post.list.nearPost);
   const review = useSelector((state) => state.post.list.filterRe);
   const user = useSelector((state) => state.user);
+  const post = useSelector((state) => state.post.list);
+  // console.log(post);
   const dispatch = useDispatch();
   const [state, setState] = React.useState({
     center: {
@@ -63,6 +68,7 @@ const Main = () => {
     }
     dispatch(userActions.isLoginDB());
     dispatch(postActions.getMainDB());
+    // dispatch(postActions.getPostlistDB());
   }, []);
 
   return (
@@ -123,7 +129,7 @@ const Main = () => {
             history.push("/postcategory");
           }}
         >
-          +
+          <HiPlus color="white" padding="10px" />
         </Button>
         {/* 푸터 */}
       </Container>
