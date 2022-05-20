@@ -19,6 +19,7 @@ const NameCard = () => {
     dispatch(mypageActions.myReviewDB());
   }, []);
   const userInfo = useSelector((state) => state.user.userInfo);
+  // console.log(userInfo);
   const myReview = useSelector((state) => state.mypage.myReview);
   const len = myReview.length;
   return (
