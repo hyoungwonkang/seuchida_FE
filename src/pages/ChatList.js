@@ -12,7 +12,7 @@ const ChatList = () => {
   const dispatch = useDispatch();
   const room_list = useSelector((state) => state.room.list.chattingRoom);
   const last_chat = useSelector((state) => state.room.list.lastChatting);
-  console.log(room_list);
+
 
   React.useEffect(() => {
     dispatch(roomCreators.getchatRoomDB());
@@ -38,8 +38,8 @@ const ChatList = () => {
                   <Image src={room.ownerImg} size={50} />
                   <div style={{ marginLeft: "10px" }}>
                     <div style={{ marginBottom: "5px" }}>
-                      <ChatTitle>{room.postTitle} </ChatTitle>
-                      <UserCount> {room.userList.length}</UserCount>
+                      <ChatTitle>{room?.postTitle} </ChatTitle>
+                      <UserCount> {room.userList?.length}</UserCount>
                     </div>
                     <LastMsg>{last_chat[index]?.msg}</LastMsg>
                   </div>
@@ -58,13 +58,12 @@ const ChatList = () => {
 export default ChatList;
 
 const Header = styled.div`
-  height: 77px;
+  height: 68px;
   top: 0;
   position: fixed;
   font-weight: bold;
   font-size: 20px;
-  margin: 24px 0px;
-  padding: 0px 24px;
+  padding: 24px 24px 0px 24px;
   background-color: white;
   width: 100%;
 `;

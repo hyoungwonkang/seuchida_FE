@@ -19,12 +19,13 @@ const socket = io.connect("https://seuchidabackend.shop", {
 function Chatex(props) {
   const params = useParams();
   const dispatch = useDispatch();
-
+  
   const user = useSelector((state) => state.user.userInfo);
   const roomId = params.roomId;
   const [message, setMessage] = useState("");
   const [chatlist, setChatlist] = useState([]);
   const [chat, setChat] = useState([]);
+  const [nowM, setnowM] = useState(1)
   const [comModalOn, setcomModalOn] = useState(false);
   const openModal =() =>{
     setcomModalOn(true)
@@ -35,7 +36,6 @@ function Chatex(props) {
     // document.body.style.overflow ="unset"
   };
 
-console.log(props)
   const roomInfo = props?.location.state;
   //유저리스트 키값 나우멤버로 수정 요청
   const TimeCheck = (t) => {
@@ -62,7 +62,10 @@ console.log(props)
     socket.on("broadcast", (data) => {
       setChat((chat) => chat.concat(data));
     });
+    setnowM(roomInfo?.nowMember?.length)
   }, []);
+ 
+
 
   useEffect(() => {
     socket.on("chatlist", (data) => {
@@ -85,6 +88,7 @@ console.log(props)
     history.replace('/chatlist')
   };
 
+
   return (
     <div>
         <ChatMenu
@@ -92,6 +96,7 @@ console.log(props)
         closecomModal={closecomModal}
         roomId ={roomId}
         leaveRoom ={leaveRoom}
+        socket = {socket}
       />
     
       <Header>
@@ -107,7 +112,7 @@ console.log(props)
             {roomInfo?.postTitle}
           </div>
           <div style={{ margin: "3px 0px 0px 15px", color: "#C4C4C4" }}>
-            {roomInfo?.nowMember?.length}/{roomInfo?.maxMember}
+            {nowM}/{roomInfo?.maxMember}
           </div> 
           </RowBox>
        
@@ -156,7 +161,7 @@ console.log(props)
                   <Image src={chat.userImg} size={32} />
                   <NameBox>{chat.name}</NameBox>
                 </RowBox>
-
+              
                 <RowBox>
                   <TextBox>{chat.msg}</TextBox>
                   <TimeBox>{TimeCheck(chat.createdAt)}</TimeBox>
@@ -174,7 +179,8 @@ console.log(props)
             onChange={(e) => setMessage(e.target.value)}
           />
 
-          <Send onClick={sendMessage}>전송</Send>
+          <Send onClick={sendMessage}>전송하기
+</Send>
         </div>
       </Chatting>
     </div>

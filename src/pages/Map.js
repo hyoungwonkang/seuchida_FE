@@ -28,7 +28,6 @@ const Map = () => {
         authorization: `Bearer ${token}`,
       },
     }).then((response) => {
-      // console.log(response.data.nearPosts);
       setPost(response.data.nearPosts);
     });
 

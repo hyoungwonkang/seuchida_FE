@@ -17,11 +17,11 @@ const EndCard = (props) => {
       padding="0px 10px"
       bg="white"
     >
-      <Text size="16px">* 모집완료 {props.postTitle}</Text>
+      <Text size="16px">* 모집완료 {props?.postTitle}</Text>
 
-      <Text size="16px">{props.postDesc}</Text>
+      <Text size="16px">{props?.postDesc}</Text>
       <Grid row height="auto" padding="5px">
-        {props.nowMember.map((v, i) => {
+        {props.nowMember?.map((v, i) => {
           return (
             <div key={v + i}>
               <Image shape="circle" src={v.memberImg} size={32} margin="3px" />

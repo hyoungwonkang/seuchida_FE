@@ -14,7 +14,7 @@ const MyPost = (props) => {
   const myPostList = useSelector((state) => state.mypage.myPost);
 
   // const remove = myPostList ? true : false;
-  // console.log(remove);
+
 
   const [state, setState] = React.useState({
     center: {
@@ -66,7 +66,6 @@ const MyPost = (props) => {
 
       <Grid>
         {myPostList.map((p, i) => {
-          // console.log(p._id);
           return (
             <Card
               {...p}

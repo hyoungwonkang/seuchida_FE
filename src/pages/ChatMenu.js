@@ -3,28 +3,48 @@ import styled, {keyframes} from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as roomActions } from '../redux/modules/room';
 import Image from '../elements/Image';
-const ChatMenu = ({ comModalOn, closecomModal, roomId, leaveRoom}) => {
-  const dispatch = useDispatch();
-  const user_list = useSelector((state) => state.room.list.chatUserList)
+import { history } from '../redux/configStore';
 
+const ChatMenu = ({ comModalOn, closecomModal, roomId, leaveRoom, socket}) => {
+  const dispatch = useDispatch();
+  const user_list = useSelector((state) => state.room.list.nowMember)
+  const postId = useSelector((state) => state.room.list.postId)
+  const [kick , setKick] = React.useState(false)
+ 
   React.useEffect(()=>{
     dispatch(roomActions.getchatMemberDB(roomId))
   },[])
 
 
+  React.useEffect(() => {
+    socket.on('ban',(data)=>{
+      if(data===true){
+        setKick(true)
+    
+      }
+    })
+  },[])
+  if(kick===true){
 
+    socket.emit('banUserOut',{roomId:roomId})
+    setKick(false)
+  }
   return comModalOn? (
     <Overlay comModalOn={comModalOn} onClick={closecomModal}>
       <Container  onClick={(e) => e.stopPropagation()} >
-      <div> 채팅참여자  </div>
-      <div> 게시글보기</div>
-      {user_list.map((user,index) => {
-        return ( <div key={user.user_id}>
+      <Menu style={{marginTop:"40px"}} onClick={()=>history.push(`/postdetail/${postId}`)}> 게시글보기</Menu>
+      <Menu> 참여자 목록  </Menu>
+      {user_list?.map((user,index) => {
+          const banUser = ()=>{
+            socket.emit('banUser',{userId:user.userId})
+            // window.location.href = "/main";
+           }
+        return ( <div key={user?._id}>
             <RowBox>
            
-            <Image src={user.userImg} size={50}/>
-            <div>{user.nickName}</div>
-            
+            <Image src={user?.userImg} size={50}/>
+            <div>{user?.nickName}</div>
+            <button  onClick={banUser}>강태연습</button>
             </RowBox>
            </div>)
 
@@ -83,9 +103,15 @@ padding: 20px;
 `
 const OutChat = styled.div`
 position: fixed;
+margin: 0px 30px 30px 0px;
 bottom:0;
+right: 0;
 `
-
+const Menu = styled.div`
+font-size: 20px;
+font-weight: bold;
+padding: 20px;
+`
 
 
 const UserBox = styled.div`
