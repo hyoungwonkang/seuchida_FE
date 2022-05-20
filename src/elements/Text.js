@@ -17,6 +17,7 @@ const Text = (props) => {
     left,
     position,
     br,
+    zIndex,
   } = props;
   const styles = {
     bold,
@@ -32,6 +33,7 @@ const Text = (props) => {
     left,
     position,
     br,
+    zIndex,
   };
   return (
     <React.Fragment>
@@ -52,6 +54,7 @@ Text.defaultProps = {
 const Textbox = styled.p`
   width: ${(props) => props.width};
   ${(props) => (props.text_align ? `text-align: center` : "")}
+  ${(props) => (props.zIndex ? `z-index: 100` : "")}
   color: ${(props) => props.color};
   font-size: ${(props) => props.size};
   ${(props) => (props.bold ? `font-weight: bold` : "")};

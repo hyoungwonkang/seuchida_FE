@@ -20,8 +20,8 @@ const GoBack = (props) => {
         <IoIosArrowBack
           size={32}
           onClick={() => {
-            // history.push(props.path);
-            history.goBack();
+            history.push(props.path);
+            // history.goBack();
           }}
         />
         <Text size="20px" position margin="0px 0px 0px 40px" bold>

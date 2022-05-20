@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Card } from "../components/index";
 import { useHistory } from "react-router-dom";
 import FooterMenu from "../shared/FooterMenu";
@@ -8,13 +8,10 @@ import GoBack from "../elements/GoBack";
 import { Grid, Image, Text } from "../elements/Index";
 import PostDetail from "./PostDetail";
 
-const MyPost = (props) => {
+const MyPost = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const myPostList = useSelector((state) => state.mypage.myPost);
-
-  // const remove = myPostList ? true : false;
-
 
   const [state, setState] = React.useState({
     center: {
@@ -71,7 +68,6 @@ const MyPost = (props) => {
               {...p}
               key={p.id}
               center={state.center}
-              // removeone={p._id}
               _onClick={() => {
                 history.push(`/postdetail/${p._id}`);
               }}

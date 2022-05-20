@@ -11,6 +11,7 @@ import ModalData from "../components/Modal/ModalData";
 import axios from "axios";
 
 const Evaluation = (props) => {
+  console.log(props);
   //4. input 값 배열로 한개씩만 들어가게끔..
   //5. 라디오 감추고 색으로 선택 + 디자인 수정
   //6. 유효성 검사 다 평가하게끔
@@ -21,7 +22,7 @@ const Evaluation = (props) => {
 
   //ReviewWrite에서 받아온 값
   const postInfo = props?.location?.state?.postInfo;
-  const postId = props?.location?.state?.postInfo?.postId;
+  const postId = postInfo?.postId;
   const review = props?.location?.state?.review;
   const reviewImg = props?.location?.state?.reviewImg;
 
@@ -33,41 +34,38 @@ const Evaluation = (props) => {
   //내 id
   const myId = useSelector((state) => state.user.userInfo.userId);
   //평가할 사람들 목록(나 제외)
-  // const _postInfo = postInfo.nowMember.filter((v) => v.memberId !== myId);
+  const _postInfo = postInfo.nowMember.filter((v) => v !== myId);
   //다른 사람 id
-  const otherId = postInfo?.nowMember?.map((v, i) => v.memberId);
+  const otherId = postInfo?.nowMember?.map((v, i) => v);
 
   //좋아요||싫어요
-  // const evalueList = new Array(postInfo.nowMember.length);
-  // console.log(evalueList);
-  const [good, setGood] = useState("");
-  const [bad, setBad] = useState("");
+  // const [checked, setChecked] = useState(false);
   const [evalue, setEvalue] = useState([]);
-  console.log(good);
-  console.log(bad);
   console.log(evalue);
-  // const [evalueList, setEvalueList] = useState([]);
-  // let a = new Array(postInfo.nowMember.length);
-  // const b = a.fill(evalue, 1, 2);
+  // console.log(checked);
 
-  const rate = [
-    { id: 0, data: "좋아요 +1", value: "1" },
-    { id: 1, data: "싫어요 -1", value: "-1" },
-  ];
+  const is_checked = () => {
+    // 1. checkbox element를 찾습니다.
+    const checkbox = document.getElementById("my_checkbox");
+    // 2. checked 속성을 체크합니다.
+    const is_checked = checkbox.checked;
+    // 3. 결과를 출력합니다.
+    console.log(is_checked);
+  };
 
   //좋아요||싫어요 배열화
-  const _userInterest = (checked, h) => {
-    if (checked) {
-      if (evalue?.length < 3) {
-        setEvalue([...evalue, h]);
-      } else {
-        window.alert("최대 3개까지 선택 가능합니다:)");
-        setEvalue([...evalue, h]);
-      }
-    } else if (!checked) {
-      setEvalue(evalue?.filter((el) => el !== h));
-    }
-  };
+  // const _userInterest = (checked, h) => {
+  //   if (checked) {
+  //     if (evalue?.length < 3) {
+  //       setEvalue([...evalue, h]);
+  //     } else {
+  //       window.alert("최대 3개까지 선택 가능합니다:)");
+  //       setEvalue([...evalue, h]);
+  //     }
+  //   } else if (!checked) {
+  //     setEvalue(evalue?.filter((el) => el !== h));
+  //   }
+  // };
 
   //모달 오픈 state
   const [isOpen, setIsOpen] = useState(false);
@@ -78,6 +76,7 @@ const Evaluation = (props) => {
   const [report, setReport] = useState("");
   const [rUserId, setRUserId] = useState("");
   const [reportdone, setReportDone] = useState("");
+  // console.log(report, rUserId);
 
   //후기 작성 & 다른 사람 평가
   const addReview = () => {
@@ -90,7 +89,9 @@ const Evaluation = (props) => {
     for (var i = 0; i < evalue.length; i++) {
       formData.append("evalues[]", evalue[i]);
     }
-
+    for (var pair of formData.entries()) {
+      console.log(pair[0] + ", " + pair[1]);
+    }
     dispatch(mypageActions.addReviewDB(formData, postId));
     // history.push("/mypage");
   };
@@ -153,46 +154,35 @@ const Evaluation = (props) => {
 
                   <Grid column>
                     <SelectBox>
-                      {/* 좋아요 */}
-                      {rate.map((h, j) => {
-                        return (
-                          <>
-                            <input
-                              id={h.id}
-                              type="checkbox"
-                              name={i}
-                              value={h.value}
-                              onChange={(e) => {
-                                //배열안에서 그 위치에 값만 바뀌고
-                                //다음 클릭 시 계속 추가되는
-                                // setGood(e.target.value);
-                                setEvalue([...evalue, e.target.value]);
-                                //api
-                                // _userInterest(e.target.checked, e.target.value);
-                              }}
-                              checked={evalue.includes(h.data) ? true : false}
-                            />
-                            <label>
-                              <Select>{h.data}</Select>
-                            </label>
-                          </>
-                        );
-                      })}
+                      <Grid margin="0px 0px 32px 0px" row>
+                        {/* 좋아요 */}
+                        <input
+                          id={m._id}
+                          type="radio"
+                          name={i}
+                          value={1}
+                          onChange={(e) => {
+                            setEvalue(e.target.value);
+                          }}
+                        />
+                        <label>
+                          <Select>좋아요</Select>
+                        </label>
 
-                      {/* 싫어요
-                      <input
-                        id={i}
-                        type="radio"
-                        name={i}
-                        value="시러요"
-                        onChange={(e) => {
-                          setBad(e.target.value);
-                          setEvalue([...evalue, bad]);
-                        }}
-                      />
-                      <label>
-                        <Select>싫어요</Select>
-                      </label> */}
+                        {/* 싫어요 */}
+                        <input
+                          id={m._id}
+                          type="radio"
+                          name={i}
+                          value={-1}
+                          onChange={(e) => {
+                            setEvalue(e.target.value);
+                          }}
+                        />
+                        <label>
+                          <Select>싫어요</Select>
+                        </label>
+                      </Grid>
                     </SelectBox>
 
                     {/* 신고하기 */}
@@ -283,4 +273,23 @@ const Report = styled.div`
   border-radius: 5px;
   background: ${(props) => (props.report ? "#3477F6" : "white")};
   color: ${(props) => (props.report ? "white" : "black")};
+`;
+const RadioInput = styled.input`
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+
+  border: 2px solid #999;
+  margin-right: 5px;
+
+  position: relative;
+  top: 4px;
+
+  :checked {
+    border: 5px solid #5796f7;
+  }
 `;

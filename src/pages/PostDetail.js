@@ -12,13 +12,13 @@ import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 import FooterMenu from "../shared/FooterMenu";
 import GoBack from "../elements/GoBack";
-import { AiOutlineConsoleSql } from "react-icons/ai";
 
 const PostDetail = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.userInfo);
   const userId = useSelector((state) => state.user.userInfo.userId);
+
   const [isOpen, setIsOpen] = React.useState(false);
   const [isOpen2, setIsOpen2] = React.useState(false);
   const [isOpen3, setIsOpen3] = React.useState(false);
@@ -29,12 +29,18 @@ const PostDetail = (props) => {
   const params = useParams();
   const postOwner = post?.userId;
   const isMe = userId === postOwner ? true : false;
-  const postId = params.postId; //게시물 번호
- 
- //강퇴당한유저 킥 데이터가 이상하게 배열로 2겹임 ..
-  const banUser = post?.banUserList[0]?.filter((u) =>
-  u.includes([userId]))
- 
+
+  //강퇴당한유저 킥 데이터가 이상하게 배열로 2겹임 ..
+  const banUser = post?.banUserList[0]?.filter((u) => u.includes([userId]));
+
+  const postId = post?.roomId; //게시물 번호(룸 아이디)
+
+  //게시물 삭제
+  const deleteone = (e) => {
+    dispatch(mypageActions.deletePostDB(postId));
+    history.push("/main");
+  };
+
   const [state, setState] = React.useState({
     center: {
       lat: 33.450701,
@@ -44,19 +50,16 @@ const PostDetail = (props) => {
     isLoading: true,
   });
 
-  const deleteone = (e) => {
-    dispatch(mypageActions.deletePostDB(post.roomId));
-    history.push("/main");
-  };
   const joinRoom = () => {
     dispatch(roomActions.joinRoomDB(post.roomId, postId));
   };
+
   const roomDone = () => {
     dispatch(roomActions.roomDoneDB(postId));
   };
-  const joinCancle = () =>{
-    dispatch(roomActions.joinCancleDB(post.roomId, postId))
-  }
+  const joinCancle = () => {
+    dispatch(roomActions.joinCancleDB(post.roomId, postId));
+  };
 
   React.useEffect(() => {
     if (navigator.geolocation) {
@@ -101,9 +104,9 @@ const PostDetail = (props) => {
     dispatch(userActions.isLoginDB());
   }, []);
 
-  if(banUser){
-   window.alert('강퇴당함 ')
-    history.push('/main')
+  if (banUser) {
+    window.alert("강퇴당함 ");
+    history.push("/main");
   }
 
   if (!post) return;
@@ -115,34 +118,36 @@ const PostDetail = (props) => {
     <>
       <Header>
         <GoBack gback _onClick={() => history.goBack()} />
-  
-        
+
         {/*  삭제버튼  */}
-       
+
         {isMe ? (
           <>
-          <Btnbox>
-          {post.status===true &&<EndBtn onClick={roomDone}>모집완료</EndBtn>}
-            <DelBtn
-          
-              onClick={() => {
-                setIsOpen3(true);
-              }}
-            >
-              삭제
-            </DelBtn>
+            <Btnbox>
+              {post.status === true && (
+                <EndBtn onClick={roomDone}>모집완료</EndBtn>
+              )}
+              <DelBtn
+                onClick={() => {
+                  setIsOpen3(true);
+                }}
+              >
+                삭제
+              </DelBtn>
             </Btnbox>
           </>
         ) : (
           ""
         )}
-  
+
         {/* <h2>여기여기 붙어라</h2> */}
       </Header>
       <Container>
         <ProfileBox>
-      
-        {!isMe && userCheck.length === 1 && <button onClick={joinCancle}> 참여취소</button>}<Image
+          {!isMe && userCheck.length === 1 && (
+            <button onClick={joinCancle}> 참여취소</button>
+          )}
+          <Image
             margin="0px 15px 0px 0px"
             shape="circle"
             src={post.userImg}
@@ -151,6 +156,7 @@ const PostDetail = (props) => {
               setIsOpen(true);
             }}
           />
+          {/* 작성자 프로필 모달 */}
           <Modal open={isOpen}>
             <ModalData post={post.nowMember} onClose={() => setIsOpen(false)} />
           </Modal>
@@ -188,6 +194,7 @@ const PostDetail = (props) => {
                       setIsOpen2(true);
                     }}
                   />
+                  {/* 참여자 프로필 모달 */}
                   <Modal open={isOpen2}>
                     <ModalData
                       Members
@@ -227,8 +234,8 @@ const PostDetail = (props) => {
           //참여중이 아니거나 모집중일경우 참여하기 버튼
           userCheck.length === 0 &&
           post.status === true && (
-            <ButtonBox onClick={()=>setIsOpen4(true)}>
-              <FooterMenu next text={"참여하기"} ></FooterMenu>
+            <ButtonBox onClick={() => setIsOpen4(true)}>
+              <FooterMenu next text={"참여하기"}></FooterMenu>
             </ButtonBox>
           )
         )}
@@ -244,8 +251,8 @@ const PostDetail = (props) => {
         />
       </Modal>
 
-   {/* 채팅방 이동 확인 창(채팅하기 버튼에 모달 적용 전) */}
-   <Modal open={isOpen4}>
+      {/* 채팅방 이동 확인 창(채팅하기 버튼에 모달 적용 전) */}
+      <Modal open={isOpen4}>
         <ModalData
           Check
           text="모임에 참여하시겠어요?"
@@ -264,11 +271,10 @@ const Container = styled.div`
 `;
 
 const Btnbox = styled.div`
-display: flex;
-flex-direction: row;
-margin-right: 25vw;
-`
-
+  display: flex;
+  flex-direction: row;
+  margin-right: 25vw;
+`;
 
 const ProfileBox = styled.div`
   padding: 24px 24px 24px 24px;
@@ -312,10 +318,10 @@ const ButtonBox = styled.div`
 `;
 
 const DelBtn = styled.div`
-font-size: 16px;
-font-weight: 700;
-margin: 5px 0px 0px 12px;
-`
+  font-size: 16px;
+  font-weight: 700;
+  margin: 5px 0px 0px 12px;
+`;
 
 const LiveBox = styled.div`
   padding: 24px;
@@ -331,7 +337,7 @@ const DetailMap = styled.div`
 `;
 
 const EndBtn = styled.div`
-  background-color:#0ed88b ;
+  background-color: #0ed88b;
   display: flex;
   align-items: center;
   color: white;

@@ -1,9 +1,10 @@
 import React from "react";
 import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
-import { Grid, Text, GoBack } from "../elements/Index";
+import { Grid, Text, Image } from "../elements/Index";
 import styled from "styled-components";
 import { useMap } from "react-kakao-maps-sdk";
-import Image from "../elements/Image";
+import { HiOutlineX } from "react-icons/hi";
+import { history } from "../redux/configStore";
 
 function KakaoMap(props) {
   const { MainMap, UserLoca, post, _onClick } = props;
@@ -90,6 +91,17 @@ const Close = styled.button``;
 
 const EventMarkerContainer = (props) => {
   const [isclick, setIsClicked] = React.useState(false);
+
+  const level = [
+    { id: 1, level: 1, image: <Image src="../img/red.png" /> },
+    { id: 2, level: 2, image: <Image src="../img/orange.png" /> },
+    { id: 3, level: 3, image: <Image src="../img/yellow.png" /> },
+    { id: 4, level: 4, image: <Image src="../img/green.png" /> },
+    { id: 5, level: 5, image: <Image src="../img/skyblue.png" /> },
+    { id: 6, level: 6, image: <Image src="../img/blue.png" /> },
+    { id: 7, level: 7, image: <Image src="../img/purple.png" /> },
+  ];
+
   return (
     <>
       <MapMarker
@@ -108,20 +120,50 @@ const EventMarkerContainer = (props) => {
         position={{ lat: props.latitude, lng: props.longitude }} // 마커를 표시할 위치
       >
         {isclick && (
-          <Grid bg="white" padding="15px" br="10px">
-            <Grid row>
-              <Image src={props.userImg} size={36}></Image>
-              {props.nickName}
+          <Grid
+            bg="white"
+            padding="15px"
+            br="10px"
+            width="173px"
+            height="126px"
+          >
+            <Grid row justify="right" height="15px">
+              <HiOutlineX size={20} onClick={() => setIsClicked(false)} />
             </Grid>
-            {props.postDesc}
-            <div>
-              <Close className="close" onClick={() => setIsClicked(false)}>
-                X
-              </Close>
-            </div>
+            <Grid
+              height="30px"
+              _onClick={() => {
+                history.push(`/postdetail/${props._id}`);
+              }}
+            >
+              <Grid row>
+                {level.map((v, i) => {
+                  if (v.level == props.level) return v.image;
+                })}
+                <Text size="14px" bold>
+                  {props.nickName}
+                </Text>
+              </Grid>
+              <Desc>{props.postDesc}</Desc>
+            </Grid>
           </Grid>
         )}
       </CustomOverlayMap>
     </>
   );
 };
+
+const Desc = styled.div`
+  font-size: 14px;
+  width: 120px;
+  /* min-height: 100px; */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; */
+  /* word-wrap: break-word; */
+  line-height: 2em;
+  height: 2.4em;
+  /* white-space: nowrap; */
+`;
