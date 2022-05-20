@@ -126,13 +126,12 @@ const addReviewDB = (formData, postId) => {
 };
 
 //포스트 삭제
-const deletePostDB = (postId) => {
-  console.log(postId);
+const deletePostDB = (roomId) => {
   return async function (dispatch, getState, { history }) {
     await axios({
       method: "delete",
-      url: `https://seuchidabackend.shop/api/postDelete/${postId}`,
-      data: { postId },
+      url: `https://seuchidabackend.shop/api/postDelete/${roomId}`,
+      data: { roomId },
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": `multipart/form-data;`,

@@ -30,13 +30,11 @@ const PostDetail = (props) => {
   const postOwner = post?.userId;
   const isMe = userId === postOwner ? true : false;
   const postId = params.postId; //게시물 번호
-
-  //게시물 삭제
-  const deleteone = (e) => {
-    dispatch(mypageActions.deletePostDB(postId));
-    history.push("/main");
-  };
-
+ 
+ //강퇴당한유저 킥 데이터가 이상하게 배열로 2겹임 ..
+  const banUser = post?.banUserList[0]?.filter((u) =>
+  u.includes([userId]))
+ 
   const [state, setState] = React.useState({
     center: {
       lat: 33.450701,
@@ -46,12 +44,19 @@ const PostDetail = (props) => {
     isLoading: true,
   });
 
+  const deleteone = (e) => {
+    dispatch(mypageActions.deletePostDB(post.roomId));
+    history.push("/main");
+  };
   const joinRoom = () => {
-    dispatch(roomActions.joinRoomDB(post.roomId, params.postId));
+    dispatch(roomActions.joinRoomDB(post.roomId, postId));
   };
   const roomDone = () => {
-    dispatch(roomActions.roomDoneDB(params.postId));
+    dispatch(roomActions.roomDoneDB(postId));
   };
+  const joinCancle = () =>{
+    dispatch(roomActions.joinCancleDB(post.roomId, postId))
+  }
 
   React.useEffect(() => {
     if (navigator.geolocation) {
@@ -96,6 +101,11 @@ const PostDetail = (props) => {
     dispatch(userActions.isLoginDB());
   }, []);
 
+  if(banUser){
+   window.alert('강퇴당함 ')
+    history.push('/main')
+  }
+
   if (!post) return;
   const userCheck = post?.nowMember?.filter((u) =>
     u.memberId?.includes(user.userId)
@@ -105,29 +115,34 @@ const PostDetail = (props) => {
     <>
       <Header>
         <GoBack gback _onClick={() => history.goBack()} />
-
+  
+        
         {/*  삭제버튼  */}
+       
         {isMe ? (
           <>
-            <EndBtn onClick={roomDone}>모집완료</EndBtn>
-            <Button
-              is_delete
-              _onClick={() => {
+          <Btnbox>
+          {post.status===true &&<EndBtn onClick={roomDone}>모집완료</EndBtn>}
+            <DelBtn
+          
+              onClick={() => {
                 setIsOpen3(true);
               }}
             >
               삭제
-            </Button>
+            </DelBtn>
+            </Btnbox>
           </>
         ) : (
           ""
         )}
-
+  
         {/* <h2>여기여기 붙어라</h2> */}
       </Header>
       <Container>
         <ProfileBox>
-          <Image
+      
+        {!isMe && userCheck.length === 1 && <button onClick={joinCancle}> 참여취소</button>}<Image
             margin="0px 15px 0px 0px"
             shape="circle"
             src={post.userImg}
@@ -202,7 +217,7 @@ const PostDetail = (props) => {
           </ButtonBox>
         ) : // 방장이고 참여자일때 채팅하기 버튼
 
-        post.status === false && post.nowMember.length === post.maxMember ? (
+        post.status === false || post.nowMember.length === post.maxMember ? (
           <ButtonBox>
             <FooterMenu is_check text={"참여불가"}></FooterMenu>
           </ButtonBox>
@@ -212,8 +227,8 @@ const PostDetail = (props) => {
           //참여중이 아니거나 모집중일경우 참여하기 버튼
           userCheck.length === 0 &&
           post.status === true && (
-            <ButtonBox>
-              <FooterMenu next text={"참여하기"} event={joinRoom}></FooterMenu>
+            <ButtonBox onClick={()=>setIsOpen4(true)}>
+              <FooterMenu next text={"참여하기"} ></FooterMenu>
             </ButtonBox>
           )
         )}
@@ -229,12 +244,13 @@ const PostDetail = (props) => {
         />
       </Modal>
 
-      {/* 채팅방 이동 확인 창(채팅하기 버튼에 모달 적용 전) */}
-      <Modal open={isOpen4}>
+   {/* 채팅방 이동 확인 창(채팅하기 버튼에 모달 적용 전) */}
+   <Modal open={isOpen4}>
         <ModalData
           Check
           text="모임에 참여하시겠어요?"
-          onClose={() => setIsOpen3(false)}
+          onClose={() => setIsOpen4(false)}
+          join={() => joinRoom()}
         />
       </Modal>
     </>
@@ -246,6 +262,13 @@ export default PostDetail;
 const Container = styled.div`
   padding-top: 70px;
 `;
+
+const Btnbox = styled.div`
+display: flex;
+flex-direction: row;
+margin-right: 25vw;
+`
+
 
 const ProfileBox = styled.div`
   padding: 24px 24px 24px 24px;
@@ -269,9 +292,10 @@ const Header = styled.div`
   background-color: white;
   width: 100%;
   height: 40px;
-  padding: 24px 0px 0px 24px;
+  padding: 24px 24px 0px 24px;
   display: flex;
-  flex-direction: row;
+  /* flex-direction: row; */
+  justify-content: space-between;
 `;
 
 const ButtonBox = styled.div`
@@ -286,16 +310,12 @@ const ButtonBox = styled.div`
   background-color: white;
   width: 100%;
 `;
-const ChatButton = styled.button`
-  width: 342px;
-  height: 54px;
-  background-color: #b0b0b0;
-  border: none;
-  color: white;
-  font-size: 18px;
-  font-weight: bold;
-  border-radius: 5px;
-`;
+
+const DelBtn = styled.div`
+font-size: 16px;
+font-weight: 700;
+margin: 5px 0px 0px 12px;
+`
 
 const LiveBox = styled.div`
   padding: 24px;
@@ -311,7 +331,7 @@ const DetailMap = styled.div`
 `;
 
 const EndBtn = styled.div`
-  background-color: #0ed88b;
+  background-color:#0ed88b ;
   display: flex;
   align-items: center;
   color: white;

@@ -8,43 +8,57 @@ const ModalData = (props) => {
 
   console.log(props);
 
-  //재확인 창
-  if (Check) {
-    return (
-      <Grid width="240px" height="156px" column padding="17px">
-        <Text margin="20px 0px 0px 0px">{text}</Text>
-        <hr
+ //재확인 창
+ if (Check) {
+  return (
+    <Grid width="240px" height="156px" column padding="17px">
+      <Text margin="20px 0px 0px 0px">{text}</Text>
+      <hr
+        style={{
+          width: "240px",
+          borderTop: "1px solid gray",
+          borderBottom: "none",
+          borderLeft: "none",
+          borderRight: "none",
+          margin: "40px 0px 0px 0px",
+        }}
+      />
+      <Grid row justify="center">
+        <Button is_close _onClick={onClose} margin="10px 38px 0px 0px">
+          취소
+        </Button>
+        <div
           style={{
-            width: "240px",
-            borderTop: "1px solid gray",
-            borderBottom: "none",
-            borderLeft: "none",
-            borderRight: "none",
-            margin: "40px 0px 0px 0px",
+            display: "block",
+            width: "1px",
+            height: "57px",
+            backgroundColor: "gray",
+            position: "absolute",
+            bottom: 0,
+            left: "120px",
           }}
         />
-        <Grid row justify="center">
-          <Button is_close _onClick={onClose} margin="10px 38px 0px 0px">
-            취소
-          </Button>
-          <div
-            style={{
-              display: "block",
-              width: "1px",
-              height: "57px",
-              backgroundColor: "gray",
-              position: "absolute",
-              bottom: 0,
-              left: "120px",
-            }}
-          />
-          <Button is_close _onClick={onCheck} margin="10px 0px 0px 38px">
-            확인
-          </Button>
-        </Grid>
+        <Button
+          is_close
+          _onClick={() => {
+            if (props.onCheck) {
+              props.onCheck();
+            }
+            if (props.yes) {
+              props.yes();
+            }
+            if (props.join) {
+              props.join();
+            }
+          }}
+          margin="10px 0px 0px 38px"
+        >
+          확인
+        </Button>
       </Grid>
-    );
-  }
+    </Grid>
+  );
+}
 
   //alert 창
   if (Alert) {
@@ -149,7 +163,7 @@ const ModalData = (props) => {
           </Grid>
         </Grid>
         <Grid row height="auto">
-          {props?.post?.memberCategory.map((h, i) => {
+          {props?.post?.memberCategory?.map((h, i) => {
             return (
               <Text
                 br
@@ -186,12 +200,12 @@ const ModalData = (props) => {
           <Image src="../img/purple.png" />
           <Text margin="0px">{props.post[0].memberNickname}</Text>
           <Text margin="0px">
-            {props.post[0].memberGen}/{props.post[0].memberAgee}
+            {props.post[0]?.memberGen}/{props.post[0].memberAge}
           </Text>
         </Grid>
       </Grid>
       <Grid row height="auto">
-        {props.post[0].memberCategory.map((h, i) => {
+        {props.post[0]?.memberCategory?.map((h, i) => {
           return (
             <Text
               br
