@@ -7,12 +7,22 @@ import Modal from "../components/Modal/Modal";
 import ModalData from "../components/Modal/ModalData";
 
 const PostWrite_1 = (props) => {
+  //앱에서 페이지 새로고침 막기
   document.body.style.overscrollBehavior = "none";
+
   const history = useHistory();
 
   if (history.action === "POP") {
-    history.replace("/main");
+    history.replace("/postcategory");
   }
+
+  //새로고침 시 작성 첫 번째 페이지로 이동
+  // if (document.readyState === "interactive") {
+  //   window.onbeforeunload = function () {
+  //     return "새로고침 경고";
+  //   };
+  //   history.replace("/postcategory");
+  // }
 
   const postCategory = props?.location?.state?.postCategory;
 
@@ -64,6 +74,8 @@ const PostWrite_1 = (props) => {
       setIsOpen3(true);
     }
   }, [postDesc]);
+
+  // console.log(postCategory);
 
   return (
     <div>
@@ -133,14 +145,14 @@ const PostWrite_1 = (props) => {
       </Modal>
       <Modal open={isOpen2}>
         <ModalData
-          Alert2
+          Alert
           text="20자 이하만 가능해요"
           onClose={() => setIsOpen2(false)}
         />
       </Modal>
       <Modal open={isOpen3}>
         <ModalData
-          Alert3
+          Alert
           text="200자 이하만 가능해요"
           onClose={() => setIsOpen3(false)}
         />

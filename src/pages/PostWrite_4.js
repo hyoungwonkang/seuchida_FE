@@ -15,8 +15,16 @@ const PostWrite_4 = (props) => {
   const history = useHistory();
 
   if (history.action === "POP") {
-    history.replace("/main");
+    history.replace("/postcategory");
   }
+
+  //새로고침 시 작성 첫 번째 페이지로 이동
+  // if (document.readyState === "interactive") {
+  //   window.onbeforeunload = function () {
+  //     return "새로고침 경고";
+  //   };
+  //   history.replace("/postcategory");
+  // }
 
   //모달 오픈 state
   const [isOpen, setIsOpen] = React.useState(false);
@@ -68,13 +76,27 @@ const PostWrite_4 = (props) => {
       // 지도를 생성합니다
       const map = new kakao.maps.Map(mapContainer, mapOption);
 
+      const imageSrc = "/img/postpoint.png",
+        imageSize = new kakao.maps.Size(38, 53),
+        imageOption = { offset: new kakao.maps.Point(19, 53) };
+
+      const markerImage = new kakao.maps.MarkerImage(
+          imageSrc,
+          imageSize,
+          imageOption
+        ),
+        markerPosition = new kakao.maps.LatLng(); // 표시용
+
       // 주소-좌표 변환 객체를 생성합니다
-      const geocoder = new kakao.maps.services.Geocoder();
+      const geocoder = new kakao.maps.services.Geocoder(lat, lng);
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////
       //마커 표시
 
-      const marker = new kakao.maps.Marker(), // 클릭한 위치를 표시할 마커입니다
+      const marker = new kakao.maps.Marker({
+          position: markerPosition,
+          image: markerImage,
+        }), // 클릭한 위치를 표시할 마커입니다
         infowindow = new kakao.maps.InfoWindow({ zindex: 1 }); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
 
       // 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
@@ -165,6 +187,7 @@ const PostWrite_4 = (props) => {
         // 마커를 생성하고 지도에 표시합니다
         let marker_search = new kakao.maps.Marker({
           map: map,
+          image: markerImage,
           position: new kakao.maps.LatLng(place.y, place.x),
         });
 

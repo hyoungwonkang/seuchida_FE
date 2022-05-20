@@ -6,13 +6,21 @@ import { Grid, Text, GoBack } from "../elements/Index";
 import Modal from "../components/Modal/Modal";
 import ModalData from "../components/Modal/ModalData";
 
-const PostCategory = (prop) => {
+const PostCategory = () => {
   document.body.style.overscrollBehavior = "none";
   const history = useHistory();
 
   if (history.action === "POP") {
-    history.replace("/main");
+    history.replace("/postcategory");
   }
+
+  //새로고침 시 작성 첫 번째 페이지로 이동
+  // if (document.readyState === "interactive") {
+  //   window.onbeforeunload = function () {
+  //     return "새로고침 경고";
+  //   };
+  //   history.replace("/main");
+  // }
 
   //모달 오픈 state
   const [isOpen, setIsOpen] = React.useState(false);
@@ -58,6 +66,7 @@ const PostCategory = (prop) => {
       history.push("/postwrite1");
     }
   };
+  // console.log(postCategory);
 
   return (
     <Grid>

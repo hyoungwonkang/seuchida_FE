@@ -17,8 +17,16 @@ const PostWrite_2 = (props) => {
   const history = useHistory();
 
   if (history.action === "POP") {
-    history.replace("/main");
+    history.replace("/postcategory");
   }
+
+  //새로고침 시 작성 첫 번째 페이지로 이동
+  // if (document.readyState === "interactive") {
+  //   window.onbeforeunload = function () {
+  //     return "새로고침 경고";
+  //   };
+  //   history.replace("/postcategory");
+  // }
 
   //모달 오픈 state
   const [isOpen, setIsOpen] = React.useState(false);
@@ -89,7 +97,7 @@ const PostWrite_2 = (props) => {
 
   //유효성 검사
   const check = (e) => {
-    if (memberGender === "" || memberAge === "") {
+    if (memberGender === "" || memberAge === "" || !showOptions) {
       setIsOpen(true);
     } else {
       history.push("/postwrite3");
@@ -103,6 +111,7 @@ const PostWrite_2 = (props) => {
       ele.value = ele.value.replace(regExp, "");
     }
   };
+  // console.log(postCategory, postTitle, postDesc);
 
   return (
     <Grid>
@@ -277,7 +286,7 @@ const PostWrite_2 = (props) => {
       </Modal>
       <Modal open={isOpen2}>
         <ModalData
-          Alert2
+          Alert
           text="2 ~ 30명만 가능해요"
           onClose={() => setIsOpen2(false)}
         />
