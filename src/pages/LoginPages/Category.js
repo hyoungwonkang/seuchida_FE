@@ -7,7 +7,7 @@ import FooterMenu from "../../shared/FooterMenu";
 import { useHistory } from "react-router-dom";
 
 const Category = (props) => {
-  console.log(props);
+  // console.log(props);
   const history = useHistory();
   const dispatch = useDispatch();
 

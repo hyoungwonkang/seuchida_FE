@@ -97,6 +97,7 @@ const PostWrite_1 = (props) => {
       </Text>
       <Grid padding="8px 0px 0px 24px">
         <Input
+          bg="#F1F1F5"
           size="16px"
           multiLine
           height="160px"

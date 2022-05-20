@@ -11,7 +11,6 @@ import ModalData from "../../components/Modal/ModalData";
 import { AiFillPlusCircle } from "react-icons/ai";
 
 const EditProfile = (props) => {
-  console.log(props);
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -154,13 +153,13 @@ const EditProfile = (props) => {
             <div className="calendarBox">
               <Age
                 type="number"
+                placeholder="나이"
                 style={{
                   width: "213px",
                   height: "56px",
                   boxSizing: "border-box",
                   borderRadius: "5px",
                   border: "1px solid #ddd",
-                  placeholder: "나이",
                 }}
                 onChange={selectAge}
                 value={age || ""}

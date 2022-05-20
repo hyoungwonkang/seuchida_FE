@@ -9,7 +9,7 @@ import ModalData from "../../components/Modal/ModalData";
 import { AiFillPlusCircle } from "react-icons/ai";
 
 const AddProfile = (props) => {
-  console.log(props);
+  // console.log(props);
   const history = useHistory();
 
   //SignupLoca에서 받은 값
@@ -137,6 +137,7 @@ const AddProfile = (props) => {
             <div className="calendarBox">
               <Age
                 type="number"
+                placeholder="나이"
                 style={{
                   width: "213px",
                   height: "56px",

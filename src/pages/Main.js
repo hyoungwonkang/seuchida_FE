@@ -17,7 +17,7 @@ const Main = () => {
   const review = useSelector((state) => state.post.list.filterRe);
   const user = useSelector((state) => state.user);
   const post = useSelector((state) => state.post.list);
-  console.log(post);
+  // console.log(post);
   const dispatch = useDispatch();
 
   const [state, setState] = React.useState({

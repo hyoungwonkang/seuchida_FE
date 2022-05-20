@@ -104,7 +104,7 @@ const PostDetail = (props) => {
     u.memberId?.includes(user.userId)
   );
 
-  console.log(userCheck);
+  // console.log(userCheck);
 
   return (
     <>
@@ -164,7 +164,7 @@ const PostDetail = (props) => {
           <div className="otherProfile">
             {post?.nowMember?.map((m, i) => {
               return (
-                <div key={m._id}>
+                <div key={m + i}>
                   <Image
                     shape="circle"
                     src={m.memberImg}
