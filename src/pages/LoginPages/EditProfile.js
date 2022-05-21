@@ -104,6 +104,13 @@ const EditProfile = (props) => {
 
   //새로고침 시 작성 첫 번째 페이지로 이동
   if (document.readyState === "interactive") {
+    //로컬 값 날림
+    localStorage.removeItem("address");
+    localStorage.removeItem("nickName");
+    localStorage.removeItem("gender");
+    localStorage.removeItem("age");
+    localStorage.removeItem("content");
+    //새로고침 경고
     window.onbeforeunload = function () {
       return "새로고침 경고";
     };
@@ -112,7 +119,7 @@ const EditProfile = (props) => {
 
   return (
     <Grid>
-      <GoBack text="프로필 수정" />
+      <GoBack text="프로필 수정" path="/signuploca" />
 
       <Grid column height="650px">
         <Grid height="auto" column margin="30px 0px">
@@ -125,7 +132,7 @@ const EditProfile = (props) => {
           />
           <FileUpload>
             <label htmlFor="image">
-              <AiFillPlusCircle size={32} />
+              <AiFillPlusCircle size={32} color="#5796F7" />
             </label>
             <input
               type="file"
@@ -167,6 +174,8 @@ const EditProfile = (props) => {
                   boxSizing: "border-box",
                   borderRadius: "5px",
                   border: "1px solid #ddd",
+                  placeholder: "나이",
+                  padding: "12px 10px",
                 }}
                 onChange={selectAge}
                 value={age || ""}
@@ -194,12 +203,7 @@ const EditProfile = (props) => {
           <Link
             to={{
               state: {
-                // address,
                 profile,
-                // nickName,
-                // gender,
-                // age,
-                // content,
               },
             }}
           >

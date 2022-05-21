@@ -12,9 +12,6 @@ const AddProfile = (props) => {
   // console.log(props);
   const history = useHistory();
 
-  //SignupLoca에서 받은 값
-  const address = props?.location?.state?.address;
-
   //모달 오픈 state
   const [isOpen, setIsOpen] = React.useState(false);
   const [isOpen2, setIsOpen2] = React.useState(false);
@@ -28,7 +25,6 @@ const AddProfile = (props) => {
   const [content, setContent] = useState(localStorage.getItem("content"));
 
   //로컬 값 저장
-  // localStorage.setItem("profile", profile);
   localStorage.setItem("nickName", nickName);
   localStorage.setItem("gender", gender);
   localStorage.setItem("age", age);
@@ -95,7 +91,7 @@ const AddProfile = (props) => {
   }
 
   return (
-    <Grid stop>
+    <Grid>
       <GoBack text="프로필 작성" path="/signuploca" />
 
       <Grid column height="650px">
@@ -109,7 +105,7 @@ const AddProfile = (props) => {
           />
           <FileUpload>
             <label htmlFor="image">
-              <AiFillPlusCircle size={32} />
+              <AiFillPlusCircle size={32} color="#5796F7" />
             </label>
             <input
               type="file"
@@ -152,6 +148,7 @@ const AddProfile = (props) => {
                   borderRadius: "5px",
                   border: "1px solid #ddd",
                   placeholder: "나이",
+                  padding: "12px 10px",
                 }}
                 onChange={selectAge}
                 pattern="/[^ㄱ-ㅎ가-힣]/g"
@@ -168,7 +165,7 @@ const AddProfile = (props) => {
             margin="0px 0px 100px 100px"
             type="text"
             maxlength="100"
-            placeholder="당신에 대해 조금 더 알려주세요!"
+            placeholder="스친에게 나를 소개해주세요"
             _onChange={selectContent}
             value={content || ""}
           />
@@ -180,12 +177,7 @@ const AddProfile = (props) => {
           <Link
             to={{
               state: {
-                // address,
                 profile,
-                // nickName,
-                // gender,
-                // age,
-                // content,
               },
             }}
           >

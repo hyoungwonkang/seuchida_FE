@@ -266,7 +266,7 @@ const PostDetail = (props) => {
           Check
           text="모임에 참여하시겠어요?"
           onClose={() => setIsOpen4(false)}
-          join={() => joinRoom()}
+          onCheck={() => joinRoom()}
         />
       </Modal>
 
@@ -276,7 +276,7 @@ const PostDetail = (props) => {
           Check
           text="참여 취소하시겠어요?"
           onClose={() => setIsOpen5(false)}
-          out={() => joinCancle()}
+          onCheck={() => joinCancle()}
         />
       </Modal>
     </>

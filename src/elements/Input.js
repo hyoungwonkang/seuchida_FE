@@ -95,7 +95,7 @@ const ElTextarea = styled.textarea`
   ) =>
     props.wd ? `width: 213px; background: white; border: 1px solid #ddd;` : ""};
   height: ${(props) => props.height};
-  padding: 12px 4px;
+  padding: 12px 10px;
   box-sizing: border-box;
   font-size: ${(props) => props.size};
   font-weight: ${(props) => props.bold};
@@ -114,7 +114,7 @@ const ElInput = styled.input`
   ) =>
     props.wd ? `width: 213px; background: white; border: 1px solid #ddd;` : ""};
   height: ${(props) => props.height};
-  padding: 12px 4px;
+  padding: 12px 10px;
   box-sizing: border-box;
   font-size: ${(props) => props.size};
   font-weight: ${(props) => props.bold};

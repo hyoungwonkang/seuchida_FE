@@ -21,8 +21,8 @@ const myPostList = createAction(MY_POST, (myPost) => ({ myPost }));
 const myReviewList = createAction(MY_REVIEW, (myReview) => ({
   myReview,
 }));
-const addReview = createAction(ADD_REVIEW, (review) => ({
-  review,
+const addReview = createAction(ADD_REVIEW, (addreview) => ({
+  addreview,
 }));
 // const addReport = createAction(ADD_REPORT, (report) => ({
 //   report,
@@ -115,6 +115,8 @@ const addReviewDB = (formData, postId) => {
       },
     })
       .then((res) => {
+        const addreview = res.data.reviewList;
+        dispatch(addReview(addreview));
         console.log("addReview에 성공했습니다.", res);
       })
       .catch((err) => {
@@ -179,6 +181,12 @@ export default handleActions(
     [MY_REVIEW]: (state, action) =>
       produce(state, (draft) => {
         draft.myReview = action.payload.myReview;
+      }),
+    [ADD_REVIEW]: (state, action) =>
+      produce(state, (draft) => {
+        draft.myExercise = draft.myExercise.filter(
+          (p) => p.postId !== action.payload.addreview.postId
+        );
       }),
   },
   initialState

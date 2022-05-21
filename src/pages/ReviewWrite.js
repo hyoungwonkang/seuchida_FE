@@ -20,7 +20,7 @@ const ReviewWrite = (props) => {
   const postId = props.match.params.postId;
 
   const [postInfo, setPostInfo] = useState();
-  console.log(postInfo);
+  // console.log(postInfo);
 
   //모달 오픈 state
   const [isOpen, setIsOpen] = React.useState(false);
@@ -44,8 +44,16 @@ const ReviewWrite = (props) => {
   }, []);
 
   const [preview, setPreview] = useState("");
-  const [review, setReview] = useState("");
+  const [review, setReview] = useState(localStorage.getItem("review"));
   const [reviewImg, setReviewImg] = useState("");
+
+  //로컬 값 삭제
+  const remove = () => {
+    localStorage.removeItem("review");
+    // localStorage.removeItem("review");
+    // localStorage.removeItem("review");
+    // localStorage.removeItem("review");
+  };
 
   const selectPreview = (e) => {
     setPreview(window.webkitURL.createObjectURL(e.target.files[0]));
@@ -64,9 +72,10 @@ const ReviewWrite = (props) => {
 
   //빈값 유효성 검사
   const alert = (e) => {
-    if (review === "" || reviewImg === "") {
+    if (review === "") {
       setIsOpen(true);
     } else {
+      localStorage.setItem("review", review);
       history.push("/reviewevalue");
     }
   };
@@ -75,9 +84,26 @@ const ReviewWrite = (props) => {
     window.alert("100글자 이내로 작성해주세요:)");
   }
 
+  //앱에서 페이지 새로고침 막기
+  document.body.style.overscrollBehavior = "none";
+
+  //새로고침 시 작성 첫 번째 페이지로 이동
+  if (document.readyState === "interactive") {
+    //로컬 값 날림
+    localStorage.removeItem("review");
+    // localStorage.removeItem("nickName");
+    // localStorage.removeItem("gender");
+    // localStorage.removeItem("age");
+    // localStorage.removeItem("content");
+    //새로고침 경고
+    window.onbeforeunload = function () {
+      return "새로고침 경고";
+    };
+  }
+
   return (
     <Grid>
-      <GoBack text="후기 작성하기" path="/mypage" />
+      <GoBack text="후기 작성하기" path="/mypage" remove={remove} />
       <Grid height="950px">
         {/* 포스트 내용  */}
         <Grid height="46px" width="342px" margin="0px 0px 0px 25px">

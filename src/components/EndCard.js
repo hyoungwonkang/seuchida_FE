@@ -46,21 +46,25 @@ const EndCard = (props) => {
           })}
         </Grid>
 
-        <Grid row padding="0px 0px 0px 80px">
-          <FaPen
-            color="#C4C4C4"
-            size={14}
-            onClick={() => history.push(`/reviewwrite/${props.postId}`)}
-          />
-          <Text
-            size="12px"
-            // margin="0px 0px 0px 150px"
-            _onClick={() => history.push(`/reviewwrite/${props.postId}`)}
-            post={props.PostId}
-          >
-            후기 작성하기
-          </Text>
-        </Grid>
+        {props?.status === true ? (
+          ""
+        ) : (
+          <Grid row padding="0px 0px 0px 80px">
+            <FaPen
+              color="#C4C4C4"
+              size={14}
+              onClick={() => history.push(`/reviewwrite/${props.postId}`)}
+            />
+            <Text
+              size="12px"
+              // margin="0px 0px 0px 150px"
+              _onClick={() => history.push(`/reviewwrite/${props.postId}`)}
+              post={props.PostId}
+            >
+              후기 작성하기
+            </Text>
+          </Grid>
+        )}
       </Grid>
     </Grid>
   );

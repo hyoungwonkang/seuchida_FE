@@ -80,6 +80,9 @@ const Evaluation = (props) => {
 
   //후기 작성 & 다른 사람 평가
   const addReview = () => {
+    //로컬 제거
+    localStorage.removeItem("review");
+
     const formData = new FormData();
     formData.append("image", reviewImg);
     formData.append("content", review);
@@ -93,7 +96,7 @@ const Evaluation = (props) => {
       console.log(pair[0] + ", " + pair[1]);
     }
     dispatch(mypageActions.addReviewDB(formData, postId));
-    // history.push("/mypage");
+    history.push("/mypage");
   };
 
   //신고하기
@@ -119,11 +122,29 @@ const Evaluation = (props) => {
       });
   };
 
+  //앱에서 페이지 새로고침 막기
+  document.body.style.overscrollBehavior = "none";
+
+  //새로고침 시 작성 첫 번째 페이지로 이동
+  if (document.readyState === "interactive") {
+    //로컬 값 날림
+    localStorage.removeItem("review");
+    // localStorage.removeItem("nickName");
+    // localStorage.removeItem("gender");
+    // localStorage.removeItem("age");
+    // localStorage.removeItem("content");
+    //새로고침 경고
+    window.onbeforeunload = function () {
+      return "새로고침 경고";
+    };
+    history.replace(`reviewwrite/${postId}`);
+  }
+
   if (!postInfo) return;
 
   return (
     <Grid>
-      <GoBack text="후기 작성하기" path="/mypage" />
+      <GoBack text="후기 작성하기" path={`reviewwrite/${postId}`} />
       <Grid height="950px">
         <Text margin="0px 0px 0px 30px" size="24px" bold>
           함께한 분들은 어땠나요?
@@ -203,7 +224,7 @@ const Evaluation = (props) => {
                     Evaluate
                     _report={report}
                     report={setReport}
-                    addreport={() => addReport()}
+                    onCheck={() => addReport()}
                     rUserId={setRUserId}
                     post={modalData}
                     onClose={() => setIsOpen2(false)}

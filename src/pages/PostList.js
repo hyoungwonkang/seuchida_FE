@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Card } from "../components/index";
+import { Button } from "../elements/Index";
 import styled from "styled-components";
 import FooterMenu from "../shared/FooterMenu";
 import GoBack from "../elements/GoBack";
@@ -13,6 +14,23 @@ const PostList = ({ list, params }) => {
 
   // 포스트 목록
   const post_list = useSelector((state) => state.post.list.nearPosts);
+
+  // const division = (arr, n) => {
+  //   const length = arr.length;
+  //   const divide =
+  //     Math.floor(length / n) + (Math.floor(length % n) > 0 ? 1 : 0);
+  //   const newArray = [];
+
+  //   for (let i = 0; i <= divide; i++) {
+  //     // 배열 0부터 n개씩 잘라 새 배열에 넣기
+  //     newArray.push(arr.splice(0, n));
+  //   }
+
+  //   return newArray;
+  // };
+  // const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  // const result = division(arr, 3);
+  // console.log(result);
 
   const [pageNumber, setPageNumber] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
@@ -61,6 +79,7 @@ const PostList = ({ list, params }) => {
     setIsLoading(false);
   }, [pageNumber]);
 
+  //무한 스크롤
   const onIntersect = (entries) => {
     entries.forEach((element) => {
       if (element.isIntersecting) {

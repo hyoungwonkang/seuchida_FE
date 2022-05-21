@@ -73,13 +73,6 @@ const NameCard = () => {
       <Text width="302px" color="#505050" margin="0px 0px 45px 0px">
         {userInfo.userContent}
       </Text>
-      <button
-        onClick={() => {
-          dispatch(mypageActions.signDownDB());
-        }}
-      >
-        탈퇴
-      </button>
     </Grid>
   );
 };
@@ -98,7 +91,12 @@ const MyPage = () => {
 
   const singdown = () => {
     dispatch(mypageActions.signDownDB());
-    // history.push("/");
+    history.push("/");
+  };
+
+  const signout = () => {
+    localStorage.clear();
+    history.push("/");
   };
 
   const level = [
@@ -218,10 +216,10 @@ const MyPage = () => {
           br="1px solid #C4C4C4"
           color=" #C4C4C4"
           _onClick={() => {
-            setIsOpen(true);
+            setIsOpen2(true);
           }}
         >
-          탈퇴하기
+          로그아웃
         </Button>
         <Button
           wd="171px"
@@ -229,10 +227,10 @@ const MyPage = () => {
           br="1px solid #C4C4C4"
           color=" #C4C4C4"
           _onClick={() => {
-            setIsOpen2(true);
+            setIsOpen(true);
           }}
         >
-          로그아웃
+          탈퇴하기
         </Button>
       </Grid>
 
@@ -240,7 +238,7 @@ const MyPage = () => {
       <Modal open={isOpen}>
         <ModalData
           Check
-          yes={() => singdown()}
+          onCheck={() => singdown()}
           onClose={() => setIsOpen(false)}
           text="정말로 탈퇴하시겠습니까?"
         />
@@ -250,6 +248,9 @@ const MyPage = () => {
       <Modal open={isOpen2}>
         <ModalData
           Check
+          onCheck={() => {
+            signout();
+          }}
           onClose={() => setIsOpen2(false)}
           text="로그아웃 하시겠습니까?"
         />

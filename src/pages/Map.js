@@ -18,6 +18,21 @@ const Map = () => {
     errMsg: null,
     isLoading: true,
   });
+  console.log(state);
+
+  // const MyPoint = () => {
+  //   //현재 내 위치 찾기(좌표)
+  //   navigator.geolocation.getCurrentPosition(function (pos) {
+  //     setState((prev) => ({
+  //       ...prev,
+  //       center: {
+  //         lat: pos.coords.latitude, // 위도
+  //         lng: pos.coords.longitude, // 경도
+  //       },
+  //       isLoading: false,
+  //     }));
+  //   });
+  // };
 
   React.useEffect(() => {
     //갱신으로 수정해야됨
@@ -52,6 +67,7 @@ const Map = () => {
             isLoading: false,
           }));
         }
+        // { timeout: 5000, isLoading: false }
       );
     } else {
       // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
@@ -74,6 +90,12 @@ const Map = () => {
           </Title>
         </Header>
         <div style={{ marginTop: "128px" }}>
+          {/* <MyLoca
+            src="./img/locaagain.png"
+            onClick={() => {
+              MyPoint();
+            }}
+          /> */}
           <OpenModal onClick={() => setIsOpen(!isOpen)}>목록보기</OpenModal>
           {isOpen && (
             <Modal>
@@ -155,4 +177,11 @@ const OpenModal = styled.div`
   padding: 8px 16px;
   border-radius: 50px;
   margin-left: 38%;
+`;
+
+const MyLoca = styled.img`
+  position: fixed;
+  bottom: 95px;
+  z-index: 10;
+  margin-left: 85%;
 `;

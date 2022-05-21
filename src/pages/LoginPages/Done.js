@@ -9,7 +9,6 @@ const Done = () => {
 
   // 로컬 지우기
   const remove = () => {
-    // localStorage.setItem("profile", profile);
     localStorage.removeItem("address");
     localStorage.removeItem("nickName");
     localStorage.removeItem("gender");

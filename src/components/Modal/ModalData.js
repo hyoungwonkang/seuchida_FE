@@ -5,7 +5,7 @@ import { HiOutlineX } from "react-icons/hi";
 
 const ModalData = (props) => {
   console.log(props);
-  const { Members, Alert, Check, text, onClose, Evaluate } = props;
+  const { Members, Alert, Check, Evaluate, text, onCheck, onClose } = props;
 
   //재확인 창
   if (Check) {
@@ -40,20 +40,8 @@ const ModalData = (props) => {
           <Button
             is_close
             _onClick={() => {
-              if (props.onCheck) {
-                props.onCheck();
-              }
-              if (props.yes) {
-                props.yes();
-              }
-              if (props.join) {
-                props.join();
-                onClose();
-              }
-              if (props.out) {
-                props.out();
-                onClose();
-              }
+              onCheck();
+              onClose();
             }}
             margin="10px 0px 0px 38px"
           >
@@ -135,7 +123,7 @@ const ModalData = (props) => {
             <Button
               is_close
               _onClick={() => {
-                props.addreport();
+                onCheck();
                 onClose();
               }}
             >
