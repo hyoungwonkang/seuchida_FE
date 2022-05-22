@@ -32,14 +32,9 @@ const PostDetail = (props) => {
 
   //강퇴당한유저 킥 데이터가 이상하게 배열로 2겹임 ..
   const banUser = post?.banUserList[0]?.filter((u) => u.includes([userId]));
+  const postId = params.postId //게시물 번호(룸 아이디)
 
-  const postId = post?.roomId; //게시물 번호(룸 아이디)
 
-  //게시물 삭제
-  const deleteone = (e) => {
-    dispatch(mypageActions.deletePostDB(postId));
-    history.push("/main");
-  };
 
   const [state, setState] = React.useState({
     center: {
@@ -50,6 +45,11 @@ const PostDetail = (props) => {
     isLoading: true,
   });
 
+    //게시물 삭제
+    const deleteone = (e) => {
+      dispatch(mypageActions.deletePostDB(postId));
+      history.push("/main");
+    };
   const joinRoom = () => {
     dispatch(roomActions.joinRoomDB(post.roomId, postId));
   };

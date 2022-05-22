@@ -32,9 +32,7 @@ const joinRoomDB = (roomId, postId) => {
       await axios({
         method: "get",
         url: `https://seuchidabackend.shop/api/postPush/${roomId}`,
-        // data: JSON.stringify({
-        //   postId: postId,
-        // }),
+
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -53,9 +51,6 @@ const joinCancleDB = (roomId, postId) => {
       await axios({
         method: "get",
         url: `https://seuchidabackend.shop/api/postPushCancle/${roomId}`,
-        // data: JSON.stringify({
-        //   postId: postId,
-        // }),
         headers: {
           authorization: `Bearer ${token}`,
         },
