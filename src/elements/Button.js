@@ -35,13 +35,13 @@ const Button = (props) => {
     border_right: border_right,
     color: color,
   };
-  if (is_float) {
-    return (
-      <React.Fragment>
-        <FloatButton onClick={_onClick}>{text ? text : children}</FloatButton>
-      </React.Fragment>
-    );
-  }
+  // if (is_float) {
+  //   return (
+  //     <React.Fragment>
+  //       <FloatButton onClick={_onClick}>{text ? text : children}</FloatButton>
+  //     </React.Fragment>
+  //   );
+  // }
   if (is_delete) {
     return (
       <React.Fragment>
@@ -101,23 +101,23 @@ const ElButton = styled.button`
   ${(props) => (props.right ? `float: right` : "")}
 `;
 
-const FloatButton = styled.button`
-  width: 50px;
-  height: 50px;
-  padding: 4px;
-  background-color: #5796f7;
-  box-sizing: border-box;
-  font-size: 36px;
-  font-weight: 800;
-  position: fixed;
-  bottom: 100px;
-  left: 330px;
-  text-align: center;
-  vertical-align: middle;
-  border: none;
-  border-radius: 50px;
-  z-index: 1000;
-`;
+// const FloatButton = styled.button`
+//   width: 50px;
+//   height: 50px;
+//   padding: 4px;
+//   background-color: #5796f7;
+//   box-sizing: border-box;
+//   font-size: 36px;
+//   font-weight: 800;
+//   position: fixed;
+//   bottom: 100px;
+//   left: 330px;
+//   text-align: center;
+//   vertical-align: middle;
+//   border: none;
+//   border-radius: 50px;
+//   z-index: 1000;
+// `;
 
 const DeleteButton = styled.button`
   width: 57px;

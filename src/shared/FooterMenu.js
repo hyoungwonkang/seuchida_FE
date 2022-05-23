@@ -7,6 +7,8 @@ const FooterMenu = (props) => {
   const history = useHistory();
   const { next, is_check, __onClick } = props;
 
+  const [click, setClick] = React.useState("");
+
   if (next) {
     return (
       <Btn>
@@ -46,34 +48,53 @@ const FooterMenu = (props) => {
     <Container>
       <MenuBox>
         <Menu
-          onClick={() => {
-            // history.push("/main");
+          onClick={(e) => {
+            setClick("main");
             window.location.href = "/main";
           }}
         >
-          홈
+          {click === "main" ? (
+            <img alt="home" src="./img/footer/homeg.png" />
+          ) : (
+            <img alt="home" src="./img/footer/home.png" />
+          )}
         </Menu>
         <Menu
           onClick={() => {
-            // history.push("/map");
-            window.location.href = "/map";
+            setClick("map");
+            history.push("/map");
+            // window.location.href = "/map";
           }}
         >
-          내주변
+          {click === "map" ? (
+            <img alt="around" src="./img/footer/aroundg.png" />
+          ) : (
+            <img alt="around" src="./img/footer/around.png" />
+          )}
         </Menu>
         <Menu
           onClick={() => {
+            setClick("chat");
             history.push("/chatlist");
           }}
         >
-          채팅
+          {click === "chat" ? (
+            <img alt="chat" src="./img/footer/chatg.png" />
+          ) : (
+            <img alt="chat" src="./img/footer/chat.png" />
+          )}
         </Menu>
         <Menu
-          onClick={() => {
+          onClick={(e) => {
+            setClick("mypage");
             history.push("/mypage");
           }}
         >
-          프로필
+          {click === "mypage" ? (
+            <img alt="profile" src="./img/footer/smileg.png" />
+          ) : (
+            <img alt="profile" src="./img/footer/smile.png" />
+          )}
         </Menu>
       </MenuBox>
     </Container>
@@ -99,15 +120,12 @@ const MenuBox = styled.div`
   display: flex;
   justify-content: space-around;
   flex-direction: row;
-  padding: 24px;
+  padding: 15px;
 `;
 
 const Menu = styled.div`
-  font-size: 16px;
-  color: #787878;
   cursor: pointer;
-  display: flex;
-  flex-direction: column;
+  color: ${(props) => (props.onClick ? "white" : "black")};
 `;
 
 const Btn = styled.div`

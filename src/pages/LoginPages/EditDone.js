@@ -13,6 +13,7 @@ const EditDone = () => {
     localStorage.removeItem("gender");
     localStorage.removeItem("age");
     localStorage.removeItem("content");
+    localStorage.removeItem("userInterest");
     history.replace("/mypage");
   };
 

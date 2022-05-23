@@ -10,7 +10,6 @@ import { useParams } from "react-router-dom";
 import { history } from "../redux/configStore";
 import ChatMenu from "./ChatMenu";
 
-
 const token = localStorage.getItem("token");
 const socket = io.connect("https://seuchidabackend.shop", {
   auth: {
@@ -62,7 +61,6 @@ function Chatex(props) {
   useEffect(() => {
     socket.on("broadcast", (data) => {
       setChat((chat) => chat.concat(data));
-
     });
     setnowM(roomInfo?.nowMember?.length);
   }, []);

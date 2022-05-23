@@ -22,15 +22,16 @@ const NameCard = () => {
   }, []);
 
   const userInfo = useSelector((state) => state.user.userInfo);
+  console.log(userInfo);
 
   const level = [
-    { id: 1, level: 1, image: <Image src="./img/red.png" /> },
-    { id: 2, level: 2, image: <Image src="./img/orange.png" /> },
-    { id: 3, level: 3, image: <Image src="./img/yellow.png" /> },
-    { id: 4, level: 4, image: <Image src="./img/green.png" /> },
-    { id: 5, level: 5, image: <Image src="./img/skyblue.png" /> },
-    { id: 6, level: 6, image: <Image src="./img/blue.png" /> },
-    { id: 7, level: 7, image: <Image src="./img/purple.png" /> },
+    { id: 1, level: 1, image: <Image src="./img/badge/red.png" /> },
+    { id: 2, level: 2, image: <Image src="./img/badge/orange.png" /> },
+    { id: 3, level: 3, image: <Image src="./img/badge/yellow.png" /> },
+    { id: 4, level: 4, image: <Image src="./img/badge/green.png" /> },
+    { id: 5, level: 5, image: <Image src="./img/badge/skyblue.png" /> },
+    { id: 6, level: 6, image: <Image src="./img/badge/blue.png" /> },
+    { id: 7, level: 7, image: <Image src="./img/badge/purple.png" /> },
   ];
 
   return (
@@ -80,8 +81,6 @@ const NameCard = () => {
 const MyPage = () => {
   const dispatch = useDispatch();
   const myExercise = useSelector((state) => state.mypage.myExercise);
-  const a = useSelector((state) => state);
-  console.log(a);
   const userInfo = useSelector((state) => state.user.userInfo);
   const point = JSON.stringify(userInfo?.userEvalue);
 
@@ -89,11 +88,14 @@ const MyPage = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [isOpen2, setIsOpen2] = React.useState(false);
 
+  //회원탈퇴
   const singdown = () => {
     dispatch(mypageActions.signDownDB());
     history.push("/");
+    localStorage.clear();
   };
 
+  //로그아웃
   const signout = () => {
     localStorage.clear();
     history.push("/");

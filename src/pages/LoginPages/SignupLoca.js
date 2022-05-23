@@ -6,13 +6,12 @@ import { Grid, Text, Image, GoBack } from "../../elements/Index";
 import FooterMenu from "../../shared/FooterMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as userActions } from "../../redux/modules/user";
-import { Link } from "react-router-dom";
 
 const SignupLoca = () => {
   const dispatch = useDispatch();
 
   //작성||수정 구분
-  const edit = useSelector((state) => state.user?.userInfo.userImg);
+  const edit = useSelector((state) => state.user?.userInfo.nickName);
   const is_edit = edit ? true : false;
 
   //유저정보
@@ -36,6 +35,7 @@ const SignupLoca = () => {
 
   //뒤로가기 시 로컬 값 삭제
   const remove = () => {
+    localStorage.removeItem("profile");
     localStorage.removeItem("address");
     localStorage.removeItem("nickName");
     localStorage.removeItem("gender");

@@ -11,20 +11,19 @@ import ModalData from "../components/Modal/ModalData";
 import axios from "axios";
 
 const Evaluation = (props) => {
-  console.log(props);
-  //4. input 값 배열로 한개씩만 들어가게끔..
-  //5. 라디오 감추고 색으로 선택 + 디자인 수정
-  //6. 유효성 검사 다 평가하게끔
-  //7. 신고하기 선택하면 취소/삭제로 바꾸기 ok
-  //8. 사람 클릭시 프로필 모달 띄우기
   const history = useHistory();
   const dispatch = useDispatch();
 
-  //ReviewWrite에서 받아온 값
-  const postInfo = props?.location?.state?.postInfo;
+  useEffect(() => {
+    dispatch(mypageActions.myPostOneDB(postId));
+  }, []);
+
+  //ReviewWrite로 보낼zzz
+  const postInfo = useSelector((state) => state.mypage.myPostOne);
   const postId = postInfo?.postId;
-  const review = props?.location?.state?.review;
-  const reviewImg = props?.location?.state?.reviewImg;
+  const image = useSelector((state) => state.mypage.reviewImg);
+  const review = localStorage.getItem("review");
+  const reviewImg = localStorage.getItem("image");
 
   //내 아이디 가져오기
   useEffect(() => {
@@ -50,7 +49,7 @@ const Evaluation = (props) => {
     // 2. checked 속성을 체크합니다.
     const is_checked = checkbox.checked;
     // 3. 결과를 출력합니다.
-    console.log(is_checked);
+    // console.log(is_checked);
   };
 
   //좋아요||싫어요 배열화
@@ -78,24 +77,21 @@ const Evaluation = (props) => {
   const [reportdone, setReportDone] = useState("");
   // console.log(report, rUserId);
 
+  //로컬 값 저장
+  localStorage.setItem("image", image);
+  localStorage.setItem("otherId", JSON.stringify(otherId));
+  localStorage.setItem("evalue", JSON.stringify(evalue));
+
   //후기 작성 & 다른 사람 평가
   const addReview = () => {
     //로컬 제거
     localStorage.removeItem("review");
-
-    const formData = new FormData();
-    formData.append("image", reviewImg);
-    formData.append("content", review);
-    for (var i = 0; i < otherId.length; i++) {
-      formData.append("otherId[]", otherId[i]);
-    }
-    for (var i = 0; i < evalue.length; i++) {
-      formData.append("evalues[]", evalue[i]);
-    }
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ", " + pair[1]);
-    }
-    dispatch(mypageActions.addReviewDB(formData, postId));
+    localStorage.removeItem("image");
+    localStorage.removeItem("otherId");
+    localStorage.removeItem("evalue");
+    dispatch(
+      mypageActions.addReviewDB(review, reviewImg, otherId, evalue, postId)
+    );
     history.push("/mypage");
   };
 

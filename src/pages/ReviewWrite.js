@@ -4,55 +4,39 @@ import { useHistory } from "react-router-dom";
 import { Grid, Image, Input, Text, GoBack } from "../elements/Index";
 import FooterMenu from "../shared/FooterMenu";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { AiFillCalendar } from "react-icons/ai";
 import { MdPlace } from "react-icons/md";
 import { BiDumbbell } from "react-icons/bi";
 import { actionCreators as mypageActions } from "../redux/modules/mypage";
 import Modal from "../components/Modal/Modal"; //모달 창
 import ModalData from "../components/Modal/ModalData";
-import axios from "axios";
 
 const ReviewWrite = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const postId = props.match.params.postId;
+  useEffect(() => {
+    dispatch(mypageActions.myPostOneDB(postId));
+  }, []);
 
-  const [postInfo, setPostInfo] = useState();
-  // console.log(postInfo);
+  //이미지 가져오기
+  const postInfo = useSelector((state) => state.mypage.myPostOne);
+  const _preview = localStorage.getItem("image");
+  const postId = props.match.params.postId;
 
   //모달 오픈 state
   const [isOpen, setIsOpen] = React.useState(false);
 
-  useEffect(() => {
-    axios({
-      method: "get",
-      url: `https://seuchidabackend.shop/api/reviewPost/${postId}`,
-      headers: {
-        "Content-Type": `multipart/form-data;`,
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    })
-      .then((res) => {
-        const _postInfo = res.data.post;
-        setPostInfo(_postInfo);
-      })
-      .catch((err) => {
-        console.log("mypostone에 실패했습니다.", err);
-      });
-  }, []);
-
-  const [preview, setPreview] = useState("");
+  const [preview, setPreview] = useState(_preview);
   const [review, setReview] = useState(localStorage.getItem("review"));
   const [reviewImg, setReviewImg] = useState("");
 
   //로컬 값 삭제
   const remove = () => {
     localStorage.removeItem("review");
-    // localStorage.removeItem("review");
-    // localStorage.removeItem("review");
-    // localStorage.removeItem("review");
+    localStorage.removeItem("image");
+    localStorage.removeItem("otherId");
+    localStorage.removeItem("evalue");
   };
 
   const selectPreview = (e) => {
@@ -61,6 +45,7 @@ const ReviewWrite = (props) => {
 
   const selectImage = (e) => {
     setReviewImg(e.target.files[0]);
+    //사진 추가
   };
 
   const writeReview = (e) => {
@@ -75,7 +60,12 @@ const ReviewWrite = (props) => {
     if (review === "") {
       setIsOpen(true);
     } else {
+      //로컬 값 저장
       localStorage.setItem("review", review);
+      //이미지 추가
+      const formData = new FormData();
+      formData.append("image", reviewImg);
+      dispatch(mypageActions.addPhotoDB(formData));
       history.push("/reviewevalue");
     }
   };
@@ -167,17 +157,7 @@ const ReviewWrite = (props) => {
       </Grid>
 
       {/* 다음 버튼 */}
-      <Link
-        to={{
-          state: {
-            review,
-            reviewImg,
-            postInfo,
-          },
-        }}
-      >
-        <FooterMenu next text="다음" state={alert} />
-      </Link>
+      <FooterMenu next text="다음" state={alert} />
 
       {/* 경고창 모달 */}
       <Modal open={isOpen}>

@@ -8,7 +8,7 @@ import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { history } from "../redux/configStore";
 import io from "socket.io-client";
-import { HiPlus } from "react-icons/hi";
+import { RiMessage3Fill } from "react-icons/ri";
 
 const token = localStorage.getItem("token");
 const socket = io.connect("https://seuchidabackend.shop", {
@@ -123,14 +123,22 @@ const Main = () => {
             })}
           </CardBox>
         </ListBox>
-        <Button
-          is_float
-          _onClick={() => {
+        {/* 설문조사 작성 */}
+        <Survey
+          onClick={() => {
+            // history.push("/postcategory");
+          }}
+        >
+          <RiMessage3Fill size={40} color="#FDE333" />
+        </Survey>
+        {/* 프로필 작성 */}
+        <Float
+          onClick={() => {
             history.push("/postcategory");
           }}
         >
-          <HiPlus color="white" padding="10px" />
-        </Button>
+          <img alt="plus" src="./img/addpost.png" width={64} />
+        </Float>
         {/* 푸터 */}
       </Container>
       <FooterMenu />
@@ -182,4 +190,22 @@ const Title = styled.div`
 
 const ReviewBox = styled.section`
   background-color: white;
+`;
+
+const Survey = styled.button`
+  position: fixed;
+  bottom: 170px;
+  left: 312px;
+  background: transparent;
+  border: none;
+  z-index: 1000;
+`;
+
+const Float = styled.button`
+  position: fixed;
+  bottom: 100px;
+  left: 300px;
+  background: transparent;
+  border: none;
+  z-index: 1000;
 `;

@@ -11,7 +11,6 @@ const ChatMenu = ({ comModalOn, closecomModal, roomId, leaveRoom, socket }) => {
   const postId = useSelector((state) => state.room.list.postId);
   const [kick, setKick] = React.useState(false);
 
-  
   React.useEffect(() => {
     dispatch(roomActions.getchatMemberDB(roomId));
   }, []);
@@ -25,7 +24,7 @@ const ChatMenu = ({ comModalOn, closecomModal, roomId, leaveRoom, socket }) => {
   }, []);
   if (kick === true) {
     socket.emit("banUserOut", { roomId: roomId });
-    window.alert('방장에 의해 강퇴 당하셨습니다.')
+    window.alert("방장에 의해 강퇴 당하셨습니다.");
     window.location.href = "/main";
     setKick(false);
   }

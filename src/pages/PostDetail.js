@@ -33,7 +33,7 @@ const PostDetail = (props) => {
 
   //강퇴당한유저 킥 데이터가 이상하게 배열로 2겹임 ..
   const banUser = post?.banUserList[0]?.filter((u) => u.includes([userId]));
-
+  console.log(banUser);
   const postId = params.postId;
 
   //게시물 삭제
