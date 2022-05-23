@@ -19,31 +19,36 @@ const Map = () => {
     isLoading: true,
   });
 
-  React.useEffect(() => {
-    //갱신으로 수정해야됨
-    axios({
-      method: "get",
-      url: `https://seuchidabackend.shop/api/nearPostList`,
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-    }).then((response) => {
-      setPost(response.data.nearPosts);
-    });
 
-    if (navigator.geolocation) {
+ React.useEffect(()=>{
+   axios({
+    method: "get",
+    url: `https://seuchidabackend.shop/api/nearPostList`,
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  }).then((response) => {
+    setPost(response.data.nearPosts);
+  });
+
+ },[])
+
+
+
+  React.useEffect( () => {
+    //갱신으로 수정해야됨
+    if ( navigator.geolocation) {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-      navigator.geolocation.watchPosition(
-        //REcheck 필요~! //react-lazy활용해보자 geolocation값이 채워질 타이밍을 더 찾아봅시당
-        (position) => {
-          setState((prev) => ({
-            ...prev,
-            center: {
-              lat: position.coords.latitude, // 위도
-              lng: position.coords.longitude, // 경도
-            },
-            isLoading: false,
-          }));
+        navigator.geolocation.watchPosition(
+        async (position) => {
+         setState((prev) => ({
+              ...prev,
+              center: {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude, // 경도
+              },
+              isLoading: false,
+            }));
         },
         (err) => {
           setState((prev) => ({
@@ -61,7 +66,7 @@ const Map = () => {
         isLoading: false,
       }));
     }
-  }, [state]);
+  }, [state.isLoading]);
 
   let UserLoca = state.center;
   return (

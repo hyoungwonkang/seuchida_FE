@@ -11,7 +11,7 @@ import ModalData from "../components/Modal/ModalData";
 import axios from "axios";
 
 const Evaluation = (props) => {
-  console.log(props);
+
   //4. input 값 배열로 한개씩만 들어가게끔..
   //5. 라디오 감추고 색으로 선택 + 디자인 수정
   //6. 유효성 검사 다 평가하게끔
@@ -92,7 +92,7 @@ const Evaluation = (props) => {
     for (var pair of formData.entries()) {
       console.log(pair[0] + ", " + pair[1]);
     }
-    dispatch(mypageActions.addReviewDB(formData, postId));
+    // dispatch(mypageActions.addReviewDB(formData, postId));
     // history.push("/mypage");
   };
 

@@ -111,6 +111,26 @@ const getPostlistDB = () => {
     }
   };
 };
+// const getOnePostDB = (postId) => {
+//   return async function (dispatch, getState) {
+//     try {
+//       await axios({
+//         method: "get",
+//         url: `https://seuchidabackend.shop/api/postDetail/${postId}`,
+//         headers: {
+//           authorization: `Bearer ${token}`,
+//         },
+//       }).then((response) => {
+//         console.log(response)
+//         dispatch(setPost(response.data.newPost));
+//       });
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   };
+// };
+
+
 
 const getReviewlistDB = () => {
   return async function (dispatch, getState) {
@@ -130,6 +150,8 @@ const getReviewlistDB = () => {
     }
   };
 };
+
+
 
 export default handleActions(
   {

@@ -19,13 +19,9 @@ const socket = io.connect("https://seuchidabackend.shop", {
 
 const Main = () => {
   const catepost = useSelector((state) => state.post.list.caPost);
-  //이미지 업데이트가 바로 되지 않음
-  //참여하기 버튼 후에도 확인 필요
   const post_list = useSelector((state) => state.post.list.nearPost);
   const review = useSelector((state) => state.post.list.filterRe);
   const user = useSelector((state) => state.user);
-  const post = useSelector((state) => state.post.list);
-  // console.log(post);
   const dispatch = useDispatch();
   const [state, setState] = React.useState({
     center: {
@@ -35,6 +31,12 @@ const Main = () => {
     errMsg: null,
     isLoading: true,
   });
+
+
+  React.useEffect(()=>{
+    dispatch(userActions.isLoginDB());
+    dispatch(postActions.getMainDB());
+  },[])
 
   React.useEffect(() => {
     if (navigator.geolocation) {
@@ -66,10 +68,9 @@ const Main = () => {
         isLoading: false,
       }));
     }
-    dispatch(userActions.isLoginDB());
-    dispatch(postActions.getMainDB());
+  
     // dispatch(postActions.getPostlistDB());
-  }, []);
+  }, [state.isLoading===true]);
 
   return (
     <>

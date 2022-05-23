@@ -9,6 +9,8 @@ import { useParams } from "react-router-dom";
 import { BiDumbbell } from "react-icons/bi";
 import { MdPlace } from "react-icons/md";
 import GoBack from "../elements/GoBack";
+import { history } from "../redux/configStore";
+import { goBack } from "connected-react-router";
 const ReviewList = () => {
   const review = useSelector((state) => state.post.review);
   const dispatch = useDispatch();
@@ -37,8 +39,8 @@ const ReviewList = () => {
   return (
     <>
     
-    <Header><GoBack text={'함께한 스친들의 후기'}></GoBack></Header>
-      <div style={{ margin: "80px 0px" }}>
+    <Header><GoBack  text={'함께한 스친들의 후기'} path='/main'></GoBack></Header>
+      <div style={{ margin: "0px 0px 80px 0px" }}>
         {review_list?.map((review, index) => {
           return (
             <div key={review._id}>
@@ -54,7 +56,7 @@ const ReviewList = () => {
                 />
 
                 <User>
-                  <Master>{review.nickName}</Master>
+                  <Master>{review.nickName==='undefined'? '탈퇴한 회원':review.nickName}</Master>
                   <div style={{ color: "rgba(120, 120, 120, 1)" }}>
                     {review.createdAt}
                   </div>
