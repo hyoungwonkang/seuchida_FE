@@ -48,7 +48,7 @@ const PostDetail = (props) => {
 
     //게시물 삭제
     const deleteone = (e) => {
-      dispatch(mypageActions.deletePostDB(postId));
+      dispatch(mypageActions.deletePostDB(post.roomId));
       history.push("/main");
     };
   const joinRoom = () => {
