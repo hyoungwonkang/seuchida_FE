@@ -7,12 +7,12 @@ const token = localStorage.getItem("token");
 //Actions
 
 const SET_CHAT = "SET_CHAT";
-const ADD_MEMBER = "ADD_MEMBER";
+const SET_MEMBER = "SET_MEMBER";
 
 //Action Creators
 
 const chatRoom = createAction(SET_CHAT, (chat_list) => ({ chat_list }));
-const chatMember = createAction(ADD_MEMBER, (member) => ({ member}));
+const chatMember = createAction(SET_MEMBER, (member) => ({ member}));
 //initialState (default props 같은 것, 기본값)
 
 const initialState = {
@@ -32,15 +32,13 @@ const joinRoomDB = (roomId, postId) => {
       await axios({
         method: "get",
         url: `https://seuchidabackend.shop/api/postPush/${roomId}`,
-        // data: JSON.stringify({
-        //   postId: postId,
-        // }),
+
         headers: {
           authorization: `Bearer ${token}`,
         },
       }).then((response) => {
         console.log(response);
-        window.location.href = `/postdetail/${postId}`;
+        dispatch(chatMember(response.data.postInfo))
       });
     } catch (err) {
       console.log(err);
@@ -53,15 +51,12 @@ const joinCancleDB = (roomId, postId) => {
       await axios({
         method: "get",
         url: `https://seuchidabackend.shop/api/postPushCancle/${roomId}`,
-        // data: JSON.stringify({
-        //   postId: postId,
-        // }),
         headers: {
           authorization: `Bearer ${token}`,
         },
       }).then((response) => {
-        console.log(response);
-        // window.location.href = `/postdetail/${postId}`;
+        console.log(response.data.postInfo);
+        dispatch(chatMember(response.data.postInfo))
       });
     } catch (err) {
       console.log(err);
@@ -85,6 +80,7 @@ const getchatRoomDB = () => {
         console.log(response);
       
         dispatch(chatRoom(response.data));
+
         
       });
     } catch (err) {
@@ -122,6 +118,7 @@ const roomDoneDB = (postId) => {
         },
       }).then((response) => {
         console.log(response.data);
+        dispatch(chatMember(response.data.postInfo))
       });
     } catch (err) {
       console.log(err);
@@ -138,8 +135,9 @@ export default handleActions(
       produce(state, (draft) => {
         draft.list = action.payload.chat_list;
       }),
-    [ADD_MEMBER]: (state, action) =>
+    [SET_MEMBER]: (state, action) =>
       produce(state, (draft) => {
+        draft.list = action.payload.member;
       }),
     
   },

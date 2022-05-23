@@ -8,6 +8,7 @@ import { actionCreators as mypageActions } from "../redux/modules/mypage";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as roomActions } from "../redux/modules/room";
 import { actionCreators as userActions } from "../redux/modules/user";
+import { actionCreators as postActions } from "../redux/modules/post";
 import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 import FooterMenu from "../shared/FooterMenu";
@@ -18,7 +19,7 @@ const PostDetail = (props) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.userInfo);
   const userId = useSelector((state) => state.user.userInfo.userId);
-
+  const update = useSelector((state) => state.room.list)
   const [isOpen, setIsOpen] = React.useState(false);
   const [isOpen2, setIsOpen2] = React.useState(false);
   const [isOpen3, setIsOpen3] = React.useState(false);
@@ -31,15 +32,10 @@ const PostDetail = (props) => {
   const isMe = userId === postOwner ? true : false;
 
   //강퇴당한유저 킥 데이터가 이상하게 배열로 2겹임 ..
-  const banUser = post?.banUserList[0]?.filter((u) => u.includes([userId]));
+  const banUser = post?.banUserList?.filter((u) => u.includes(userId));
+  const postId = params.postId //게시물 번호(룸 아이디)
 
-  const postId = post?.roomId; //게시물 번호(룸 아이디)
 
-  //게시물 삭제
-  const deleteone = (e) => {
-    dispatch(mypageActions.deletePostDB(postId));
-    history.push("/main");
-  };
 
   const [state, setState] = React.useState({
     center: {
@@ -50,8 +46,14 @@ const PostDetail = (props) => {
     isLoading: true,
   });
 
+    //게시물 삭제
+    const deleteone = (e) => {
+      dispatch(mypageActions.deletePostDB(post.roomId));
+      history.push("/main");
+    };
   const joinRoom = () => {
     dispatch(roomActions.joinRoomDB(post.roomId, postId));
+
   };
 
   const roomDone = () => {
@@ -59,14 +61,14 @@ const PostDetail = (props) => {
   };
   const joinCancle = () => {
     dispatch(roomActions.joinCancleDB(post.roomId, postId));
+
   };
 
   React.useEffect(() => {
     if (navigator.geolocation) {
-      // GeoLocation을 이용해서 접속 위치를 얻어옵니다
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          setState((prev) => ({
+      setState((prev) => ({
             ...prev,
             center: {
               lat: position.coords.latitude, // 위도
@@ -91,6 +93,10 @@ const PostDetail = (props) => {
         isLoading: false,
       }));
     }
+     
+  }, [state.isLoading]);
+
+  React.useEffect(()=>{
     axios({
       method: "get",
       url: `https://seuchidabackend.shop/api/postDetail/${params.postId}`,
@@ -102,9 +108,9 @@ const PostDetail = (props) => {
     });
 
     dispatch(userActions.isLoginDB());
-  }, []);
+  },[update])
 
-  if (banUser) {
+  if (banUser?.length===1) {
     window.alert("강퇴당함 ");
     history.push("/main");
   }
