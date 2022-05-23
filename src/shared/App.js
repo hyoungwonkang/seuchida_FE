@@ -5,7 +5,8 @@ import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configStore";
 import {
   Login,
-  Redirect,
+  KakaoRedirect,
+  GoogleRedirect,
   SignupDone,
   SignupLoca,
   AddProfile,
@@ -41,7 +42,8 @@ function App() {
         <ConnectedRouter history={history}>
           <Route path="/" exact component={Login} />
           <Route path="/main" exact component={Main} />
-          <Route path="/oauth/callback/kakao" component={Redirect} />
+          <Route path="/oauth/callback/kakao" component={KakaoRedirect} />
+          <Route path="/oauth/callback/google" component={GoogleRedirect} />
           <Route path="/signupdone" exact component={SignupDone} />
           <Route path="/signuploca" exact component={SignupLoca} />
           <Route path="/addprofile" exact component={AddProfile} />

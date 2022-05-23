@@ -1,26 +1,31 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import FooterMenu from "../shared/FooterMenu";
 import { Grid, Text, GoBack } from "../elements/Index";
 import Modal from "../components/Modal/Modal";
 import ModalData from "../components/Modal/ModalData";
 
-const PostCategory = () => {
+const PostCategory = (props) => {
+  //앱에서 페이지 새로고침 막기
   document.body.style.overscrollBehavior = "none";
   const history = useHistory();
 
-  if (history.action === "POP") {
-    history.replace("/postcategory");
-  }
-
-  //새로고침 시 작성 첫 번째 페이지로 이동
-  // if (document.readyState === "interactive") {
-  //   window.onbeforeunload = function () {
-  //     return "새로고침 경고";
-  //   };
-  //   history.replace("/main");
+  // if (history.action === "POP") {
+  //   history.replace("/postcategory");
   // }
+
+  localStorage.setItem("postCategory", "");
+  localStorage.setItem("postDesc", "");
+  localStorage.setItem("postTitle", "");
+  localStorage.setItem("maxMember", 2);
+  localStorage.setItem("memberAge", "");
+  localStorage.setItem("memberGender", "");
+  localStorage.setItem("address", "");
+  localStorage.setItem("spot", "");
+  localStorage.setItem("datemate", "");
+  localStorage.setItem("latitude", "");
+  localStorage.setItem("longitude", "");
 
   //모달 오픈 state
   const [isOpen, setIsOpen] = React.useState(false);
@@ -58,15 +63,24 @@ const PostCategory = () => {
   const [postCate, setPostCate] = useState("");
   let postCategory = postCate.toString();
 
+  // 뒤로가기 시에도 데이터를 유지합니다.
+  useEffect(() => {
+    setPostCate(window.localStorage.getItem("postCategory"));
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("postCategory", postCategory);
+  }, [postCategory]);
+
   //유효성 검사
   const check = () => {
     if (!postCategory) {
       setIsOpen(true);
     } else {
+      localStorage.setItem("postCategory", postCategory); // 로컬스토리지에 저장합니다.
       history.push("/postwrite1");
     }
   };
-  // console.log(postCategory);
 
   return (
     <Grid>
@@ -88,8 +102,6 @@ const PostCategory = () => {
                   onChange={(e) => {
                     setPostCate(e.target.value);
                   }}
-                  //배열에 data가 있으면 true, 없으면 false
-                  // checked={postCate.includes(item.data) ? true : false}
                 />
                 <label htmlFor={item.id}>
                   <Cate color={+postCate.includes(item.data)}>{item.data}</Cate>
@@ -97,12 +109,16 @@ const PostCategory = () => {
               </div>
             );
           })}
-          <Link to={{ state: { postCategory } }}>
-            <FooterMenu next text="다음" state={check} />
-          </Link>
+          {/* <Link to={{ state: { postCategory } }}> */}
+          <FooterMenu next text="다음" state={check} />
+          {/* </Link> */}
           {/* 경고창 모달 */}
           <Modal open={isOpen}>
-            <ModalData Alert onClose={() => setIsOpen(false)} />
+            <ModalData
+              Alert
+              text="운동을 골라주세요"
+              onClose={() => setIsOpen(false)}
+            />
           </Modal>
         </CateBox>
       </Grid>

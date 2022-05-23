@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { useDispatch } from "react-redux";
 import FooterMenu from "../shared/FooterMenu";
 import Picker from "react-mobile-picker-scroll";
-import { Grid, Text, GoBack } from "../elements/Index";
+import { Grid, Text } from "../elements/Index";
 import Modal from "../components/Modal/Modal";
 import ModalData from "../components/Modal/ModalData";
 
@@ -15,38 +15,53 @@ import { IconContext } from "react-icons";
 import { BsFillCalendarFill } from "react-icons/bs";
 import { AiFillClockCircle } from "react-icons/ai";
 import { FaMapMarkerAlt } from "react-icons/fa";
+import { IoIosArrowBack } from "react-icons/io";
 
 const PostWrite_3 = (props) => {
   document.body.style.overscrollBehavior = "none";
   const history = useHistory();
   const dispatch = useDispatch();
 
-  if (history.action === "POP") {
-    history.replace("/postcategory");
-  }
-
-  //새로고침 시 작성 첫 번째 페이지로 이동
-  // if (document.readyState === "interactive") {
-  //   window.onbeforeunload = function () {
-  //     return "새로고침 경고";
-  //   };
+  // if (history.action === "POP") {
   //   history.replace("/postcategory");
   // }
 
+  //새로고침 시 작성 첫 번째 페이지로 이동
+  if (document.readyState === "interactive") {
+    //로컬 값 날림
+    localStorage.removeItem("address");
+    localStorage.removeItem("spot");
+    localStorage.removeItem("latitude");
+    localStorage.removeItem("longitude");
+    localStorage.removeItem("datemate");
+    localStorage.removeItem("memberAge");
+    localStorage.removeItem("memberGender");
+    localStorage.removeItem("maxMember");
+    localStorage.removeItem("postCategory");
+    localStorage.removeItem("postTitle");
+    localStorage.removeItem("postDesc");
+    localStorage.removeItem("showOptions");
+    //새로고침 경고
+    window.onbeforeunload = function () {
+      return "새로고침 경고";
+    };
+    history.replace("/postcategory");
+  }
+
+  //localStorage에 있는 데이터를 불러옵니다.
+  const address = localStorage.getItem("address");
+  const spot = localStorage.getItem("spot");
+  const latitude = localStorage.getItem("latitude");
+  const longitude = localStorage.getItem("longitude");
+  const memberAge = localStorage.getItem("memberAge");
+  const memberGender = localStorage.getItem("memberGender");
+  const maxMember = localStorage.getItem("maxMember");
+  const postCategory = localStorage.getItem("postCategory");
+  const postTitle = localStorage.getItem("postTitle");
+  const postDesc = localStorage.getItem("postDesc");
+
   //모달 오픈 state
   const [isOpen, setIsOpen] = React.useState(false);
-
-  const memberAge = props?.location?.state?.memberAge;
-  const memberGender = props?.location?.state?.memberGender;
-  const maxMember = props?.location?.state?.maxMember;
-  const postCategory = props?.location?.state?.postCategory;
-  const postTitle = props?.location?.state?.postTitle;
-  const postDesc = props?.location?.state?.postDesc;
-
-  const address = props.location?.state?.address;
-  const spot = props.location?.state?.spot;
-  const latitude = props.location?.state?.latitude;
-  const longitude = props.location?.state?.longitude;
 
   // 날짜
   const [value, setValue] = useState(new Date());
@@ -91,6 +106,10 @@ const PostWrite_3 = (props) => {
     }
     return "(" + day + ")";
   }
+
+  //localStorage에서 가져온 데이터를 사용합니다.
+  // let [dayDate, setDayDate] = useState();
+  // let [pageTime, setPageTime] = useState();
 
   //요일을 포함하는 변수를 만듭니다.
   let dayDate = new_realfinal + " " + getDay();
@@ -159,6 +178,7 @@ const PostWrite_3 = (props) => {
       //유효성 검사
       setIsOpen(true);
     } else {
+      localStorage.setItem("datemate", datemate);
       dispatch(
         postActions.addPostDB(
           address,
@@ -177,6 +197,38 @@ const PostWrite_3 = (props) => {
     }
   };
 
+  // 뒤로가기 시에도 데이터를 유지합니다.
+  // if (showDate) {
+  //   if (showDate === dayDate) {
+  //     localStorage.setItem("dayDate", dayDate);
+  //     localStorage.setItem("show", show);
+  //   }
+  // }
+  // console.log(showDate);
+  // if (showTime) {
+  //   localStorage.setItem("pageTime", pageTime);
+  // }
+
+  // useEffect(() => {
+  //   setDayDate(window.localStorage.getItem("dayDate"));
+  //   setPageTime(window.localStorage.getItem("pageTime"));
+  //   setShowDate(window.localStorage.getItem("showDate"));
+  //   setShowTime(window.localStorage.getItem("showTime"));
+  // }, []);
+
+  // useEffect(() => {
+  //   window.localStorage.setItem("spot", spot);
+  // }, [spot]);
+  // useEffect(() => {
+  //   window.localStorage.setItem("show", show);
+  // }, [show]);
+  // useEffect(() => {
+  //   window.localStorage.setItem("showDate", showDate);
+  // }, [showDate]);
+  // useEffect(() => {
+  //   window.localStorage.setItem("dayDate", dayDate);
+  // }, [dayDate]);
+
   // console.log(address);
   // console.log(datemate);
   // console.log(latitude);
@@ -192,7 +244,18 @@ const PostWrite_3 = (props) => {
 
   return (
     <Grid>
-      <GoBack text="모임 만들기" path="/postcategory" />
+      <Grid row padding="20px">
+        <IoIosArrowBack
+          size={32}
+          onClick={() => {
+            // history.push(props.path);
+            history.push("/postwrite2");
+          }}
+        />
+        <Text size="20px" position margin="0px 0px 0px 40px" bold>
+          모임 만들기
+        </Text>
+      </Grid>
       <Grid margin="24px 0px 40px 0px">
         <ProgressBar>
           <HighLight width={(count / 3) * 100 + "%"} />
@@ -216,31 +279,17 @@ const PostWrite_3 = (props) => {
           </Grid>
           <Grid isFlex_end>
             {!spot ? (
-              <Link
-                to={{
-                  // pathname: '/postwrite4',
-                  state: {
-                    maxMember,
-                    memberAge,
-                    memberGender,
-                    postCategory,
-                    postDesc,
-                    postTitle,
-                  },
+              <div
+                onClick={() => {
+                  history.push("/postwrite4");
                 }}
-                style={{ textDecorationLine: "none" }}
+                style={{
+                  color: "#C4C4C4",
+                  textDecorationLine: "none",
+                }}
               >
-                <div
-                  onClick={() => {
-                    history.push("/postwrite4");
-                  }}
-                  style={{
-                    color: "#C4C4C4",
-                  }}
-                >
-                  조건 선택
-                </div>
-              </Link>
+                조건 선택
+              </div>
             ) : (
               <div
                 onClick={() => {

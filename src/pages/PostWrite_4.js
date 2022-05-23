@@ -14,17 +14,31 @@ const PostWrite_4 = (props) => {
   document.body.style.overscrollBehavior = "none";
   const history = useHistory();
 
-  if (history.action === "POP") {
-    history.replace("/postcategory");
-  }
-
-  //새로고침 시 작성 첫 번째 페이지로 이동
-  // if (document.readyState === "interactive") {
-  //   window.onbeforeunload = function () {
-  //     return "새로고침 경고";
-  //   };
+  // if (history.action === "POP") {
   //   history.replace("/postcategory");
   // }
+
+  //새로고침 시 작성 첫 번째 페이지로 이동
+  if (document.readyState === "interactive") {
+    //로컬 값 날림
+    localStorage.removeItem("address");
+    localStorage.removeItem("spot");
+    localStorage.removeItem("latitude");
+    localStorage.removeItem("longitude");
+    localStorage.removeItem("datemate");
+    localStorage.removeItem("memberAge");
+    localStorage.removeItem("memberGender");
+    localStorage.removeItem("maxMember");
+    localStorage.removeItem("postCategory");
+    localStorage.removeItem("postTitle");
+    localStorage.removeItem("postDesc");
+    localStorage.removeItem("showOptions");
+    //새로고침 경고
+    window.onbeforeunload = function () {
+      return "새로고침 경고";
+    };
+    history.replace("/postcategory");
+  }
 
   //모달 오픈 state
   const [isOpen, setIsOpen] = React.useState(false);
@@ -263,6 +277,10 @@ const PostWrite_4 = (props) => {
       setIsOpen(true);
     } else {
       history.push("/postwrite3");
+      localStorage.setItem("address", address); //localStorage 에 저장 합니다
+      localStorage.setItem("spot", spot); //localStorage 에 저장 합니다
+      localStorage.setItem("latitude", latitude); //localStorage 에 저장 합니다
+      localStorage.setItem("longitude", longitude); //localStorage 에 저장 합니다
     }
   };
 

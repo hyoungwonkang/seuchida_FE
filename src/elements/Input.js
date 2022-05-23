@@ -88,8 +88,9 @@ const ElTextarea = styled.textarea`
   border: none;
   border-radius: 5px;
   background: ${(props) => props.bg};
-  max-width: 390px;
-  width: 342px;
+  max-width: 420px;
+  min-width: 330px;
+  width: 88vw;
   ${(
     props //성별/나이 input 창
   ) =>
@@ -107,8 +108,9 @@ const ElInput = styled.input`
   border: none;
   border-radius: 5px;
   background: #f1f1f5;
-  max-width: 390px;
-  width: 342px;
+  max-width: 420px;
+  min-width: 330px;
+  width: 88vw;
   ${(
     props //성별/나이 input 창
   ) =>

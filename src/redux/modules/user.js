@@ -25,6 +25,7 @@ const initialState = {
   user: "",
   is_login: false,
   userInfo: "",
+  token: "",
 };
 
 const kakaoLogin = (code) => {
@@ -32,6 +33,7 @@ const kakaoLogin = (code) => {
     await axios
       .get(`https://seuchidabackend.shop/oauth/callback/kakao?code=${code}`)
       .then((res) => {
+        console.log(res);
         const token = res.data.user.token;
         const userInfo = res.data.user.userInfo;
         // decode the logged in user
@@ -59,6 +61,45 @@ const kakaoLogin = (code) => {
       })
       .catch((err) => {
         console.log("카카오로그인 에러", err);
+        window.alert("로그인에 실패했습니다");
+        // history.replace('/'); //로그인 실패 시 로그인 화면으로 돌아갑니다
+      });
+  };
+};
+
+const googleLogin = (code) => {
+  return async function (dispatch, getState, { history }) {
+    await axios
+      .get(`https://seuchidabackend.shop/oauth/callback/google/?code=${code}`) //승인된 자바스크립트 원본?
+      .then((res) => {
+        console.log(res);
+        const token = res.data.user.token;
+        const userInfo = res.data.user.userInfo;
+        // // decode the logged in user
+        function parseJwt(token) {
+          if (!token) {
+            return;
+          }
+          const base64Url = token.split(".")[1];
+          const base64 = base64Url.replace("-", "+").replace("_", "/");
+          return JSON.parse(window.atob(base64));
+        }
+
+        // // loggedin user
+        const decode_token = parseJwt(token);
+
+        localStorage.setItem("token", token); //token을 local에 저장합니다
+
+        dispatch(logIn(decode_token, userInfo));
+        console.log("로그인 확인");
+        if (!userInfo.userInterest[0]) {
+          history.replace("/signupdone");
+        } else {
+          history.replace("/main"); //토큰 받았고 로그인됬으니 메인으로 전환합니다
+        }
+      })
+      .catch((err) => {
+        console.log("구글로그인 에러", err);
         window.alert("로그인에 실패했습니다");
         // history.replace('/'); //로그인 실패 시 로그인 화면으로 돌아갑니다
       });
@@ -140,6 +181,7 @@ export default handleActions(
         draft.token = action.payload.token;
         draft.userInfo = action.payload.user;
         draft.is_login = true;
+        console.log(draft.token);
       }),
     [LOG_OUT]: (state, action) => produce(state, (draft) => {}),
     [GET_USER]: (state, action) =>
@@ -159,6 +201,7 @@ export default handleActions(
 const actionCreators = {
   logIn,
   kakaoLogin,
+  googleLogin,
   logOut,
   getUser,
   signupDB,

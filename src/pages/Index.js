@@ -1,5 +1,6 @@
 import Login from "../pages/LoginPages/Login";
-import Redirect from "../shared/Redirect";
+import KakaoRedirect from "../shared/KakaoRedirect";
+import GoogleRedirect from "../shared/GoogleRedirect";
 import SignupDone from "../pages/LoginPages/SignupDone";
 import SignupLoca from "../pages/LoginPages/SignupLoca";
 import AddProfile from "../pages/LoginPages/AddProfile";
@@ -28,7 +29,8 @@ import ReviewDone from "./ReviewDone";
 
 export {
   Login,
-  Redirect,
+  KakaoRedirect,
+  GoogleRedirect,
   SignupDone,
   SignupLoca,
   AddProfile,
