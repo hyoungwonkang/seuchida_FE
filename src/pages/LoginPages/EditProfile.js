@@ -14,9 +14,6 @@ const EditProfile = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  //SignupLoca에서 받은 값
-  const address = props?.location?.state?.address;
-
   //유저 정보
   React.useEffect(() => {
     dispatch(userActions.isLoginDB());
@@ -31,7 +28,7 @@ const EditProfile = (props) => {
     setGender(userInfo?.userGender);
     setAge(userInfo?.userAge);
     setContent(userInfo?.userContent);
-  }, [userInfo]);
+  }, [userInfo, userInfo.userImg]);
 
   //모달 오픈 state
   const [isOpen, setIsOpen] = React.useState(false);
@@ -40,10 +37,16 @@ const EditProfile = (props) => {
   //입력값 state
   const [preview, setPreview] = useState("");
   const [profile, setProfile] = useState("");
-  const [nickName, setNickName] = useState("");
-  const [gender, setGender] = useState("");
-  const [age, setAge] = useState("");
-  const [content, setContent] = useState("");
+  const [nickName, setNickName] = useState(localStorage.getItem("nickName"));
+  const [gender, setGender] = useState(localStorage.getItem("gender"));
+  const [age, setAge] = useState(localStorage.getItem("age"));
+  const [content, setContent] = useState(localStorage.getItem("content"));
+
+  //로컬 값 저장
+  localStorage.setItem("nickName", nickName);
+  localStorage.setItem("gender", gender);
+  localStorage.setItem("age", age);
+  localStorage.setItem("content", content);
 
   const selectPreview = (e) => {
     setPreview(window.webkitURL.createObjectURL(e.target.files[0]));
@@ -81,6 +84,13 @@ const EditProfile = (props) => {
     ) {
       setIsOpen(true);
     } else {
+      //사진 수정
+      const formData = new FormData();
+      formData.append("newUserImg", profile);
+      // for (var pair of formData.entries()) {
+      //   console.log(pair[0] + ", " + pair[1]);
+      // }
+      dispatch(userActions.editPhotoDB(formData));
       history.push("/category");
     }
   };
@@ -97,6 +107,13 @@ const EditProfile = (props) => {
 
   //새로고침 시 작성 첫 번째 페이지로 이동
   if (document.readyState === "interactive") {
+    //로컬 값 날림
+    localStorage.removeItem("address");
+    localStorage.removeItem("nickName");
+    localStorage.removeItem("gender");
+    localStorage.removeItem("age");
+    localStorage.removeItem("content");
+    //새로고침 경고
     window.onbeforeunload = function () {
       return "새로고침 경고";
     };
@@ -105,7 +122,7 @@ const EditProfile = (props) => {
 
   return (
     <Grid>
-      <GoBack text="프로필 수정" />
+      <GoBack text="프로필 수정" path="/signuploca" />
 
       <Grid column height="650px">
         <Grid height="auto" column margin="30px 0px">
@@ -118,7 +135,7 @@ const EditProfile = (props) => {
           />
           <FileUpload>
             <label htmlFor="image">
-              <AiFillPlusCircle size={32} />
+              <AiFillPlusCircle size={32} color="#5796F7" />
             </label>
             <input
               type="file"
@@ -150,20 +167,13 @@ const EditProfile = (props) => {
             </select>
 
             {/* 나이 */}
-            <div className="calendarBox">
+            <div>
               <Age
                 type="number"
                 placeholder="나이"
-                style={{
-                  width: "213px",
-                  height: "56px",
-                  boxSizing: "border-box",
-                  borderRadius: "5px",
-                  border: "1px solid #ddd",
-                }}
                 onChange={selectAge}
-                value={age || ""}
                 pattern="/[^ㄱ-ㅎ가-힣]/g"
+                value={age || ""}
               />
             </div>
           </Option>
@@ -187,12 +197,7 @@ const EditProfile = (props) => {
           <Link
             to={{
               state: {
-                address,
                 profile,
-                nickName,
-                gender,
-                age,
-                content,
               },
             }}
           >
@@ -266,12 +271,10 @@ const Option = styled.div`
 `;
 
 const Age = styled.input`
-  ::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-  ::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
+  width: 213px;
+  height: 56px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  padding: 12px 10px;
 `;

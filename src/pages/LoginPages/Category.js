@@ -5,20 +5,19 @@ import { actionCreators as userActions } from "../../redux/modules/user";
 import { Grid, Text, GoBack } from "../../elements/Index";
 import FooterMenu from "../../shared/FooterMenu";
 import { useHistory } from "react-router-dom";
+import Modal from "../../components/Modal/Modal"; //모달 창
+import ModalData from "../../components/Modal/ModalData";
 
 const Category = (props) => {
-  // console.log(props);
   const history = useHistory();
   const dispatch = useDispatch();
 
   //AddProfile에서 받은 값
-  const get = props.location.state;
-  const address = get?.address;
-  const profile = get?.profile;
-  const nickName = get?.nickName;
-  const gender = get?.gender;
-  const age = get?.age;
-  const content = get?.content;
+  const address = localStorage.getItem("address");
+  const nickName = localStorage.getItem("nickName");
+  const gender = localStorage.getItem("gender");
+  const age = localStorage.getItem("age");
+  const content = localStorage.getItem("content");
 
   //카테고리 리스트
   const CategoryList = [
@@ -52,7 +51,7 @@ const Category = (props) => {
 
   //작성 || 수정 구분
   const userInfo = useSelector((state) => state.user.userInfo);
-  const edit = useSelector((state) => state.user?.userInfo.userImg);
+  const edit = useSelector((state) => state.user?.userInfo.address);
   const is_edit = edit ? true : false;
 
   //유저 정보
@@ -62,8 +61,16 @@ const Category = (props) => {
 
   //수정시, 유저의 이전 관심 태그 보여주기
   React.useEffect(() => {
-    setUserInterest(userInfo?.userInterest);
+    if (is_edit) {
+      setUserInterest(userInfo?.userInterest);
+    } else {
+      setUserInterest(JSON.parse(localStorage.getItem("userInterest")));
+    }
   }, [userInfo]);
+
+  //모달 오픈 state
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen2, setIsOpen2] = React.useState(false);
 
   //유저의 관심 태그 값
   const [userInterest, setUserInterest] = useState([]);
@@ -74,7 +81,7 @@ const Category = (props) => {
       if (userInterest?.length < 3) {
         setUserInterest([...userInterest, item]);
       } else {
-        window.alert("최대 3개까지 선택 가능합니다:)");
+        setIsOpen(true);
       }
     } else if (!checked) {
       setUserInterest(userInterest?.filter((el) => el !== item));
@@ -83,32 +90,43 @@ const Category = (props) => {
 
   //프로필 추가
   const addProfile = () => {
-    const formData = new FormData();
-    formData.append("userImg", profile);
-    formData.append("nickName", nickName);
-    formData.append("userGender", gender);
-    formData.append("userAge", age);
-    formData.append("userContent", content);
-    formData.append("address", address);
-    for (var i = 0; i < userInterest.length; i++) {
-      formData.append("userInterest[]", userInterest[i]);
+    if (userInterest.length === 0) {
+      setIsOpen2(true);
+    } else {
+      dispatch(
+        userActions.addUserDB(
+          nickName,
+          gender,
+          age,
+          content,
+          address,
+          userInterest
+        )
+      );
     }
-    dispatch(userActions.signupDB(formData));
   };
 
   //프로필 수정
   const editProfile = () => {
-    const formData = new FormData();
-    formData.append("newUserImg", profile);
-    formData.append("nickName", nickName);
-    formData.append("userGender", gender);
-    formData.append("userAge", age);
-    formData.append("userContent", content);
-    formData.append("address", address);
-    for (var i = 0; i < userInterest.length; i++) {
-      formData.append("userInterest[]", userInterest[i]);
+    if (userInterest.length === 0) {
+      setIsOpen2(true);
+    } else {
+      dispatch(
+        userActions.editUserDB(
+          nickName,
+          gender,
+          age,
+          content,
+          address,
+          userInterest
+        )
+      );
     }
-    dispatch(userActions.editUserDB(formData));
+  };
+
+  const remove = () => {
+    //뒤로가기 시 로컬 값 저장
+    localStorage.setItem("userInterest", JSON.stringify(userInterest));
   };
 
   //앱에서 페이지 새로고침 막기
@@ -116,6 +134,15 @@ const Category = (props) => {
 
   //새로고침 시 작성 첫 번째 페이지로 이동
   if (document.readyState === "interactive") {
+    //로컬 값 날림
+    localStorage.removeItem("profile");
+    localStorage.removeItem("address");
+    localStorage.removeItem("nickName");
+    localStorage.removeItem("gender");
+    localStorage.removeItem("age");
+    localStorage.removeItem("content");
+    localStorage.removeItem("userInterest");
+    //새로고침 경고
     window.onbeforeunload = function () {
       return "새로고침 경고";
     };
@@ -123,15 +150,21 @@ const Category = (props) => {
   }
 
   return (
-    <Grid stop>
-      <GoBack text="상세 관심사 선택" />
-      <Text margin="0px 0px 0px 30px" size="24px" bold>
-        관심있는 <br />
-        운동을 알려주세요
-      </Text>
-      <Text margin="12px 0px 20px 30px" size="16px" color="gray">
-        내 관심사에 딱 맞는 맞춤형 모임을 추천해 드려요
-      </Text>
+    <Grid>
+      {is_edit ? (
+        <GoBack text="상세 관심사 선택" path="/editprofile" remove={remove} />
+      ) : (
+        <GoBack text="상세 관심사 선택" path="/addprofile" remove={remove} />
+      )}
+      <Grid padding="0px 25px" margin="0px">
+        <Text size="24px" bold margin="0px">
+          관심있는 <br />
+          운동을 알려주세요
+        </Text>
+        <Text size="16px" color="gray">
+          내 관심사에 딱 맞는 맞춤형 모임을 추천해 드려요
+        </Text>
+      </Grid>
 
       {/* 관심사 선택 */}
       <Grid height="auto" column margin="auto">
@@ -161,10 +194,28 @@ const Category = (props) => {
 
           {/* 푸터 */}
           {is_edit ? (
-            <FooterMenu next path="/editdone" text="수정" event={editProfile} />
+            <FooterMenu next text="수정" event={editProfile} />
           ) : (
-            <FooterMenu next path="/done" text="다음" event={addProfile} />
+            <FooterMenu next text="다음" event={addProfile} />
           )}
+
+          {/* 경고창 모달 */}
+          <Modal open={isOpen}>
+            <ModalData
+              Alert
+              onClose={() => setIsOpen(false)}
+              text="최대 3개까지 선택 가능합니다."
+            />
+          </Modal>
+
+          {/* 최소 선택 모달 */}
+          <Modal open={isOpen2}>
+            <ModalData
+              Alert
+              onClose={() => setIsOpen2(false)}
+              text="최소 1개를 선택해 주세요."
+            />
+          </Modal>
         </CateBox>
       </Grid>
     </Grid>
@@ -177,6 +228,7 @@ export default Category;
 const CateBox = styled.div`
   width: 90%;
   height: 100%;
+  margin-top: 10px;
   display: flex;
   flex-wrap: wrap;
   label {

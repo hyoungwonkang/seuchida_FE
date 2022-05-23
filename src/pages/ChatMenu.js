@@ -11,12 +11,8 @@ const ChatMenu = ({ comModalOn, closecomModal, roomId, leaveRoom, socket }) => {
   const postId = useSelector((state) => state.room.list.postId);
   const ownerId = useSelector((state) => state.room.list.owner);
   const userMe = useSelector((state) => state.user.userInfo);
-  const IsOwner = userMe.userId === ownerId
+  const IsOwner = userMe.userId === ownerId;
   const [kick, setKick] = React.useState(false);
-
-
-  
-
 
   React.useEffect(() => {
     socket.on("ban", (data) => {
@@ -27,7 +23,7 @@ const ChatMenu = ({ comModalOn, closecomModal, roomId, leaveRoom, socket }) => {
   }, []);
   if (kick === true) {
     socket.emit("banUserOut", { roomId: roomId });
-    window.alert('방장에 의해 강퇴 당하셨습니다.')
+    window.alert("방장에 의해 강퇴 당하셨습니다.");
     window.location.href = "/main";
     setKick(false);
   }
@@ -42,23 +38,24 @@ const ChatMenu = ({ comModalOn, closecomModal, roomId, leaveRoom, socket }) => {
         </Menu>
         <Menu> 참여자 목록 </Menu>
         <RowBox>
-                <Image src={userMe.userImg} size={50} />
-                <UserBox>{userMe?.nickName}</UserBox>
-              </RowBox>
+          <Image src={userMe.userImg} size={50} />
+          <UserBox>{userMe?.nickName}</UserBox>
+        </RowBox>
         {user_list?.map((user, index) => {
           const banUser = () => {
             socket.emit("banUser", { userId: user.userId });
             // window.location.href = "/main";
-          }; if(user.userId!==userMe.userId)
-          return (
-         <div key={user?._id}>
-              <RowBox>
-                <Image src={user?.userImg} size={50} />
-                <UserBox>{user?.nickName}</UserBox>
-                {IsOwner===true && <button onClick={banUser}>강퇴</button>}
-              </RowBox>
-            </div>
-          );
+          };
+          if (user.userId !== userMe.userId)
+            return (
+              <div key={user?._id}>
+                <RowBox>
+                  <Image src={user?.userImg} size={50} />
+                  <UserBox>{user?.nickName}</UserBox>
+                  {IsOwner === true && <button onClick={banUser}>강퇴</button>}
+                </RowBox>
+              </div>
+            );
         })}
         <OutChat onClick={leaveRoom}>채팅방 나가기</OutChat>
       </Container>
@@ -124,9 +121,7 @@ const Menu = styled.div`
   padding: 20px;
 `;
 
-const KickBtn = styled.div`
-
-`
+const KickBtn = styled.div``;
 
 const UserBox = styled.div`
   display: flex;

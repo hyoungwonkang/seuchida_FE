@@ -20,7 +20,7 @@ function ECslider(props) {
   if (!myEx) return;
 
   return (
-    <Sliders {...settings} style={{ height: "180px", margin: "0px" }}>
+    <Sliders {...settings} style={{ height: "180px" }}>
       {myEx?.map((p, i) => {
         if (i < 5) {
           return <EndCard {...p} key={p?.id} _onClick={props._onClick} />;
@@ -33,16 +33,17 @@ function ECslider(props) {
 export default ECslider;
 
 const Sliders = styled(Slider)`
-  margin: auto;
+  .slick-track {
+    /* height: auto; */
+    /* margin: -10px 0px 0px 0px; */
+  }
   .slider {
     position: relative;
   }
-
   .slider .slick-list {
-    margin: 0 -10px;
+    margin: 0 5px;
   }
-
   .slick-slide {
-    margin: 0 10px;
+    margin-right: 18px;
   }
 `;

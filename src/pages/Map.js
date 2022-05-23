@@ -5,6 +5,7 @@ import { KakaoMap } from "../components";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { Card } from "../components/index";
+
 const Map = () => {
   const history = useHistory();
   const token = localStorage.getItem("token");
@@ -18,6 +19,21 @@ const Map = () => {
     errMsg: null,
     isLoading: true,
   });
+  // console.log(state);
+
+  // const MyPoint = () => {
+  //   //현재 내 위치 찾기(좌표)
+  //   navigator.geolocation.getCurrentPosition(function (pos) {
+  //     setState((prev) => ({
+  //       ...prev,
+  //       center: {
+  //         lat: pos.coords.latitude, // 위도
+  //         lng: pos.coords.longitude, // 경도
+  //       },
+  //       isLoading: false,
+  //     }));
+  //   });
+  // };
 
 
  React.useEffect(()=>{
@@ -79,6 +95,12 @@ const Map = () => {
           </Title>
         </Header>
         <div style={{ marginTop: "128px" }}>
+          {/* <MyLoca
+            src="./img/locaagain.png"
+            onClick={() => {
+              MyPoint();
+            }}
+          /> */}
           <OpenModal onClick={() => setIsOpen(!isOpen)}>목록보기</OpenModal>
           {isOpen && (
             <Modal>
@@ -160,4 +182,11 @@ const OpenModal = styled.div`
   padding: 8px 16px;
   border-radius: 50px;
   margin-left: 38%;
+`;
+
+const MyLoca = styled.img`
+  position: fixed;
+  bottom: 95px;
+  z-index: 10;
+  margin-left: 85%;
 `;

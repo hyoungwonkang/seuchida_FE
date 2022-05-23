@@ -38,8 +38,9 @@ const ReviewList = () => {
 
   return (
     <>
-    
-    <Header><GoBack  text={'함께한 스친들의 후기'} path='/main'></GoBack></Header>
+      <Header>
+        <GoBack text={"함께한 스친들의 후기"} path="/main"></GoBack>
+      </Header>
       <div style={{ margin: "0px 0px 80px 0px" }}>
         {review_list?.map((review, index) => {
           return (
@@ -56,7 +57,11 @@ const ReviewList = () => {
                 />
 
                 <User>
-                  <Master>{review.nickName==='undefined'? '탈퇴한 회원':review.nickName}</Master>
+                  <Master>
+                    {review.nickName === "undefined"
+                      ? "탈퇴한 회원"
+                      : review.nickName}
+                  </Master>
                   <div style={{ color: "rgba(120, 120, 120, 1)" }}>
                     {review.createdAt}
                   </div>
@@ -88,8 +93,8 @@ const ReviewList = () => {
 export default ReviewList;
 
 const Header = styled.div`
-padding: 8px 0px;
-`
+  padding: 8px 0px;
+`;
 
 const ProfileBox = styled.div`
   padding: 24px 24px 10px 24px;

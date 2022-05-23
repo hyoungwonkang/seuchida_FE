@@ -10,7 +10,6 @@ import { useParams } from "react-router-dom";
 import { history } from "../redux/configStore";
 import ChatMenu from "./ChatMenu";
 
-
 const token = localStorage.getItem("token");
 const socket = io.connect("https://seuchidabackend.shop", {
   auth: {
@@ -26,13 +25,17 @@ function Chatex(props) {
   const [message, setMessage] = useState("");
   const [chatlist, setChatlist] = useState([]);
   const [chat, setChat] = useState([]);
-  const [systemMsg, setSystemMsg] = useState([])
+  const [systemMsg, setSystemMsg] = useState([]);
   const [nowM, setnowM] = useState(1);
   const [comModalOn, setcomModalOn] = useState(false);
-  const chattingBox= useRef(null)
+  const chattingBox = useRef(null);
   const scrollToBottom = () => {
     if (chattingBox.current) {
-      chattingBox.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'end' });
+      chattingBox.current.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+        inline: "end",
+      });
     }
   };
   const openModal = () => {
@@ -61,9 +64,9 @@ function Chatex(props) {
     dispatch(roomActions.getchatMemberDB(roomId));
   }, [systemMsg]);
 
-  useEffect(() =>{
-    setnowM(user_list?.length)
-  },[user_list])
+  useEffect(() => {
+    setnowM(user_list?.length);
+  }, [user_list]);
 
   useEffect(() => {
     dispatch(userActions.isLoginDB());
@@ -76,17 +79,15 @@ function Chatex(props) {
   useEffect(() => {
     socket.on("broadcast", (data) => {
       setChat((chat) => chat.concat(data));
-      if(data.name==='System'){
-       setSystemMsg((systemMsg) => systemMsg.concat(data));
+      if (data.name === "System") {
+        setSystemMsg((systemMsg) => systemMsg.concat(data));
       }
     });
- 
   }, []);
 
   useEffect(() => {
     scrollToBottom();
   }, [chat]);
-  
 
   useEffect(() => {
     socket.on("chatlist", (data) => {
@@ -107,13 +108,10 @@ function Chatex(props) {
   const leaveRoom = () => {
     socket.emit("leave", { roomId });
     history.replace("/chatlist");
-
- 
-
   };
 
   return (
-    < >
+    <>
       <ChatMenu
         comModalOn={comModalOn}
         closecomModal={closecomModal}
@@ -303,5 +301,5 @@ const TextBoxMe = styled.div`
 `;
 
 const Space = styled.div`
- height: 79px;
-`
+  height: 79px;
+`;

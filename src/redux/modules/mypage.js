@@ -9,7 +9,9 @@ import axios from "axios";
 const MY_EXERCISE = "MY_EXERCISE";
 const MY_POST = "MY_POST";
 const MY_REVIEW = "MY_REVIEW";
+const MY_POSTONE = "MY_POSTONE";
 const ADD_REVIEW = "ADD_REVIEW";
+const REVIEW_PHOTO = "REVIEW_PHOTO";
 // const ADD_REPORT = "ADD_REPORT";
 
 //Action Creators
@@ -21,8 +23,14 @@ const myPostList = createAction(MY_POST, (myPost) => ({ myPost }));
 const myReviewList = createAction(MY_REVIEW, (myReview) => ({
   myReview,
 }));
-const addReview = createAction(ADD_REVIEW, (review) => ({
-  review,
+const myPostOne = createAction(MY_POSTONE, (postOne) => ({
+  postOne,
+}));
+const addReview = createAction(ADD_REVIEW, (addreview) => ({
+  addreview,
+}));
+const addPhoto = createAction(REVIEW_PHOTO, (image) => ({
+  image,
 }));
 // const addReport = createAction(ADD_REPORT, (report) => ({
 //   report,
@@ -32,7 +40,9 @@ const addReview = createAction(ADD_REVIEW, (review) => ({
 const initialState = {
   myExercise: "",
   myPost: "",
+  myPostOne: "",
   myReview: "",
+  reviewImg: "",
   myReport: "",
 };
 
@@ -101,13 +111,62 @@ const myReviewDB = () => {
   };
 };
 
-//후기 작성(redux확인 필요)
-const addReviewDB = (formData, postId) => {
-  console.log(postId);
+//게시물 한 개
+const myPostOneDB = (postId) => {
+  return async (dispatch, getState, { history }) => {
+    await axios({
+      method: "get",
+      url: `https://seuchidabackend.shop/api/reviewPost/${postId}`,
+      headers: {
+        "Content-Type": `multipart/form-data;`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((res) => {
+        console.log(res.data.post);
+        const postOne = res.data.post;
+        dispatch(myPostOne(postOne));
+      })
+      .catch((err) => {
+        console.log("mypostone에 실패했습니다.", err);
+      });
+  };
+};
+
+//후기 작성
+const addReviewDB = (review, reviewImg, otherId, evalue, postId) => {
   return async (dispatch, getState, { history }) => {
     await axios({
       method: "post",
       url: `https://seuchidabackend.shop/api/review/${postId}`,
+      data: JSON.stringify({
+        content: review,
+        image: reviewImg,
+        otherId: otherId,
+        evalues: evalue,
+      }),
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": `application/json`,
+      },
+    })
+      .then((res) => {
+        const addreview = res.data.reviewList;
+        dispatch(addReview(addreview));
+        console.log("addReview에 성공했습니다.", res);
+      })
+      .catch((err) => {
+        console.log("addReview에 실패했습니다.", err);
+      });
+  };
+};
+
+//사진 추가
+const addPhotoDB = (formData) => {
+  return async (dispatch, getState, { history }) => {
+    await axios({
+      method: "post",
+      url: `https://seuchidabackend.shop/api/reviewImg `,
       data: formData,
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -115,12 +174,12 @@ const addReviewDB = (formData, postId) => {
       },
     })
       .then((res) => {
-        console.log(res);
-        const review = res.data;
-        dispatch(addReview(review));
+        const image = res.data.image;
+        dispatch(addPhoto(image));
+        console.log("사진추가에 성공했습니다.", res);
       })
       .catch((err) => {
-        console.log("addReview에 실패했습니다.", err);
+        console.log("사진추가에 실패했습니다.", err);
       });
   };
 };
@@ -178,14 +237,23 @@ export default handleActions(
       produce(state, (draft) => {
         draft.myPost = action.payload.myPost;
       }),
+    [MY_POSTONE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.myPostOne = action.payload.postOne;
+      }),
     [MY_REVIEW]: (state, action) =>
       produce(state, (draft) => {
         draft.myReview = action.payload.myReview;
       }),
+    [REVIEW_PHOTO]: (state, action) =>
+      produce(state, (draft) => {
+        draft.reviewImg = action.payload.image;
+      }),
     [ADD_REVIEW]: (state, action) =>
       produce(state, (draft) => {
-        draft.myPost.push(action.payload.review);
-        // console.log(action.payload.userInfo);
+        draft.myExercise = draft.myExercise.filter(
+          (p) => p.postId !== action.payload.addreview.postId
+        );
       }),
   },
   initialState
@@ -196,7 +264,9 @@ const actionCreators = {
   myExerciseDB,
   myPostDB,
   myReviewDB,
+  myPostOneDB,
   addReviewDB,
+  addPhotoDB,
   deletePostDB,
   signDownDB,
 };

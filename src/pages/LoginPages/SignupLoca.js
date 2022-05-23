@@ -6,13 +6,12 @@ import { Grid, Text, Image, GoBack } from "../../elements/Index";
 import FooterMenu from "../../shared/FooterMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as userActions } from "../../redux/modules/user";
-import { Link } from "react-router-dom";
 
 const SignupLoca = () => {
   const dispatch = useDispatch();
 
   //작성||수정 구분
-  const edit = useSelector((state) => state.user?.userInfo.userImg);
+  const edit = useSelector((state) => state.user?.userInfo.nickName);
   const is_edit = edit ? true : false;
 
   //유저정보
@@ -30,6 +29,19 @@ const SignupLoca = () => {
     errMsg: null,
     isLoading: true,
   });
+
+  //로컬 값 저장
+  localStorage.setItem("address", address);
+
+  //뒤로가기 시 로컬 값 삭제
+  const remove = () => {
+    localStorage.removeItem("profile");
+    localStorage.removeItem("address");
+    localStorage.removeItem("nickName");
+    localStorage.removeItem("gender");
+    localStorage.removeItem("age");
+    localStorage.removeItem("content");
+  };
 
   //현재 내 위치
   React.useEffect(() => {
@@ -84,16 +96,16 @@ const SignupLoca = () => {
   return (
     <Grid column height="700px">
       {is_edit ? (
-        <GoBack text="동네 설정하기" />
+        <GoBack text="동네 설정하기" path="/mypage" remove={remove} />
       ) : (
-        <GoBack text="동네 설정하기" path="/signupdone" />
+        <GoBack text="동네 설정하기" path="/signupdone" remove={remove} />
       )}
 
       {/* 동네 설정 */}
       <Grid height="auto" column margin="auto">
-        <Grid row padding="0px 30px" height="auto">
-          <Image src="https://ifh.cc/g/NcBFMY.png" size={16} />
-          <Text size="16px" margin="0px 60px 0px 0px">
+        <Grid row padding="0px 30px" height="auto" justify="space-between">
+          <Image src="./img/nowloca.png" size={16} />
+          <Text size="16px" margin="0px 80px 0px 0px" bold>
             나의 동네
           </Text>
           <Text size="16px">{fullAddress}</Text>
@@ -115,32 +127,22 @@ const SignupLoca = () => {
             <MapMarker
               position={state.center}
               image={{
-                src: "https://ifh.cc/g/NcBFMY.png", // 마커이미지의 주소입니다
+                src: "./img/mypoint.png", // 마커이미지의 주소입니다
                 size: {
-                  width: 40,
-                  height: 40,
+                  width: 51,
+                  height: 70,
                 },
               }}
-            >
-              <MsgBox>{state.errMsg ? state.errMsg : "내 위치"}</MsgBox>
-            </MapMarker>
+            ></MapMarker>
           )}
         </Map>
 
         {/* 푸터*/}
-        <Link
-          to={{
-            state: {
-              address,
-            },
-          }}
-        >
-          {is_edit ? (
-            <FooterMenu next text="다음" path="/editprofile" />
-          ) : (
-            <FooterMenu next text="다음" path="/addprofile" />
-          )}
-        </Link>
+        {is_edit ? (
+          <FooterMenu next text="다음" path="/editprofile" />
+        ) : (
+          <FooterMenu next text="다음" path="/addprofile" />
+        )}
       </Grid>
     </Grid>
   );

@@ -1,9 +1,22 @@
 import React from "react";
 import { Grid, Text } from "../../elements/Index";
 import FooterMenu from "../../shared/FooterMenu";
+import { useHistory } from "react-router-dom";
 
 const Done = () => {
+  const history = useHistory();
   document.body.style.overscrollBehavior = "none";
+
+  // 로컬 지우기
+  const remove = () => {
+    localStorage.removeItem("address");
+    localStorage.removeItem("nickName");
+    localStorage.removeItem("gender");
+    localStorage.removeItem("age");
+    localStorage.removeItem("content");
+    localStorage.removeItem("userInterest");
+    history.replace("/main");
+  };
 
   return (
     <Grid column margin="167px auto 0px auto" stop>
@@ -18,7 +31,7 @@ const Done = () => {
       <Text size="16px" color="gray" margin="0px">
         찾으러 떠나 볼까요?
       </Text>
-      <FooterMenu next path="/main" text="확인" />
+      <FooterMenu next event={remove} text="확인" />
     </Grid>
   );
 };

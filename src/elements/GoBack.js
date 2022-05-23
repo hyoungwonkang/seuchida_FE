@@ -21,7 +21,9 @@ const GoBack = (props) => {
           size={32}
           onClick={() => {
             history.push(props.path);
-            // history.goBack();
+            if (props.remove) {
+              props.remove();
+            }
           }}
         />
         <Text size="20px" position margin="0px 0px 0px 40px" bold>

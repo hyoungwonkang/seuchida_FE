@@ -5,7 +5,7 @@ import { HiOutlineX } from "react-icons/hi";
 
 const ModalData = (props) => {
   console.log(props);
-  const { Members, Alert, Check, text, onClose, Evaluate } = props;
+  const { Members, Alert, Check, Evaluate, text, onCheck, onClose } = props;
 
   //재확인 창
   if (Check) {
@@ -40,15 +40,8 @@ const ModalData = (props) => {
           <Button
             is_close
             _onClick={() => {
-              if (props.onCheck) {
-                props.onCheck();
-              }
-              if (props.yes) {
-                props.yes();
-              }
-              if (props.join) {
-                props.join();
-              }
+              onCheck();
+              onClose();
             }}
             margin="10px 0px 0px 38px"
           >
@@ -130,7 +123,7 @@ const ModalData = (props) => {
             <Button
               is_close
               _onClick={() => {
-                props.addreport();
+                onCheck();
                 onClose();
               }}
             >
@@ -143,13 +136,13 @@ const ModalData = (props) => {
   }
 
   const level = [
-    { id: 1, level: 1, image: <Image src="../img/red.png" /> },
-    { id: 2, level: 2, image: <Image src="../img/orange.png" /> },
-    { id: 3, level: 3, image: <Image src="../img/yellow.png" /> },
-    { id: 4, level: 4, image: <Image src="../img/green.png" /> },
-    { id: 5, level: 5, image: <Image src="../img/skyblue.png" /> },
-    { id: 6, level: 6, image: <Image src="../img/blue.png" /> },
-    { id: 7, level: 7, image: <Image src="../img/purple.png" /> },
+    { id: 1, level: 1, image: <Image src="../img/badge/red.png" /> },
+    { id: 2, level: 2, image: <Image src="../img/badge/orange.png" /> },
+    { id: 3, level: 3, image: <Image src="../img/badge/yellow.png" /> },
+    { id: 4, level: 4, image: <Image src="../img/badge/green.png" /> },
+    { id: 5, level: 5, image: <Image src="../img/badge/skyblue.png" /> },
+    { id: 6, level: 6, image: <Image src="../img/badge/blue.png" /> },
+    { id: 7, level: 7, image: <Image src="../img/badge/purple.png" /> },
   ];
 
   //참여중인 운동 메이트 프로필(레벨 넣어야함)
