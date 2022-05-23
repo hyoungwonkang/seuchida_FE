@@ -132,7 +132,6 @@ const getPostlistDB = () => {
 
 
 
-
 const getReviewlistDB = () => {
   return async function (dispatch, getState) {
     try {
@@ -151,14 +150,6 @@ const getReviewlistDB = () => {
     }
   };
 };
-
-
-
-    
-
-
-
-
 
 
 
