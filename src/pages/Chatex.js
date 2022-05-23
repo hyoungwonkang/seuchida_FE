@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import io from "socket.io-client";
 import styled from "styled-components";
 import GoBack from "../elements/GoBack";
@@ -20,14 +20,21 @@ const socket = io.connect("https://seuchidabackend.shop", {
 function Chatex(props) {
   const params = useParams();
   const dispatch = useDispatch();
-
+  const user_list = useSelector((state) => state.room.list.nowMember);
   const user = useSelector((state) => state.user.userInfo);
   const roomId = params.roomId;
   const [message, setMessage] = useState("");
   const [chatlist, setChatlist] = useState([]);
   const [chat, setChat] = useState([]);
+  const [systemMsg, setSystemMsg] = useState([])
   const [nowM, setnowM] = useState(1);
   const [comModalOn, setcomModalOn] = useState(false);
+  const chattingBox= useRef(null)
+  const scrollToBottom = () => {
+    if (chattingBox.current) {
+      chattingBox.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'end' });
+    }
+  };
   const openModal = () => {
     setcomModalOn(true);
     // document.body.style.overflow ="hidden"
@@ -38,7 +45,6 @@ function Chatex(props) {
   };
 
   const roomInfo = props?.location.state;
-  //유저리스트 키값 나우멤버로 수정 요청
   const TimeCheck = (t) => {
     let time = t.split(" ")[1];
     let hour = time.split(":")[0];
@@ -52,6 +58,14 @@ function Chatex(props) {
   }; //작성시간 변환 함수
 
   useEffect(() => {
+    dispatch(roomActions.getchatMemberDB(roomId));
+  }, [systemMsg]);
+
+  useEffect(() =>{
+    setnowM(user_list?.length)
+  },[user_list])
+
+  useEffect(() => {
     dispatch(userActions.isLoginDB());
     socket?.emit("join", {
       roomId,
@@ -62,16 +76,23 @@ function Chatex(props) {
   useEffect(() => {
     socket.on("broadcast", (data) => {
       setChat((chat) => chat.concat(data));
-
+      if(data.name==='System'){
+       setSystemMsg((systemMsg) => systemMsg.concat(data));
+      }
     });
-    setnowM(roomInfo?.nowMember?.length);
+ 
   }, []);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [chat]);
+  
 
   useEffect(() => {
     socket.on("chatlist", (data) => {
       setChatlist(data);
     });
-  }, []);
+  }, [chatlist]);
 
   const sendMessage = useCallback(
     (e) => {
@@ -86,10 +107,13 @@ function Chatex(props) {
   const leaveRoom = () => {
     socket.emit("leave", { roomId });
     history.replace("/chatlist");
+
+ 
+
   };
 
   return (
-    <div>
+    < >
       <ChatMenu
         comModalOn={comModalOn}
         closecomModal={closecomModal}
@@ -119,7 +143,7 @@ function Chatex(props) {
         </HeaderContents>
       </Header>
 
-      <Body>
+      <Body ref={chattingBox}>
         {/* 이전 채팅  */}
         {chatlist.map((prevChat, index) => {
           return prevChat.name === "System" ? null : prevChat.name ===
@@ -180,7 +204,7 @@ function Chatex(props) {
           <Send onClick={sendMessage}>전송하기</Send>
         </div>
       </Chatting>
-    </div>
+    </>
   );
 }
 
@@ -205,8 +229,9 @@ const HeaderContents = styled.div`
 `;
 
 const Body = styled.div`
-  margin: 100px 24px;
+  margin: 100px 24px 0px 24px;
   overflow: auto;
+  padding-bottom: 80px;
 `;
 
 const Chatting = styled.div`
@@ -276,3 +301,7 @@ const TextBoxMe = styled.div`
   margin: 15px 0px;
   max-width: 200px;
 `;
+
+const Space = styled.div`
+ height: 79px;
+`

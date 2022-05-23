@@ -69,7 +69,7 @@ const Main = () => {
     dispatch(userActions.isLoginDB());
     dispatch(postActions.getMainDB());
     // dispatch(postActions.getPostlistDB());
-  }, []);
+  }, [state.isLoading===true]);
 
   return (
     <>
