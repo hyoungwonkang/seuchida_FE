@@ -4,23 +4,23 @@ import { useHistory } from "react-router-dom";
 import { Button, Image } from "../elements/Index";
 import { io } from "socket.io-client";
 
-const token = localStorage.getItem("token");
-const socket = io.connect("https://seuchidabackend.shop", {
-  auth: {
-    auth: token,
-  },
-});
+// const token = localStorage.getItem("token");
+// const socket = io.connect("https://seuchidabackend.shop", {
+//   auth: {
+//     auth: token,
+//   },
+// });
 const FooterMenu = (props) => {
   const history = useHistory();
   const { next, is_check, __onClick } = props;
-  const [alarm, setAlarm] = React.useState([]);
+  // const [alarm, setAlarm] = React.useState([]);
 
-  console.log(alarm);
-  React.useEffect(() => {
-    socket.on("broadcast", (data) => {
-      setAlarm((alarm) => alarm.concat(data));
-    });
-  }, []);
+  // console.log(alarm);
+  // React.useEffect(() => {
+  //   socket.on("broadcast", (data) => {
+  //     setAlarm((alarm) => alarm.concat(data));
+  //   });
+  // }, []);
 
   const [click, setClick] = React.useState("");
 
@@ -65,7 +65,8 @@ const FooterMenu = (props) => {
         <Menu
           onClick={(e) => {
             setClick("main");
-            window.location.href = "/main";
+            history.push("/main");
+            // window.location.href = "/main";
           }}
         >
           {click === "main" ? (

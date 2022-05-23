@@ -32,7 +32,6 @@ const Main = () => {
     isLoading: true,
   });
 
-
   React.useEffect(()=>{
     dispatch(userActions.isLoginDB());
     dispatch(postActions.getMainDB());
@@ -61,15 +60,13 @@ const Main = () => {
         }
       );
     } else {
-      // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
       setState((prev) => ({
         ...prev,
         errMsg: "geolocation을 사용할수 없어요..",
         isLoading: false,
       }));
     }
-  
-    // dispatch(postActions.getPostlistDB());
+
   }, [state.isLoading===true]);
 
   return (

@@ -19,72 +19,53 @@ const Map = () => {
     errMsg: null,
     isLoading: true,
   });
-  // console.log(state);
 
-  // const MyPoint = () => {
-  //   //현재 내 위치 찾기(좌표)
-  //   navigator.geolocation.getCurrentPosition(function (pos) {
-  //     setState((prev) => ({
-  //       ...prev,
-  //       center: {
-  //         lat: pos.coords.latitude, // 위도
-  //         lng: pos.coords.longitude, // 경도
-  //       },
-  //       isLoading: false,
-  //     }));
-  //   });
-  // };
 
+  const researchMap = ()=>{
+    axios({
+      method: "get",
+      url: `https://seuchidabackend.shop/api/nearPostList`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    }).then((response) => {
+      setPost(response.data.nearPosts);
+    });
+  }
 
  React.useEffect(()=>{
-   axios({
-    method: "get",
-    url: `https://seuchidabackend.shop/api/nearPostList`,
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-  }).then((response) => {
-    setPost(response.data.nearPosts);
-  });
-
+  researchMap()
  },[])
 
 
+ //비동기처리 마스터하자 ...
+ const getPos = () => {
+	return new Promise((resolve, reject) => {
+		navigator.geolocation.getCurrentPosition(resolve, reject);
+	});
+};
+const getCoordinate = async () => {
+    if (navigator.geolocation) {
+		const position = await getPos();
+    return setState({center:{
+      lat: position.coords.latitude,
+      lng: position.coords.longitude,
+		}})
+    }else {
+        // Geolocation API에 액세스할 수 없으면 기본값 리턴
+		return  setState({center:{
+		  lat: 33.450701,
+      lng: 126.570667,
+		}})
+    }
+};
 
   React.useEffect( () => {
-    //갱신으로 수정해야됨
-    if ( navigator.geolocation) {
-      // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-        navigator.geolocation.watchPosition(
-        async (position) => {
-         setState((prev) => ({
-              ...prev,
-              center: {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude, // 경도
-              },
-              isLoading: false,
-            }));
-        },
-        (err) => {
-          setState((prev) => ({
-            ...prev,
-            errMsg: err.message,
-            isLoading: false,
-          }));
-        }
-      );
-    } else {
-      // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-      setState((prev) => ({
-        ...prev,
-        errMsg: "geolocation을 사용할수 없어요..",
-        isLoading: false,
-      }));
-    }
-  }, [state.isLoading]);
+    getCoordinate()
+  }, []);
 
   let UserLoca = state.center;
+
   return (
     <>
       <div>
@@ -95,6 +76,7 @@ const Map = () => {
           </Title>
         </Header>
         <div style={{ marginTop: "128px" }}>
+          <ResearchBtn onClick={()=>researchMap()}>재검색</ResearchBtn>
           {/* <MyLoca
             src="./img/locaagain.png"
             onClick={() => {
@@ -163,7 +145,7 @@ const slideUp = keyframes`
 `;
 const Modal = styled.div`
   width: 100%;
-  height: 450px;
+  height: 500px;
   position: fixed;
   z-index: 29;
   bottom: 80px;
@@ -172,6 +154,9 @@ const Modal = styled.div`
   animation-name: ${slideUp};
   animation-fill-mode: forwards;
   overflow: auto;
+  overflow:x-hidden;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
 `;
 
 const OpenModal = styled.div`
@@ -181,8 +166,23 @@ const OpenModal = styled.div`
   background-color: white;
   padding: 8px 16px;
   border-radius: 50px;
-  margin-left: 38%;
+  margin-left: 40%;
+  font-size: 14px;
 `;
+
+const ResearchBtn = styled.div`
+position: fixed;
+z-index: 9999;
+background-color: white;
+  padding: 8px 16px;
+  border-radius: 50px;
+  top: 175px;
+  left: 42%;
+  font-size: 14px;
+  color: #c4c4c4;
+
+`
+
 
 const MyLoca = styled.img`
   position: fixed;

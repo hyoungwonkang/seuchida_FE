@@ -2,23 +2,41 @@ import React from "react";
 import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
 import { Grid, Text, Image } from "../elements/Index";
 import styled from "styled-components";
-import { useMap } from "react-kakao-maps-sdk";
+import { useMap, kakao } from "react-kakao-maps-sdk";
 import { HiOutlineX } from "react-icons/hi";
 import { history } from "../redux/configStore";
 
+
 function KakaoMap(props) {
   const { MainMap, UserLoca, post, _onClick } = props;
-
+  const [state, setState] = React.useState({
+    // 지도의 초기 위치
+    center: { lat: UserLoca.lat, lng: UserLoca.lng },
+    // 지도 위치 변경시 panto를 이용할지에 대해서 정의
+    isPanto: false,
+  })
+  console.log(state)
   if (MainMap) {
     return (
+      <>
+      <Mebtn button
+            onClick={() =>
+              setState({
+                center: { lat: UserLoca.lat, lng: UserLoca.lng },
+                isPanto: true,
+              })
+            } >sdfseww</Mebtn>
       <Map
         center={{ lat: UserLoca.lat, lng: UserLoca.lng }}
-        style={{ width: "100%", height: "600px" }}
+        style={{ width: "100%", height: "100vh" }}
         onClick={_onClick}
         level={7}
       >
+       
         <MapMarker // 마커를 생성합니다
           position={{ lat: UserLoca.lat, lng: UserLoca.lng }}
+          center={state.center}
+          isPanto={state.isPanto}
           image={{
             src: "./img/mypoint.png", // 마커이미지의 주소입니다
             size: {
@@ -34,14 +52,14 @@ function KakaoMap(props) {
           }}
         />
         {post?.map((position, index) => (
-          <>
+         
             <EventMarkerContainer
               {...position}
               key={`${position.PostId} + ${position.latitude}`}
             />
-          </>
+         
         ))}
-      </Map>
+      </Map></>
     );
   }
 
@@ -74,6 +92,13 @@ export default KakaoMap;
 const DetailMap = styled.div`
   padding: 0px 24px 130px 24px;
 `;
+
+const Mebtn = styled.div`
+background-color: black;
+position: fixed;
+bottom: 120px;
+z-index: 99;
+`
 
 const Box = styled.div`
   position: absolute;
