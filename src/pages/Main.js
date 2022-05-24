@@ -32,11 +32,10 @@ const Main = () => {
     isLoading: true,
   });
 
-
-  React.useEffect(()=>{
+  React.useEffect(() => {
     dispatch(userActions.isLoginDB());
     dispatch(postActions.getMainDB());
-  },[])
+  }, []);
 
   React.useEffect(() => {
     if (navigator.geolocation) {
@@ -68,9 +67,9 @@ const Main = () => {
         isLoading: false,
       }));
     }
-  
+
     // dispatch(postActions.getPostlistDB());
-  }, [state.isLoading===true]);
+  }, [state.isLoading === true]);
 
   return (
     <>
@@ -135,6 +134,20 @@ const Main = () => {
         {/* 프로필 작성 */}
         <Float
           onClick={() => {
+            localStorage.setItem("address", "");
+            localStorage.setItem("spot", "");
+            localStorage.setItem("latitude", "");
+            localStorage.setItem("longitude", "");
+            localStorage.setItem("datemate", "");
+            localStorage.setItem("memberAge", "");
+            localStorage.setItem("memberGender", "");
+            localStorage.setItem("maxMember", 2);
+            localStorage.setItem("postCategory", "");
+            localStorage.setItem("postTitle", "");
+            localStorage.setItem("postDesc", "");
+            localStorage.setItem("showOptions", "");
+            localStorage.setItem("showDate", "");
+            localStorage.setItem("showTime", "");
             history.push("/postcategory");
           }}
         >

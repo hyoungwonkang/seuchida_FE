@@ -1,26 +1,43 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import FooterMenu from "../shared/FooterMenu";
 import { Grid, Text, GoBack } from "../elements/Index";
 import Modal from "../components/Modal/Modal";
 import ModalData from "../components/Modal/ModalData";
 
-const PostCategory = () => {
+const PostCategory = (props) => {
+  //앱에서 페이지 새로고침 막기
   document.body.style.overscrollBehavior = "none";
   const history = useHistory();
 
-  if (history.action === "POP") {
-    history.replace("/postcategory");
-  }
+  // if (history.action === "POP") {
+  //   history.replace("/postcategory");
+  // }
 
   //새로고침 시 작성 첫 번째 페이지로 이동
-  // if (document.readyState === "interactive") {
-  //   window.onbeforeunload = function () {
-  //     return "새로고침 경고";
-  //   };
-  //   history.replace("/main");
-  // }
+  if (document.readyState === "interactive") {
+    //로컬 값 날림
+    localStorage.removeItem("address");
+    localStorage.removeItem("spot");
+    localStorage.removeItem("latitude");
+    localStorage.removeItem("longitude");
+    localStorage.removeItem("datemate");
+    localStorage.removeItem("memberAge");
+    localStorage.removeItem("memberGender");
+    localStorage.removeItem("maxMember");
+    localStorage.removeItem("postCategory");
+    localStorage.removeItem("postTitle");
+    localStorage.removeItem("postDesc");
+    localStorage.removeItem("showOptions");
+    localStorage.removeItem("showDate");
+    localStorage.removeItem("showTime");
+    //새로고침 경고
+    window.onbeforeunload = function () {
+      return "새로고침 경고";
+    };
+    history.replace("/main");
+  }
 
   //모달 오픈 state
   const [isOpen, setIsOpen] = React.useState(false);
@@ -58,19 +75,28 @@ const PostCategory = () => {
   const [postCate, setPostCate] = useState("");
   let postCategory = postCate.toString();
 
+  // 뒤로가기 시에도 데이터를 유지합니다.
+  useEffect(() => {
+    setPostCate(window.localStorage.getItem("postCategory"));
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("postCategory", postCategory);
+  }, [postCategory]);
+
   //유효성 검사
   const check = () => {
     if (!postCategory) {
       setIsOpen(true);
     } else {
+      localStorage.setItem("postCategory", postCategory); // 로컬스토리지에 저장합니다.
       history.push("/postwrite1");
     }
   };
-  // console.log(postCategory);
 
   return (
     <Grid>
-      <GoBack text="모임 만들기" path="/main" />
+      <GoBack postBackCategory text="모임 만들기" path="/main" />
       <Text bold margin="24px 0px 10px 30px" size="24px">
         함께하고 싶은 <br />
         운동을 선택해주세요
@@ -88,8 +114,6 @@ const PostCategory = () => {
                   onChange={(e) => {
                     setPostCate(e.target.value);
                   }}
-                  //배열에 data가 있으면 true, 없으면 false
-                  // checked={postCate.includes(item.data) ? true : false}
                 />
                 <label htmlFor={item.id}>
                   <Cate color={+postCate.includes(item.data)}>{item.data}</Cate>
@@ -97,12 +121,16 @@ const PostCategory = () => {
               </div>
             );
           })}
-          <Link to={{ state: { postCategory } }}>
-            <FooterMenu next text="다음" state={check} />
-          </Link>
+          {/* <Link to={{ state: { postCategory } }}> */}
+          <FooterMenu next text="다음" state={check} />
+          {/* </Link> */}
           {/* 경고창 모달 */}
           <Modal open={isOpen}>
-            <ModalData Alert onClose={() => setIsOpen(false)} />
+            <ModalData
+              Alert
+              text="운동을 골라주세요"
+              onClose={() => setIsOpen(false)}
+            />
           </Modal>
         </CateBox>
       </Grid>
