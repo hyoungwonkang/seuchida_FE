@@ -12,17 +12,16 @@ const Login = (props) => {
           <img src="./img/login.png" style={{ margin: "150px 0px" }} />
         </Grid>
         <div style={{ margin: "250px 0px 20px 0px" }}>
-          <A
+          <Akakao
             href={KAKAO_AUTH_URL}
             onClick={() => {
               window.location.href = "/main";
             }}
           >
             <img src="./img/kakao_login_medium_wide.png" alt="카카오로그인" />
-          </A>
+          </Akakao>
         </div>
         <GoogleBtn
-          style={{ display: "flex", justifyContent: "initial" }}
           onClick={() => {
             window.location.href = "/main";
           }}
@@ -38,10 +37,9 @@ const Login = (props) => {
 
 export default Login;
 
-const A = styled.a`
+const Akakao = styled.a`
   text-decoration-line: none;
   display: block;
-  /* padding-top: 0px; */
   font-weight: bold;
   font-size: 14px;
 `;
@@ -51,13 +49,12 @@ const Agoogle = styled.a`
   margin-top: 13px;
   text-decoration-line: none;
   display: block;
-  /* padding-top: 0px; */
   font-weight: bold;
   font-size: 14px;
 `;
 
 const GoogleBtn = styled.button`
-  display: inline-block;
+  display: flex;
   width: 300px;
   height: 44px;
   background: white;
