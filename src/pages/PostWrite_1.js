@@ -26,16 +26,15 @@ const PostWrite_1 = (props) => {
     localStorage.removeItem("postCategory");
     localStorage.removeItem("postTitle");
     localStorage.removeItem("postDesc");
+    localStorage.removeItem("showOptions");
+    localStorage.removeItem("showDate");
+    localStorage.removeItem("showTime");
     //새로고침 경고
     window.onbeforeunload = function () {
       return "새로고침 경고";
     };
     history.replace("/postcategory");
   }
-
-  // if (history.action === "POP") {
-  //   history.replace("/postcategory");
-  // }
 
   //모달 오픈 state
   const [isOpen, setIsOpen] = useState(false);

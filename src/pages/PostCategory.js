@@ -15,19 +15,29 @@ const PostCategory = (props) => {
   //   history.replace("/postcategory");
   // }
 
-  // localStorage.setItem("postCategory", "");
-  localStorage.setItem("postDesc", "");
-  localStorage.setItem("postTitle", "");
-  localStorage.setItem("maxMember", 2);
-  localStorage.setItem("memberAge", "");
-  localStorage.setItem("memberGender", "");
-  localStorage.setItem("address", "");
-  localStorage.setItem("spot", "");
-  localStorage.setItem("datemate", "");
-  localStorage.setItem("latitude", "");
-  localStorage.setItem("longitude", "");
-  localStorage.setItem("showDate", "");
-  localStorage.setItem("showTime", "");
+  //새로고침 시 작성 첫 번째 페이지로 이동
+  if (document.readyState === "interactive") {
+    //로컬 값 날림
+    localStorage.removeItem("address");
+    localStorage.removeItem("spot");
+    localStorage.removeItem("latitude");
+    localStorage.removeItem("longitude");
+    localStorage.removeItem("datemate");
+    localStorage.removeItem("memberAge");
+    localStorage.removeItem("memberGender");
+    localStorage.removeItem("maxMember");
+    localStorage.removeItem("postCategory");
+    localStorage.removeItem("postTitle");
+    localStorage.removeItem("postDesc");
+    localStorage.removeItem("showOptions");
+    localStorage.removeItem("showDate");
+    localStorage.removeItem("showTime");
+    //새로고침 경고
+    window.onbeforeunload = function () {
+      return "새로고침 경고";
+    };
+    history.replace("/main");
+  }
 
   //모달 오픈 state
   const [isOpen, setIsOpen] = React.useState(false);
@@ -86,7 +96,7 @@ const PostCategory = (props) => {
 
   return (
     <Grid>
-      <GoBack text="모임 만들기" path="/main" />
+      <GoBack postBackCategory text="모임 만들기" path="/main" />
       <Text bold margin="24px 0px 10px 30px" size="24px">
         함께하고 싶은 <br />
         운동을 선택해주세요

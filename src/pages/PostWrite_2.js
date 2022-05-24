@@ -16,10 +16,6 @@ const PostWrite_2 = (props) => {
   document.body.style.overscrollBehavior = "none";
   const history = useHistory();
 
-  // if (history.action === "POP") {
-  //   history.replace("/postcategory");
-  // }
-
   //새로고침 시 작성 첫 번째 페이지로 이동
   if (document.readyState === "interactive") {
     //로컬 값 날림
@@ -34,7 +30,9 @@ const PostWrite_2 = (props) => {
     localStorage.removeItem("postCategory");
     localStorage.removeItem("postTitle");
     localStorage.removeItem("postDesc");
-    localStorage.removeItem("showOpitons");
+    localStorage.removeItem("showOptions");
+    localStorage.removeItem("showDate");
+    localStorage.removeItem("showTime");
     //새로고침 경고
     window.onbeforeunload = function () {
       return "새로고침 경고";
