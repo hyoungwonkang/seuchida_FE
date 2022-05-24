@@ -41,6 +41,8 @@ const PostDone = () => {
   localStorage.removeItem("dayDate");
   localStorage.removeItem("inputText");
   localStorage.removeItem("showOptions");
+  localStorage.removeItem("showTime");
+  localStorage.removeItem("showDate");
 
   const setDone = () => {
     window.location.href = "/main";

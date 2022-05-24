@@ -295,7 +295,7 @@ const PostWrite_4 = (props) => {
               onChange={onChange}
               value={inputText || ""}
             />
-            <img src="/img/search.png" alt="search" />
+            <img src="/img/search.png" onClick={handleSubmit} alt="search" />
           </SearchContainer>
         </form>
       </Grid>

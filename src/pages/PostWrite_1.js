@@ -102,7 +102,7 @@ const PostWrite_1 = (props) => {
 
   return (
     <div>
-      <GoBack text="모임 만들기" path="/postcategory" />
+      <GoBack postBack text="모임 만들기" path="/postcategory" />
       <Grid margin="24px 0px 40px 0px">
         <ProgressBar>
           <HighLight width={(count / 3) * 100 + "%"} />

@@ -145,7 +145,7 @@ const PostWrite_2 = (props) => {
 
   return (
     <Grid>
-      <GoBack text="모임 만들기" path="/main" />
+      <GoBack postBack text="모임 만들기" path="/postwrite1" />
       <Grid margin="24px 0px 40px 0px">
         <ProgressBar>
           <HighLight width={(count / 3) * 100 + "%"} />

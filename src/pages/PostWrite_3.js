@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
@@ -7,7 +7,7 @@ import { actionCreators as postActions } from "../redux/modules/post";
 import { useDispatch } from "react-redux";
 import FooterMenu from "../shared/FooterMenu";
 import Picker from "react-mobile-picker-scroll";
-import { Grid, Text } from "../elements/Index";
+import { Grid, Text, GoBack } from "../elements/Index";
 import Modal from "../components/Modal/Modal";
 import ModalData from "../components/Modal/ModalData";
 
@@ -15,7 +15,6 @@ import { IconContext } from "react-icons";
 import { BsFillCalendarFill } from "react-icons/bs";
 import { AiFillClockCircle } from "react-icons/ai";
 import { FaMapMarkerAlt } from "react-icons/fa";
-import { IoIosArrowBack } from "react-icons/io";
 
 const PostWrite_3 = (props) => {
   document.body.style.overscrollBehavior = "none";
@@ -73,7 +72,7 @@ const PostWrite_3 = (props) => {
   const newfinalday = newdays.split("-");
   const new_month = newfinalday[1];
   const new_day = newfinalday[2].split(" ")[0];
-  const new_realfinal = `${new_month}월${new_day}일`;
+  let new_realfinal = `${new_month}월${new_day}일`;
 
   // 요일을 가져옵니다.
   function getDay() {
@@ -106,10 +105,7 @@ const PostWrite_3 = (props) => {
     }
     return "(" + day + ")";
   }
-
-  //localStorage에서 가져온 데이터를 사용합니다.
-  // let [dayDate, setDayDate] = useState();
-  // let [pageTime, setPageTime] = useState();
+  //
 
   //요일을 포함하는 변수를 만듭니다.
   let dayDate = new_realfinal + " " + getDay();
@@ -150,14 +146,14 @@ const PostWrite_3 = (props) => {
   // 오후 12:00 형식의 변수를 만듭니다.
   let pageTime = b + ` ` + c + `:` + d;
 
-  //날짜와 시간을 datemate로 합성합니다.
-  let datemate = new_realfinal + ", " + c + ":" + d + " " + b;
-
   //토글
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
   let [showDate, setShowDate] = useState("");
   let [showTime, setShowTime] = useState("");
+
+  //날짜와 시간을 datemate로 합성합니다.
+  let [datemate, setDatemate] = useState("");
 
   //프로그레스바
   let count = 2;
@@ -166,10 +162,16 @@ const PostWrite_3 = (props) => {
   }
 
   //datemate 만들기
+  let aaa = "" + showDate;
+  let x = aaa.substring(0, 6);
+  let bbb = "" + showTime;
+  let y_1 = bbb.split(" ").splice(0, 1);
+  let y_2 = bbb.split(" ").splice(1, 1);
+  let z = x + ", " + y_2 + " " + y_1;
   if (!show) {
     datemate = null;
     if (showDate && showTime) {
-      datemate = new_realfinal + ", " + c + ":" + d + " " + b;
+      datemate = z;
     }
   }
 
@@ -178,7 +180,6 @@ const PostWrite_3 = (props) => {
       //유효성 검사
       setIsOpen(true);
     } else {
-      localStorage.setItem("datemate", datemate);
       dispatch(
         postActions.addPostDB(
           address,
@@ -198,36 +199,25 @@ const PostWrite_3 = (props) => {
   };
 
   // 뒤로가기 시에도 데이터를 유지합니다.
-  // if (showDate) {
-  //   if (showDate === dayDate) {
-  //     localStorage.setItem("dayDate", dayDate);
-  //     localStorage.setItem("show", show);
-  //   }
-  // }
-  // console.log(showDate);
-  // if (showTime) {
-  //   localStorage.setItem("pageTime", pageTime);
-  // }
 
-  // useEffect(() => {
-  //   setDayDate(window.localStorage.getItem("dayDate"));
-  //   setPageTime(window.localStorage.getItem("pageTime"));
-  //   setShowDate(window.localStorage.getItem("showDate"));
-  //   setShowTime(window.localStorage.getItem("showTime"));
-  // }, []);
+  useEffect(() => {
+    setShowDate(window.localStorage.getItem("showDate"));
+    setShowTime(window.localStorage.getItem("showTime"));
+    setDatemate(window.localStorage.getItem("datemate"));
+  }, []);
 
-  // useEffect(() => {
-  //   window.localStorage.setItem("spot", spot);
-  // }, [spot]);
-  // useEffect(() => {
-  //   window.localStorage.setItem("show", show);
-  // }, [show]);
-  // useEffect(() => {
-  //   window.localStorage.setItem("showDate", showDate);
-  // }, [showDate]);
-  // useEffect(() => {
-  //   window.localStorage.setItem("dayDate", dayDate);
-  // }, [dayDate]);
+  useEffect(() => {
+    window.localStorage.setItem("spot", spot);
+  }, [spot]);
+  useEffect(() => {
+    window.localStorage.setItem("datemate", datemate);
+  }, [datemate]);
+  useEffect(() => {
+    window.localStorage.setItem("showDate", showDate);
+  }, [showDate]);
+  useEffect(() => {
+    window.localStorage.setItem("showTime", showTime);
+  }, [showTime]);
 
   // console.log(address);
   // console.log(datemate);
@@ -244,18 +234,7 @@ const PostWrite_3 = (props) => {
 
   return (
     <Grid>
-      <Grid row padding="20px">
-        <IoIosArrowBack
-          size={32}
-          onClick={() => {
-            // history.push(props.path);
-            history.push("/postwrite2");
-          }}
-        />
-        <Text size="20px" position margin="0px 0px 0px 40px" bold>
-          모임 만들기
-        </Text>
-      </Grid>
+      <GoBack postBack text="모임 만들기" path="/postwrite2" />
       <Grid margin="24px 0px 40px 0px">
         <ProgressBar>
           <HighLight width={(count / 3) * 100 + "%"} />
@@ -269,52 +248,8 @@ const PostWrite_3 = (props) => {
           padding="0px 24px 4px 0px"
           justify="space-between"
         >
-          <Grid row margin="6px 0px 0px 24px">
-            <IconContext.Provider value={{ color: "#787878", size: "16px" }}>
-              <FaMapMarkerAlt />
-            </IconContext.Provider>
-            <Text bold margin="0px 13px" size="16px">
-              장소
-            </Text>
-          </Grid>
-          <Grid isFlex_end>
-            {!spot ? (
-              <div
-                onClick={() => {
-                  history.push("/postwrite4");
-                }}
-                style={{
-                  color: "#C4C4C4",
-                  textDecorationLine: "none",
-                }}
-              >
-                조건 선택
-              </div>
-            ) : (
-              <div
-                onClick={() => {
-                  history.push("/postwrite4");
-                }}
-                style={{
-                  color: "black",
-                }}
-              >
-                {spot}
-              </div>
-            )}
-          </Grid>
-        </Grid>
-      </LineBox>
-      <LineBox>
-        <Grid
-          row
-          margin="12px 0px"
-          height="auto"
-          padding="0px 24px 4px 0px"
-          justify="space-between"
-        >
           <Grid>
-            <Grid row padding="0px 0px 0px 26px">
+            <Grid row padding="6px 0px 0px 26px">
               <IconContext.Provider value={{ color: "#787878", size: "16px" }}>
                 <BsFillCalendarFill />
               </IconContext.Provider>
@@ -333,7 +268,7 @@ const PostWrite_3 = (props) => {
                       확인
                     </div>
                   ) : showDate ? (
-                    dayDate
+                    showDate
                   ) : (
                     <div style={{ color: "#C4C4C4" }}>조건 선택</div>
                   )}
@@ -355,46 +290,92 @@ const PostWrite_3 = (props) => {
           </Grid>
         </Grid>
       </LineBox>
+      <LineBox>
+        <Grid
+          row
+          height="auto"
+          padding="12px 24px 12px 0px"
+          justify="space-between"
+        >
+          <Grid row margin="0px 0px 0px 24px">
+            <IconContext.Provider value={{ color: "#787878", size: "16px" }}>
+              <AiFillClockCircle />
+            </IconContext.Provider>
+            <Text bold width="32px" margin="0px 12px">
+              시간
+            </Text>
+          </Grid>
+          <Grid isFlex_end>
+            <div className="Test" onClick={() => setShow2(!show2)}>
+              {show2 ? (
+                <div
+                  onClick={() => {
+                    setShowTime(pageTime);
+                  }}
+                  style={{
+                    fontSize: "16px",
+                  }}
+                >
+                  확인
+                </div>
+              ) : showTime ? (
+                showTime
+              ) : (
+                <div style={{ color: "#C4C4C4" }}>조건 선택</div>
+              )}
+            </div>
+          </Grid>
+        </Grid>
+        {show2 ? (
+          <Picker
+            optionGroups={optionGroups}
+            valueGroups={valueGroups}
+            onChange={handleChange}
+          />
+        ) : null}
+      </LineBox>
       <Grid
         row
+        margin="12px 0px"
         height="auto"
-        padding="12px 24px 12px 0px"
+        padding="0px 24px 4px 0px"
         justify="space-between"
       >
-        <Grid row margin="0px 0px 0px 24px">
+        <Grid row margin="6px 0px 0px 24px">
           <IconContext.Provider value={{ color: "#787878", size: "16px" }}>
-            <AiFillClockCircle />
+            <FaMapMarkerAlt />
           </IconContext.Provider>
-          <Text bold width="32px" margin="0px 12px">
-            시간
+          <Text bold margin="0px 13px" size="16px">
+            장소
           </Text>
         </Grid>
         <Grid isFlex_end>
-          <div className="Test" onClick={() => setShow2(!show2)}>
-            {show2 ? (
-              <div
-                onClick={() => setShowTime(pageTime)}
-                style={{
-                  fontSize: "16px",
-                }}
-              >
-                확인
-              </div>
-            ) : showTime ? (
-              pageTime
-            ) : (
-              <div style={{ color: "#C4C4C4" }}>조건 선택</div>
-            )}
-          </div>
+          {!spot ? (
+            <div
+              onClick={() => {
+                history.push("/postwrite4");
+              }}
+              style={{
+                color: "#C4C4C4",
+                textDecorationLine: "none",
+              }}
+            >
+              조건 선택
+            </div>
+          ) : (
+            <div
+              onClick={() => {
+                history.push("/postwrite4");
+              }}
+              style={{
+                color: "black",
+              }}
+            >
+              {spot}
+            </div>
+          )}
         </Grid>
       </Grid>
-      {show2 ? (
-        <Picker
-          optionGroups={optionGroups}
-          valueGroups={valueGroups}
-          onChange={handleChange}
-        />
-      ) : null}
       <FooterMenu next event={addPost} text="다음" />
       {/* 경고창 모달 */}
       <Modal open={isOpen}>

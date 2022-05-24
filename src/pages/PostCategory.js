@@ -15,7 +15,7 @@ const PostCategory = (props) => {
   //   history.replace("/postcategory");
   // }
 
-  localStorage.setItem("postCategory", "");
+  // localStorage.setItem("postCategory", "");
   localStorage.setItem("postDesc", "");
   localStorage.setItem("postTitle", "");
   localStorage.setItem("maxMember", 2);
@@ -26,6 +26,8 @@ const PostCategory = (props) => {
   localStorage.setItem("datemate", "");
   localStorage.setItem("latitude", "");
   localStorage.setItem("longitude", "");
+  localStorage.setItem("showDate", "");
+  localStorage.setItem("showTime", "");
 
   //모달 오픈 state
   const [isOpen, setIsOpen] = React.useState(false);
