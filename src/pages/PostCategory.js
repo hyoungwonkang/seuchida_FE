@@ -11,36 +11,8 @@ const PostCategory = (props) => {
   document.body.style.overscrollBehavior = "none";
   const history = useHistory();
 
-  // if (history.action === "POP") {
-  //   history.replace("/postcategory");
-  // }
-
-  //새로고침 시 작성 첫 번째 페이지로 이동
-  if (document.readyState === "interactive") {
-    //로컬 값 날림
-    localStorage.removeItem("address");
-    localStorage.removeItem("spot");
-    localStorage.removeItem("latitude");
-    localStorage.removeItem("longitude");
-    localStorage.removeItem("datemate");
-    localStorage.removeItem("memberAge");
-    localStorage.removeItem("memberGender");
-    localStorage.removeItem("maxMember");
-    localStorage.removeItem("postCategory");
-    localStorage.removeItem("postTitle");
-    localStorage.removeItem("postDesc");
-    localStorage.removeItem("showOptions");
-    localStorage.removeItem("showDate");
-    localStorage.removeItem("showTime");
-    //새로고침 경고
-    window.onbeforeunload = function () {
-      return "새로고침 경고";
-    };
-    history.replace("/main");
-  }
-
   //모달 오픈 state
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const CategoryList = [
     { id: 0, data: "자전거" },
@@ -73,7 +45,7 @@ const PostCategory = (props) => {
 
   // 데이터를 넣을 빈배열
   const [postCate, setPostCate] = useState("");
-  let postCategory = postCate.toString();
+  let postCategory = postCate;
 
   // 뒤로가기 시에도 데이터를 유지합니다.
   useEffect(() => {
@@ -93,6 +65,14 @@ const PostCategory = (props) => {
       history.push("/postwrite1");
     }
   };
+
+  //새로고침 시 작성 첫 번째 페이지로 이동
+  if (document.readyState === "interactive") {
+    //새로고침 경고
+    window.onbeforeunload = function () {
+      return "새로고침 경고";
+    };
+  }
 
   return (
     <Grid>
@@ -116,7 +96,9 @@ const PostCategory = (props) => {
                   }}
                 />
                 <label htmlFor={item.id}>
-                  <Cate color={+postCate.includes(item.data)}>{item.data}</Cate>
+                  <Cate color={+postCate?.includes(item.data)}>
+                    {item.data}
+                  </Cate>
                 </label>
               </div>
             );
@@ -163,7 +145,7 @@ const Cate = styled.div`
   border: 1px solid #ddd;
   border-radius: 30px;
   font-size: 16px;
-  background: ${(props) => (props.color ? "lightgreen" : "white")};
+  background: ${(props) => (props?.color ? "lightgreen" : "white")};
   color: ${(props) => (props.click ? "white" : "black")};
 `;
 

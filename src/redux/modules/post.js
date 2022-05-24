@@ -69,6 +69,7 @@ const addPostDB = (
         history.push("/postdone");
       })
       .catch((err) => {
+        window.location.href = "/main";
         console.log("게시물 등록 실패", err);
       });
   };
@@ -130,8 +131,6 @@ const getPostlistDB = () => {
 //   };
 // };
 
-
-
 const getReviewlistDB = () => {
   return async function (dispatch, getState) {
     try {
@@ -150,8 +149,6 @@ const getReviewlistDB = () => {
     }
   };
 };
-
-
 
 export default handleActions(
   {

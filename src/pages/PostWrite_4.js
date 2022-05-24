@@ -5,6 +5,7 @@ import styled from "styled-components";
 import FooterMenu from "../shared/FooterMenu";
 import Modal from "../components/Modal/Modal";
 import ModalData from "../components/Modal/ModalData";
+import { Redirect } from "react-router-dom";
 
 import { IconContext } from "react-icons";
 import { FaMapMarkerAlt } from "react-icons/fa";
@@ -13,30 +14,6 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 const PostWrite_4 = (props) => {
   document.body.style.overscrollBehavior = "none";
   const history = useHistory();
-
-  //새로고침 시 작성 첫 번째 페이지로 이동
-  if (document.readyState === "interactive") {
-    //로컬 값 날림
-    localStorage.removeItem("address");
-    localStorage.removeItem("spot");
-    localStorage.removeItem("latitude");
-    localStorage.removeItem("longitude");
-    localStorage.removeItem("datemate");
-    localStorage.removeItem("memberAge");
-    localStorage.removeItem("memberGender");
-    localStorage.removeItem("maxMember");
-    localStorage.removeItem("postCategory");
-    localStorage.removeItem("postTitle");
-    localStorage.removeItem("postDesc");
-    localStorage.removeItem("showOptions");
-    localStorage.removeItem("showDate");
-    localStorage.removeItem("showTime");
-    //새로고침 경고
-    window.onbeforeunload = function () {
-      return "새로고침 경고";
-    };
-    history.replace("/postcategory");
-  }
 
   //모달 오픈 state
   const [isOpen, setIsOpen] = React.useState(false);
@@ -281,6 +258,30 @@ const PostWrite_4 = (props) => {
       localStorage.setItem("longitude", longitude); //localStorage 에 저장 합니다
     }
   };
+
+  //새로고침 시 작성 첫 번째 페이지로 이동
+  if (document.readyState === "interactive") {
+    //로컬 값 날림
+    localStorage.setItem("address", "");
+    localStorage.setItem("spot", "");
+    localStorage.setItem("latitude", "");
+    localStorage.setItem("longitude", "");
+    localStorage.setItem("datemate", "");
+    localStorage.setItem("memberAge", "");
+    localStorage.setItem("memberGender", "");
+    localStorage.setItem("maxMember", 2);
+    localStorage.setItem("postCategory", "");
+    localStorage.setItem("postTitle", "");
+    localStorage.setItem("postDesc", "");
+    localStorage.setItem("showOptions", "");
+    localStorage.setItem("showDate", "");
+    localStorage.setItem("showTime", "");
+    //새로고침 경고
+    window.onbeforeunload = function () {
+      return "새로고침 경고";
+    };
+    return <Redirect to="/postcategory" />;
+  }
 
   return (
     <Grid>

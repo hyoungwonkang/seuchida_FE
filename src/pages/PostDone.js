@@ -50,7 +50,7 @@ const PostDone = () => {
 
   return (
     <Grid column margin="167px auto 0px auto">
-      <img src="/img/seuchin.png" alt="seuchin" />
+      <img src="/img/seuchin_blue.png" alt="seuchin" />
       <Text bold margin="16px 0px 0px 0px" size="24px">
         모집 등록이 완료되었습니다!
       </Text>
