@@ -12,17 +12,14 @@ import { io } from "socket.io-client";
 // });
 const FooterMenu = (props) => {
   const history = useHistory();
-  const { next, is_check, __onClick , socket} = props;
+  const { next, is_check, __onClick, socket } = props;
   // const [alarm, setAlarm] = React.useState([]);
-
 
   React.useEffect(() => {
     socket?.on("broadcast", (data) => {
-      console.log(data)
+      console.log(data);
     });
   }, []);
-
-  const [click, setClick] = React.useState("");
 
   if (next) {
     return (
@@ -64,12 +61,14 @@ const FooterMenu = (props) => {
       <MenuBox>
         <Menu
           onClick={(e) => {
+            localStorage.setItem("main", "main");
+            localStorage.removeItem("map");
+            localStorage.removeItem("chat");
+            localStorage.removeItem("mypage");
             history.push("/main");
-            setClick("main");
-            // window.location.href = "/main";
           }}
         >
-          {click === "main" ? (
+          {localStorage.getItem("main") === "main" ? (
             <img alt="home" src="./img/footer/homeg.png" />
           ) : (
             <img alt="home" src="./img/footer/home.png" />
@@ -77,12 +76,14 @@ const FooterMenu = (props) => {
         </Menu>
         <Menu
           onClick={() => {
-            setClick("map");
-            history.push("/map");
-            // window.location.href = "/map";
+            localStorage.removeItem("main");
+            localStorage.setItem("map", "map");
+            localStorage.removeItem("chat");
+            localStorage.removeItem("mypage");
+            window.location.href = "/map";
           }}
         >
-          {click === "map" ? (
+          {localStorage.getItem("map") === "map" ? (
             <img alt="around" src="./img/footer/aroundg.png" />
           ) : (
             <img alt="around" src="./img/footer/around.png" />
@@ -90,11 +91,14 @@ const FooterMenu = (props) => {
         </Menu>
         <Menu
           onClick={() => {
-            setClick("chat");
+            localStorage.removeItem("main");
+            localStorage.removeItem("map");
+            localStorage.setItem("chat", "chat");
+            localStorage.removeItem("mypage");
             history.push("/chatlist");
           }}
         >
-          {click === "chat" ? (
+          {localStorage.getItem("chat") === "chat" ? (
             <img alt="chat" src="./img/footer/chatg.png" />
           ) : (
             <img alt="chat" src="./img/footer/chat.png" />
@@ -102,11 +106,14 @@ const FooterMenu = (props) => {
         </Menu>
         <Menu
           onClick={(e) => {
-            setClick("mypage");
+            localStorage.removeItem("main");
+            localStorage.removeItem("map");
+            localStorage.removeItem("chat");
+            localStorage.setItem("mypage", "mypage");
             history.push("/mypage");
           }}
         >
-          {click === "mypage" ? (
+          {localStorage.getItem("mypage") === "mypage" ? (
             <img alt="profile" src="./img/footer/smileg.png" />
           ) : (
             <img alt="profile" src="./img/footer/smile.png" />
@@ -120,7 +127,7 @@ const FooterMenu = (props) => {
 export default FooterMenu;
 
 const Container = styled.div`
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;

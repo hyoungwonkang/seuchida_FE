@@ -22,7 +22,6 @@ const NameCard = () => {
   }, []);
 
   const userInfo = useSelector((state) => state.user.userInfo);
-  console.log(userInfo);
 
   const level = [
     { id: 1, level: 1, image: <Image src="./img/badge/red.png" /> },
@@ -211,7 +210,12 @@ const MyPage = () => {
         <IoIosArrowForward size={30} />
       </Grid>
 
-      <Grid padding="100px 20px 120px 20px" row justify="space-between">
+      <Grid
+        padding="100px 20px 120px 20px"
+        row
+        justify="space-between"
+        bg="white"
+      >
         <Button
           wd="171px"
           bg="#fff"
@@ -278,7 +282,7 @@ const Seuchin = styled.img`
 `;
 const Highlight = styled.div`
   background: #ffe926;
-  transition: 1s width; //몇초동안 뭐를(생략하면 모든것을 바꿈)
+  transition: 1s width;
   width: ${(props) => props.width};
   height: 12px;
   border-radius: 12px;

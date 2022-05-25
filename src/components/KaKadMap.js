@@ -97,7 +97,6 @@ const Box = styled.div`
   z-index: 1000;
   box-shadow: 1px 1px 6px -2px;
 `;
-const Close = styled.button``;
 
 const EventMarkerContainer = (props) => {
   const [isclick, setIsClicked] = React.useState(false);
@@ -130,33 +129,35 @@ const EventMarkerContainer = (props) => {
         position={{ lat: props.latitude, lng: props.longitude }} // 마커를 표시할 위치
       >
         {isclick && (
-          <Grid
-            bg="white"
-            padding="15px"
-            br="10px"
-            width="173px"
-            height="126px"
-          >
-            <Grid row justify="right" height="15px">
-              <HiOutlineX size={20} onClick={() => setIsClicked(false)} />
-            </Grid>
+          <Box>
             <Grid
-              height="30px"
-              _onClick={() => {
-                history.push(`/postdetail/${props._id}`);
-              }}
+              bg="white"
+              padding="10px"
+              br="10px"
+              width="173px"
+              height="126px"
             >
-              <Grid row>
-                {level.map((v, i) => {
-                  if (v.level == props.level) return v.image;
-                })}
-                <Text size="14px" bold>
-                  {props.nickName}
-                </Text>
+              <Grid row justify="right" height="15px">
+                <HiOutlineX size={20} onClick={() => setIsClicked(false)} />
               </Grid>
-              <Desc>{props.postDesc}</Desc>
+              <Grid
+                height="30px"
+                _onClick={() => {
+                  history.push(`/postdetail/${props._id}`);
+                }}
+              >
+                <Grid row>
+                  {level.map((v, i) => {
+                    if (v.level == props.level) return v.image;
+                  })}
+                  <Text size="14px" bold>
+                    {props.nickName}
+                  </Text>
+                </Grid>
+                <Desc>{props.postDesc}</Desc>
+              </Grid>
             </Grid>
-          </Grid>
+          </Box>
         )}
       </CustomOverlayMap>
     </React.Fragment>
@@ -164,16 +165,17 @@ const EventMarkerContainer = (props) => {
 };
 
 const Desc = styled.div`
-  font-size: 14px;
+  font-size: 16px;
   width: 120px;
-  /* min-height: 100px; */
+  height: 60px;
+  padding: 10px 6px;
   overflow: hidden;
   text-overflow: ellipsis;
   /* display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 2; 
   -webkit-box-orient: vertical; */
-  /* word-wrap: break-word; */
-  line-height: 2em;
+  word-wrap: break-word;
+  line-height: 1.3em;
   height: 2.4em;
-  /* white-space: nowrap; */
+  color: #585858;
 `;

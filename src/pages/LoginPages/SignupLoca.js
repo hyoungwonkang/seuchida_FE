@@ -41,6 +41,7 @@ const SignupLoca = () => {
     localStorage.removeItem("gender");
     localStorage.removeItem("age");
     localStorage.removeItem("content");
+    localStorage.removeItem("userInterest");
   };
 
   //현재 내 위치
@@ -94,7 +95,7 @@ const SignupLoca = () => {
   }, []);
 
   return (
-    <Grid column height="700px">
+    <Grid column height="700px" bg="white">
       {is_edit ? (
         <GoBack text="동네 설정하기" path="/mypage" remove={remove} />
       ) : (

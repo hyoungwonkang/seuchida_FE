@@ -20,24 +20,26 @@ const ReviewWrite = (props) => {
   }, []);
 
   //이미지 가져오기
+  const photo = useSelector((state) => state.mypage.reviewImg);
   const postInfo = useSelector((state) => state.mypage.myPostOne);
-  const _preview = localStorage.getItem("image");
   const postId = props.match.params.postId;
+
+  //로컬 값 불러오기(4)
+  const localreview = localStorage.getItem("review");
+
+  useEffect(() => {
+    setPreview(photo);
+    setReviewImg(photo);
+    setReview(localreview ? localreview : "");
+  }, [photo, localreview]);
 
   //모달 오픈 state
   const [isOpen, setIsOpen] = React.useState(false);
 
-  const [preview, setPreview] = useState(_preview);
-  const [review, setReview] = useState(localStorage.getItem("review"));
+  //페이지 값
+  const [preview, setPreview] = useState("");
   const [reviewImg, setReviewImg] = useState("");
-
-  //로컬 값 삭제
-  const remove = () => {
-    localStorage.removeItem("review");
-    localStorage.removeItem("image");
-    localStorage.removeItem("otherId");
-    localStorage.removeItem("evalue");
-  };
+  const [review, setReview] = useState("");
 
   const selectPreview = (e) => {
     setPreview(window.webkitURL.createObjectURL(e.target.files[0]));
@@ -45,7 +47,6 @@ const ReviewWrite = (props) => {
 
   const selectImage = (e) => {
     setReviewImg(e.target.files[0]);
-    //사진 추가
   };
 
   const writeReview = (e) => {
@@ -63,16 +64,29 @@ const ReviewWrite = (props) => {
       //로컬 값 저장
       localStorage.setItem("review", review);
       //이미지 추가
-      const formData = new FormData();
-      formData.append("image", reviewImg);
-      dispatch(mypageActions.addPhotoDB(formData));
-      history.push("/reviewevalue");
+      if (reviewImg === photo) {
+        history.push("/reviewevalue");
+      } else {
+        const formData = new FormData();
+        formData.append("image", reviewImg);
+        dispatch(mypageActions.addPhotoDB(formData));
+        history.push("/reviewevalue");
+      }
     }
   };
 
+  //100글자 제한
   if (review?.length >= 100) {
     window.alert("100글자 이내로 작성해주세요:)");
   }
+
+  //뒤로가기 시 로컬 값 삭제
+  const remove = () => {
+    localStorage.removeItem("review");
+    localStorage.removeItem("otherId");
+    localStorage.removeItem("evalue");
+    localStorage.removeItem("report");
+  };
 
   //앱에서 페이지 새로고침 막기
   document.body.style.overscrollBehavior = "none";
@@ -81,11 +95,10 @@ const ReviewWrite = (props) => {
   if (document.readyState === "interactive") {
     //로컬 값 날림
     localStorage.removeItem("review");
-    // localStorage.removeItem("nickName");
-    // localStorage.removeItem("gender");
-    // localStorage.removeItem("age");
-    // localStorage.removeItem("content");
-    //새로고침 경고
+    localStorage.removeItem("otherId");
+    localStorage.removeItem("evalue");
+    localStorage.removeItem("report");
+
     window.onbeforeunload = function () {
       return "새로고침 경고";
     };
@@ -122,7 +135,7 @@ const ReviewWrite = (props) => {
               position="relative"
               alt="profile"
               // z-index
-              src={preview ? preview : "../img/addimage.png"}
+              src={preview ? preview : photo ? photo : "../img/addimage.png"}
             />
           </label>
           <input

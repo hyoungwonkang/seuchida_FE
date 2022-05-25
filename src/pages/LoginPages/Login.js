@@ -2,8 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import { KAKAO_AUTH_URL, GOOGLE_AUTH_URL } from "../../shared/OAuth";
 import { Grid, Button, Image, Text } from "../../elements/Index";
+import { useHistory } from "react-router-dom";
 
 const Login = (props) => {
+  const history = useHistory();
   return (
     <Grid height="100vh" bg="#00D282">
       <Grid column>
@@ -11,6 +13,7 @@ const Login = (props) => {
         <Grid column width="200px" height="200px" margin="auto">
           <img src="./img/login.png" style={{ margin: "150px 0px" }} />
         </Grid>
+        <Around onClick={() => history.push("/guide")}>둘러보기</Around>
         <div style={{ margin: "250px 0px 20px 0px" }}>
           <Akakao
             href={KAKAO_AUTH_URL}
@@ -66,4 +69,14 @@ const GoogleBtn = styled.button`
     height: 44px;
     width: 44px;
   }
+`;
+
+const Around = styled.button`
+  min-width: "100px";
+  height: 40px;
+  margin: 120px 0px -20px 0px;
+  background: #ff6b52;
+  border: none;
+  border-radius: 5px;
+  color: white;
 `;

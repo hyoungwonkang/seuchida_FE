@@ -21,14 +21,20 @@ const EditProfile = (props) => {
 
   const userInfo = useSelector((state) => state.user.userInfo);
 
+  //로컬 값 불러오기(4)
+  const localNickname = localStorage.getItem("nickName");
+  const localGender = localStorage.getItem("gender");
+  const localAge = localStorage.getItem("age");
+  const localContent = localStorage.getItem("content");
+
   //수정 페이지 기본 정보 불러오기
   React.useEffect(() => {
     setProfile(userInfo?.userImg);
-    setNickName(userInfo?.nickName);
-    setGender(userInfo?.userGender);
-    setAge(userInfo?.userAge);
-    setContent(userInfo?.userContent);
-  }, [userInfo, userInfo.userImg]);
+    setNickName(localNickname ? localNickname : userInfo?.nickName);
+    setGender(localGender ? localGender : userInfo?.userGender);
+    setAge(localAge ? localAge : userInfo?.userAge);
+    setContent(localContent ? localContent : userInfo?.userContent);
+  }, [userInfo]);
 
   //모달 오픈 state
   const [isOpen, setIsOpen] = React.useState(false);
@@ -37,17 +43,18 @@ const EditProfile = (props) => {
   //입력값 state
   const [preview, setPreview] = useState("");
   const [profile, setProfile] = useState("");
-  const [nickName, setNickName] = useState(localStorage.getItem("nickName"));
-  const [gender, setGender] = useState(localStorage.getItem("gender"));
-  const [age, setAge] = useState(localStorage.getItem("age"));
-  const [content, setContent] = useState(localStorage.getItem("content"));
+  const [nickName, setNickName] = useState("");
+  const [gender, setGender] = useState("");
+  const [age, setAge] = useState("");
+  const [content, setContent] = useState("");
 
-  //로컬 값 저장
+  //로컬 값 저장(4)
   localStorage.setItem("nickName", nickName);
   localStorage.setItem("gender", gender);
   localStorage.setItem("age", age);
   localStorage.setItem("content", content);
 
+  //입력값 가져오기
   const selectPreview = (e) => {
     setPreview(window.webkitURL.createObjectURL(e.target.files[0]));
   };
@@ -87,9 +94,6 @@ const EditProfile = (props) => {
       //사진 수정
       const formData = new FormData();
       formData.append("newUserImg", profile);
-      // for (var pair of formData.entries()) {
-      //   console.log(pair[0] + ", " + pair[1]);
-      // }
       dispatch(userActions.editPhotoDB(formData));
       history.push("/category");
     }
@@ -121,7 +125,7 @@ const EditProfile = (props) => {
   }
 
   return (
-    <Grid>
+    <Grid bg="white">
       <GoBack text="프로필 수정" path="/signuploca" />
 
       <Grid column height="650px">
