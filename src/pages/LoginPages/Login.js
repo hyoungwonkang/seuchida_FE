@@ -56,10 +56,14 @@ const Agoogle = styled.a`
 const GoogleBtn = styled.button`
   display: flex;
   width: 300px;
-  height: 44px;
+  height: 45px;
   background: white;
   border: none;
   border-radius: 5px;
   margin-bottom: 50px;
   padding-left: 0px;
+  img {
+    height: 44px;
+    width: 44px;
+  }
 `;

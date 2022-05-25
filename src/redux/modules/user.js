@@ -75,7 +75,7 @@ const kakaoLogin = (code) => {
       .catch((err) => {
         console.log("카카오로그인 에러", err);
         window.alert("로그인에 실패했습니다");
-        // history.replace('/'); //로그인 실패 시 로그인 화면으로 돌아갑니다
+        history.replace("/"); //로그인 실패 시 로그인 화면으로 돌아갑니다
       });
   };
 };
@@ -114,7 +114,7 @@ const googleLogin = (code) => {
       .catch((err) => {
         console.log("구글로그인 에러", err);
         window.alert("로그인에 실패했습니다");
-        // history.replace('/'); //로그인 실패 시 로그인 화면으로 돌아갑니다
+        history.replace("/"); //로그인 실패 시 로그인 화면으로 돌아갑니다
       });
   };
 };
