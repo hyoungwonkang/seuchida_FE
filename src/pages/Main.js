@@ -34,6 +34,7 @@ const Main = () => {
   });
 
 
+
   React.useEffect(()=>{
   if(socket.connected===false)socket.emit('login')
   },[])
@@ -145,6 +146,20 @@ const Main = () => {
         {/* 프로필 작성 */}
         <Float
           onClick={() => {
+            localStorage.setItem("address", "");
+            localStorage.setItem("spot", "");
+            localStorage.setItem("latitude", "");
+            localStorage.setItem("longitude", "");
+            localStorage.setItem("datemate", "");
+            localStorage.setItem("memberAge", "");
+            localStorage.setItem("memberGender", "");
+            localStorage.setItem("maxMember", 2);
+            localStorage.setItem("postCategory", "");
+            localStorage.setItem("postTitle", "");
+            localStorage.setItem("postDesc", "");
+            localStorage.setItem("showOptions", "");
+            localStorage.setItem("showDate", "");
+            localStorage.setItem("showTime", "");
             history.push("/postcategory");
           }}
         >

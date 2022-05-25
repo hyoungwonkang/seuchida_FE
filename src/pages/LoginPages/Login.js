@@ -5,7 +5,7 @@ import { Grid, Button, Image, Text } from "../../elements/Index";
 
 const Login = (props) => {
   return (
-    <Grid column height="800px" bg="#00D282">
+    <Grid column height="100vh" bg="#00D282">
       {/* <Grid height="auto" column margin="250px 0px 50px 0px"> */}
       <Grid column width="200px" height="200px" margin="auto">
         <img src="./img/login.png" style={{ margin: "150px 0px" }} />
