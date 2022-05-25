@@ -48,6 +48,7 @@ function Chatex(props) {
   };
 
   const roomInfo = props?.location.state;
+  //작성시간 변환 함수
   const TimeCheck = (t) => {
     let time = t.split(" ")[1];
     let hour = time.split(":")[0];
@@ -58,24 +59,28 @@ function Chatex(props) {
       hour = `오전 ${hour}`;
     }
     return `${hour}:${time.split(":")[1]}`;
-  }; //작성시간 변환 함수
+  }; 
 
+  //시스템 메세지 오면 다시 방정보 가져오기 
   useEffect(() => {
     dispatch(roomActions.getchatMemberDB(roomId));
-  }, [systemMsg]);
+  }, [systemMsg]); 
 
+  //현재인원 바꾸기
   useEffect(() => {
     setnowM(user_list?.length);
   }, [user_list]);
 
+  //방 조인
   useEffect(() => {
     dispatch(userActions.isLoginDB());
     socket?.emit("join", {
       roomId,
     });
-    return;
+    return ;
   }, [roomId]);
 
+  //방마다 메세지 수신
   useEffect(() => {
     socket.on("broadcast", (data) => {
       setChat((chat) => chat.concat(data));
@@ -85,16 +90,19 @@ function Chatex(props) {
     });
   }, []);
 
+  //채팅 오면 스크롤 하단으로 내리기
   useEffect(() => {
     scrollToBottom();
   }, [chat]);
 
+  //이전 채팅 리스트 받아오기
   useEffect(() => {
     socket.on("chatlist", (data) => {
       setChatlist(data);
     });
   }, [chatlist]);
 
+  //메세지 전송
   const sendMessage = useCallback(
     (e) => {
       if (message) {
@@ -104,11 +112,16 @@ function Chatex(props) {
     },
     [message]
   );
-
+ // 방 나가기
   const leaveRoom = () => {
     socket.emit("leave", { roomId });
     history.replace("/chatlist");
   };
+
+  const BackRoom = () =>{
+    socket.emit("back", { roomId , userId:user.userId})
+    history.goBack();
+  }
 
   return (
     <>
@@ -125,9 +138,7 @@ function Chatex(props) {
           <RowBox>
             <GoBack
               gback
-              _onClick={() => {
-                history.goBack();
-              }}
+              _onClick={BackRoom}
             />
             <div style={{ margin: "3px 0px 0px 10px" }}>
               {roomInfo?.postTitle}
@@ -298,8 +309,4 @@ const TextBoxMe = styled.div`
   border-radius: 8px;
   margin: 15px 0px;
   max-width: 200px;
-`;
-
-const Space = styled.div`
-  height: 79px;
 `;
