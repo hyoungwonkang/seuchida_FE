@@ -104,7 +104,7 @@ function Chatex(props) {
   }, [chatlist]);
 
   //메세지 전송
-  //userId는 방마다 참여중인 유저리스트 ( 나 제외 )
+  //userId는 방마다 참여중인 유저리스트 ( 나 제외 
   let userId =[]
   for(let i=0; i<user_list?.length;i++){
     if(user_list[i].userId !==user.userId)
