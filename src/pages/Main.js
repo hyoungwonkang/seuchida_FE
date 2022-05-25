@@ -15,12 +15,14 @@ const socket = io.connect("https://seuchidabackend.shop", {
   auth: {
     auth: token,
   },
-});
+});console.log(socket)
 
 const Main = () => {
   const catepost = useSelector((state) => state.post.list.caPost);
   const post_list = useSelector((state) => state.post.list.nearPost);
   const review = useSelector((state) => state.post.list.filterRe);
+
+  console.log(review)
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [state, setState] = React.useState({

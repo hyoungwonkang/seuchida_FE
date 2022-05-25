@@ -61,6 +61,9 @@ const PostDetail = (props) => {
     dispatch(roomActions.joinCancleDB(post.roomId, postId));
   };
 
+  React.useEffect(()=>{
+    dispatch(userActions.isLoginDB());
+  },[])
   React.useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -102,8 +105,6 @@ const PostDetail = (props) => {
     }).then((response) => {
       setPost(response.data.newPost);
     });
-
-    dispatch(userActions.isLoginDB());
   }, [update]);
 
   if (banUser?.length === 1) {
@@ -120,9 +121,7 @@ const PostDetail = (props) => {
     <>
       <Header>
         <GoBack gback _onClick={() => history.goBack()} />
-
         {/*  삭제버튼  */}
-
         {isMe ? (
           <>
             <Btnbox>
@@ -153,7 +152,6 @@ const PostDetail = (props) => {
                 setIsOpen5(true);
               }}
             >
-              {" "}
               참여취소
             </button>
           )}

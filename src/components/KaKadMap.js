@@ -9,23 +9,10 @@ import { history } from "../redux/configStore";
 
 function KakaoMap(props) {
   const { MainMap, UserLoca, post, _onClick } = props;
-  const [state, setState] = React.useState({
-    // 지도의 초기 위치
-    center: { lat: UserLoca.lat, lng: UserLoca.lng },
-    // 지도 위치 변경시 panto를 이용할지에 대해서 정의
-    isPanto: false,
-  })
-  console.log(state)
+ 
   if (MainMap) {
     return (
       <>
-      <Mebtn button
-            onClick={() =>
-              setState({
-                center: { lat: UserLoca.lat, lng: UserLoca.lng },
-                isPanto: true,
-              })
-            } >sdfseww</Mebtn>
       <Map
         center={{ lat: UserLoca.lat, lng: UserLoca.lng }}
         style={{ width: "100%", height: "100vh" }}
@@ -35,8 +22,6 @@ function KakaoMap(props) {
        
         <MapMarker // 마커를 생성합니다
           position={{ lat: UserLoca.lat, lng: UserLoca.lng }}
-          center={state.center}
-          isPanto={state.isPanto}
           image={{
             src: "./img/mypoint.png", // 마커이미지의 주소입니다
             size: {
@@ -55,7 +40,7 @@ function KakaoMap(props) {
          
             <EventMarkerContainer
               {...position}
-              key={`${position.PostId} + ${position.latitude}`}
+              key={`${position.postId} + ${position.latitude}`}
             />
          
         ))}
@@ -128,7 +113,7 @@ const EventMarkerContainer = (props) => {
   ];
 
   return (
-    <>
+    <React.Fragment key={props._id}>
       <MapMarker
         key={props._id}
         position={{ lat: props.latitude, lng: props.longitude }}
@@ -174,7 +159,7 @@ const EventMarkerContainer = (props) => {
           </Grid>
         )}
       </CustomOverlayMap>
-    </>
+    </React.Fragment>
   );
 };
 
