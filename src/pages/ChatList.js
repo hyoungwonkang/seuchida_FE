@@ -20,27 +20,36 @@ const ChatList = () => {
   const dispatch = useDispatch();
   const room_list = useSelector((state) => state.room.list.chattingRoom);
   const last_chat = useSelector((state) => state.room.list.lastChatting);
-  
+  const unreadChat = useSelector((state) => state.room.list)
+  console.log(unreadChat)
+  console.log(socket.connected)
+  if(socket.connected===false){socket.emit('login')}
   React.useEffect(() => {
     dispatch(roomCreators.getchatRoomDB());
   }, []);
-  let roomId = []
-  for(let i=0; i< room_list?.length; i++){
-    roomId.push(room_list[i]?.roomId)
 
-  }
   React.useEffect(() => {
-    socket?.emit("chatNum", {
-      roomId,
-    });
+    dispatch(roomCreators.getunreadChatDB());
   }, []);
+  
+
+  // let roomId = []
+  // for(let i=0; i< room_list?.length; i++){
+  //   roomId.push(room_list[i]?.roomId)
+
+  // }
+  // React.useEffect(() => {
+  //   socket?.emit("chatNum", {
+  //     roomId,
+  //   });
+  // }, []);
 
  
   React.useEffect(() => {
-    socket?.on("returnChatNum" ,(data)=>{
+    socket?.on("alert" ,(data)=>{
       console.log(data)
     })
-  }, [roomId]);
+  }, []);
 
 
 

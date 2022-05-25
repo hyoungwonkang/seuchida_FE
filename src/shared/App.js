@@ -39,9 +39,7 @@ import {
 } from "../pages/Index";
  
 function App() {
-  React.useEffect((
-  
-    )=>{},[])
+
   return (
     <>
       <Container>

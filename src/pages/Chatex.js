@@ -29,6 +29,7 @@ function Chatex(props) {
   const [nowM, setnowM] = useState(1);
   const [comModalOn, setcomModalOn] = useState(false);
   const chattingBox = useRef(null);
+
   const scrollToBottom = () => {
     if (chattingBox.current) {
       chattingBox.current.scrollIntoView({
@@ -103,11 +104,17 @@ function Chatex(props) {
   }, [chatlist]);
 
   //메세지 전송
-  const sendMessage = useCallback(
+  //userId는 방마다 참여중인 유저리스트 ( 나 제외 )
+  let userId =[]
+  for(let i=0; i<user_list?.length;i++){
+    if(user_list[i].userId !==user.userId)
+   { userId.push(user_list[i].userId)}
+  }
+ const sendMessage = useCallback(
     (e) => {
       if (message) {
         e.preventDefault();
-        socket.emit("chat", { roomId, msg: message }, setMessage(""));
+        socket.emit("chat", { roomId, msg: message, userId }, setMessage(""));
       }
     },
     [message]
@@ -122,6 +129,9 @@ function Chatex(props) {
     socket.emit("back", { roomId , userId:user.userId})
     history.goBack();
   }
+
+
+
 
   return (
     <>

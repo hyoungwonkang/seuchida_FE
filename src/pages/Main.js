@@ -6,6 +6,7 @@ import FooterMenu from "../shared/FooterMenu";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as userActions } from "../redux/modules/user";
+import { actionCreators as roomActions } from "../redux/modules/room";
 import { history } from "../redux/configStore";
 import io from "socket.io-client";
 import { RiMessage3Fill } from "react-icons/ri";
@@ -15,14 +16,12 @@ const socket = io.connect("https://seuchidabackend.shop", {
   auth: {
     auth: token,
   },
-});console.log(socket)
+});
 
 const Main = () => {
   const catepost = useSelector((state) => state.post.list.caPost);
   const post_list = useSelector((state) => state.post.list.nearPost);
   const review = useSelector((state) => state.post.list.filterRe);
-
-  console.log(review)
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [state, setState] = React.useState({
@@ -34,10 +33,22 @@ const Main = () => {
     isLoading: true,
   });
 
+
   React.useEffect(()=>{
-    dispatch(userActions.isLoginDB());
-    dispatch(postActions.getMainDB());
+  if(socket.connected===false)socket.emit('login')
   },[])
+
+  React.useEffect(()=>{
+    dispatch(userActions.isLoginDB());   
+  },[])
+  React.useEffect(()=>{
+    dispatch(postActions.getMainDB());    
+  },[])
+  React.useEffect(() => {
+    socket?.on("alert" ,(data)=>{
+      console.log(data)
+    })
+  }, []);
 
   React.useEffect(() => {
     if (navigator.geolocation) {
@@ -141,7 +152,7 @@ const Main = () => {
         </Float>
         {/* 푸터 */}
       </Container>
-      <FooterMenu />
+      <FooterMenu socket={socket}/>
     </>
   );
 };
