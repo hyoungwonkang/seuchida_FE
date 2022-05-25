@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { useDispatch } from "react-redux";
 import FooterMenu from "../shared/FooterMenu";
@@ -10,6 +10,7 @@ import Picker from "react-mobile-picker-scroll";
 import { Grid, Text, GoBack } from "../elements/Index";
 import Modal from "../components/Modal/Modal";
 import ModalData from "../components/Modal/ModalData";
+import { Redirect } from "react-router-dom";
 
 import { IconContext } from "react-icons";
 import { BsFillCalendarFill } from "react-icons/bs";
@@ -21,32 +22,20 @@ const PostWrite_3 = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  if (history.action === "POP") {
-    history.replace("/postcategory");
-  }
-
-  //새로고침 시 작성 첫 번째 페이지로 이동
-  // if (document.readyState === "interactive") {
-  //   window.onbeforeunload = function () {
-  //     return "새로고침 경고";
-  //   };
-  //   history.replace("/postcategory");
-  // }
+  //localStorage에 있는 데이터를 불러옵니다.
+  const address = localStorage.getItem("address");
+  const spot = localStorage.getItem("spot");
+  const latitude = localStorage.getItem("latitude");
+  const longitude = localStorage.getItem("longitude");
+  const memberAge = localStorage.getItem("memberAge");
+  const memberGender = localStorage.getItem("memberGender");
+  const maxMember = localStorage.getItem("maxMember");
+  const postCategory = localStorage.getItem("postCategory");
+  const postTitle = localStorage.getItem("postTitle");
+  const postDesc = localStorage.getItem("postDesc");
 
   //모달 오픈 state
   const [isOpen, setIsOpen] = React.useState(false);
-
-  const memberAge = props?.location?.state?.memberAge;
-  const memberGender = props?.location?.state?.memberGender;
-  const maxMember = props?.location?.state?.maxMember;
-  const postCategory = props?.location?.state?.postCategory;
-  const postTitle = props?.location?.state?.postTitle;
-  const postDesc = props?.location?.state?.postDesc;
-
-  const address = props.location?.state?.address;
-  const spot = props.location?.state?.spot;
-  const latitude = props.location?.state?.latitude;
-  const longitude = props.location?.state?.longitude;
 
   // 날짜
   const [value, setValue] = useState(new Date());
@@ -58,7 +47,7 @@ const PostWrite_3 = (props) => {
   const newfinalday = newdays.split("-");
   const new_month = newfinalday[1];
   const new_day = newfinalday[2].split(" ")[0];
-  const new_realfinal = `${new_month}월${new_day}일`;
+  let new_realfinal = `${new_month}월${new_day}일`;
 
   // 요일을 가져옵니다.
   function getDay() {
@@ -91,6 +80,7 @@ const PostWrite_3 = (props) => {
     }
     return "(" + day + ")";
   }
+  //
 
   //요일을 포함하는 변수를 만듭니다.
   let dayDate = new_realfinal + " " + getDay();
@@ -131,14 +121,14 @@ const PostWrite_3 = (props) => {
   // 오후 12:00 형식의 변수를 만듭니다.
   let pageTime = b + ` ` + c + `:` + d;
 
-  //날짜와 시간을 datemate로 합성합니다.
-  let datemate = new_realfinal + ", " + c + ":" + d + " " + b;
-
   //토글
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
   let [showDate, setShowDate] = useState("");
   let [showTime, setShowTime] = useState("");
+
+  //날짜와 시간을 datemate로 합성합니다.
+  let [datemate, setDatemate] = useState("");
 
   //프로그레스바
   let count = 2;
@@ -147,10 +137,16 @@ const PostWrite_3 = (props) => {
   }
 
   //datemate 만들기
+  let aaa = "" + showDate;
+  let x = aaa.substring(0, 6);
+  let bbb = "" + showTime;
+  let y_1 = bbb.split(" ").splice(0, 1);
+  let y_2 = bbb.split(" ").splice(1, 1);
+  let z = x + ", " + y_2 + " " + y_1;
   if (!show) {
     datemate = null;
     if (showDate && showTime) {
-      datemate = new_realfinal + ", " + c + ":" + d + " " + b;
+      datemate = z;
     }
   }
 
@@ -177,6 +173,27 @@ const PostWrite_3 = (props) => {
     }
   };
 
+  // 뒤로가기 시에도 데이터를 유지합니다.
+
+  useEffect(() => {
+    setShowDate(window.localStorage.getItem("showDate"));
+    setShowTime(window.localStorage.getItem("showTime"));
+    setDatemate(window.localStorage.getItem("datemate"));
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("spot", spot);
+  }, [spot]);
+  useEffect(() => {
+    window.localStorage.setItem("datemate", datemate);
+  }, [datemate]);
+  useEffect(() => {
+    window.localStorage.setItem("showDate", showDate);
+  }, [showDate]);
+  useEffect(() => {
+    window.localStorage.setItem("showTime", showTime);
+  }, [showTime]);
+
   // console.log(address);
   // console.log(datemate);
   // console.log(latitude);
@@ -190,9 +207,32 @@ const PostWrite_3 = (props) => {
   // console.log(spot);
   // console.log(valueGroups);
 
+  //새로고침 시 작성 첫 번째 페이지로 이동
+  if (document.readyState === "interactive") {
+    //로컬 값 날림localStorage.setItem("address", "");
+    localStorage.setItem("spot", "");
+    localStorage.setItem("latitude", "");
+    localStorage.setItem("longitude", "");
+    localStorage.setItem("datemate", "");
+    localStorage.setItem("memberAge", "");
+    localStorage.setItem("memberGender", "");
+    localStorage.setItem("maxMember", 2);
+    localStorage.setItem("postCategory", "");
+    localStorage.setItem("postTitle", "");
+    localStorage.setItem("postDesc", "");
+    localStorage.setItem("showOptions", "");
+    localStorage.setItem("showDate", "");
+    localStorage.setItem("showTime", "");
+    //새로고침 경고
+    window.onbeforeunload = function () {
+      return "새로고침 경고";
+    };
+    return <Redirect to="/postcategory" />;
+  }
+
   return (
     <Grid>
-      <GoBack text="모임 만들기" path="/postcategory" />
+      <GoBack postBack text="모임 만들기" path="/postwrite2" />
       <Grid margin="24px 0px 40px 0px">
         <ProgressBar>
           <HighLight width={(count / 3) * 100 + "%"} />
@@ -206,66 +246,8 @@ const PostWrite_3 = (props) => {
           padding="0px 24px 4px 0px"
           justify="space-between"
         >
-          <Grid row margin="6px 0px 0px 24px">
-            <IconContext.Provider value={{ color: "#787878", size: "16px" }}>
-              <FaMapMarkerAlt />
-            </IconContext.Provider>
-            <Text bold margin="0px 13px" size="16px">
-              장소
-            </Text>
-          </Grid>
-          <Grid isFlex_end>
-            {!spot ? (
-              <Link
-                to={{
-                  // pathname: '/postwrite4',
-                  state: {
-                    maxMember,
-                    memberAge,
-                    memberGender,
-                    postCategory,
-                    postDesc,
-                    postTitle,
-                  },
-                }}
-                style={{ textDecorationLine: "none" }}
-              >
-                <div
-                  onClick={() => {
-                    history.push("/postwrite4");
-                  }}
-                  style={{
-                    color: "#C4C4C4",
-                  }}
-                >
-                  조건 선택
-                </div>
-              </Link>
-            ) : (
-              <div
-                onClick={() => {
-                  history.push("/postwrite4");
-                }}
-                style={{
-                  color: "black",
-                }}
-              >
-                {spot}
-              </div>
-            )}
-          </Grid>
-        </Grid>
-      </LineBox>
-      <LineBox>
-        <Grid
-          row
-          margin="12px 0px"
-          height="auto"
-          padding="0px 24px 4px 0px"
-          justify="space-between"
-        >
           <Grid>
-            <Grid row padding="0px 0px 0px 26px">
+            <Grid row padding="6px 0px 0px 26px">
               <IconContext.Provider value={{ color: "#787878", size: "16px" }}>
                 <BsFillCalendarFill />
               </IconContext.Provider>
@@ -284,7 +266,7 @@ const PostWrite_3 = (props) => {
                       확인
                     </div>
                   ) : showDate ? (
-                    dayDate
+                    showDate
                   ) : (
                     <div style={{ color: "#C4C4C4" }}>조건 선택</div>
                   )}
@@ -306,46 +288,92 @@ const PostWrite_3 = (props) => {
           </Grid>
         </Grid>
       </LineBox>
+      <LineBox>
+        <Grid
+          row
+          height="auto"
+          padding="12px 24px 12px 0px"
+          justify="space-between"
+        >
+          <Grid row margin="0px 0px 0px 24px">
+            <IconContext.Provider value={{ color: "#787878", size: "16px" }}>
+              <AiFillClockCircle />
+            </IconContext.Provider>
+            <Text bold width="32px" margin="0px 12px">
+              시간
+            </Text>
+          </Grid>
+          <Grid isFlex_end>
+            <div className="Test" onClick={() => setShow2(!show2)}>
+              {show2 ? (
+                <div
+                  onClick={() => {
+                    setShowTime(pageTime);
+                  }}
+                  style={{
+                    fontSize: "16px",
+                  }}
+                >
+                  확인
+                </div>
+              ) : showTime ? (
+                showTime
+              ) : (
+                <div style={{ color: "#C4C4C4" }}>조건 선택</div>
+              )}
+            </div>
+          </Grid>
+        </Grid>
+        {show2 ? (
+          <Picker
+            optionGroups={optionGroups}
+            valueGroups={valueGroups}
+            onChange={handleChange}
+          />
+        ) : null}
+      </LineBox>
       <Grid
         row
+        margin="12px 0px"
         height="auto"
-        padding="12px 24px 12px 0px"
+        padding="0px 24px 4px 0px"
         justify="space-between"
       >
-        <Grid row margin="0px 0px 0px 24px">
+        <Grid row margin="6px 0px 0px 24px">
           <IconContext.Provider value={{ color: "#787878", size: "16px" }}>
-            <AiFillClockCircle />
+            <FaMapMarkerAlt />
           </IconContext.Provider>
-          <Text bold width="32px" margin="0px 12px">
-            시간
+          <Text bold margin="0px 13px" size="16px">
+            장소
           </Text>
         </Grid>
         <Grid isFlex_end>
-          <div className="Test" onClick={() => setShow2(!show2)}>
-            {show2 ? (
-              <div
-                onClick={() => setShowTime(pageTime)}
-                style={{
-                  fontSize: "16px",
-                }}
-              >
-                확인
-              </div>
-            ) : showTime ? (
-              pageTime
-            ) : (
-              <div style={{ color: "#C4C4C4" }}>조건 선택</div>
-            )}
-          </div>
+          {!spot ? (
+            <div
+              onClick={() => {
+                history.push("/postwrite4");
+              }}
+              style={{
+                color: "#C4C4C4",
+                textDecorationLine: "none",
+              }}
+            >
+              조건 선택
+            </div>
+          ) : (
+            <div
+              onClick={() => {
+                history.push("/postwrite4");
+              }}
+              style={{
+                color: "black",
+              }}
+            >
+              {spot}
+            </div>
+          )}
         </Grid>
       </Grid>
-      {show2 ? (
-        <Picker
-          optionGroups={optionGroups}
-          valueGroups={valueGroups}
-          onChange={handleChange}
-        />
-      ) : null}
       <FooterMenu next event={addPost} text="다음" />
       {/* 경고창 모달 */}
       <Modal open={isOpen}>

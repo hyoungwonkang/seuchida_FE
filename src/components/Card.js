@@ -150,7 +150,7 @@ const Card = (props) => {
 
   if (Map) {
     return (
-      <Container style={{ border: "none" }} onClick={_onClick}>
+      <Container style={{ border: "none" ,overflowX: 'hidden'}} onClick={_onClick}>
         <TitleBox style={{ backgroundColor: "white", paddingTop: "5px" }}>
           <BoldTitle style={{ color: "#FF6B52" }}>
             · {props?.status === true ? "모집중" : "모집완료"}

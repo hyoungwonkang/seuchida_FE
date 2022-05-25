@@ -6,6 +6,7 @@ import FooterMenu from "../shared/FooterMenu";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as userActions } from "../redux/modules/user";
+import { actionCreators as roomActions } from "../redux/modules/room";
 import { history } from "../redux/configStore";
 import io from "socket.io-client";
 import { RiMessage3Fill } from "react-icons/ri";
@@ -33,10 +34,22 @@ const Main = () => {
   });
 
 
+
   React.useEffect(()=>{
-    dispatch(userActions.isLoginDB());
-    dispatch(postActions.getMainDB());
+  if(socket.connected===false)socket.emit('login')
   },[])
+
+  React.useEffect(()=>{
+    dispatch(userActions.isLoginDB());   
+  },[])
+  React.useEffect(()=>{
+    dispatch(postActions.getMainDB());    
+  },[])
+  React.useEffect(() => {
+    socket?.on("alert" ,(data)=>{
+      console.log(data)
+    })
+  }, []);
 
   React.useEffect(() => {
     if (navigator.geolocation) {
@@ -61,15 +74,13 @@ const Main = () => {
         }
       );
     } else {
-      // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
       setState((prev) => ({
         ...prev,
         errMsg: "geolocation을 사용할수 없어요..",
         isLoading: false,
       }));
     }
-  
-    // dispatch(postActions.getPostlistDB());
+
   }, [state.isLoading===true]);
 
   return (
@@ -135,6 +146,20 @@ const Main = () => {
         {/* 프로필 작성 */}
         <Float
           onClick={() => {
+            localStorage.setItem("address", "");
+            localStorage.setItem("spot", "");
+            localStorage.setItem("latitude", "");
+            localStorage.setItem("longitude", "");
+            localStorage.setItem("datemate", "");
+            localStorage.setItem("memberAge", "");
+            localStorage.setItem("memberGender", "");
+            localStorage.setItem("maxMember", 2);
+            localStorage.setItem("postCategory", "");
+            localStorage.setItem("postTitle", "");
+            localStorage.setItem("postDesc", "");
+            localStorage.setItem("showOptions", "");
+            localStorage.setItem("showDate", "");
+            localStorage.setItem("showTime", "");
             history.push("/postcategory");
           }}
         >
@@ -142,7 +167,7 @@ const Main = () => {
         </Float>
         {/* 푸터 */}
       </Container>
-      <FooterMenu />
+      <FooterMenu socket={socket}/>
     </>
   );
 };

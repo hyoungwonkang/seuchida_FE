@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import FooterMenu from "../shared/FooterMenu";
 import { Grid, Text, GoBack } from "../elements/Index";
 import Modal from "../components/Modal/Modal";
 import ModalData from "../components/Modal/ModalData";
+import { Redirect } from "react-router-dom";
 
 import { IconContext } from "react-icons";
 import { BsFillPeopleFill } from "react-icons/bs";
@@ -16,28 +17,12 @@ const PostWrite_2 = (props) => {
   document.body.style.overscrollBehavior = "none";
   const history = useHistory();
 
-  if (history.action === "POP") {
-    history.replace("/postcategory");
-  }
-
-  //새로고침 시 작성 첫 번째 페이지로 이동
-  // if (document.readyState === "interactive") {
-  //   window.onbeforeunload = function () {
-  //     return "새로고침 경고";
-  //   };
-  //   history.replace("/postcategory");
-  // }
-
   //모달 오픈 state
   const [isOpen, setIsOpen] = React.useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
 
-  const postCategory = props.location.state?.postCategory;
-  const postTitle = props.location.state?.postTitle;
-  const postDesc = props.location.state?.postDesc;
-
   //인원
-  let [maxMember, setMaxMember] = useState(2);
+  let [maxMember, setMaxMember] = useState("");
   maxMember = parseInt(maxMember);
   const onIncrease = () => {
     setMaxMember(maxMember + 1);
@@ -103,7 +88,6 @@ const PostWrite_2 = (props) => {
       history.push("/postwrite3");
     }
   };
-
   const chkCharCode = (e) => {
     const regExp = /[^0-9]/g;
     const ele = e.target;
@@ -113,9 +97,53 @@ const PostWrite_2 = (props) => {
   };
   // console.log(postCategory, postTitle, postDesc);
 
+  // 뒤로가기 시에도 데이터를 유지합니다.
+  useEffect(() => {
+    setMaxMember(window.localStorage.getItem("maxMember"));
+    setMemberGender(window.localStorage.getItem("memberGender"));
+    setMemberAge(window.localStorage.getItem("memberAge"));
+    setShowOptions(window.localStorage.getItem("showOptions"));
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("maxMember", maxMember);
+  }, [maxMember]);
+  useEffect(() => {
+    window.localStorage.setItem("memberGender", memberGender);
+  }, [memberGender]);
+  useEffect(() => {
+    window.localStorage.setItem("memberAge", memberAge);
+  }, [memberAge]);
+  useEffect(() => {
+    window.localStorage.setItem("showOptions", showOptions);
+  }, [showOptions]);
+
+  //새로고침 시 작성 첫 번째 페이지로 이동
+  if (document.readyState === "interactive") {
+    //로컬 값 날림localStorage.setItem("address", "");
+    localStorage.setItem("spot", "");
+    localStorage.setItem("latitude", "");
+    localStorage.setItem("longitude", "");
+    localStorage.setItem("datemate", "");
+    localStorage.setItem("memberAge", "");
+    localStorage.setItem("memberGender", "");
+    localStorage.setItem("maxMember", 2);
+    localStorage.setItem("postCategory", "");
+    localStorage.setItem("postTitle", "");
+    localStorage.setItem("postDesc", "");
+    localStorage.setItem("showOptions", "");
+    localStorage.setItem("showDate", "");
+    localStorage.setItem("showTime", "");
+    //새로고침 경고
+    window.onbeforeunload = function () {
+      return "새로고침 경고";
+    };
+    return <Redirect to="/postcategory" />;
+  }
+
   return (
     <Grid>
-      <GoBack text="모임 만들기" path="/postcategory" />
+      <GoBack postBack text="모임 만들기" path="/postwrite1" />
       <Grid margin="24px 0px 40px 0px">
         <ProgressBar>
           <HighLight width={(count / 3) * 100 + "%"} />
@@ -262,20 +290,7 @@ const PostWrite_2 = (props) => {
           </div>
         ) : null}
       </Grid>
-      <Link
-        to={{
-          state: {
-            maxMember,
-            memberGender,
-            memberAge,
-            postCategory,
-            postTitle,
-            postDesc,
-          },
-        }}
-      >
-        <FooterMenu next text="다음" state={check} />
-      </Link>
+      <FooterMenu next text="다음" state={check} />
       {/* 경고창 모달 */}
       <Modal open={isOpen}>
         <ModalData

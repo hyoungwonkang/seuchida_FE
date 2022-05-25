@@ -1,30 +1,17 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import FooterMenu from "../shared/FooterMenu";
 import { Grid, Text, Input, GoBack } from "../elements/Index";
 import Modal from "../components/Modal/Modal";
 import ModalData from "../components/Modal/ModalData";
+import { Redirect } from "react-router-dom";
 
 const PostWrite_1 = (props) => {
-  //앱에서 페이지 새로고침 막기
-  document.body.style.overscrollBehavior = "none";
-
   const history = useHistory();
 
-  if (history.action === "POP") {
-    history.replace("/postcategory");
-  }
-
-  //새로고침 시 작성 첫 번째 페이지로 이동
-  // if (document.readyState === "interactive") {
-  //   window.onbeforeunload = function () {
-  //     return "새로고침 경고";
-  //   };
-  //   history.replace("/postcategory");
-  // }
-
-  const postCategory = props?.location?.state?.postCategory;
+  //앱에서 페이지 새로고침 막기
+  document.body.style.overscrollBehavior = "none";
 
   //모달 오픈 state
   const [isOpen, setIsOpen] = useState(false);
@@ -36,13 +23,13 @@ const PostWrite_1 = (props) => {
   let [postDesc, setPostDesc] = useState("");
 
   const selectPostTitle = (e) => {
-    if (e.target.value.length >= 60) {
+    if (e.target.value?.length >= 60) {
       e.target.value = e.target.value.substr(0, 60);
     }
     setPostTitle(e.target.value);
   };
   const selectPostDesc = (e) => {
-    if (e.target.value.length >= 200) {
+    if (e.target.value?.length >= 200) {
       e.target.value = e.target.value.substr(0, 200);
     }
     setPostDesc(e.target.value);
@@ -50,7 +37,7 @@ const PostWrite_1 = (props) => {
 
   //프로그레스바
   let count = 0;
-  if (postTitle.length > 0) {
+  if (postTitle?.length > 0) {
     count++;
   }
 
@@ -59,27 +46,63 @@ const PostWrite_1 = (props) => {
     if (!postTitle || !postDesc) {
       setIsOpen(true);
     } else {
+      localStorage.setItem("postTitle", postTitle); // 로컬스토리지에 저장합니다.
+      localStorage.setItem("postDesc", postDesc); // 로컬스토리지에 저장합니다.
       history.push("/postwrite2");
     }
   };
-
   useEffect(() => {
-    if (postTitle.length >= 20) {
+    if (postTitle?.length >= 20) {
       setIsOpen2(true);
     }
   }, [postTitle]);
 
   useEffect(() => {
-    if (postDesc.length >= 200) {
+    if (postDesc?.length >= 200) {
       setIsOpen3(true);
     }
   }, [postDesc]);
 
-  // console.log(postCategory);
+  // 뒤로가기 시에도 데이터를 유지합니다.
+  useEffect(() => {
+    setPostTitle(window.localStorage.getItem("postTitle"));
+    setPostDesc(window.localStorage.getItem("postDesc"));
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("postTitle", postTitle);
+  }, [postTitle]);
+  useEffect(() => {
+    window.localStorage.setItem("postDesc", postDesc);
+  }, [postDesc]);
+
+  //새로고침 시 작성 첫 번째 페이지로 이동
+  if (document.readyState === "interactive") {
+    //로컬 값 날림
+    localStorage.setItem("address", "");
+    localStorage.setItem("spot", "");
+    localStorage.setItem("latitude", "");
+    localStorage.setItem("longitude", "");
+    localStorage.setItem("datemate", "");
+    localStorage.setItem("memberAge", "");
+    localStorage.setItem("memberGender", "");
+    localStorage.setItem("maxMember", 2);
+    localStorage.setItem("postCategory", "");
+    localStorage.setItem("postTitle", "");
+    localStorage.setItem("postDesc", "");
+    localStorage.setItem("showOptions", "");
+    localStorage.setItem("showDate", "");
+    localStorage.setItem("showTime", "");
+    //새로고침 경고
+    window.onbeforeunload = function () {
+      return "새로고침 경고";
+    };
+    return <Redirect to="/postcategory" />;
+  }
 
   return (
     <div>
-      <GoBack text="모임 만들기" path="/postcategory" />
+      <GoBack postBack text="모임 만들기" path="/postcategory" />
       <Grid margin="24px 0px 40px 0px">
         <ProgressBar>
           <HighLight width={(count / 3) * 100 + "%"} />
@@ -100,7 +123,7 @@ const PostWrite_1 = (props) => {
         />
         <Grid isFlex_end>
           <Text margin="4px 28px 0px 0px" size="12px" color="#787878">
-            {postTitle.length}/20
+            {postTitle?.length}/20
           </Text>
         </Grid>
       </Grid>
@@ -121,21 +144,11 @@ const PostWrite_1 = (props) => {
         />
         <Grid isFlex_end>
           <Text margin="4px 28px 0px 0px" size="12px" color="#787878">
-            {postDesc.length}/200
+            {postDesc?.length}/200
           </Text>
         </Grid>
       </Grid>
-      <Link
-        to={{
-          state: {
-            postTitle,
-            postDesc,
-            postCategory,
-          },
-        }}
-      >
-        <FooterMenu next text="다음" state={check} />
-      </Link>
+      <FooterMenu next text="다음" state={check} />
       {/* 경고창 모달 */}
       <Modal open={isOpen}>
         <ModalData
