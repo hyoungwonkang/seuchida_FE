@@ -22,7 +22,6 @@ const NameCard = () => {
   }, []);
 
   const userInfo = useSelector((state) => state.user.userInfo);
-  // console.log(userInfo);
 
   const level = [
     { id: 1, level: 1, image: <Image src="./img/badge/red.png" /> },
@@ -211,7 +210,12 @@ const MyPage = () => {
         <IoIosArrowForward size={30} />
       </Grid>
 
-      <Grid padding="100px 20px 120px 20px" row justify="space-between">
+      <Grid
+        padding="100px 20px 120px 20px"
+        row
+        justify="space-between"
+        bg="white"
+      >
         <Button
           wd="171px"
           bg="#fff"

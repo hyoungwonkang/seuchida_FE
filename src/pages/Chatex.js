@@ -9,7 +9,7 @@ import { actionCreators as roomActions } from "../redux/modules/room";
 import { useParams } from "react-router-dom";
 import { history } from "../redux/configStore";
 import ChatMenu from "./ChatMenu";
-import { IoSend } from "react-icons/io5";
+// import { IoSend } from "react-icons/io5";
 
 const token = localStorage.getItem("token");
 const socket = io.connect("https://seuchidabackend.shop", {
@@ -20,7 +20,7 @@ const socket = io.connect("https://seuchidabackend.shop", {
 function Chatex(props) {
   const params = useParams();
   const dispatch = useDispatch();
-  const user_list = useSelector((state) => state.room.list?.nowMember);
+  const user_list = useSelector((state) => state.room.list.nowMember);
   const user = useSelector((state) => state.user.userInfo);
   const roomId = params.roomId;
   const [message, setMessage] = useState("");
@@ -30,6 +30,7 @@ function Chatex(props) {
   const [nowM, setnowM] = useState(1);
   const [comModalOn, setcomModalOn] = useState(false);
   const chattingBox = useRef(null);
+
   const scrollToBottom = () => {
     if (chattingBox.current) {
       chattingBox.current.scrollIntoView({
@@ -49,6 +50,7 @@ function Chatex(props) {
   };
 
   const roomInfo = props?.location.state;
+  //작성시간 변환 함수
   const TimeCheck = (t) => {
     let time = t.split(" ")[1];
     let hour = time.split(":")[0];
@@ -59,16 +61,19 @@ function Chatex(props) {
       hour = `오전 ${hour}`;
     }
     return `${hour}:${time.split(":")[1]}`;
-  }; //작성시간 변환 함수
+  };
 
+  //시스템 메세지 오면 다시 방정보 가져오기
   useEffect(() => {
     dispatch(roomActions.getchatMemberDB(roomId));
   }, [systemMsg]);
 
+  //현재인원 바꾸기
   useEffect(() => {
     setnowM(user_list?.length);
   }, [user_list]);
 
+  //방 조인
   useEffect(() => {
     dispatch(userActions.isLoginDB());
     socket?.emit("join", {
@@ -77,6 +82,7 @@ function Chatex(props) {
     return;
   }, [roomId]);
 
+  //방마다 메세지 수신
   useEffect(() => {
     socket.on("broadcast", (data) => {
       setChat((chat) => chat.concat(data));
@@ -86,29 +92,45 @@ function Chatex(props) {
     });
   }, []);
 
+  //채팅 오면 스크롤 하단으로 내리기
   useEffect(() => {
     scrollToBottom();
   }, [chat]);
 
+  //이전 채팅 리스트 받아오기
   useEffect(() => {
     socket.on("chatlist", (data) => {
       setChatlist(data);
     });
   }, [chatlist]);
 
+  //메세지 전송
+  //userId는 방마다 참여중인 유저리스트 ( 나 제외 )
+  let userId = [];
+  for (let i = 0; i < user_list?.length; i++) {
+    if (user_list[i].userId !== user.userId) {
+      userId.push(user_list[i].userId);
+    }
+  }
+  // console.log(userId);
   const sendMessage = useCallback(
     (e) => {
       if (message) {
         e.preventDefault();
-        socket.emit("chat", { roomId, msg: message }, setMessage(""));
+        socket.emit("chat", { roomId, msg: message, userId }, setMessage(""));
       }
     },
     [message]
   );
-
+  // 방 나가기
   const leaveRoom = () => {
     socket.emit("leave", { roomId });
     history.replace("/chatlist");
+  };
+
+  const BackRoom = () => {
+    socket.emit("back", { roomId, userId: user.userId });
+    history.goBack();
   };
 
   return (
@@ -124,12 +146,7 @@ function Chatex(props) {
       <Header>
         <HeaderContents>
           <RowBox>
-            <GoBack
-              gback
-              _onClick={() => {
-                history.goBack();
-              }}
-            />
+            <GoBack gback _onClick={BackRoom} />
             <div style={{ margin: "3px 0px 0px 10px" }}>
               {roomInfo?.postTitle}
             </div>
@@ -200,9 +217,7 @@ function Chatex(props) {
             onChange={(e) => setMessage(e.target.value)}
           />
 
-          <Send onClick={sendMessage}>
-            <IoSend size={25} color="#787878" />
-          </Send>
+          <Send onClick={sendMessage}>전송하기</Send>
         </div>
       </Chatting>
     </>
@@ -262,8 +277,7 @@ const TextMsg = styled.input`
 `;
 
 const Send = styled.span`
-  bottom: 23px;
-  right: 33px;
+  right: 30px;
   position: fixed;
 `;
 
@@ -302,8 +316,4 @@ const TextBoxMe = styled.div`
   border-radius: 8px;
   margin: 15px 0px;
   max-width: 200px;
-`;
-
-const Space = styled.div`
-  height: 79px;
 `;

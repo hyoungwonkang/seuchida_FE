@@ -125,7 +125,7 @@ const EditProfile = (props) => {
   }
 
   return (
-    <Grid>
+    <Grid bg="white">
       <GoBack text="프로필 수정" path="/signuploca" />
 
       <Grid column height="650px">

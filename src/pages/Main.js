@@ -165,7 +165,6 @@ const TopLive = styled.section`
 `;
 
 // 여기여기 붙어라
-
 const ListBox = styled.section`
   background-color: white;
   padding-bottom: 80px;
@@ -176,6 +175,7 @@ const CardBox = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
 const TitleBox = styled.div`
   justify-content: space-between;
   display: flex;
@@ -199,19 +199,21 @@ const ReviewBox = styled.section`
 `;
 
 const Survey = styled.button`
-  position: fixed;
+  position: absolute;
   bottom: 170px;
-  left: 312px;
+  right: 23px;
   background: transparent;
   border: none;
   z-index: 1000;
+  cursor: pointer;
 `;
 
 const Float = styled.button`
-  position: fixed;
+  position: absolute;
   bottom: 100px;
-  left: 300px;
+  right: 10px;
   background: transparent;
   border: none;
   z-index: 1000;
+  cursor: pointer;
 `;

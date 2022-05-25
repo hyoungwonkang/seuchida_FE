@@ -31,7 +31,6 @@ const AddProfile = (props) => {
   const [profile, setProfile] = useState(
     userInfo.userImg ? userInfo.userImg : ""
   );
-  console.log(profile, userInfo.userImg);
   const [nickName, setNickName] = useState(localStorage.getItem("nickName"));
   const [gender, setGender] = useState(localStorage.getItem("gender"));
   const [age, setAge] = useState(localStorage.getItem("age"));
@@ -123,7 +122,7 @@ const AddProfile = (props) => {
   }
 
   return (
-    <Grid>
+    <Grid bg="white">
       <GoBack text="프로필 작성" path="/signuploca" />
 
       <Grid column height="650px">

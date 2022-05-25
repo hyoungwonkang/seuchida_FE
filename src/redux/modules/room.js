@@ -12,7 +12,8 @@ const SET_MEMBER = "SET_MEMBER";
 //Action Creators
 
 const chatRoom = createAction(SET_CHAT, (chat_list) => ({ chat_list }));
-const chatMember = createAction(SET_MEMBER, (member) => ({ member}));
+const chatMember = createAction(SET_MEMBER, (member) => ({ member }));
+
 //initialState (default props 같은 것, 기본값)
 
 const initialState = {
@@ -20,7 +21,8 @@ const initialState = {
     chatUserList: [],
     chattingRoom: [],
     lastChatting: [],
-    nowMember:[],
+    nowMember: [],
+    unreadChat: [],
   },
 };
 
@@ -38,7 +40,7 @@ const joinRoomDB = (roomId, postId) => {
         },
       }).then((response) => {
         console.log(response);
-        dispatch(chatMember(response.data.postInfo))
+        dispatch(chatMember(response.data.postInfo));
       });
     } catch (err) {
       console.log(err);
@@ -56,16 +58,13 @@ const joinCancleDB = (roomId, postId) => {
         },
       }).then((response) => {
         console.log(response.data.postInfo);
-        dispatch(chatMember(response.data.postInfo))
+        dispatch(chatMember(response.data.postInfo));
       });
     } catch (err) {
       console.log(err);
     }
   };
 };
-
-
-
 
 const getchatRoomDB = () => {
   return async function (dispatch, getState) {
@@ -78,10 +77,7 @@ const getchatRoomDB = () => {
         },
       }).then((response) => {
         console.log(response);
-      
         dispatch(chatRoom(response.data));
-
-        
       });
     } catch (err) {
       console.log(err);
@@ -118,7 +114,7 @@ const roomDoneDB = (postId) => {
         },
       }).then((response) => {
         console.log(response.data);
-        dispatch(chatMember(response.data.postInfo))
+        dispatch(chatMember(response.data.postInfo));
       });
     } catch (err) {
       console.log(err);
@@ -126,7 +122,23 @@ const roomDoneDB = (postId) => {
   };
 };
 
-
+const getunreadChatDB = () => {
+  return async function (dispatch, getState) {
+    try {
+      await axios({
+        method: "get",
+        url: `https://seuchidabackend.shop/api/unreadChat`,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }).then((response) => {
+        console.log(response.data);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
 
 //reducer
 export default handleActions(
@@ -139,7 +151,6 @@ export default handleActions(
       produce(state, (draft) => {
         draft.list = action.payload.member;
       }),
-    
   },
   initialState
 );
@@ -153,6 +164,7 @@ const actionCreators = {
   getchatMemberDB,
   roomDoneDB,
   joinCancleDB,
+  getunreadChatDB,
 };
 
 export { actionCreators };

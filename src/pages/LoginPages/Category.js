@@ -155,7 +155,7 @@ const Category = (props) => {
   }
 
   return (
-    <Grid>
+    <Grid bg="white">
       {is_edit ? (
         <GoBack text="상세 관심사 선택" path="/editprofile" remove={remove} />
       ) : (

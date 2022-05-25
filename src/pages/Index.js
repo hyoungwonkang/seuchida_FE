@@ -26,7 +26,6 @@ const MyPage = lazy(() => import("../pages/MyPage"));
 const MyPost = lazy(() => import("../pages/MyPost"));
 const MyReview = lazy(() => import("../pages/MyReview"));
 const ReviewWrite = lazy(() => import("../pages/ReviewWrite"));
-const ChatRoom = lazy(() => import("./ChatRoom"));
 const Evaluation = lazy(() => import("../pages/Evaluation"));
 const ReviewDone = lazy(() => import("./ReviewDone"));
 const Chatex = lazy(() => import("../pages/Chatex"));
@@ -62,7 +61,6 @@ export {
   ReviewWrite,
   Evaluation,
   ReviewDone,
-  ChatRoom,
   Chatex,
   ChatList,
   NotFound,

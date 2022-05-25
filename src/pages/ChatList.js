@@ -7,14 +7,45 @@ import { history } from "../redux/configStore";
 import Image from "../elements/Image";
 import moment from "moment";
 import "moment/locale/ko";
+import { io } from "socket.io-client";
+
+const token = localStorage.getItem("token");
+const socket = io.connect("https://seuchidabackend.shop", {
+  auth: {
+    auth: token,
+  },
+});
 
 const ChatList = () => {
   const dispatch = useDispatch();
   const room_list = useSelector((state) => state.room.list.chattingRoom);
   const last_chat = useSelector((state) => state.room.list.lastChatting);
-  
+  const unreadChat = useSelector((state) => state.room.list);
+  console.log(unreadChat);
+
   React.useEffect(() => {
     dispatch(roomCreators.getchatRoomDB());
+  }, []);
+
+  React.useEffect(() => {
+    dispatch(roomCreators.getunreadChatDB());
+  }, []);
+
+  // let roomId = []
+  // for(let i=0; i< room_list?.length; i++){
+  //   roomId.push(room_list[i]?.roomId)
+
+  // }
+  // React.useEffect(() => {
+  //   socket?.emit("chatNum", {
+  //     roomId,
+  //   });
+  // }, []);
+
+  React.useEffect(() => {
+    socket?.on("alert", (data) => {
+      console.log(data);
+    });
   }, []);
 
   return (

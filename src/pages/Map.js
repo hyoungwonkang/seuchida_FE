@@ -35,36 +35,32 @@ const Map = () => {
   //   });
   // };
 
+  React.useEffect(() => {
+    axios({
+      method: "get",
+      url: `https://seuchidabackend.shop/api/nearPostList`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    }).then((response) => {
+      setPost(response.data.nearPosts);
+    });
+  }, []);
 
- React.useEffect(()=>{
-   axios({
-    method: "get",
-    url: `https://seuchidabackend.shop/api/nearPostList`,
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-  }).then((response) => {
-    setPost(response.data.nearPosts);
-  });
-
- },[])
-
-
-
-  React.useEffect( () => {
+  React.useEffect(() => {
     //갱신으로 수정해야됨
-    if ( navigator.geolocation) {
+    if (navigator.geolocation) {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-        navigator.geolocation.watchPosition(
+      navigator.geolocation.watchPosition(
         async (position) => {
-         setState((prev) => ({
-              ...prev,
-              center: {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude, // 경도
-              },
-              isLoading: false,
-            }));
+          setState((prev) => ({
+            ...prev,
+            center: {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude, // 경도
+            },
+            isLoading: false,
+          }));
         },
         (err) => {
           setState((prev) => ({
@@ -139,7 +135,8 @@ const Header = styled.div`
   z-index: 3;
   background-color: white;
   width: 100%;
-  height: 110px;
+  height: 150px;
+  box-sizing: border-box;
   max-width: 390px;
   padding: 24px;
   position: fixed;

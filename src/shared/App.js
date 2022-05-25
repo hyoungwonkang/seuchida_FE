@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import styled from "styled-components";
-import GlobalStyle from "../elements/style/GlobalStyle";
+// import GlobalStyle from "../elements/style/GlobalStyle";
 import { Route, Switch } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configStore";
@@ -33,7 +33,6 @@ import {
   ReviewWrite,
   Evaluation,
   ReviewDone,
-  ChatRoom,
   Chatex,
   ChatList,
   NotFound,
@@ -42,17 +41,21 @@ import {
 function App() {
   return (
     <>
-      <Container>
-        <ConnectedRouter history={history}>
-          <Suspense
-            fallback={
-              <Loading>
-                <img alt="seuchin" src="./img/loading.gif" width={130} />
-                <Txt>Loading...</Txt>
-              </Loading>
-            }
-          >
-            <GlobalStyle />
+      {/* <GlobalStyle /> */}
+      <ConnectedRouter history={history}>
+        <WebView>
+          <Download>앱 사용자 평가하러 GO!</Download>
+        </WebView>
+
+        <Suspense
+          fallback={
+            <Loading>
+              <img alt="seuchin" src="./img/loading.gif" width={130} />
+              <Txt>Loading...</Txt>
+            </Loading>
+          }
+        >
+          <Container>
             <Switch>
               <Route path="/" exact component={Login} />
               <Route path="/guide" exact component={Guide} />
@@ -96,18 +99,46 @@ function App() {
                 <NotFound />
               </Route>
             </Switch>
-          </Suspense>
-        </ConnectedRouter>
-      </Container>
+          </Container>
+        </Suspense>
+      </ConnectedRouter>
     </>
   );
 }
 
 export default App;
 
+const WebView = styled.div`
+  width: 100vw;
+  height: 100vh;
+  background-image: url("./img/webpage2.png");
+  background-size: cover;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+`;
+
+const Download = styled.button`
+  width: 266px;
+  height: 71px;
+  box-sizing: border-box;
+  background: transparent;
+  border: 1px solid #505050;
+  font-size: 20px;
+  position: absolute;
+  top: 300px;
+  left: 200px;
+  cursor: pointer;
+`;
+
 const Container = styled.div`
   width: 100%;
   max-width: 390px;
+  position: absolute;
+  right: 470px;
 `;
 
 const Loading = styled.div`
