@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Route, Switch } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configStore";
+
 import {
   Login,
   KakaoRedirect,
@@ -36,8 +37,9 @@ import {
   ChatList,
   NotFound,
 } from "../pages/Index";
-
+ 
 function App() {
+
   return (
     <>
       <Container>
