@@ -6,6 +6,7 @@ import FooterMenu from "../shared/FooterMenu";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as userActions } from "../redux/modules/user";
+import { actionCreators as roomActions } from "../redux/modules/room";
 import { history } from "../redux/configStore";
 import io from "socket.io-client";
 import { RiMessage3Fill } from "react-icons/ri";
@@ -32,9 +33,22 @@ const Main = () => {
     isLoading: true,
   });
 
+
+
+  React.useEffect(()=>{
+  if(socket.connected===false)socket.emit('login')
+  },[])
+
+  React.useEffect(()=>{
+    dispatch(userActions.isLoginDB());   
+  },[])
+  React.useEffect(()=>{
+    dispatch(postActions.getMainDB());    
+  },[])
   React.useEffect(() => {
-    dispatch(userActions.isLoginDB());
-    dispatch(postActions.getMainDB());
+    socket?.on("alert" ,(data)=>{
+      console.log(data)
+    })
   }, []);
 
   React.useEffect(() => {
@@ -60,7 +74,6 @@ const Main = () => {
         }
       );
     } else {
-      // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
       setState((prev) => ({
         ...prev,
         errMsg: "geolocation을 사용할수 없어요..",
@@ -68,8 +81,7 @@ const Main = () => {
       }));
     }
 
-    // dispatch(postActions.getPostlistDB());
-  }, [state.isLoading === true]);
+  }, [state.isLoading===true]);
 
   return (
     <>
@@ -155,7 +167,7 @@ const Main = () => {
         </Float>
         {/* 푸터 */}
       </Container>
-      <FooterMenu />
+      <FooterMenu socket={socket}/>
     </>
   );
 };

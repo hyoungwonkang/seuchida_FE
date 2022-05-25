@@ -2,21 +2,24 @@ import React from "react";
 import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
 import { Grid, Text, Image } from "../elements/Index";
 import styled from "styled-components";
-import { useMap } from "react-kakao-maps-sdk";
+import { useMap, kakao } from "react-kakao-maps-sdk";
 import { HiOutlineX } from "react-icons/hi";
 import { history } from "../redux/configStore";
 
+
 function KakaoMap(props) {
   const { MainMap, UserLoca, post, _onClick } = props;
-
+ 
   if (MainMap) {
     return (
+      <>
       <Map
         center={{ lat: UserLoca.lat, lng: UserLoca.lng }}
-        style={{ width: "100%", height: "600px" }}
+        style={{ width: "100%", height: "100vh" }}
         onClick={_onClick}
         level={7}
       >
+       
         <MapMarker // 마커를 생성합니다
           position={{ lat: UserLoca.lat, lng: UserLoca.lng }}
           image={{
@@ -34,14 +37,14 @@ function KakaoMap(props) {
           }}
         />
         {post?.map((position, index) => (
-          <>
+         
             <EventMarkerContainer
               {...position}
-              key={`${position.PostId} + ${position.latitude}`}
+              key={`${position.postId} + ${position.latitude}`}
             />
-          </>
+         
         ))}
-      </Map>
+      </Map></>
     );
   }
 
@@ -75,6 +78,13 @@ const DetailMap = styled.div`
   padding: 0px 24px 130px 24px;
 `;
 
+const Mebtn = styled.div`
+background-color: black;
+position: fixed;
+bottom: 120px;
+z-index: 99;
+`
+
 const Box = styled.div`
   position: absolute;
   padding: 10px;
@@ -103,7 +113,7 @@ const EventMarkerContainer = (props) => {
   ];
 
   return (
-    <>
+    <React.Fragment key={props._id}>
       <MapMarker
         key={props._id}
         position={{ lat: props.latitude, lng: props.longitude }}
@@ -149,7 +159,7 @@ const EventMarkerContainer = (props) => {
           </Grid>
         )}
       </CustomOverlayMap>
-    </>
+    </React.Fragment>
   );
 };
 
