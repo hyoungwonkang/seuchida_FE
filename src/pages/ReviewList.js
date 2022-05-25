@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Image from "../elements/Image";
 import Modal from "../components/Modal/Modal"; //모달 창
@@ -16,6 +16,10 @@ const ReviewList = () => {
   const dispatch = useDispatch();
   const params = useParams();
 
+  const [pageNumber, setPageNumber] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
+  const pageEnd = React.useRef(null);
+
   const review_list = [
     ...review.filter((d) => d._id === params.reviewId),
     ...review.filter((d) => d._id !== params.reviewId),
@@ -30,9 +34,31 @@ const ReviewList = () => {
   const closeModal = (e) => {
     setModalOn(false);
   };
+
   React.useEffect(() => {
     dispatch(postActions.getReviewlistDB());
-  }, []);
+    setIsLoading(false);
+  }, [pageNumber]);
+
+  //무한 스크롤
+  const onIntersect = (entries) => {
+    entries.forEach((element) => {
+      if (element.isIntersecting) {
+        setPageNumber((prev) => prev + 1);
+      }
+    });
+  };
+
+  React.useEffect(() => {
+    const options = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.25,
+    };
+    const observer = new IntersectionObserver(onIntersect, options);
+    observer.observe(pageEnd.current);
+    return () => observer.disconnect();
+  }, [pageEnd]);
 
   if (!review_list) return;
 
@@ -84,6 +110,9 @@ const ReviewList = () => {
             </div>
           );
         })}
+        <div ref={pageEnd} className="pageEnd">
+          {isLoading && <img alt="loading" src="./img/loading.gif" />}
+        </div>
       </div>
       <FooterMenu />
     </>

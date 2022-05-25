@@ -1,9 +1,11 @@
 import React, { Suspense } from "react";
 import styled from "styled-components";
+import GlobalStyle from "../elements/style/GlobalStyle";
 import { Route, Switch } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configStore";
 import {
+  Guide,
   Login,
   KakaoRedirect,
   GoogleRedirect,
@@ -45,12 +47,15 @@ function App() {
           <Suspense
             fallback={
               <Loading>
-                <img alt="seuchin" src="./img/seuchin.png" />
+                <img alt="seuchin" src="./img/loading.gif" width={130} />
+                <Txt>Loading...</Txt>
               </Loading>
             }
           >
+            <GlobalStyle />
             <Switch>
               <Route path="/" exact component={Login} />
+              <Route path="/guide" exact component={Guide} />
               <Route path="/main" exact component={Main} />
               <Route path="/oauth/callback/kakao" component={KakaoRedirect} />
               <Route path="/oauth/callback/google" component={GoogleRedirect} />
@@ -110,6 +115,16 @@ const Loading = styled.div`
   height: 100%;
   max-width: 390px;
   padding: 300px 0px;
+  margin: auto;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  text-align: center;
+`;
+
+const Txt = styled.div`
+  color: #0ed88b;
+  font-size: 20px;
+  font-weight: 800;
 `;

@@ -1,5 +1,6 @@
 import { lazy } from "react";
 
+const Guide = lazy(() => import("../pages/LoginPages/Guide"));
 const Login = lazy(() => import("../pages/LoginPages/Login"));
 const KakaoRedirect = lazy(() => import("../shared/KakaoRedirect"));
 const GoogleRedirect = lazy(() => import("../shared/GoogleRedirect"));
@@ -33,6 +34,7 @@ const ChatList = lazy(() => import("../pages/ChatList"));
 const NotFound = lazy(() => import("../pages/NotFound"));
 
 export {
+  Guide,
   Login,
   KakaoRedirect,
   GoogleRedirect,

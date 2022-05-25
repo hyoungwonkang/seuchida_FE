@@ -41,6 +41,7 @@ const SignupLoca = () => {
     localStorage.removeItem("gender");
     localStorage.removeItem("age");
     localStorage.removeItem("content");
+    localStorage.removeItem("userInterest");
   };
 
   //현재 내 위치

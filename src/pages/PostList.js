@@ -7,6 +7,8 @@ import GoBack from "../elements/GoBack";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { useHistory } from "react-router-dom";
+import { IoMdTennisball } from "react-icons/io";
+import axios from "axios";
 
 const PostList = ({ list, params }) => {
   const dispatch = useDispatch();
@@ -32,7 +34,10 @@ const PostList = ({ list, params }) => {
   // const result = division(arr, 3);
   // console.log(result);
 
+  const [postList, setPostList] = useState([]);
+  console.log(postList);
   const [pageNumber, setPageNumber] = useState(1);
+  console.log(pageNumber);
   const [isLoading, setIsLoading] = useState(true);
   const pageEnd = React.useRef(null);
 
@@ -75,8 +80,32 @@ const PostList = ({ list, params }) => {
         isLoading: false,
       }));
     }
-    dispatch(postActions.getPostlistDB());
-    setIsLoading(false);
+    // dispatch(postActions.getPostlistDB());
+    // setIsLoading(false);
+  }, []);
+  const limit = 6;
+
+  const test = () => {
+    setIsLoading(true);
+    axios({
+      method: "get",
+      url: `https://seuchidabackend.shop/api/nearPostList/${pageNumber}`,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((res) => {
+        console.log(res.data.nearPosts);
+        setIsLoading(false);
+        setPostList((items) => [...items, ...res.data.nearPosts]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  React.useEffect(() => {
+    test(pageNumber);
   }, [pageNumber]);
 
   //무한 스크롤
@@ -88,6 +117,7 @@ const PostList = ({ list, params }) => {
     });
   };
 
+  //바닥 감지
   React.useEffect(() => {
     const options = {
       root: null,
@@ -116,7 +146,8 @@ const PostList = ({ list, params }) => {
       </Header>
 
       <ListBox>
-        {post_list?.map((p, i) => {
+        {postList?.map((p, i) => {
+          // console.log(p);
           return (
             <Card
               {...p}
@@ -129,7 +160,9 @@ const PostList = ({ list, params }) => {
           );
         })}
         <div ref={pageEnd} className="pageEnd">
-          {isLoading && <img alt="loading" src="./img/loading.gif" />}
+          {isLoading && (
+            <img alt="loading" src="./img/loading.gif" width={130} />
+          )}
         </div>
       </ListBox>
 

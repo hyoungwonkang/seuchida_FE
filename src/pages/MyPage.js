@@ -22,7 +22,7 @@ const NameCard = () => {
   }, []);
 
   const userInfo = useSelector((state) => state.user.userInfo);
-  console.log(userInfo);
+  // console.log(userInfo);
 
   const level = [
     { id: 1, level: 1, image: <Image src="./img/badge/red.png" /> },
@@ -278,7 +278,7 @@ const Seuchin = styled.img`
 `;
 const Highlight = styled.div`
   background: #ffe926;
-  transition: 1s width; //몇초동안 뭐를(생략하면 모든것을 바꿈)
+  transition: 1s width;
   width: ${(props) => props.width};
   height: 12px;
   border-radius: 12px;

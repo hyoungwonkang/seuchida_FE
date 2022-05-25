@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { Card, LCslider, RCslider } from "../components/index";
-import { Button } from "../elements/Index";
 import FooterMenu from "../shared/FooterMenu";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
@@ -9,6 +8,7 @@ import { actionCreators as userActions } from "../redux/modules/user";
 import { history } from "../redux/configStore";
 import io from "socket.io-client";
 import { RiMessage3Fill } from "react-icons/ri";
+import { IoIosArrowForward } from "react-icons/io";
 
 const token = localStorage.getItem("token");
 const socket = io.connect("https://seuchidabackend.shop", {
@@ -32,11 +32,10 @@ const Main = () => {
     isLoading: true,
   });
 
-
-  React.useEffect(()=>{
+  React.useEffect(() => {
     dispatch(userActions.isLoginDB());
     dispatch(postActions.getMainDB());
-  },[])
+  }, []);
 
   React.useEffect(() => {
     if (navigator.geolocation) {
@@ -68,9 +67,9 @@ const Main = () => {
         isLoading: false,
       }));
     }
-  
+
     // dispatch(postActions.getPostlistDB());
-  }, [state.isLoading===true]);
+  }, [state.isLoading === true]);
 
   return (
     <>
@@ -91,7 +90,10 @@ const Main = () => {
               window.location.href = "/reviewlist/1";
             }}
           >
-            <Title>함께한 스친들의 후기</Title> <Title>&gt;</Title>
+            <Title>함께한 스친들의 후기</Title>{" "}
+            <Title>
+              <IoIosArrowForward size={30} />
+            </Title>
           </TitleBox>
 
           <RCslider review={review} />
@@ -105,7 +107,9 @@ const Main = () => {
           }}
         >
           <Title>여기여기 붙어라</Title>
-          <Title>&gt;</Title>
+          <Title>
+            <IoIosArrowForward size={30} />
+          </Title>
         </TitleBox>
         <ListBox>
           <CardBox>
@@ -175,6 +179,7 @@ const CardBox = styled.div`
 const TitleBox = styled.div`
   justify-content: space-between;
   display: flex;
+  flex-direction: row;
   background-color: white;
   z-index: 20;
   margin-bottom: -9px;
@@ -183,7 +188,7 @@ const TitleBox = styled.div`
 const Title = styled.div`
   font-size: 24px;
   font-weight: 700;
-  padding: 25px;
+  padding: 25px 25px 20px 25px;
 `;
 //-- 여기여기 붙어라
 

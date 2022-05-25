@@ -1,6 +1,5 @@
 import React from "react";
 import { IoIosArrowBack } from "react-icons/io";
-// import { history } from "../redux/configStore";
 import { useHistory } from "react-router-dom";
 import { Grid, Text } from "./Index";
 

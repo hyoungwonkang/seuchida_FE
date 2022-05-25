@@ -11,12 +11,13 @@ function LCslider(props) {
   const [state, setState] = useState("");
 
   React.useEffect(() => {
-    setState(post[0]?.postCategory);
-  }, [post[0]]);
-
+    if (post) {
+      setState(post[0]?.postCategory);
+    }
+  }, []);
   //인덱스 값 변화에 따른 category 변화 조건
   post?.map((p, i) => {
-    if (state === i) return setState(p.postCategory);
+    if (state === i) return setState(p?.postCategory);
   });
 
   const settings = {

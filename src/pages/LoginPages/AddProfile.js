@@ -31,7 +31,7 @@ const AddProfile = (props) => {
   const [profile, setProfile] = useState(
     userInfo.userImg ? userInfo.userImg : ""
   );
-  // console.log(profile);
+  console.log(profile, userInfo.userImg);
   const [nickName, setNickName] = useState(localStorage.getItem("nickName"));
   const [gender, setGender] = useState(localStorage.getItem("gender"));
   const [age, setAge] = useState(localStorage.getItem("age"));
@@ -84,14 +84,15 @@ const AddProfile = (props) => {
       localStorage.setItem("content", content);
 
       //사진 추가
-      const formData = new FormData();
-      formData.append("userImg", profile);
-      // for (var pair of formData.entries()) {
-      //   console.log(pair[0] + ", " + pair[1]);
-      // }
-      dispatch(userActions.addPhotoDB(formData));
+      if (profile === userInfo?.userImg) {
+        history.push("/category");
+      } else {
+        const formData = new FormData();
+        formData.append("userImg", profile);
+        dispatch(userActions.addPhotoDB(formData));
 
-      history.push("/category");
+        history.push("/category");
+      }
     }
   };
 

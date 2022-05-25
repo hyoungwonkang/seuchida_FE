@@ -59,13 +59,18 @@ const Category = (props) => {
     dispatch(userActions.isLoginDB());
   }, []);
 
+  //로컬 값 가져오기
+  const localUserInterest = JSON.parse(localStorage.getItem("userInterest"));
+
   //수정시, 유저의 이전 관심 태그 보여주기
   React.useEffect(() => {
-    if (is_edit) {
-      setUserInterest(userInfo?.userInterest);
-    } else {
-      setUserInterest(JSON.parse(localStorage.getItem("userInterest")));
-    }
+    // if (is_edit) {
+    setUserInterest(
+      localUserInterest ? localUserInterest : userInfo?.userInterest
+    );
+    // } else {
+    //   setUserInterest(JSON.parse(localStorage.getItem("userInterest")));
+    // }
   }, [userInfo]);
 
   //모달 오픈 state

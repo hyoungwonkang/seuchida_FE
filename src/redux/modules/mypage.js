@@ -12,7 +12,6 @@ const MY_REVIEW = "MY_REVIEW";
 const MY_POSTONE = "MY_POSTONE";
 const ADD_REVIEW = "ADD_REVIEW";
 const REVIEW_PHOTO = "REVIEW_PHOTO";
-// const ADD_REPORT = "ADD_REPORT";
 
 //Action Creators
 
@@ -32,9 +31,6 @@ const addReview = createAction(ADD_REVIEW, (addreview) => ({
 const addPhoto = createAction(REVIEW_PHOTO, (image) => ({
   image,
 }));
-// const addReport = createAction(ADD_REPORT, (report) => ({
-//   report,
-// }));
 
 //initialState (default props 같은 것, 기본값)
 const initialState = {
@@ -43,7 +39,6 @@ const initialState = {
   myPostOne: "",
   myReview: "",
   reviewImg: "",
-  myReport: "",
 };
 
 //Middleware
@@ -184,6 +179,29 @@ const addPhotoDB = (formData) => {
   };
 };
 
+const addReportDB = (rUserId, report) => {
+  return async (dispatch, getState, { history }) => {
+    await axios({
+      method: "post",
+      url: `https://seuchidabackend.shop/api/report`,
+      data: JSON.stringify({
+        userId: rUserId,
+        content: report,
+      }),
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": `application/json`,
+      },
+    })
+      .then((res) => {
+        console.log("addReport에 성공했습니다.", res);
+      })
+      .catch((err) => {
+        console.log("addReport에 실패했습니다.", err);
+      });
+  };
+};
+
 //포스트 삭제
 const deletePostDB = (roomId) => {
   return async function (dispatch, getState, { history }) {
@@ -267,6 +285,7 @@ const actionCreators = {
   myPostOneDB,
   addReviewDB,
   addPhotoDB,
+  addReportDB,
   deletePostDB,
   signDownDB,
 };

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { HiOutlineX } from "react-icons/hi";
 
 const ModalData = (props) => {
-  console.log(props);
+  // console.log(props);
   const { Members, Alert, Check, Evaluate, text, onCheck, onClose } = props;
 
   //재확인 창
@@ -164,7 +164,8 @@ const ModalData = (props) => {
             />
             <Grid row justify="center" height="auto">
               {level.map((v, i) => {
-                if (v.level == props.post.memberLevel) return v.image;
+                if (v.level == props.post.memberLevel)
+                  return <div key={v + i}>{v.image}</div>;
               })}
               <Text margin="0px" bold size="24px">
                 {props.post.memberNickname}
@@ -189,13 +190,15 @@ const ModalData = (props) => {
               );
             })}
           </Grid>
-          <Text margin="20px 0px 0px 3px">{props.post.memberDesc}</Text>
+          <Grid>
+            <Text margin="20px 0px 0px 3px">{props.post.memberDesc}</Text>
+          </Grid>
         </Grid>
       </Grid>
     );
   }
 
-  //게시물 작성자 프로필(레벨 넣어야함//카테고리 왜 빠짐?)
+  //게시물 작성자 프로필
   return (
     <Grid width="342px" height="356px" padding="20px">
       {/* close버튼 */}
@@ -214,7 +217,8 @@ const ModalData = (props) => {
           />
           <Grid row justify="center" height="auto">
             {level.map((v, i) => {
-              if (v.level == props.post[0].memberLevel) return v.image;
+              if (v.level == props.post[0].memberLevel)
+                return <div key={v + i}>{v.image}</div>;
             })}
             <Text margin="0px" bold size="24px">
               {props.post[0].memberNickname}
@@ -239,7 +243,9 @@ const ModalData = (props) => {
             );
           })}
         </Grid>
-        <Text margin="20px 0px 0px 3px">{props.post[0].memberDesc}</Text>
+        <Grid>
+          <Text margin="20px 0px 0px 3px">{props.post[0].memberDesc}</Text>
+        </Grid>
       </Grid>
     </Grid>
   );
