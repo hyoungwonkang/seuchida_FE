@@ -91,18 +91,10 @@ const MyPage = () => {
   const myExercise = useSelector((state) => state.mypage.myExercise);
   const userInfo = useSelector((state) => state.user.userInfo);
   const point = JSON.stringify(userInfo?.userEvalue);
-  // console.log(userInfo?.userEvalue > );
 
   //모달창 state
   const [isOpen, setIsOpen] = React.useState(false);
   const [isOpen2, setIsOpen2] = React.useState(false);
-
-  //회원탈퇴
-  const singdown = () => {
-    dispatch(mypageActions.signDownDB());
-    history.push("/");
-    localStorage.clear();
-  };
 
   //로그아웃
   const signout = () => {
@@ -133,7 +125,7 @@ const MyPage = () => {
         bg="#0ED88B"
       >
         <ProgressBar>
-          {point >= "70" ? (
+          {point >= 70 ? (
             <Highlight width={0 + "%"} />
           ) : (
             <Highlight
@@ -167,33 +159,17 @@ const MyPage = () => {
         bg="white"
         height="300px"
       >
-        <Text size="16px" bold>
+        <Grid row height="70px">
           <RiBarChartFill color="#FF6B52" />
-          운동 후기 남기고 스친 레벨 올리자!
-        </Text>
+          <Text size="16px" bold>
+            운동 후기 남기고 스친 레벨 올리자!
+          </Text>
+        </Grid>
+
         {myExercise.length !== 0 ? (
           <ECslider myExercise={myExercise} />
         ) : (
-          <Grid
-            border="1px solid #ddd"
-            width="342px"
-            height="168px"
-            br="12px"
-            padding="0px 10px"
-            bg="white"
-            column
-          >
-            <Text margin="70px" bold size="16px" position>
-              후기를 다 작성하셨네요!
-            </Text>
-            <img
-              src="./img/review.png"
-              alt="review"
-              style={{
-                margin: "50px auto",
-              }}
-            />
-          </Grid>
+          <img src="./img/noreview.png" alt="review" />
         )}
       </Grid>
 
@@ -239,7 +215,7 @@ const MyPage = () => {
         bg="white"
       >
         <Button
-          wd="171px"
+          wd="342px"
           bg="#fff"
           br="1px solid #C4C4C4"
           color=" #C4C4C4"
@@ -249,28 +225,7 @@ const MyPage = () => {
         >
           로그아웃
         </Button>
-        <Button
-          wd="171px"
-          bg="#fff"
-          br="1px solid #C4C4C4"
-          color=" #C4C4C4"
-          _onClick={() => {
-            setIsOpen(true);
-          }}
-        >
-          탈퇴하기
-        </Button>
       </Grid>
-
-      {/* 회원 탈퇴 경고창 모달 */}
-      <Modal open={isOpen}>
-        <ModalData
-          Check
-          onCheck={() => singdown()}
-          onClose={() => setIsOpen(false)}
-          text="정말로 탈퇴하시겠습니까?"
-        />
-      </Modal>
 
       {/* 로그아웃 경고창 모달 */}
       <Modal open={isOpen2}>

@@ -100,7 +100,6 @@ const ModalData = (props) => {
                   value={item.data}
                   onChange={(e) => {
                     props.report(e.target.value);
-                    props.rUserId(props.post.memberId);
                   }}
                 />
                 <label htmlFor={item.id}>
@@ -123,6 +122,7 @@ const ModalData = (props) => {
             <Button
               is_close
               _onClick={() => {
+                props.rUserId(props.post.memberId);
                 onCheck();
                 onClose();
               }}

@@ -8,6 +8,8 @@ import { useSelector, useDispatch } from "react-redux";
 import Image from "../elements/Image";
 import { history } from "../redux/configStore";
 import { actionCreators as roomActions } from "../redux/modules/room";
+import { Grid, Text } from "../elements/Index";
+
 function LCslider(props) {
   const { catepost } = props;
   const joinARR = useSelector((state) => state?.room?.joinArr);
@@ -16,6 +18,7 @@ function LCslider(props) {
   // const post = props.catepost;
   const [isOpen, setIsOpen] = useState(false);
   const [state, setState] = useState("");
+
 
   window.addEventListener("wheel", (e) => {
     setIsOpen(false);
@@ -31,6 +34,7 @@ function LCslider(props) {
       setState(catepost[0]?.postCategory);
     }
   }, [catepost]);
+
 
   //인덱스 값 변화에 따른 category 변화 조건
   catepost?.map((p, i) => {
@@ -57,6 +61,7 @@ function LCslider(props) {
           방금 개설된 가까운 <br />
           <Sports>{state}</Sports> 매칭이에요!
         </Wellcome>
+
          {mainalarm&& <Hey>!!</Hey>}
         <div>
           <img
@@ -95,19 +100,28 @@ function LCslider(props) {
           }) :<div>알람 음슴</div>}
         </ArlamBox>
       )}
-      <Sliders {...settings} style={{ height: "270px" }}>
-        {catepost?.map((p, i) => {
-          if (i < 6)
-            return (
-              <LiveCard
-                {...p}
-                key={p.id}
-                center={props.center}
-                _onClick={props._onClick}
-              />
-            );
-        })}
-      </Sliders>
+      {post.length === 0 ? (
+        <Grid padding="0px 0px 40px 0px" column>
+          <img src="./img/seuchin.png" style={{ margin: "40px 0px 0px 0px" }} />
+          <Text bold margin="0px" color="#C4C4C4">
+            카테고리에 해당하는 글이 없어요!
+          </Text>
+        </Grid>
+      ) : (
+        <Sliders {...settings} style={{ height: "270px" }}>
+          {post?.map((p, i) => {
+            if (i < 6)
+              return (
+                <LiveCard
+                  {...p}
+                  key={p.id}
+                  center={props.center}
+                  _onClick={props._onClick}
+                />
+              );
+          })}
+        </Sliders>
+      )}
     </div>
   );
 }

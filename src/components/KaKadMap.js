@@ -85,7 +85,7 @@ const Mebtn = styled.div`
 const Box = styled.div`
   position: absolute;
   padding: 10px;
-  top: -170px;
+  top: -190px;
   left: -80px;
   background-color: white;
   width: 173px;
@@ -134,7 +134,6 @@ const EventMarkerContainer = (props) => {
               width="173px"
               height="126px"
             >
-
               <Grid row justify="right" height="15px">
                 <HiOutlineX size={20} onClick={() => setIsClicked(false)} />
               </Grid>
@@ -146,8 +145,10 @@ const EventMarkerContainer = (props) => {
               >
                 <Grid row>
                   {level.map((v, i) => {
-                    if (v.level == props.level) return  <span key={v.id}>{v.image}</span>
-                    if (props.level >= "7") return  <span key={v.id}>{v[6]?.image}</span>
+                    if (v.level == props.level)
+                      return <span key={v.id}>{v.image}</span>;
+                    if (props.level >= 7)
+                      return <span key={v.id}>{v[6]?.image}</span>;
                   })}
                   <Text size="14px" bold>
                     {props.nickName}

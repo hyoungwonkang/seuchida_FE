@@ -17,11 +17,13 @@ import { io } from "socket.io-client";
 
 const token = localStorage.getItem("token");
 // const ENDPOINT = "https://seuchidabackend.shop";
+
 const socket =  io.connect("https://seuchidabackend.shop", {
       auth: {
         auth: token,
       },
     }); 
+
 const PostDetail = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -43,10 +45,11 @@ const PostDetail = (props) => {
   //강퇴당한유저 킥 데이터가 이상하게 배열로 2겹임 ..
   const banUser = post?.banUserList?.filter((u) => u.includes(userId));
   const postId = params.postId; //게시물 번호(룸 아이디)
-  
+
   let partymember = [];
   for (let i = 0; i < post?.nowMember?.length; i++) {
     if (user?.userId !==post?.nowMember[i]?.memberId) {
+
       partymember.push(post?.nowMember[i]?.memberId);
     }
   }
@@ -73,7 +76,9 @@ const PostDetail = (props) => {
   const roomDone = () => {
     dispatch(roomActions.roomDoneDB(postId));
   };
+  
   //참여 취소 
+
   const joinCancle = () => {
     dispatch(roomActions.joinCancleDB(post.roomId, postId));
   };
@@ -129,10 +134,6 @@ const PostDetail = (props) => {
   // };
 
 
-
-
-
-
   if (banUser?.length === 1) {
     window.alert("강퇴당함 ");
     history.push("/main");
@@ -170,16 +171,6 @@ const PostDetail = (props) => {
       {/* <h2>여기여기 붙어라</h2> */}
       <Container>
         <ProfileBox>
-          {!isMe && userCheck.length === 1 && (
-            <button
-              onClick={() => {
-                joinCancle();
-                setIsOpen5(true);
-              }}
-            >
-              참여취소
-            </button>
-          )}
           <Image
             margin="0px 15px 0px 0px"
             shape="circle"
@@ -246,14 +237,33 @@ const PostDetail = (props) => {
 
         {isMe === true || userCheck.length === 1 ? (
           <ButtonBox>
-            <FooterMenu
-              next
-              text={"채팅하기"}
-              path={{
-                pathname: `/chatex/${post.roomId}`,
-                state: { ...post },
-              }}
-            ></FooterMenu>
+            {/* 참여취소 + 채팅하기 */}
+            {!isMe && userCheck.length === 1 ? (
+              <FooterMenu
+                Chat
+                next
+                path={{
+                  pathname: `/chatex/${post.roomId}`,
+                  state: { ...post },
+                }}
+                event={() => {
+                  setIsOpen5(true);
+                }}
+              ></FooterMenu>
+            ) : (
+              // 채팅하기
+              <FooterMenu
+                next
+                text={"채팅하기"}
+                path={{
+                  pathname: `/chatex/${post.roomId}`,
+                  state: { ...post },
+                }}
+                event={() => {
+                  setIsOpen5(true);
+                }}
+              ></FooterMenu>
+            )}
           </ButtonBox>
         ) : // 방장이고 참여자일때 채팅하기 버튼
 

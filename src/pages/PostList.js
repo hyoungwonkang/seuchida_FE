@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card } from "../components/index";
-import { Button } from "../elements/Index";
+import { Grid, Text } from "../elements/Index";
 import styled from "styled-components";
 import FooterMenu from "../shared/FooterMenu";
 import GoBack from "../elements/GoBack";
@@ -95,14 +95,16 @@ const PostList = ({ list, params }) => {
 
   //바닥 감지
   React.useEffect(() => {
-    const options = {
-      root: null,
-      rootMargin: "0px",
-      threshold: 0.25,
-    };
-    const observer = new IntersectionObserver(onIntersect, options);
-    observer.observe(pageEnd.current);
-    return () => observer.disconnect();
+    if (postList.length > 0) {
+      const options = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.25,
+      };
+      const observer = new IntersectionObserver(onIntersect, options);
+      observer.observe(pageEnd.current);
+      return () => observer.disconnect();
+    }
   }, [pageEnd]);
 
   return (
@@ -120,29 +122,45 @@ const PostList = ({ list, params }) => {
           <div> 여기여기 붙어라</div>
         </HeadContents>
       </Header>
-      <ListBox>
-        {postList?.map((p, i) => {
-          return (
-            <Card
-              {...p}
-              key={p.id}
-              center={state.center}
-              _onClick={() => {
-                history.push(`/postdetail/${p._id}`);
-              }}
-            />
-          );
-        })}
-        <div ref={pageEnd} className="pageEnd">
-          {isLoading ? (
-            <Pos>
-              <Seuchin alt="loading" src="./img/loading.gif" width={130} />
-            </Pos>
-          ) : (
-            ""
-          )}
-        </div>
-      </ListBox>
+      {/* 글이 없을 때 : 있을 때*/}
+      {postList.length === 0 ? (
+        <Grid padding="0px 0px 80px 0px" column height="auto">
+          <img
+            src="./img/seuchin.png"
+            style={{ margin: "220px 0px 0px 0px" }}
+          />
+          <Text bold margin="0px" color="#C4C4C4">
+            아직 글이 없어요!
+          </Text>
+          <Text bold margin="0px" color="#C4C4C4">
+            지금 바로 글을 쓰러 가볼까요?
+          </Text>
+        </Grid>
+      ) : (
+        <ListBox>
+          {postList?.map((p, i) => {
+            return (
+              <Card
+                {...p}
+                key={p.id}
+                center={state.center}
+                _onClick={() => {
+                  history.push(`/postdetail/${p._id}`);
+                }}
+              />
+            );
+          })}
+          <div ref={pageEnd} className="pageEnd">
+            {isLoading ? (
+              <Pos>
+                <Seuchin alt="loading" src="./img/loading.gif" width={130} />
+              </Pos>
+            ) : (
+              ""
+            )}
+          </div>
+        </ListBox>
+      )}
 
       <FooterMenu />
     </>
