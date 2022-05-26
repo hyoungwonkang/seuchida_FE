@@ -171,7 +171,7 @@ const Main = () => {
         </Float>
         {/* 푸터 */}
       </Container>
-      <FooterMenu />
+      <FooterMenu socket={socket}/>
     </>
   );
 };

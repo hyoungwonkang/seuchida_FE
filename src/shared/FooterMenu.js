@@ -3,26 +3,42 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { Button, Image } from "../elements/Index";
 import { io } from "socket.io-client";
-
-// const token = localStorage.getItem("token");
-// const socket = io.connect("https://seuchidabackend.shop", {
-//   auth: {
-//     auth: token,
-//   },
-// });
+import { actionCreators as roomCreators } from "../redux/modules/room";
+import { useDispatch, useSelector } from "react-redux";
+const token = localStorage.getItem("token");
+const socket = io.connect("https://seuchidabackend.shop", {
+  auth: {
+    auth: token,
+  },
+});
 const FooterMenu = (props) => {
   const history = useHistory();
-  const { next, is_check, __onClick , socket} = props;
-  // const [alarm, setAlarm] = React.useState([]);
+  const { next, is_check, __onClick } = props;
+  const dispatch = useDispatch()
+  const alarm = useSelector(state=> state.room.alarm)
+  const [click, setClick] = React.useState("");
+  const readArlam = () =>{
 
+  dispatch(roomCreators.setalarm(false))
+  setClick("chat");
+  history.push("/chatlist");
+  }
 
   React.useEffect(() => {
-    socket?.on("broadcast", (data) => {
-      console.log(data)
-    });
+    // if (socketLogin === false) {
+    socket?.emit("login");
+    // }
   }, []);
 
-  const [click, setClick] = React.useState("");
+  
+  React.useEffect(() => {
+    socket?.on("alert", (data) => {
+      dispatch(roomCreators.setalarm(true))
+    })
+    
+    },[]);
+  
+
 
   if (next) {
     return (
@@ -89,11 +105,11 @@ const FooterMenu = (props) => {
           )}
         </Menu>
         <Menu
-          onClick={() => {
-            setClick("chat");
-            history.push("/chatlist");
-          }}
+          onClick={
+            readArlam
+          }
         >
+          <NewArlam>{alarm && 'new'}</NewArlam>
           {click === "chat" ? (
             <img alt="chat" src="./img/footer/chatg.png" />
           ) : (
@@ -160,3 +176,10 @@ const Btn = styled.div`
   min-width: 390px;
   z-index: 5;
 `;
+
+const NewArlam = styled.div`
+position: fixed;
+z-index: 999;
+background-color: red;
+margin-left: 25px;
+`
