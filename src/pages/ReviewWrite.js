@@ -108,9 +108,9 @@ const ReviewWrite = (props) => {
   }
 
   return (
-    <Grid bg="white">
+    <Grid bg="white" height="auto">
       <GoBack text="후기 작성하기" path="/mypage" remove={remove} />
-      <Grid height="950px">
+      <Grid height="auto">
         {/* 포스트 내용  */}
         <Grid height="46px" width="342px" margin="0px 0px 0px 25px">
           <Text size="18px" bold>

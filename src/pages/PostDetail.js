@@ -61,9 +61,9 @@ const PostDetail = (props) => {
     dispatch(roomActions.joinCancleDB(post.roomId, postId));
   };
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     dispatch(userActions.isLoginDB());
-  },[])
+  }, []);
   React.useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -140,9 +140,8 @@ const PostDetail = (props) => {
         ) : (
           ""
         )}
-
-        {/* <h2>여기여기 붙어라</h2> */}
       </Header>
+      {/* <h2>여기여기 붙어라</h2> */}
       <Container>
         <ProfileBox>
           {!isMe && userCheck.length === 1 && (
@@ -291,7 +290,6 @@ const Container = styled.div`
 const Btnbox = styled.div`
   display: flex;
   flex-direction: row;
-  margin-right: 25vw;
 `;
 
 const ProfileBox = styled.div`
@@ -314,11 +312,11 @@ const Header = styled.div`
   top: 0;
   position: fixed;
   background-color: white;
-  width: 100%;
-  height: 40px;
+  width: 390px;
+  height: 60px;
+  box-sizing: border-box;
   padding: 24px 24px 0px 24px;
   display: flex;
-  /* flex-direction: row; */
   justify-content: space-between;
 `;
 
@@ -333,6 +331,7 @@ const ButtonBox = styled.div`
   z-index: 3;
   background-color: white;
   width: 100%;
+  margin: 0px 0px 50px 0px;
 `;
 
 const DelBtn = styled.div`

@@ -45,15 +45,15 @@ function App() {
     <>
       <GlobalStyle />
       <Wrapper>
-        <ConnectedRouter history={history}>
-          <WebView>
-            <Download>앱 사용자 평가하러 GO!</Download>
-          </WebView>
+        <WebView>
+          <Download>앱 사용자 평가하러 GO!</Download>
+        </WebView>
 
+        <ConnectedRouter history={history}>
           <Suspense
             fallback={
               <Loading>
-                <img alt="seuchin" src="./img/loading.gif" width={130} />
+                <img alt="seuchin" src="/img/loading.gif" width={130} />
                 <Txt>Loading...</Txt>
               </Loading>
             }
@@ -129,7 +129,7 @@ const Wrapper = styled.div`
 const WebView = styled.div`
   width: 100vw;
   height: 100vh;
-  background-image: url("./img/webpage2.png");
+  background-image: url("/img/webpage2.png");
   background-size: cover;
   /* overflow: hidden; */
   position: absolute;
@@ -156,7 +156,7 @@ const Loading = styled.div`
   width: 100%;
   height: 100%;
   max-width: 390px;
-  padding: 300px 0px;
+  /* padding: 300px 0px; */
   margin: auto;
   display: flex;
   flex-direction: column;

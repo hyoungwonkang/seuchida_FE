@@ -9,7 +9,7 @@ import { actionCreators as roomActions } from "../redux/modules/room";
 import { useParams } from "react-router-dom";
 import { history } from "../redux/configStore";
 import ChatMenu from "./ChatMenu";
-// import { IoSend } from "react-icons/io5";
+import { MdSend } from "react-icons/md";
 
 const token = localStorage.getItem("token");
 const socket = io.connect("https://seuchidabackend.shop", {
@@ -132,6 +132,18 @@ function Chatex(props) {
     history.goBack();
   };
 
+  //앱에서 페이지 새로고침 막기
+  document.body.style.overscrollBehavior = "none";
+
+  //새로고침 시 작성 첫 번째 페이지로 이동
+  if (document.readyState === "interactive") {
+    //새로고침 경고
+    window.onbeforeunload = function () {
+      return "새로고침 경고";
+    };
+    history.replace("/chatlist");
+  }
+
   return (
     <>
       <ChatMenu
@@ -216,7 +228,9 @@ function Chatex(props) {
             onChange={(e) => setMessage(e.target.value)}
           />
 
-          <Send onClick={sendMessage}>전송하기</Send>
+          <Send onClick={sendMessage}>
+            <MdSend size={25} color="#787878" />
+          </Send>
         </div>
       </Chatting>
     </>
@@ -276,7 +290,8 @@ const TextMsg = styled.input`
 `;
 
 const Send = styled.span`
-  right: 30px;
+  bottom: 23px;
+  right: 33px;
   position: fixed;
 `;
 

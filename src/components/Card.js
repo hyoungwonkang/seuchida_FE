@@ -97,7 +97,7 @@ const Card = (props) => {
     return (
       <Container style={{ border: "none" }}>
         <TitleBox style={{ background: "white", borderDisplay: "none" }}>
-          <BoldTitle style={{ fontSize: "20px", color:"#FF6B52" }}>
+          <BoldTitle style={{ fontSize: "20px", color: "#FF6B52" }}>
             · {props?.status === true ? "모집중" : "모집완료"}
           </BoldTitle>
           <BoldTitle style={{ fontSize: "20px" }}>{props?.postTitle}</BoldTitle>
@@ -150,7 +150,10 @@ const Card = (props) => {
 
   if (Map) {
     return (
-      <Container style={{ border: "none" ,overflowX: 'hidden'}} onClick={_onClick}>
+      <Container
+        style={{ border: "none", overflowX: "hidden" }}
+        onClick={_onClick}
+      >
         <TitleBox style={{ backgroundColor: "white", paddingTop: "5px" }}>
           <BoldTitle style={{ color: "#FF6B52" }}>
             · {props?.status === true ? "모집중" : "모집완료"}
@@ -159,7 +162,7 @@ const Card = (props) => {
         </TitleBox>
 
         <TextBoxList>
-          <Status style={{ paddingBottom: "10px", border:"none"  }}>
+          <Status style={{ paddingBottom: "10px", border: "none" }}>
             <StatusIcon>
               <span>
                 <BiDumbbell color="#787878" />
@@ -182,7 +185,7 @@ const Card = (props) => {
             </StatusIcon>
           </Status>
 
-          <Join style={{ borderBottom: "1px solid #e9e9e9"}}>
+          <Join style={{ borderBottom: "1px solid #e9e9e9" }}>
             <ProfileBox style={{ paddingBottom: "3px" }}>
               <Profile src={props?.userImg} />
               <SmallFont style={{ margin: "12px 0px 0px 8px" }}>
@@ -279,7 +282,7 @@ const MainContainer = styled.section`
   height: 168px;
   margin-bottom: 14px;
   cursor: pointer;
-  z-index: 3; 
+  z-index: 3;
 `;
 
 const Container = styled.section`
@@ -309,6 +312,14 @@ const DetailDesc = styled.div`
   font-size: 17px;
   padding-top: 4px;
   min-height: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* 라인수 */
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+  line-height: 1.3em;
+  height: 3.9em;
 `;
 const ListDesc = styled.div`
   font-size: 17px;

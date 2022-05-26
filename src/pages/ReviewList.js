@@ -9,6 +9,8 @@ import { useParams } from "react-router-dom";
 import { BiDumbbell } from "react-icons/bi";
 import { MdPlace } from "react-icons/md";
 import GoBack from "../elements/GoBack";
+import { Grid } from "../elements/Index";
+import ReviewCardD from "../components/ReviewCardD";
 import axios from "axios";
 
 const ReviewList = () => {

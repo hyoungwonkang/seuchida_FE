@@ -63,7 +63,6 @@ const MyPost = () => {
 
       <Grid padding="0px 0px 80px 0px">
         {myPostList.map((p, i) => {
-          console.log(p);
           return (
             <Card
               {...p}

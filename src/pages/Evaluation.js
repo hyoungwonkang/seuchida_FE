@@ -8,6 +8,7 @@ import { actionCreators as userActions } from "../redux/modules/user";
 import { actionCreators as mypageActions } from "../redux/modules/mypage";
 import Modal from "../components/Modal/Modal"; //모달 창
 import ModalData from "../components/Modal/ModalData";
+import { Redirect } from "react-router-dom";
 
 const Evaluation = () => {
   const history = useHistory();
@@ -20,6 +21,7 @@ const Evaluation = () => {
   //ReviewWrite로
   const postInfo = useSelector((state) => state.mypage.myPostOne);
   const postId = postInfo?.postId;
+  console.log(postId);
   const photo = useSelector((state) => state.mypage.reviewImg);
   const review = localStorage.getItem("review");
 
@@ -52,10 +54,10 @@ const Evaluation = () => {
 
   //다른 사람 평가
   var [evalue, setEvalue] = useState(localevalue ? [...localevalue] : []);
-  evalue.length = _postInfo?.length;
-  // console.log(evalue);
-  // const evalues = evalue.slice(0, otherId.length);
-  // console.log(evalues);
+  // evalue.length = _postInfo?.length;
+  console.log(evalue);
+  const evalues = evalue.slice(0, otherId?.length);
+  console.log(evalues);
 
   //획득 포인트
   const point = evalue.filter((v) => v != undefined).length;
@@ -111,15 +113,15 @@ const Evaluation = () => {
     localStorage.removeItem("evalue");
     localStorage.removeItem("report");
 
-    history.push(`reviewwrite/${postId}`);
+    return <Redirect to="/mypage" />;
   }
 
   if (!postInfo) return;
 
   return (
-    <Grid bg="white">
+    <Grid bg="white" height="auto">
       <GoBack text="후기 작성하기" remove={remove} />
-      <Grid height="950px">
+      <Grid height="auto">
         <Text margin="0px 0px 0px 30px" size="24px" bold>
           함께한 분들은 어땠나요?
         </Text>
@@ -153,7 +155,7 @@ const Evaluation = () => {
                         <input
                           id={m._id}
                           type="radio"
-                          name={i}
+                          name={m._id}
                           value={1}
                           onChange={(e) => {
                             if (evalue[i] == 1 || -1) {
@@ -171,7 +173,7 @@ const Evaluation = () => {
                         <input
                           id={m._id}
                           type="radio"
-                          name={i}
+                          name={m._id}
                           value={-1}
                           onChange={(e) => {
                             if (evalue[i] == 1 || -1) {
