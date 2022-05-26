@@ -5,7 +5,7 @@ import FooterMenu from "../shared/FooterMenu";
 const ReviewDone = () => {
   document.body.style.overscrollBehavior = "none";
   return (
-    <Grid column margin="167px auto 0px auto">
+    <Grid column margin="167px auto 0px auto" bg="white">
       <img src="./img/seuchin.png" />
       <Text size="24px" bold margin="0px">
         후기 작성이

@@ -17,23 +17,6 @@ const PostList = ({ list, params }) => {
   // 포스트 목록
   const post_list = useSelector((state) => state.post.list.nearPosts);
 
-  // const division = (arr, n) => {
-  //   const length = arr.length;
-  //   const divide =
-  //     Math.floor(length / n) + (Math.floor(length % n) > 0 ? 1 : 0);
-  //   const newArray = [];
-
-  //   for (let i = 0; i <= divide; i++) {
-  //     // 배열 0부터 n개씩 잘라 새 배열에 넣기
-  //     newArray.push(arr.splice(0, n));
-  //   }
-
-  //   return newArray;
-  // };
-  // const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-  // const result = division(arr, 3);
-  // console.log(result);
-
   const [postList, setPostList] = useState([]);
   console.log(postList);
   const [pageNumber, setPageNumber] = useState(1);
@@ -80,12 +63,9 @@ const PostList = ({ list, params }) => {
         isLoading: false,
       }));
     }
-    // dispatch(postActions.getPostlistDB());
-    // setIsLoading(false);
   }, []);
-  const limit = 6;
 
-  const test = () => {
+  React.useEffect(() => {
     setIsLoading(true);
     axios({
       method: "get",
@@ -102,10 +82,6 @@ const PostList = ({ list, params }) => {
       .catch((err) => {
         console.log(err);
       });
-  };
-
-  React.useEffect(() => {
-    test(pageNumber);
   }, [pageNumber]);
 
   //무한 스크롤
@@ -144,10 +120,8 @@ const PostList = ({ list, params }) => {
           <div> 여기여기 붙어라</div>
         </HeadContents>
       </Header>
-
       <ListBox>
         {postList?.map((p, i) => {
-          // console.log(p);
           return (
             <Card
               {...p}
@@ -160,8 +134,12 @@ const PostList = ({ list, params }) => {
           );
         })}
         <div ref={pageEnd} className="pageEnd">
-          {isLoading && (
-            <img alt="loading" src="./img/loading.gif" width={130} />
+          {isLoading ? (
+            <Pos>
+              <Seuchin alt="loading" src="./img/loading.gif" width={130} />
+            </Pos>
+          ) : (
+            ""
           )}
         </div>
       </ListBox>
@@ -194,4 +172,15 @@ const HeadContents = styled.div`
 
 const ListBox = styled.div`
   margin: 64px 0px 80px 0px;
+`;
+
+const Pos = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Seuchin = styled.img`
+  width: 100px;
 `;

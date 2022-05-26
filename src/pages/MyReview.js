@@ -18,7 +18,7 @@ const MyReview = () => {
   if (!myReviewList) return;
 
   return (
-    <Grid>
+    <Grid bg="white">
       <GoBack text="내가 쓴 후기" path="/mypage" />
       <Grid padding="0px 0px 80px 0px">
         {myReviewList.map((p, i) => {

@@ -8,9 +8,8 @@ import { actionCreators as userActions } from "../redux/modules/user";
 import { actionCreators as mypageActions } from "../redux/modules/mypage";
 import Modal from "../components/Modal/Modal"; //모달 창
 import ModalData from "../components/Modal/ModalData";
-import axios from "axios";
 
-const Evaluation = (props) => {
+const Evaluation = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -21,8 +20,11 @@ const Evaluation = (props) => {
   //ReviewWrite로
   const postInfo = useSelector((state) => state.mypage.myPostOne);
   const postId = postInfo?.postId;
+  const photo = useSelector((state) => state.mypage.reviewImg);
   const review = localStorage.getItem("review");
-  const reviewImg = localStorage.getItem("image");
+
+  //로컬 이미지 저장
+  localStorage.setItem("reviewImg", photo);
 
   //내 아이디 가져오기
   useEffect(() => {
@@ -35,6 +37,9 @@ const Evaluation = (props) => {
   const _postInfo = postInfo?.nowMember?.filter((v) => v.memberId !== myId);
   //다른 사람 id
   const otherId = _postInfo?.map((v, i) => v.memberId);
+  //이미지 url
+  const reviewImg = useSelector((state) => state.mypage.reviewImg);
+  // console.log(reviewImg);
 
   //모달 오픈 state
   const [isOpen, setIsOpen] = useState(false);
@@ -48,6 +53,9 @@ const Evaluation = (props) => {
   //다른 사람 평가
   var [evalue, setEvalue] = useState(localevalue ? [...localevalue] : []);
   evalue.length = _postInfo?.length;
+  // console.log(evalue);
+  // const evalues = evalue.slice(0, otherId.length);
+  // console.log(evalues);
 
   //획득 포인트
   const point = evalue.filter((v) => v != undefined).length;
@@ -64,8 +72,10 @@ const Evaluation = (props) => {
     }
     //로컬 제거
     localStorage.removeItem("review");
+    localStorage.removeItem("reviewImg");
     localStorage.removeItem("otherId");
     localStorage.removeItem("evalue");
+    localStorage.removeItem("report");
     dispatch(
       mypageActions.addReviewDB(review, reviewImg, otherId, evalue, postId)
     );
@@ -88,7 +98,6 @@ const Evaluation = (props) => {
   //앱에서 페이지 새로고침 막기
   document.body.style.overscrollBehavior = "none";
 
-  // history.pop();
   //새로고침 시 작성 첫 번째 페이지로 이동
   if (document.readyState === "interactive") {
     //새로고침 경고
@@ -97,6 +106,7 @@ const Evaluation = (props) => {
     };
     //로컬 값 날림
     localStorage.removeItem("review");
+    localStorage.removeItem("reviewImg");
     localStorage.removeItem("otherId");
     localStorage.removeItem("evalue");
     localStorage.removeItem("report");
@@ -107,7 +117,7 @@ const Evaluation = (props) => {
   if (!postInfo) return;
 
   return (
-    <Grid>
+    <Grid bg="white">
       <GoBack text="후기 작성하기" remove={remove} />
       <Grid height="950px">
         <Text margin="0px 0px 0px 30px" size="24px" bold>
@@ -152,7 +162,7 @@ const Evaluation = (props) => {
                             setEvalue([...evalue, e.target.value]);
                           }}
                         />
-                        <Select1 color={+evalue[i] == 1 ? true : false}>
+                        <Select1 color={+evalue[i] === 1 ? true : false}>
                           <div className="liha">좋아요</div>
                           <div>+1 포인트</div>
                         </Select1>
@@ -170,7 +180,7 @@ const Evaluation = (props) => {
                             setEvalue([...evalue, e.target.value]);
                           }}
                         />
-                        <Select2 color={+evalue[i] == -1 ? true : false}>
+                        <Select2 color={+evalue[i] === -1 ? true : false}>
                           <div className="liha">별로에요</div>
                           <div>-1 포인트</div>
                         </Select2>

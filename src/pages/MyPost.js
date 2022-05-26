@@ -63,13 +63,14 @@ const MyPost = () => {
 
       <Grid padding="0px 0px 80px 0px">
         {myPostList.map((p, i) => {
+          console.log(p);
           return (
             <Card
               {...p}
-              key={p.id}
+              key={p._id}
               center={state.center}
               _onClick={() => {
-                history.push(`/postdetail/${p._id}`);
+                history.push(`/postdetail/${p.postId}`);
               }}
             />
           );

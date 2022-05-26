@@ -131,12 +131,12 @@ const getPostlistDB = () => {
 //   };
 // };
 
-const getReviewlistDB = () => {
+const getReviewlistDB = (pageNumber) => {
   return async function (dispatch, getState) {
     try {
       await axios({
         method: "get",
-        url: `https://seuchidabackend.shop/api/review`,
+        url: `https://seuchidabackend.shop/api/reviewAll/${pageNumber}`,
         headers: {
           authorization: `Bearer ${token}`,
         },
