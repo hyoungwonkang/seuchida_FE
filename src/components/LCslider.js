@@ -45,7 +45,6 @@ function LCslider(props) {
           alt="point"
           src="../img/main.png"
           style={{
-            margin: "0px 0px 0px 10px",
             width: "65px",
             height: "76px",
           }}
