@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { HiOutlineX } from "react-icons/hi";
 
 const ModalData = (props) => {
-  // console.log(props);
+  console.log(props);
   const { Members, Alert, Check, Evaluate, text, onCheck, onClose } = props;
 
   //재확인 창
@@ -158,40 +158,64 @@ const ModalData = (props) => {
           <Grid column height="100px">
             <Image
               shape="circle"
-              src={props.post.memberImg}
+              src={props.post.memberImg || props.post.userImg}
               size={60}
               margin="3px"
             />
             <Grid row justify="center" height="auto">
               {level.map((v, i) => {
-                if (v.level == props.post.memberLevel)
+                if (
+                  v.level == props.post.memberLevel ||
+                  v.level == props.post.level
+                )
                   return <div key={v + i}>{v.image}</div>;
               })}
               <Text margin="0px" bold size="24px">
-                {props.post.memberNickname}
+                {props.post.memberNickname || props.post.nickName}
               </Text>
             </Grid>
           </Grid>
 
           {/* 카테고리 */}
-          <Grid row height="auto" justify="center">
-            {props.post.memberCategory?.map((h, i) => {
-              return (
-                <Text
-                  br
-                  key={h + i}
-                  color="#000000"
-                  width="auto"
-                  row
-                  margin="20px 3px 5px 3px"
-                >
-                  {h}
-                </Text>
-              );
-            })}
-          </Grid>
+          {props.post.userInterest ? (
+            <Grid row height="auto" justify="center">
+              {props.post.userInterest?.map((h, i) => {
+                return (
+                  <Text
+                    br
+                    key={h + i}
+                    color="#000000"
+                    width="auto"
+                    row
+                    margin="20px 3px 5px 3px"
+                  >
+                    {h}
+                  </Text>
+                );
+              })}
+            </Grid>
+          ) : (
+            <Grid row height="auto" justify="center">
+              {props.post.memberCategory?.map((h, i) => {
+                return (
+                  <Text
+                    br
+                    key={h + i}
+                    color="#000000"
+                    width="auto"
+                    row
+                    margin="20px 3px 5px 3px"
+                  >
+                    {h}
+                  </Text>
+                );
+              })}
+            </Grid>
+          )}
           <Grid>
-            <Text margin="20px 0px 0px 3px">{props.post.memberDesc}</Text>
+            <Text margin="20px 0px 0px 3px">
+              {props.post.memberDesc || props.post.userContent}
+            </Text>
           </Grid>
         </Grid>
       </Grid>

@@ -131,24 +131,24 @@ const getPostlistDB = () => {
 //   };
 // };
 
-const getReviewlistDB = (pageNumber) => {
-  return async function (dispatch, getState) {
-    try {
-      await axios({
-        method: "get",
-        url: `https://seuchidabackend.shop/api/reviewAll/${pageNumber}`,
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      }).then((response) => {
-        console.log(response);
-        dispatch(setReview(response.data));
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-};
+// const getReviewlistDB = (pageNumber) => {
+//   return async function (dispatch, getState) {
+//     try {
+//       await axios({
+//         method: "get",
+//         url: `https://seuchidabackend.shop/api/reviewAll/${pageNumber}`,
+//         headers: {
+//           authorization: `Bearer ${token}`,
+//         },
+//       }).then((response) => {
+//         console.log(response);
+//         dispatch(setReview(response.data));
+//       });
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   };
+// };
 
 export default handleActions(
   {
@@ -173,7 +173,7 @@ const actionCreators = {
   setPost,
   getMainDB,
   getPostlistDB,
-  getReviewlistDB,
+  // getReviewlistDB,
   addPost,
   addPostDB,
 };

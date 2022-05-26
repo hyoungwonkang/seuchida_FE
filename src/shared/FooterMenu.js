@@ -69,9 +69,9 @@ const FooterMenu = (props) => {
           }}
         >
           {localStorage.getItem("main") === "main" ? (
-            <img alt="home" src="./img/footer/homeg.png" />
+            <img alt="home" src="/img/footer/homeg.png" />
           ) : (
-            <img alt="home" src="./img/footer/home.png" />
+            <img alt="home" src="/img/footer/home.png" />
           )}
         </Menu>
         <Menu
@@ -80,13 +80,13 @@ const FooterMenu = (props) => {
             localStorage.setItem("map", "map");
             localStorage.removeItem("chat");
             localStorage.removeItem("mypage");
-            window.location.href = "/map";
+            history.push("/map");
           }}
         >
           {localStorage.getItem("map") === "map" ? (
-            <img alt="around" src="./img/footer/aroundg.png" />
+            <img alt="around" src="/img/footer/aroundg.png" />
           ) : (
-            <img alt="around" src="./img/footer/around.png" />
+            <img alt="around" src="/img/footer/around.png" />
           )}
         </Menu>
         <Menu
@@ -99,9 +99,9 @@ const FooterMenu = (props) => {
           }}
         >
           {localStorage.getItem("chat") === "chat" ? (
-            <img alt="chat" src="./img/footer/chatg.png" />
+            <img alt="chat" src="/img/footer/chatg.png" />
           ) : (
-            <img alt="chat" src="./img/footer/chat.png" />
+            <img alt="chat" src="/img/footer/chat.png" />
           )}
         </Menu>
         <Menu
@@ -114,9 +114,9 @@ const FooterMenu = (props) => {
           }}
         >
           {localStorage.getItem("mypage") === "mypage" ? (
-            <img alt="profile" src="./img/footer/smileg.png" />
+            <img alt="profile" src="/img/footer/smileg.png" />
           ) : (
-            <img alt="profile" src="./img/footer/smile.png" />
+            <img alt="profile" src="/img/footer/smile.png" />
           )}
         </Menu>
       </MenuBox>
