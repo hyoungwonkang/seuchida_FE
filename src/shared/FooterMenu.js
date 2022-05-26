@@ -3,23 +3,37 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { Button, Image } from "../elements/Index";
 import { io } from "socket.io-client";
+import { actionCreators as roomCreators } from "../redux/modules/room";
+import { useDispatch, useSelector } from "react-redux";
+const token = localStorage.getItem("token");
+const socket = io.connect("https://seuchidabackend.shop", {
+  auth: {
+    auth: token,
+  },
+});
 
-// const token = localStorage.getItem("token");
-// const socket = io.connect("https://seuchidabackend.shop", {
-//   auth: {
-//     auth: token,
-//   },
-// });
 const FooterMenu = (props) => {
   const history = useHistory();
-  const { next, is_check, __onClick, socket } = props;
-  // const [alarm, setAlarm] = React.useState([]);
-
+  const { next, is_check, __onClick } = props;
+  const dispatch = useDispatch()
+  const alarm = useSelector(state=> state.room.alarm)
+  
+  const readArlam = () =>{
+  dispatch(roomCreators.setalarm(false))
+              localStorage.removeItem("main");
+            localStorage.removeItem("map");
+            localStorage.setItem("chat", "chat");
+            localStorage.removeItem("mypage");
+  history.push("/chatlist");
+  }
+  
   React.useEffect(() => {
-    socket?.on("broadcast", (data) => {
-      console.log(data);
-    });
-  }, []);
+    socket?.on("alert", (data) => {
+      dispatch(roomCreators.setalarm(true))
+    })
+    
+    },[]);
+  
 
   if (next) {
     return (
@@ -90,16 +104,15 @@ const FooterMenu = (props) => {
           )}
         </Menu>
         <Menu
-          onClick={() => {
-            localStorage.removeItem("main");
-            localStorage.removeItem("map");
-            localStorage.setItem("chat", "chat");
-            localStorage.removeItem("mypage");
-            history.push("/chatlist");
-          }}
-        >
+          onClick={readArlam}>
+          {alarm && <NewArlam>new</NewArlam>}
+          {click === "chat" ? (
+            <img alt="chat" src="./img/footer/chatg.png" />
+
+
           {localStorage.getItem("chat") === "chat" ? (
             <img alt="chat" src="/img/footer/chatg.png" />
+
           ) : (
             <img alt="chat" src="/img/footer/chat.png" />
           )}
@@ -167,3 +180,14 @@ const Btn = styled.div`
   min-width: 390px;
   z-index: 5;
 `;
+
+const NewArlam = styled.div`
+position: fixed;
+z-index: 999;
+background-color: #fe3c30;
+margin-left: 20px;
+bottom: 50px;
+padding: 4px;
+border-radius: 20px;
+font-size: 12px;
+`
