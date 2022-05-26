@@ -245,7 +245,6 @@ const editPhotoDB = (formData) => {
   };
 };
 
-
 //reducer
 export default handleActions(
   {
