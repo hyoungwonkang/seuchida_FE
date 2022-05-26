@@ -46,8 +46,9 @@ function App() {
       <GlobalStyle />
       <Wrapper>
         <WebView>
-          {/* <Download>앱 사용자 평가하러 GO!</Download> */}
-          <Seuchin src={"./img/loading.gif"} />
+          <MobileFrame className="MobileFramePage">
+            <Img src="/img/test.png" />
+          </MobileFrame>
         </WebView>
 
         <ConnectedRouter history={history}>
@@ -132,7 +133,6 @@ const WebView = styled.div`
   height: 100vh;
   background-image: url("/img/webpage2.png");
   background-size: cover;
-  /* overflow: hidden; */
   position: absolute;
   top: 0;
   right: 0;
@@ -140,24 +140,10 @@ const WebView = styled.div`
   left: 0;
 `;
 
-const Download = styled.button`
-  width: 266px;
-  height: 71px;
-  box-sizing: border-box;
-  background: transparent;
-  border: 1px solid #505050;
-  font-size: 20px;
-  position: absolute;
-  top: 300px;
-  left: 200px;
-  cursor: pointer;
-`;
-
 const Loading = styled.div`
   width: 100%;
   height: 100%;
   max-width: 390px;
-  /* padding: 300px 0px; */
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -173,3 +159,20 @@ const Txt = styled.div`
 `;
 
 const Seuchin = styled.div``;
+
+const Img = styled.img`
+  position: absolute;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  vertical-align: middle;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 390px;
+  height: 100%;
+  margin: 0 auto;
+  background-color: #fff;
+  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.3);
+  z-index: 999;
+`;
