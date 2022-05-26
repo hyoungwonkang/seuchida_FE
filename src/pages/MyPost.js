@@ -62,23 +62,39 @@ const MyPost = () => {
     <>
       <Container>
         <GoBack text="내가 만든 모임" path="/mypage" />
+        {/* 쓴글이 없을 때 */}
+        {myPostList.length === 0 ? (
+          <Grid padding="0px 0px 80px 0px" column>
+            <img
+              src="./img/seuchin.png"
+              style={{ margin: "150px 0px 0px 0px" }}
+            />
+            <Text bold margin="0px" color="#C4C4C4">
+              아직 쓴 글이 없어요!
+            </Text>
+            <Text bold margin="0px" color="#C4C4C4">
+              지금 바로 새 글을 쓰러 가볼까요?
+            </Text>
+          </Grid>
+        ) : (
+          // 쓴 글이 있을 때
+          <Grid padding="0px 0px 80px 0px">
+            {myPostList.map((p, i) => {
+              return (
+                <Card
+                  {...p}
+                  key={p._id}
+                  center={state.center}
+                  _onClick={() => {
+                    history.push(`/postdetail/${p.postId}`);
+                  }}
+                />
+              );
+            })}
+            <PostDetail />
+          </Grid>
+        )}
 
-        <Grid padding="0px 0px 80px 0px">
-          {myPostList.map((p, i) => {
-            // console.log(p);
-            return (
-              <Card
-                {...p}
-                key={p._id}
-                center={state.center}
-                _onClick={() => {
-                  history.push(`/postdetail/${p.postId}`);
-                }}
-              />
-            );
-          })}
-          <PostDetail />
-        </Grid>
         <FooterMenu />
       </Container>
     </>

@@ -81,6 +81,13 @@ const Main = () => {
     }
   }, [state.isLoading === true]);
 
+  //설문조사 페이지 이동
+  const handleClick = () => {
+    window.open(
+      "https://docs.google.com/forms/d/e/1FAIpQLSeLKcVwZ_TWWJ6hM22CjiAnrih9mjNboEFVN_RW1nLzIQMWNg/viewform?usp=sf_link"
+    );
+  };
+
   return (
     <>
       <Container>
@@ -139,11 +146,7 @@ const Main = () => {
           </CardBox>
         </ListBox>
         {/* 설문조사 작성 */}
-        <Survey
-          onClick={() => {
-            // history.push("/postcategory");
-          }}
-        >
+        <Survey onClick={handleClick}>
           <RiMessage3Fill size={40} color="#FDE333" />
         </Survey>
         {/* 프로필 작성 */}

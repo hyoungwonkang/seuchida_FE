@@ -14,26 +14,66 @@ const socket = io.connect("https://seuchidabackend.shop", {
 
 const FooterMenu = (props) => {
   const history = useHistory();
-  const { next, is_check, __onClick } = props;
-  const dispatch = useDispatch()
-  const alarm = useSelector(state=> state.room.alarm)
-  
-  const readArlam = () =>{
-  dispatch(roomCreators.setalarm(false))
-              localStorage.removeItem("main");
-            localStorage.removeItem("map");
-            localStorage.setItem("chat", "chat");
-            localStorage.removeItem("mypage");
-  history.push("/chatlist");
-  }
-  
+  const { next, is_check, __onClick, Chat } = props;
+  const dispatch = useDispatch();
+  const alarm = useSelector((state) => state.room.alarm);
+
+  const readArlam = () => {
+    dispatch(roomCreators.setalarm(false));
+    localStorage.removeItem("main");
+    localStorage.removeItem("map");
+    localStorage.setItem("chat", "chat");
+    localStorage.removeItem("mypage");
+    history.push("/chatlist");
+  };
+
   React.useEffect(() => {
     socket?.on("alert", (data) => {
-      dispatch(roomCreators.setalarm(true))
-    })
-    
-    },[]);
-  
+      dispatch(roomCreators.setalarm(true));
+    });
+  }, []);
+
+  if (Chat) {
+    return (
+      <Btns>
+        <Button
+          bg="white"
+          color="#5796f7"
+          br="1px solid #5796f7"
+          wd="150px"
+          _onClick={() => {
+            //액션 실행
+            if (props.event) {
+              return props.event();
+            }
+          }}
+          margin={"12px 10px 0px 0px"}
+        >
+          참여취소
+        </Button>
+        <Button
+          wd="150px"
+          _onClick={() => {
+            //페이지 이동
+            if (props.path) {
+              history.push(props.path);
+            }
+            //액션 실행
+            if (props.event) {
+              return props.event();
+            }
+            //유효성 검사 실행
+            if (props.state) {
+              return props.state();
+            }
+          }}
+          margin={"12px 0px 0px 0px"}
+        >
+          채팅하기
+        </Button>
+      </Btns>
+    );
+  }
 
   if (next) {
     return (
@@ -185,12 +225,29 @@ const Btn = styled.div`
 `;
 
 const NewArlam = styled.div`
-position: fixed;
-z-index: 999;
-background-color: #fe3c30;
-margin-left: 20px;
-bottom: 50px;
-padding: 4px;
-border-radius: 20px;
-font-size: 12px;
-`
+  position: fixed;
+  z-index: 999;
+  background-color: #fe3c30;
+  margin-left: 20px;
+  bottom: 50px;
+  padding: 4px;
+  border-radius: 20px;
+  font-size: 12px;
+`;
+const Btns = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 100px;
+  border-top: 1px solid #e9e9e9;
+  width: 20vw;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px 0px 0px 45px;
+  margin: auto;
+  background-color: white;
+  box-shadow: 0px -2px 4px 2.5px #ddd;
+  min-width: 390px;
+  z-index: 5;
+`;

@@ -152,7 +152,7 @@ const Cate = styled.div`
   border-radius: 30px;
   font-size: 16px;
   background: ${(props) => (props?.color ? "lightgreen" : "white")};
-  color: ${(props) => (props.click ? "white" : "black")};
+  color: ${(props) => (props.color ? "white" : "black")};
 `;
 
 export default PostCategory;

@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import room, { actionCreators as roomCreators } from "../redux/modules/room";
 import styled from "styled-components";
 import { history } from "../redux/configStore";
-import Image from "../elements/Image";
+import { Image, Grid, Text } from "../elements/Index";
 import moment from "moment";
 import "moment/locale/ko";
 import { io } from "socket.io-client";
@@ -27,7 +27,7 @@ const ChatList = () => {
 
   const [alarm, setAlarm] = React.useState();
   console.log(alarm);
-  
+
   React.useEffect(() => {
     dispatch(roomCreators.getchatRoomDB());
   }, []);
@@ -46,63 +46,57 @@ const ChatList = () => {
 
       setAlarm(data);
       // setAlarm((alarm) => alarm.concat(data));
-
     });
   }, []);
 
   return (
     <>
       <Header>채팅</Header>
-      <Body>
-        {room_list?.map((room, index) => {
-          return (
-            <ChatBox
-              key={`${room.roomId}+${index}`}
-              onClick={() => {
-                history.push({
-                  pathname: `/chatex/${room.roomId}`,
-                  state: { ...room },
-                });
-              }}
-            >
-              <ContentBox>
-                <ChatTitleBox>
-                  <Image src={room?.ownerImg} size={50} />
-                  <div style={{ marginLeft: "10px" }}>
-                    <div style={{ marginBottom: "5px", display: "flex" }}>
-                      <ChatTitle>{room?.postTitle} </ChatTitle>
-                      {/* 알람 length 더해보기. 하나는 state 하나는 일반 되나 ? +alarm.length 
-                      되긴되는데 룸아이디로 비교를 어케하냐 ??...*/}
-                      <UserCount> {room?.nowMember?.length}</UserCount>
+      {room_list?.length === 0 ? (
+        <Grid padding="0px 0px 80px 0px" column height="auto">
+          <img
+            src="./img/seuchin.png"
+            style={{ margin: "220px 0px 0px 0px" }}
+          />
+          <Text bold margin="0px" color="#C4C4C4">
+            아직 채팅방이 없어요!
+          </Text>
+          <Text bold margin="0px" color="#C4C4C4">
+            지금 바로 새 글을 쓰러 가볼까요?
+          </Text>
+        </Grid>
+      ) : (
+        <Body>
+          {room_list?.map((room, index) => {
+            return (
+              <ChatBox
+                key={`${room.roomId}+${index}`}
+                onClick={() => {
+                  history.push({
+                    pathname: `/chatex/${room.roomId}`,
+                    state: { ...room },
+                  });
+                }}
+              >
+                <ContentBox>
+                  <ChatTitleBox>
+                    <Image src={room.ownerImg} size={50} />
+                    <div style={{ marginLeft: "10px" }}>
+                      <div style={{ marginBottom: "5px" }}>
+                        <ChatTitle>{room?.postTitle} </ChatTitle>
+                        <UserCount> {room.userList?.length}</UserCount>
+                      </div>
+                      <LastMsg>{last_chat[index]?.msg}</LastMsg>
                     </div>
-                    {/* 알림과 방의 아이디가 일치하고 알람내용이 있을때  */}
+                  </ChatTitleBox>
+                  <div>{moment(last_chat[index]?.createdAt).fromNow()}</div>
+                </ContentBox>
+              </ChatBox>
+            );
+          })}
+        </Body>
+      )}
 
-                    <LastMsg>
-                      {room.roomId === alarm?.room
-                        ? alarm?.msg
-                        : last_chat[index]?.msg}
-                   
-                    </LastMsg>
-               
-                  </div>
-                </ChatTitleBox>
-
-                <div>
-                  {/* 알림과 방의 아이디가 일치하고 알람내용의 시간비교  */}
-                  {moment(
-                    room.roomId === alarm?.room
-                      ? alarm?.createdAt
-                      : last_chat[index]?.createdAt
-                  ).fromNow()}
-                      {unreadChatlist[index]?.length === 0 ? null : (
-                      <NewMsg>{unreadChatlist[index]?.length}</NewMsg>
-                    )}
-                </div>
-              </ContentBox>
-            </ChatBox>
-          );
-        })}
-      </Body>
       <FooterMenu />
     </>
   );

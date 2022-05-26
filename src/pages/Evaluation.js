@@ -41,7 +41,6 @@ const Evaluation = () => {
   const otherId = _postInfo?.map((v, i) => v.memberId);
   //이미지 url
   const reviewImg = useSelector((state) => state.mypage.reviewImg);
-  // console.log(reviewImg);
 
   //모달 오픈 state
   const [isOpen, setIsOpen] = useState(false);
@@ -54,8 +53,8 @@ const Evaluation = () => {
 
   //다른 사람 평가
   var [evalue, setEvalue] = useState(localevalue ? [...localevalue] : []);
-  // evalue.length = _postInfo?.length;
-  console.log(evalue);
+  evalue.length = _postInfo?.length;
+  // console.log(evalue);
   const evalues = evalue.slice(0, otherId?.length);
   console.log(evalues);
 
@@ -65,6 +64,7 @@ const Evaluation = () => {
   //신고 대상 & 신고 내용 state
   const [report, setReport] = useState("");
   const [rUserId, setRUserId] = useState(localreport ? localreport : "");
+  console.log(rUserId);
 
   //후기 작성 & 다른 사람 평가
   const addReview = () => {
@@ -155,7 +155,7 @@ const Evaluation = () => {
                         <input
                           id={m._id}
                           type="radio"
-                          name={m._id}
+                          name={i}
                           value={1}
                           onChange={(e) => {
                             if (evalue[i] == 1 || -1) {
@@ -173,7 +173,7 @@ const Evaluation = () => {
                         <input
                           id={m._id}
                           type="radio"
-                          name={m._id}
+                          name={i}
                           value={-1}
                           onChange={(e) => {
                             if (evalue[i] == 1 || -1) {
@@ -219,7 +219,7 @@ const Evaluation = () => {
       </Grid>
 
       {/* 푸터 */}
-      <FooterMenu next text={`+${point} 포인트`} event={addReview} />
+      <FooterMenu next text={`+${evalues.length} 포인트`} event={addReview} />
 
       {/* 경고창 모달 */}
       <Modal open={isOpen}>

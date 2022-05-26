@@ -13,7 +13,7 @@ const Login = (props) => {
         <Grid column width="200px" height="200px" margin="auto">
           <img src="./img/login.png" style={{ margin: "150px 0px" }} />
         </Grid>
-        <Around onClick={() => history.push("/guide")}>둘러보기</Around>
+        <Around onClick={() => history.push("/guide")}>가이드</Around>
         <div style={{ margin: "30vh 0px 20px 0px" }}>
           <Akakao
             href={KAKAO_AUTH_URL}
@@ -73,9 +73,9 @@ const GoogleBtn = styled.button`
 
 const Around = styled.button`
   min-width: "100px";
-  height: 40px;
+  height: 30px;
   margin: 120px 0px -20px 0px;
-  background: #ff6b52;
+  background: #1aec9c;
   border: none;
   border-radius: 5px;
   color: white;

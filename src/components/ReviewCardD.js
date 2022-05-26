@@ -26,12 +26,10 @@ const ReviewCardD = (props) => {
         <Text>{props.content}</Text>
         <Grid height="68px" padding="15px 0px ">
           <Text margin="0px">
-            <MdPlace color="#787878" />
-            {props.spot}{" "}
+            <MdPlace color="#787878" /> {props.spot}
           </Text>
           <Text margin="0px">
-            <BiDumbbell color="#787878" />
-            {props.postCategory}
+            <BiDumbbell color="#787878" /> {props.postCategory}
           </Text>
         </Grid>
       </Grid>
