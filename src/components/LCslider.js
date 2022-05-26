@@ -13,28 +13,26 @@ import { Grid, Text } from "../elements/Index";
 function LCslider(props) {
   const { catepost } = props;
   const joinARR = useSelector((state) => state?.room?.joinArr);
-  const mainalarm = useSelector(state=> state.room.mainarr)
-  const dispatch = useDispatch()
+  const mainalarm = useSelector((state) => state.room.mainarr);
+  const dispatch = useDispatch();
   // const post = props.catepost;
   const [isOpen, setIsOpen] = useState(false);
   const [state, setState] = useState("");
-
 
   window.addEventListener("wheel", (e) => {
     setIsOpen(false);
   });
 
-  const ArlamCheck =() =>{
-    dispatch(roomActions.mainArlam(false))
+  const ArlamCheck = () => {
+    dispatch(roomActions.mainArlam(false));
     setIsOpen(true);
-  }
+  };
 
   React.useEffect(() => {
     if (catepost) {
       setState(catepost[0]?.postCategory);
     }
   }, [catepost]);
-
 
   //인덱스 값 변화에 따른 category 변화 조건
   catepost?.map((p, i) => {
@@ -62,7 +60,7 @@ function LCslider(props) {
           <Sports>{state}</Sports> 매칭이에요!
         </Wellcome>
 
-         {mainalarm&& <Hey>!!</Hey>}
+        {mainalarm && <Hey>!!</Hey>}
         <div>
           <img
             onClick={ArlamCheck}
@@ -75,32 +73,34 @@ function LCslider(props) {
               width: "90px",
               height: "95px",
             }}
-            />
+          />
         </div>
       </WellcomeBox>
       {isOpen && (
-
         <ArlamBox>
-          {joinARR[0]? 
-          joinARR?.map((a, index) => {
-            return (
-              <React.Fragment key={index}>
-                <ArrsmallBox onClick={()=>{
-                  history.push(`/postdetail/${a?.postId}`)
-                }}>
-               
-                  <div> {<Image src={a?.userImg} size="30" />}</div>
-                  <Joinwho>
-                    {a?.nickName}님이 {a?.postTitle}방에 참여 하셨어요!
-                  </Joinwho>
-                  
-                </ArrsmallBox>
-              </React.Fragment>
-            )
-          }) :<div>알람 음슴</div>}
+          {joinARR[0] ? (
+            joinARR?.map((a, index) => {
+              return (
+                <React.Fragment key={index}>
+                  <ArrsmallBox
+                    onClick={() => {
+                      history.push(`/postdetail/${a?.postId}`);
+                    }}
+                  >
+                    <div> {<Image src={a?.userImg} size="30" />}</div>
+                    <Joinwho>
+                      {a?.nickName}님이 {a?.postTitle}방에 참여 하셨어요!
+                    </Joinwho>
+                  </ArrsmallBox>
+                </React.Fragment>
+              );
+            })
+          ) : (
+            <div>알람 음슴</div>
+          )}
         </ArlamBox>
       )}
-      {post.length === 0 ? (
+      {catepost.length === 0 ? (
         <Grid padding="0px 0px 40px 0px" column>
           <img src="./img/seuchin.png" style={{ margin: "40px 0px 0px 0px" }} />
           <Text bold margin="0px" color="#C4C4C4">
@@ -109,7 +109,7 @@ function LCslider(props) {
         </Grid>
       ) : (
         <Sliders {...settings} style={{ height: "270px" }}>
-          {post?.map((p, i) => {
+          {catepost?.map((p, i) => {
             if (i < 6)
               return (
                 <LiveCard
@@ -164,9 +164,9 @@ const ArlamBox = styled.div`
   z-index: 99;
   top: 165px;
   right: 15px;
- 
+
   border-radius: 6px;
-  box-shadow:  1px 2px 4px -2px;
+  box-shadow: 1px 2px 4px -2px;
   ::before {
     content: "";
     position: absolute;
@@ -185,29 +185,28 @@ const ArlamBox = styled.div`
 `;
 
 const Joinwho = styled.div`
-font-size: 11px;
-align-items: center;
-display: flex;
-margin-left: 5px;
-`
+  font-size: 11px;
+  align-items: center;
+  display: flex;
+  margin-left: 5px;
+`;
 
 const ArrsmallBox = styled.div`
-display: flex;
-flex-direction: row;
-margin-top: 5px;
-border-bottom: 1px solid #DDDDDD;
-padding: 8px;
-
-`
+  display: flex;
+  flex-direction: row;
+  margin-top: 5px;
+  border-bottom: 1px solid #dddddd;
+  padding: 8px;
+`;
 
 const Hey = styled.span`
-z-index: 555;
-color: #FF6A52;
-height: 20px;
-bottom: 10px;
-float: right;
-position: relative;
-right: -80px;
-font-size: 24px;
-font-weight: bolder;
-`
+  z-index: 555;
+  color: #ff6a52;
+  height: 20px;
+  bottom: 10px;
+  float: right;
+  position: relative;
+  right: -80px;
+  font-size: 24px;
+  font-weight: bolder;
+`;
