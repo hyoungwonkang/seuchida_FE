@@ -36,29 +36,6 @@ const Main = () => {
     isLoading: true,
   });
 
-  // React.useEffect(() => {
-    // const socket =  io.connect("https://seuchidabackend.shop", {
-    //   auth: {
-    //     auth: token,
-    //   },
-    // }); 
-  //
-
-  // }, []);
-  React.useEffect(() => {
-     socket.emit('login') 
-    //  return ()=>{
-    //   socket?.disconnect()
-    // } 
-  }, []);
- 
-
-  React.useEffect(() => {
-    socket?.on("alert" ,(data)=>{
-
-      console.log(data)
-    })
-  }, []);
 
   React.useEffect(()=>{
     dispatch(userActions.isLoginDB());   
