@@ -6,15 +6,12 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import store from "./redux/configStore";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
-// import Device from "./shared/Device";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <Provider store={store}>
-    {/* <Device> */}
     <App />
-    {/* </Device> */}
   </Provider>
 );
 // If you want your app to work offline and load faster, you can change
