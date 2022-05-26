@@ -10,7 +10,7 @@ function Guide() {
 
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -50,6 +50,8 @@ export default Guide;
 const Img = styled.img`
   min-width: 390px;
   min-height: 800px;
+  height: 100vh;
+  width: 20vw;
 `;
 
 const Btn = styled.button`
@@ -60,6 +62,7 @@ const Btn = styled.button`
   color: white;
   border: none;
   background: #c4c4c4;
+  font-size: 16px;
   /* background: red; */
 `;
 
@@ -71,6 +74,7 @@ const LastBtn = styled.button`
   color: white;
   border: none;
   background: #5796f7;
+  font-size: 16px;
   /* background: red; */
 `;
 

@@ -8648,6 +8648,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mobile-device-detect@npm:^0.4.3":
+  version: 0.4.3
+  resolution: "mobile-device-detect@npm:0.4.3"
+  checksum: 2da4a9fce70d22555f419c13844275c5bb64896378163672d35878347825392426da256043f47e9e3395fa9fc9a07e7e5149ef17c18b1e43ad746a5bef42829f
+  languageName: node
+  linkType: hard
+
 "moment@npm:^2.29.3":
   version: 2.29.3
   resolution: "moment@npm:2.29.3"
@@ -10521,6 +10528,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-pwa-install@npm:^1.0.12":
+  version: 1.0.12
+  resolution: "react-pwa-install@npm:1.0.12"
+  dependencies:
+    mobile-device-detect: ^0.4.3
+  peerDependencies:
+    react: 16.x
+  checksum: b5fe77307a6af60a8a79a24c32b50339f0ed521f285a49ce640478e542139111ab72afda29e0b818b8c387a2cb7bc7beac7a7807fca6bf82071eebe92bb443c8
+  languageName: node
+  linkType: hard
+
 "react-redux@npm:^8.0.1":
   version: 8.0.1
   resolution: "react-redux@npm:8.0.1"
@@ -11404,6 +11422,7 @@ __metadata:
     react-icons: ^4.3.1
     react-kakao-maps-sdk: ^1.0.6
     react-mobile-picker-scroll: ^0.2.14
+    react-pwa-install: ^1.0.12
     react-redux: ^8.0.1
     react-router-dom: 5.2.1
     react-scripts: 5.0.1

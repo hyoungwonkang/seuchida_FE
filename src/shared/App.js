@@ -45,10 +45,6 @@ function App() {
     <>
       <GlobalStyle />
       <Wrapper>
-        <WebView>
-          <Download>앱 사용자 평가하러 GO!</Download>
-        </WebView>
-
         <ConnectedRouter history={history}>
           <Suspense
             fallback={
@@ -111,6 +107,7 @@ function App() {
               </Switch>
             </MobileFrame>
           </Suspense>
+          <WebView></WebView>
         </ConnectedRouter>
       </Wrapper>
     </>
@@ -137,19 +134,6 @@ const WebView = styled.div`
   right: 0;
   bottom: 0;
   left: 0;
-`;
-
-const Download = styled.button`
-  width: 266px;
-  height: 71px;
-  box-sizing: border-box;
-  background: transparent;
-  border: 1px solid #505050;
-  font-size: 20px;
-  position: absolute;
-  top: 300px;
-  left: 200px;
-  cursor: pointer;
 `;
 
 const Loading = styled.div`

@@ -13,7 +13,15 @@ import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 import FooterMenu from "../shared/FooterMenu";
 import GoBack from "../elements/GoBack";
+import { io } from "socket.io-client";
 
+const token = localStorage.getItem("token");
+// const ENDPOINT = "https://seuchidabackend.shop";
+const socket = io.connect("https://seuchidabackend.shop", {
+  auth: {
+    auth: token,
+  },
+});
 const PostDetail = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -35,7 +43,13 @@ const PostDetail = (props) => {
   //강퇴당한유저 킥 데이터가 이상하게 배열로 2겹임 ..
   const banUser = post?.banUserList?.filter((u) => u.includes(userId));
   const postId = params.postId; //게시물 번호(룸 아이디)
-
+  console.log(post?.nowMember[0]?.memberId, user.userId);
+  let partymember = [];
+  for (let i = 0; i < post?.nowMember?.length; i++) {
+    if (user?.userId !== post?.nowMember[i]?.memberId) {
+      partymember.push(post?.nowMember[i]?.memberId);
+    }
+  }
   const [state, setState] = React.useState({
     center: {
       lat: 33.450701,
@@ -50,13 +64,16 @@ const PostDetail = (props) => {
     dispatch(mypageActions.deletePostDB(post.roomId));
     history.push("/main");
   };
+  //방 참여
   const joinRoom = () => {
+    socket.emit("joinParty", { postId, userId: partymember });
     dispatch(roomActions.joinRoomDB(post.roomId, postId));
   };
-
+  //모집완료
   const roomDone = () => {
     dispatch(roomActions.roomDoneDB(postId));
   };
+  //참여 취소
   const joinCancle = () => {
     dispatch(roomActions.joinCancleDB(post.roomId, postId));
   };
@@ -106,6 +123,10 @@ const PostDetail = (props) => {
       setPost(response.data.newPost);
     });
   }, [update]);
+
+  // const joinParty = () => {
+  //   socket.emit("joinParty", { postId, userId : post.nowMember });
+  // };
 
   if (banUser?.length === 1) {
     window.alert("강퇴당함 ");
