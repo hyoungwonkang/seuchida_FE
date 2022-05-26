@@ -92,7 +92,7 @@ const Box = styled.div`
   height: 126px;
   border-radius: 12px;
   z-index: 1000;
-  box-shadow: 1px 1px 6px -2px;
+  box-shadow: 1px 2px 8px -2px;
 `;
 
 const EventMarkerContainer = (props) => {
@@ -129,7 +129,7 @@ const EventMarkerContainer = (props) => {
           <Box>
             <Grid
               bg="white"
-              padding="10px"
+              padding="5px"
               br="10px"
               width="173px"
               height="126px"
@@ -170,11 +170,11 @@ const Desc = styled.div`
   padding: 10px 6px;
   overflow: hidden;
   text-overflow: ellipsis;
-  /* display: -webkit-box;
+  display: -webkit-box;
   -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical; */
-  /* word-wrap: break-word; */
-  /* line-height: 1.3em;
-  height: 2.4em; */
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+  line-height: 1.3em;
+  height: 2.6em;
   color: #585858;
 `;

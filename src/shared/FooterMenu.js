@@ -34,6 +34,12 @@ const FooterMenu = (props) => {
     
     },[]);
   
+    React.useEffect(()=>{
+      socket.on("joinPartyAlert", (data) => {
+      //  console.log(data)
+       dispatch(roomCreators.joinArlam(data))
+      })       
+      },[])
 
   if (next) {
     return (
@@ -106,13 +112,8 @@ const FooterMenu = (props) => {
         <Menu
           onClick={readArlam}>
           {alarm && <NewArlam>new</NewArlam>}
-          {click === "chat" ? (
-            <img alt="chat" src="./img/footer/chatg.png" />
-
-
           {localStorage.getItem("chat") === "chat" ? (
             <img alt="chat" src="/img/footer/chatg.png" />
-
           ) : (
             <img alt="chat" src="/img/footer/chat.png" />
           )}

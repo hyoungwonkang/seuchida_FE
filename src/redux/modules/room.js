@@ -10,7 +10,7 @@ const SET_CHAT = "SET_CHAT";
 const SET_MEMBER = "SET_MEMBER";
 const SK_LOGIN = "SK_LOGIN";
 const SET_ALARM = "SET_ALARM";
-
+const JOIN_ARR = "JOIN_ARR"
 
 //Action Creators
 
@@ -18,6 +18,7 @@ const chatRoom = createAction(SET_CHAT, (chat_list) => ({ chat_list }));
 const chatMember = createAction(SET_MEMBER, (member) => ({ member }));
 const socketLogin = createAction(SK_LOGIN, (socket) => ({ socket }));
 const setalarm = createAction(SET_ALARM, (alarm) => ({ alarm }));
+const joinArlam = createAction(JOIN_ARR, (joinArlam) => ({ joinArlam }));
 
 
 //initialState (default props 같은 것, 기본값)
@@ -29,7 +30,7 @@ const initialState = {
     lastChatting: [],
     nowMember: [],
     unreadChatlist: [],
-
+    joinArr:[],
   },
   socket: false,
   alarm: false,
@@ -152,6 +153,10 @@ export default handleActions(
       produce(state, (draft) => {
         draft.alarm = action.payload.alarm;
       }),
+    [JOIN_ARR]: (state, action) =>
+      produce(state, (draft) => {
+        draft.joinArr.concat(action.payload.joinArlam);
+      }),
 
   },
   initialState
@@ -168,7 +173,7 @@ const actionCreators = {
   joinCancleDB,
   socketLogin,
   setalarm,
-
+  joinArlam,
 };
 
 export { actionCreators };

@@ -38,7 +38,7 @@ function Guide() {
         </div>
         <div>
           <Img alt="guide5" src="./img/guide/guide5.png" />
-          <LastBtn onClick={() => history.push("/")}>시작하기</LastBtn>
+          <LastBtn onClick={() => history.push("/")}>로그인 하여 시작하기</LastBtn>
         </div>
       </Sliders>
     </div>
