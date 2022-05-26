@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import { Card } from "../components/index";
 import { useHistory } from "react-router-dom";
 import FooterMenu from "../shared/FooterMenu";
@@ -58,28 +59,34 @@ const MyPost = () => {
   if (!myPostList) return;
 
   return (
-    <Grid>
-      <GoBack text="내가 만든 모임" path="/mypage" />
+    <>
+      <Container>
+        <GoBack text="내가 만든 모임" path="/mypage" />
 
-      <Grid padding="0px 0px 80px 0px">
-        {myPostList.map((p, i) => {
-          console.log(p);
-          return (
-            <Card
-              {...p}
-              key={p._id}
-              center={state.center}
-              _onClick={() => {
-                history.push(`/postdetail/${p.postId}`);
-              }}
-            />
-          );
-        })}
-        <PostDetail />
-      </Grid>
-      <FooterMenu />
-    </Grid>
+        <Grid padding="0px 0px 80px 0px">
+          {myPostList.map((p, i) => {
+            console.log(p);
+            return (
+              <Card
+                {...p}
+                key={p._id}
+                center={state.center}
+                _onClick={() => {
+                  history.push(`/postdetail/${p.postId}`);
+                }}
+              />
+            );
+          })}
+          <PostDetail />
+        </Grid>
+        <FooterMenu />
+      </Container>
+    </>
   );
 };
+
+const Container = styled.div`
+  padding-top: 0px;
+`;
 
 export default MyPost;

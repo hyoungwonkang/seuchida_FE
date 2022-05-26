@@ -75,50 +75,56 @@ const PostCategory = (props) => {
   }
 
   return (
-    <Grid>
-      <GoBack postBackCategory text="모임 만들기" path="/main" />
-      <Text bold margin="24px 0px 10px 30px" size="24px">
-        함께하고 싶은 <br />
-        운동을 선택해주세요
-      </Text>
-      <Grid height="auto" column margin="40px 0px 0px 0px">
-        <CateBox>
-          {CategoryList.map((item) => {
-            // console.log(item);
-            return (
-              <div key={item.id}>
-                <input
-                  id={item.id}
-                  type="checkbox"
-                  value={item.data}
-                  onChange={(e) => {
-                    setPostCate(e.target.value);
-                  }}
-                />
-                <label htmlFor={item.id}>
-                  <Cate color={+postCate?.includes(item.data)}>
-                    {item.data}
-                  </Cate>
-                </label>
-              </div>
-            );
-          })}
-          {/* <Link to={{ state: { postCategory } }}> */}
-          <FooterMenu next text="다음" state={check} />
-          {/* </Link> */}
-          {/* 경고창 모달 */}
-          <Modal open={isOpen}>
-            <ModalData
-              Alert
-              text="운동을 골라주세요"
-              onClose={() => setIsOpen(false)}
-            />
-          </Modal>
-        </CateBox>
-      </Grid>
-    </Grid>
+    <>
+      <Container>
+        <GoBack postBackCategory text="모임 만들기" path="/main" />
+        <Text bold margin="24px 0px 10px 30px" size="24px">
+          함께하고 싶은 <br />
+          운동을 선택해주세요
+        </Text>
+        <Grid height="auto" column margin="40px 0px 0px 0px">
+          <CateBox>
+            {CategoryList.map((item) => {
+              // console.log(item);
+              return (
+                <div key={item.id}>
+                  <input
+                    id={item.id}
+                    type="checkbox"
+                    value={item.data}
+                    onChange={(e) => {
+                      setPostCate(e.target.value);
+                    }}
+                  />
+                  <label htmlFor={item.id}>
+                    <Cate color={+postCate?.includes(item.data)}>
+                      {item.data}
+                    </Cate>
+                  </label>
+                </div>
+              );
+            })}
+            {/* <Link to={{ state: { postCategory } }}> */}
+            <FooterMenu next text="다음" state={check} />
+            {/* </Link> */}
+            {/* 경고창 모달 */}
+            <Modal open={isOpen}>
+              <ModalData
+                Alert
+                text="운동을 골라주세요"
+                onClose={() => setIsOpen(false)}
+              />
+            </Modal>
+          </CateBox>
+        </Grid>
+      </Container>
+    </>
   );
 };
+
+const Container = styled.div`
+  padding-top: 0px;
+`;
 
 const CateBox = styled.div`
   width: 90%;

@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import { Grid, Text } from "../../elements/Index";
 import FooterMenu from "../../shared/FooterMenu";
 import { useHistory } from "react-router-dom";
@@ -18,15 +19,23 @@ const EditDone = () => {
   };
 
   return (
-    <Grid column margin="167px auto 0px auto">
-      <img src="./img/seuchin.png" />
-      <Text size="24px" bold>
-        프로필 수정이 <br />
-        완료되었어요:)
-      </Text>
-      <FooterMenu next event={remove} text="확인" />
-    </Grid>
+    <>
+      <Container>
+        <Grid column margin="167px auto 0px auto">
+          <img src="./img/seuchin.png" />
+          <Text size="24px" bold>
+            프로필 수정이 <br />
+            완료되었어요:)
+          </Text>
+          <FooterMenu next event={remove} text="확인" />
+        </Grid>
+      </Container>
+    </>
   );
 };
+
+const Container = styled.div`
+  padding-top: 0px;
+`;
 
 export default EditDone;

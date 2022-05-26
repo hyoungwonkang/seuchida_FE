@@ -10425,6 +10425,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-div-100vh@npm:^0.7.0":
+  version: 0.7.0
+  resolution: "react-div-100vh@npm:0.7.0"
+  peerDependencies:
+    react: ">=16.8.0"
+  checksum: 3adc7ac3a8363a6bcaa5b8b3b287f5c842ee64aff29d00ab8910d968dde0d130fbbd4d4d2cb5c9e35624df6bff28154e6dd577ef8ce9062821cca3d11b9b161e
+  languageName: node
+  linkType: hard
+
 "react-dom@npm:^18.0.0":
   version: 18.1.0
   resolution: "react-dom@npm:18.1.0"
@@ -11390,6 +11399,7 @@ __metadata:
     react: ^18.0.0
     react-calendar: ^3.7.0
     react-datetime-picker: ^3.5.0
+    react-div-100vh: ^0.7.0
     react-dom: ^18.0.0
     react-icons: ^4.3.1
     react-kakao-maps-sdk: ^1.0.6
