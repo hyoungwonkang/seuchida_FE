@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { Grid, Text } from "../elements/Index";
 import FooterMenu from "../shared/FooterMenu";
@@ -49,20 +50,28 @@ const PostDone = () => {
   };
 
   return (
-    <Grid column margin="167px auto 0px auto">
-      <img src="/img/seuchin.png" alt="seuchin" />
-      <Text bold margin="16px 0px 0px 0px" size="24px">
-        모집 등록이 완료되었습니다!
-      </Text>
-      <Text size="16px" margin="12px 0px 4px 0px" color="#787878">
-        내가 만든 모임은 마이페이지에서
-      </Text>
-      <Text size="16px" margin="0px" color="#787878">
-        확인할 수 있어요
-      </Text>
-      <FooterMenu next state={setDone} text="확인" />
-    </Grid>
+    <>
+      <Container>
+        <Grid column margin="30vh 0vw 0vh 0vw">
+          <img src="/img/seuchin_blue.png" alt="seuchin" />
+          <Text bold margin="16px 0px 0px 0px" size="24px">
+            모집 등록이 완료되었습니다!
+          </Text>
+          <Text size="16px" margin="12px 0px 4px 0px" color="#787878">
+            내가 만든 모임은 마이페이지에서
+          </Text>
+          <Text size="16px" margin="0px" color="#787878">
+            확인할 수 있어요
+          </Text>
+          <FooterMenu next state={setDone} text="확인" />
+        </Grid>
+      </Container>
+    </>
   );
 };
+
+const Container = styled.div`
+  padding-top: 0px;
+`;
 
 export default PostDone;

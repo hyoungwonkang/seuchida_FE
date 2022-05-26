@@ -5,6 +5,7 @@ import FooterMenu from "../shared/FooterMenu";
 import { Grid, Text, GoBack } from "../elements/Index";
 import Modal from "../components/Modal/Modal";
 import ModalData from "../components/Modal/ModalData";
+import { Redirect } from "react-router-dom";
 
 import { IconContext } from "react-icons";
 import { BsFillPeopleFill } from "react-icons/bs";
@@ -15,30 +16,6 @@ import { AiOutlinePlusCircle } from "react-icons/ai";
 const PostWrite_2 = (props) => {
   document.body.style.overscrollBehavior = "none";
   const history = useHistory();
-
-  //새로고침 시 작성 첫 번째 페이지로 이동
-  if (document.readyState === "interactive") {
-    //로컬 값 날림
-    localStorage.removeItem("address");
-    localStorage.removeItem("spot");
-    localStorage.removeItem("latitude");
-    localStorage.removeItem("longitude");
-    localStorage.removeItem("datemate");
-    localStorage.removeItem("memberAge");
-    localStorage.removeItem("memberGender");
-    localStorage.removeItem("maxMember");
-    localStorage.removeItem("postCategory");
-    localStorage.removeItem("postTitle");
-    localStorage.removeItem("postDesc");
-    localStorage.removeItem("showOptions");
-    localStorage.removeItem("showDate");
-    localStorage.removeItem("showTime");
-    //새로고침 경고
-    window.onbeforeunload = function () {
-      return "새로고침 경고";
-    };
-    history.replace("/postcategory");
-  }
 
   //모달 오픈 state
   const [isOpen, setIsOpen] = React.useState(false);
@@ -141,174 +118,215 @@ const PostWrite_2 = (props) => {
     window.localStorage.setItem("showOptions", showOptions);
   }, [showOptions]);
 
+  //새로고침 시 작성 첫 번째 페이지로 이동
+  if (document.readyState === "interactive") {
+    //로컬 값 날림localStorage.setItem("address", "");
+    localStorage.setItem("spot", "");
+    localStorage.setItem("latitude", "");
+    localStorage.setItem("longitude", "");
+    localStorage.setItem("datemate", "");
+    localStorage.setItem("memberAge", "");
+    localStorage.setItem("memberGender", "");
+    localStorage.setItem("maxMember", 2);
+    localStorage.setItem("postCategory", "");
+    localStorage.setItem("postTitle", "");
+    localStorage.setItem("postDesc", "");
+    localStorage.setItem("showOptions", "");
+    localStorage.setItem("showDate", "");
+    localStorage.setItem("showTime", "");
+    //새로고침 경고
+    window.onbeforeunload = function () {
+      return "새로고침 경고";
+    };
+    return <Redirect to="/postcategory" />;
+  }
+
   return (
-    <Grid>
-      <GoBack postBack text="모임 만들기" path="/postwrite1" />
-      <Grid margin="24px 0px 40px 0px">
-        <ProgressBar>
-          <HighLight width={(count / 3) * 100 + "%"} />
-        </ProgressBar>
-      </Grid>
-      <LineBox>
-        <Grid row margin="12px 0px" height="auto" justify="space-between">
-          <Grid row margin="0px 0px 0px 24px">
-            <IconContext.Provider value={{ color: "#787878", size: "16px" }}>
-              <BsFillPeopleFill />
-            </IconContext.Provider>
-            <Text bold width="40px" margin="0px 12px" size="16px">
-              인원
-            </Text>
-          </Grid>
-          <Grid row margin="0px 24px 0px 172px">
-            <div onClick={onDecrease}>
-              <IconContext.Provider value={{ color: "#DDDDDD", size: "28px" }}>
-                <AiOutlineMinusCircle />
+    <>
+      <Container>
+        <GoBack postBack text="모임 만들기" path="/postwrite1" />
+        <Grid margin="24px 0px 40px 0px">
+          <ProgressBar>
+            <HighLight width={(count / 3) * 100 + "%"} />
+          </ProgressBar>
+        </Grid>
+        <LineBox>
+          <Grid row margin="12px 0px" height="auto" justify="space-between">
+            <Grid row margin="0px 0px 0px 24px">
+              <IconContext.Provider value={{ color: "#787878", size: "16px" }}>
+                <BsFillPeopleFill />
               </IconContext.Provider>
-            </div>
-            <Grid margin="0px 0px 6px 0px">
-              {" "}
-              &nbsp;{maxMember}&nbsp;명&nbsp;{" "}
+              <Text bold width="40px" margin="0px 12px" size="16px">
+                인원
+              </Text>
             </Grid>
-            <div onClick={onIncrease}>
-              <IconContext.Provider value={{ color: "#DDDDDD", size: "28px" }}>
-                <AiOutlinePlusCircle />
-              </IconContext.Provider>
-            </div>
+            <Grid row margin="0px 24px 0px 172px">
+              <div onClick={onDecrease}>
+                <IconContext.Provider
+                  value={{ color: "#DDDDDD", size: "28px" }}
+                >
+                  <AiOutlineMinusCircle />
+                </IconContext.Provider>
+              </div>
+              <Grid margin="0px 0px 6px 0px">
+                {" "}
+                &nbsp;{maxMember}&nbsp;명&nbsp;{" "}
+              </Grid>
+              <div onClick={onIncrease}>
+                <IconContext.Provider
+                  value={{ color: "#DDDDDD", size: "28px" }}
+                >
+                  <AiOutlinePlusCircle />
+                </IconContext.Provider>
+              </div>
+            </Grid>
+          </Grid>
+        </LineBox>
+        <Grid row margin="12px 0px 20px 0px" padding="0px 24px 4px 24px">
+          <IconContext.Provider value={{ color: "#787878", size: "24px" }}>
+            <MdEdit />
+          </IconContext.Provider>
+          <Text bold width="100px" margin="0px 12px">
+            모집조건
+          </Text>
+          <Grid _onClick={() => setShow(!show)} isFlex_end>
+            {show ? (
+              <div
+                onClick={() => setShowOptions(memberGender + `, ` + memberAge)}
+                style={{ color: "#000000" }}
+              >
+                확인
+              </div>
+            ) : showOptions ? (
+              memberGender + `, ` + memberAge
+            ) : (
+              <div style={{ color: "#C4C4C4" }}>조건 선택</div>
+            )}
           </Grid>
         </Grid>
-      </LineBox>
-      <Grid row margin="12px 0px 20px 0px" padding="0px 24px 4px 24px">
-        <IconContext.Provider value={{ color: "#787878", size: "24px" }}>
-          <MdEdit />
-        </IconContext.Provider>
-        <Text bold width="100px" margin="0px 12px">
-          모집조건
-        </Text>
-        <Grid _onClick={() => setShow(!show)} isFlex_end>
+        <Grid>
           {show ? (
-            <div
-              onClick={() => setShowOptions(memberGender + `, ` + memberAge)}
-              style={{ color: "#000000" }}
-            >
-              확인
-            </div>
-          ) : showOptions ? (
-            memberGender + `, ` + memberAge
-          ) : (
-            <div style={{ color: "#C4C4C4" }}>조건 선택</div>
-          )}
-        </Grid>
-      </Grid>
-      <Grid>
-        {show ? (
-          <div>
-            <GenderBox>
-              <Text>성별</Text>
-              <Grid margin="0px 0px 32px 0px">
+            <div>
+              <GenderBox>
+                <Text>성별</Text>
+                <Grid margin="0px 0px 32px 0px">
+                  <form
+                    onChange={(e) => {
+                      setMemberGender(e.target.value);
+                    }}
+                  >
+                    <Grid>
+                      <RadioInput type="radio" name="state" value="성별무관" />{" "}
+                      성별무관&nbsp;&nbsp;&nbsp;&nbsp;
+                      <RadioInput
+                        type="radio"
+                        name="state"
+                        value="여성만"
+                      />{" "}
+                      여성만&nbsp;&nbsp;&nbsp;&nbsp;
+                      <RadioInput
+                        type="radio"
+                        name="state"
+                        value="남성만"
+                      />{" "}
+                      남성만
+                    </Grid>
+                  </form>
+                </Grid>
+              </GenderBox>
+              <AgeBox>
+                <Text>나이</Text>
                 <form
                   onChange={(e) => {
-                    setMemberGender(e.target.value);
+                    setMemberAge(e.target.value);
                   }}
                 >
                   <Grid>
-                    <RadioInput type="radio" name="state" value="성별무관" />{" "}
-                    성별무관&nbsp;&nbsp;&nbsp;&nbsp;
-                    <RadioInput type="radio" name="state" value="여성만" />{" "}
-                    여성만&nbsp;&nbsp;&nbsp;&nbsp;
-                    <RadioInput type="radio" name="state" value="남성만" />{" "}
-                    남성만
+                    <Grid>
+                      <RadioInput type="radio" name="state" value="나이무관" />{" "}
+                      나이무관&nbsp;&nbsp;&nbsp;&nbsp;
+                      <RadioInput
+                        type="radio"
+                        name="state"
+                        value={member.fage + member.lage}
+                      />{" "}
+                      직접입력
+                    </Grid>
+                    <Grid row margin="28px 0px" padding="0px 8px">
+                      <label>
+                        <AgeInput
+                          type="number"
+                          name="fage"
+                          value={member.fage}
+                          onChange={handleChange}
+                          placeholder="시작 나이 ex) 20"
+                          style={{
+                            width: "136px",
+                            height: "52px",
+                            textAlign: "center",
+                            fontSize: "16px",
+                            background: "#f1f1f5",
+                            border: "none",
+                          }}
+                          pattern="[0-9]+"
+                          onKeyUp={chkCharCode}
+                        />
+                      </label>
+                      &nbsp;&nbsp;&nbsp;
+                      <Text size="18px" bold>
+                        -
+                      </Text>
+                      &nbsp;&nbsp;&nbsp;
+                      <label>
+                        <AgeInput
+                          type="number"
+                          name="lage"
+                          value={member.lage}
+                          onChange={handleChange}
+                          placeholder="끝 나이 ex) 29"
+                          style={{
+                            width: "136px",
+                            height: "52px",
+                            textAlign: "center",
+                            fontSize: "16px",
+                            background: "#f1f1f5",
+                            border: "none",
+                          }}
+                          pattern="[0-9]+"
+                          onKeyUp={chkCharCode}
+                        />
+                      </label>
+                    </Grid>
                   </Grid>
                 </form>
-              </Grid>
-            </GenderBox>
-            <AgeBox>
-              <Text>나이</Text>
-              <form
-                onChange={(e) => {
-                  setMemberAge(e.target.value);
-                }}
-              >
-                <Grid>
-                  <Grid>
-                    <RadioInput type="radio" name="state" value="나이무관" />{" "}
-                    나이무관&nbsp;&nbsp;&nbsp;&nbsp;
-                    <RadioInput
-                      type="radio"
-                      name="state"
-                      value={member.fage + member.lage}
-                    />{" "}
-                    직접입력
-                  </Grid>
-                  <Grid row margin="28px 0px" padding="0px 8px">
-                    <label>
-                      <AgeInput
-                        type="number"
-                        name="fage"
-                        value={member.fage}
-                        onChange={handleChange}
-                        placeholder="시작 나이 ex) 20"
-                        style={{
-                          width: "136px",
-                          height: "52px",
-                          textAlign: "center",
-                          fontSize: "16px",
-                          background: "#f1f1f5",
-                          border: "none",
-                        }}
-                        pattern="[0-9]+"
-                        onKeyUp={chkCharCode}
-                      />
-                    </label>
-                    &nbsp;&nbsp;&nbsp;
-                    <Text size="18px" bold>
-                      -
-                    </Text>
-                    &nbsp;&nbsp;&nbsp;
-                    <label>
-                      <AgeInput
-                        type="number"
-                        name="lage"
-                        value={member.lage}
-                        onChange={handleChange}
-                        placeholder="끝 나이 ex) 29"
-                        style={{
-                          width: "136px",
-                          height: "52px",
-                          textAlign: "center",
-                          fontSize: "16px",
-                          background: "#f1f1f5",
-                          border: "none",
-                        }}
-                        pattern="[0-9]+"
-                        onKeyUp={chkCharCode}
-                      />
-                    </label>
-                  </Grid>
-                </Grid>
-              </form>
-            </AgeBox>
-          </div>
-        ) : null}
-      </Grid>
-      <FooterMenu next text="다음" state={check} />
-      {/* 경고창 모달 */}
-      <Modal open={isOpen}>
-        <ModalData
-          Alert
-          text="내용을 모두 입력해주세요"
-          onClose={() => setIsOpen(false)}
-        />
-      </Modal>
-      <Modal open={isOpen2}>
-        <ModalData
-          Alert
-          text="2 ~ 30명만 가능해요"
-          onClose={() => setIsOpen2(false)}
-        />
-      </Modal>
-    </Grid>
+              </AgeBox>
+            </div>
+          ) : null}
+        </Grid>
+        <FooterMenu next text="다음" state={check} />
+        {/* 경고창 모달 */}
+        <Modal open={isOpen}>
+          <ModalData
+            Alert
+            text="내용을 모두 입력해주세요"
+            onClose={() => setIsOpen(false)}
+          />
+        </Modal>
+        <Modal open={isOpen2}>
+          <ModalData
+            Alert
+            text="2 ~ 30명만 가능해요"
+            onClose={() => setIsOpen2(false)}
+          />
+        </Modal>
+      </Container>
+    </>
   );
 };
+
+const Container = styled.div`
+  padding-top: 0px;
+`;
 
 const LineBox = styled.div`
   border-bottom: 1px solid #e9e9e9;

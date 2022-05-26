@@ -9,14 +9,17 @@ function LCslider(props) {
   const post = props.catepost;
 
   const [state, setState] = useState("");
+  console.log(state);
 
   React.useEffect(() => {
-    if(post) {setState(post[0]?.postCategory)};
-  }, []);
+    if (post) {
+      setState(post[0]?.postCategory);
+    }
+  }, [state]);
 
   //인덱스 값 변화에 따른 category 변화 조건
   post?.map((p, i) => {
-    if (state === i) return setState(p.postCategory);
+    if (state === i) return setState(p?.postCategory);
   });
 
   const settings = {
@@ -43,9 +46,9 @@ function LCslider(props) {
           alt="point"
           src="../img/main.png"
           style={{
-            position: "absolute",
-            top: "60px",
-            left: "310px",
+            margin: "30px 0px 0px 0px",
+            // padding: "30px 0px 0px 30px",
+            // position: "absolute",
             width: "65px",
             height: "76px",
           }}
@@ -78,11 +81,14 @@ const Sliders = styled(Slider)`
 `;
 
 const WellcomeBox = styled.div`
+  width: 390px;
   font-size: 24px;
   padding: 40px 24px 30px 24px;
   background-color: #0ed88b;
+  box-sizing: border-box;
   display: flex;
   flex-direction: row;
+  justify-content: "space-between";
 `;
 
 const Sports = styled.div`

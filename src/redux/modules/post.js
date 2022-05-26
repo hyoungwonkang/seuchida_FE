@@ -69,6 +69,7 @@ const addPostDB = (
         history.push("/postdone");
       })
       .catch((err) => {
+        window.location.href = "/main";
         console.log("게시물 등록 실패", err);
       });
   };
@@ -130,28 +131,24 @@ const getPostlistDB = () => {
 //   };
 // };
 
-
-
-const getReviewlistDB = () => {
-  return async function (dispatch, getState) {
-    try {
-      await axios({
-        method: "get",
-        url: `https://seuchidabackend.shop/api/review`,
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      }).then((response) => {
-        console.log(response);
-        dispatch(setReview(response.data));
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-};
-
-
+// const getReviewlistDB = (pageNumber) => {
+//   return async function (dispatch, getState) {
+//     try {
+//       await axios({
+//         method: "get",
+//         url: `https://seuchidabackend.shop/api/reviewAll/${pageNumber}`,
+//         headers: {
+//           authorization: `Bearer ${token}`,
+//         },
+//       }).then((response) => {
+//         console.log(response);
+//         dispatch(setReview(response.data));
+//       });
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   };
+// };
 
 export default handleActions(
   {
@@ -176,7 +173,7 @@ const actionCreators = {
   setPost,
   getMainDB,
   getPostlistDB,
-  getReviewlistDB,
+  // getReviewlistDB,
   addPost,
   addPostDB,
 };

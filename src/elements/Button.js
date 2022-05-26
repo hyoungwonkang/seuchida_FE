@@ -141,8 +141,8 @@ const CloseButton = styled.button`
   font-size: 16px;
   text-align: center;
   border: none;
-  ${(props) => (props.margin ? `margin: ${props.margin};` : "")}
-  border-right: ${(props) => props.border_right}
+  ${(props) => (props.margin ? `margin: ${props.margin};` : "")};
+  border-right: ${(props) => props.border_right};
 `;
 
 export default Button;

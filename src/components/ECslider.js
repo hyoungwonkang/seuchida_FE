@@ -33,10 +33,10 @@ function ECslider(props) {
 export default ECslider;
 
 const Sliders = styled(Slider)`
-  .slick-track {
+  /* .slick-track {
     /* height: auto; */
     /* margin: -10px 0px 0px 0px; */
-  }
+  /* }
   .slider {
     position: relative;
   }
@@ -45,5 +45,5 @@ const Sliders = styled(Slider)`
   }
   .slick-slide {
     margin-right: 18px;
-  }
+  } */ */
 `;

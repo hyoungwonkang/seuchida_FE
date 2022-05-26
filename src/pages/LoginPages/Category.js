@@ -155,79 +155,95 @@ const Category = (props) => {
   }
 
   return (
-    <Grid>
-      {is_edit ? (
-        <GoBack text="상세 관심사 선택" path="/editprofile" remove={remove} />
-      ) : (
-        <GoBack text="상세 관심사 선택" path="/addprofile" remove={remove} />
-      )}
-      <Grid padding="0px 25px" margin="0px">
-        <Text size="24px" bold margin="0px">
-          관심있는 <br />
-          운동을 알려주세요
-        </Text>
-        <Text size="16px" color="gray">
-          내 관심사에 딱 맞는 맞춤형 모임을 추천해 드려요
-        </Text>
-      </Grid>
-
-      {/* 관심사 선택 */}
-      <Grid height="auto" column margin="auto">
-        {/* 카테고리 */}
-        <CateBox>
-          {CategoryList.map((item) => {
-            return (
-              <div key={item.id}>
-                <input
-                  id={item.id}
-                  type="checkbox"
-                  value={item.data}
-                  onChange={(e) => {
-                    _userInterest(e.target.checked, e.target.value);
-                  }}
-                  //배열에 data가 있으면 true, 없으면 false
-                  checked={userInterest?.includes(item.data) ? true : false}
-                />
-                <label htmlFor={item.id}>
-                  <Cate click={userInterest?.includes(item.data)}>
-                    {item.data}
-                  </Cate>
-                </label>
-              </div>
-            );
-          })}
-
-          {/* 푸터 */}
+    <>
+      <Container>
+        <Grid bg="white">
           {is_edit ? (
-            <FooterMenu next text="수정" event={editProfile} />
+            <GoBack
+              text="상세 관심사 선택"
+              path="/editprofile"
+              remove={remove}
+            />
           ) : (
-            <FooterMenu next text="다음" event={addProfile} />
+            <GoBack
+              text="상세 관심사 선택"
+              path="/addprofile"
+              remove={remove}
+            />
           )}
+          <Grid padding="0px 25px" margin="0px">
+            <Text size="24px" bold margin="0px">
+              관심있는 <br />
+              운동을 알려주세요
+            </Text>
+            <Text size="16px" color="gray">
+              내 관심사에 딱 맞는 맞춤형 모임을 추천해 드려요
+            </Text>
+          </Grid>
 
-          {/* 경고창 모달 */}
-          <Modal open={isOpen}>
-            <ModalData
-              Alert
-              onClose={() => setIsOpen(false)}
-              text="최대 3개까지 선택 가능합니다."
-            />
-          </Modal>
+          {/* 관심사 선택 */}
+          <Grid height="auto" column margin="auto">
+            {/* 카테고리 */}
+            <CateBox>
+              {CategoryList.map((item) => {
+                return (
+                  <div key={item.id}>
+                    <input
+                      id={item.id}
+                      type="checkbox"
+                      value={item.data}
+                      onChange={(e) => {
+                        _userInterest(e.target.checked, e.target.value);
+                      }}
+                      //배열에 data가 있으면 true, 없으면 false
+                      checked={userInterest?.includes(item.data) ? true : false}
+                    />
+                    <label htmlFor={item.id}>
+                      <Cate click={userInterest?.includes(item.data)}>
+                        {item.data}
+                      </Cate>
+                    </label>
+                  </div>
+                );
+              })}
 
-          {/* 최소 선택 모달 */}
-          <Modal open={isOpen2}>
-            <ModalData
-              Alert
-              onClose={() => setIsOpen2(false)}
-              text="최소 1개를 선택해 주세요."
-            />
-          </Modal>
-        </CateBox>
-      </Grid>
-    </Grid>
+              {/* 푸터 */}
+              {is_edit ? (
+                <FooterMenu next text="수정" event={editProfile} />
+              ) : (
+                <FooterMenu next text="다음" event={addProfile} />
+              )}
+
+              {/* 경고창 모달 */}
+              <Modal open={isOpen}>
+                <ModalData
+                  Alert
+                  onClose={() => setIsOpen(false)}
+                  text="최대 3개까지 선택 가능합니다."
+                />
+              </Modal>
+
+              {/* 최소 선택 모달 */}
+              <Modal open={isOpen2}>
+                <ModalData
+                  Alert
+                  onClose={() => setIsOpen2(false)}
+                  text="최소 1개를 선택해 주세요."
+                />
+              </Modal>
+            </CateBox>
+          </Grid>
+        </Grid>
+      </Container>
+    </>
   );
 };
 
 export default Category;
+
+const Container = styled.div`
+  padding-top: 0px;
+`;
 
 //카테고리 css
 const CateBox = styled.div`

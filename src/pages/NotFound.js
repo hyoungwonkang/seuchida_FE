@@ -1,29 +1,41 @@
 import React from "react";
 import { Grid, Button, Text } from "../elements/Index";
 import { useHistory } from "react-router-dom";
+import styled from "styled-components";
 
 const NotFound = () => {
   const history = useHistory();
   return (
-    <Grid column>
-      <Grid column width="200px" padding="200px 0px 0px 0px">
-        <img src="./img/seuchin.png" />
+    <Grid column bg="white" height="auto" padding="200px 0px 0px 0px">
+      <Txt>페이지를 찾을 수 없어요!</Txt>
+      <Grid column padding="20px 0px 0px 0px">
+        <img alt="seuchin" src="/img/seuchin.png" />
+        <Back
+          onClick={() => {
+            history.goBack();
+          }}
+        >
+          뒤로가기
+        </Back>
       </Grid>
-      <Text margin="50px 0px 0px 0px" size="20px" bold>
-        잘못된 주소입니다:(
-      </Text>
-      <Button
-        bg="#00D282"
-        width="100px"
-        margin="100px 0px 0px 0px"
-        _onClick={() => {
-          history.goBack();
-        }}
-      >
-        뒤로가기
-      </Button>
     </Grid>
   );
 };
 
 export default NotFound;
+
+const Txt = styled.h2`
+  /* padding: 170px 0px 0px 0px; */
+`;
+
+const Back = styled.button`
+  width: 200px;
+  height: 50px;
+  border: none;
+  border-radius: 5px;
+  background: #00d282;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 30px 0px 0px 0px;
+`;

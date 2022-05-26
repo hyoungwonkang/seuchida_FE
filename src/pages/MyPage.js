@@ -22,7 +22,6 @@ const NameCard = () => {
   }, []);
 
   const userInfo = useSelector((state) => state.user.userInfo);
-  console.log(userInfo);
 
   const level = [
     { id: 1, level: 1, image: <Image src="./img/badge/red.png" /> },
@@ -59,17 +58,22 @@ const NameCard = () => {
         {level.map((v, i) => {
           if (v.level == userInfo.level)
             return <div key={v + i}>{v.image}</div>;
+          if (v.level === "7") {
+            return <div key={v + i}>{v[6].image}</div>;
+          }
         })}
         <Text size="24px" margin="0px" color="#323232" bold>
           {userInfo.nickName}
         </Text>
       </Grid>
+
       {/* 유저 관심사 */}
       <Grid row height="auto" margin="8px 0px 16px 0px" justify="center">
         {userInfo.userInterest?.map((v, i) => {
           return <Cate key={v + i}>{v}</Cate>;
         })}
       </Grid>
+
       {/* 유저 소개글 */}
       <Text width="302px" color="#505050" margin="0px 0px 45px 0px">
         {userInfo.userContent}
@@ -83,6 +87,7 @@ const MyPage = () => {
   const myExercise = useSelector((state) => state.mypage.myExercise);
   const userInfo = useSelector((state) => state.user.userInfo);
   const point = JSON.stringify(userInfo?.userEvalue);
+  // console.log(userInfo?.userEvalue > );
 
   //모달창 state
   const [isOpen, setIsOpen] = React.useState(false);
@@ -124,19 +129,31 @@ const MyPage = () => {
         bg="#0ED88B"
       >
         <ProgressBar>
-          <Highlight
-            width={(point?.charAt(point.length - 1) / 10) * 100 + "%"}
-          />
+          {point >= "70" ? (
+            <Highlight width={0 + "%"} />
+          ) : (
+            <Highlight
+              width={(point?.charAt(point.length - 1) / 10) * 100 + "%"}
+            />
+          )}
           <Seuchin src="./img/seuchin.png" />
         </ProgressBar>
-        <Text size="16px" width="342px" color="#FFFFFF" bold margin="5px">
-          {level.map((v, i) => {
-            if (v.level == userInfo.level) return v.color;
-          })}
-          레벨까지
-          {10 - point?.charAt(point.length - 1)}
-          포인트
-        </Text>
+        {userInfo.level === "7" ? (
+          <Text size="16px" width="342px" color="#FFFFFF" bold margin="5px">
+            최고 레벨 달성!
+          </Text>
+        ) : (
+          <Text size="16px" width="342px" color="#FFFFFF" bold margin="5px">
+            {level.map((v, i) => {
+              if (v.level == userInfo.level) {
+                return v.color;
+              }
+            })}
+            레벨까지
+            {10 - point?.charAt(point.length - 1)}
+            포인트
+          </Text>
+        )}
       </Grid>
 
       {/* 후기 남기기 */}
@@ -211,7 +228,12 @@ const MyPage = () => {
         <IoIosArrowForward size={30} />
       </Grid>
 
-      <Grid padding="100px 20px 120px 20px" row justify="space-between">
+      <Grid
+        padding="100px 20px 120px 20px"
+        row
+        justify="space-between"
+        bg="white"
+      >
         <Button
           wd="171px"
           bg="#fff"
@@ -278,7 +300,7 @@ const Seuchin = styled.img`
 `;
 const Highlight = styled.div`
   background: #ffe926;
-  transition: 1s width; //몇초동안 뭐를(생략하면 모든것을 바꿈)
+  transition: 1s width;
   width: ${(props) => props.width};
   height: 12px;
   border-radius: 12px;

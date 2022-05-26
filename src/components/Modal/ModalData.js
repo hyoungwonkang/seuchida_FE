@@ -158,44 +158,71 @@ const ModalData = (props) => {
           <Grid column height="100px">
             <Image
               shape="circle"
-              src={props.post.memberImg}
+              src={props.post.memberImg || props.post.userImg}
               size={60}
               margin="3px"
             />
             <Grid row justify="center" height="auto">
               {level.map((v, i) => {
-                if (v.level == props.post.memberLevel) return v.image;
+                if (
+                  v.level == props.post.memberLevel ||
+                  v.level == props.post.level
+                )
+                  return <div key={v + i}>{v.image}</div>;
               })}
               <Text margin="0px" bold size="24px">
-                {props.post.memberNickname}
+                {props.post.memberNickname || props.post.nickName}
               </Text>
             </Grid>
           </Grid>
 
           {/* 카테고리 */}
-          <Grid row height="auto" justify="center">
-            {props.post.memberCategory?.map((h, i) => {
-              return (
-                <Text
-                  br
-                  key={h + i}
-                  color="#000000"
-                  width="auto"
-                  row
-                  margin="20px 3px 5px 3px"
-                >
-                  {h}
-                </Text>
-              );
-            })}
+          {props.post.userInterest ? (
+            <Grid row height="auto" justify="center">
+              {props.post.userInterest?.map((h, i) => {
+                return (
+                  <Text
+                    br
+                    key={h + i}
+                    color="#000000"
+                    width="auto"
+                    row
+                    margin="20px 3px 5px 3px"
+                  >
+                    {h}
+                  </Text>
+                );
+              })}
+            </Grid>
+          ) : (
+            <Grid row height="auto" justify="center">
+              {props.post.memberCategory?.map((h, i) => {
+                return (
+                  <Text
+                    br
+                    key={h + i}
+                    color="#000000"
+                    width="auto"
+                    row
+                    margin="20px 3px 5px 3px"
+                  >
+                    {h}
+                  </Text>
+                );
+              })}
+            </Grid>
+          )}
+          <Grid>
+            <Text margin="20px 0px 0px 3px">
+              {props.post.memberDesc || props.post.userContent}
+            </Text>
           </Grid>
-          <Text margin="20px 0px 0px 3px">{props.post.memberDesc}</Text>
         </Grid>
       </Grid>
     );
   }
 
-  //게시물 작성자 프로필(레벨 넣어야함//카테고리 왜 빠짐?)
+  //게시물 작성자 프로필
   return (
     <Grid width="342px" height="356px" padding="20px">
       {/* close버튼 */}
@@ -214,7 +241,8 @@ const ModalData = (props) => {
           />
           <Grid row justify="center" height="auto">
             {level.map((v, i) => {
-              if (v.level == props.post[0].memberLevel) return v.image;
+              if (v.level == props.post[0].memberLevel)
+                return <div key={v + i}>{v.image}</div>;
             })}
             <Text margin="0px" bold size="24px">
               {props.post[0].memberNickname}
@@ -239,7 +267,9 @@ const ModalData = (props) => {
             );
           })}
         </Grid>
-        <Text margin="20px 0px 0px 3px">{props.post[0].memberDesc}</Text>
+        <Grid>
+          <Text margin="20px 0px 0px 3px">{props.post[0].memberDesc}</Text>
+        </Grid>
       </Grid>
     </Grid>
   );

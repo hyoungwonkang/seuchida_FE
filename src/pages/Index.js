@@ -1,5 +1,6 @@
 import { lazy } from "react";
 
+const Guide = lazy(() => import("../pages/LoginPages/Guide"));
 const Login = lazy(() => import("../pages/LoginPages/Login"));
 const KakaoRedirect = lazy(() => import("../shared/KakaoRedirect"));
 const GoogleRedirect = lazy(() => import("../shared/GoogleRedirect"));
@@ -25,7 +26,6 @@ const MyPage = lazy(() => import("../pages/MyPage"));
 const MyPost = lazy(() => import("../pages/MyPost"));
 const MyReview = lazy(() => import("../pages/MyReview"));
 const ReviewWrite = lazy(() => import("../pages/ReviewWrite"));
-const ChatRoom = lazy(() => import("./ChatRoom"));
 const Evaluation = lazy(() => import("../pages/Evaluation"));
 const ReviewDone = lazy(() => import("./ReviewDone"));
 const Chatex = lazy(() => import("../pages/Chatex"));
@@ -33,6 +33,7 @@ const ChatList = lazy(() => import("../pages/ChatList"));
 const NotFound = lazy(() => import("../pages/NotFound"));
 
 export {
+  Guide,
   Login,
   KakaoRedirect,
   GoogleRedirect,
@@ -60,7 +61,6 @@ export {
   ReviewWrite,
   Evaluation,
   ReviewDone,
-  ChatRoom,
   Chatex,
   ChatList,
   NotFound,

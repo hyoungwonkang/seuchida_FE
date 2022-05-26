@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { Card, LCslider, RCslider } from "../components/index";
-import { Button } from "../elements/Index";
 import FooterMenu from "../shared/FooterMenu";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
@@ -10,6 +9,7 @@ import { actionCreators as roomActions } from "../redux/modules/room";
 import { history } from "../redux/configStore";
 import io from "socket.io-client";
 import { RiMessage3Fill } from "react-icons/ri";
+import { IoIosArrowForward } from "react-icons/io";
 
 const token = localStorage.getItem("token");
 // const ENDPOINT = "https://seuchidabackend.shop";
@@ -35,6 +35,10 @@ const Main = () => {
     errMsg: null,
     isLoading: true,
   });
+
+  React.useEffect(() => {
+    if (socket.connected === false) socket.emit("login");
+  }, []);
 
 
   React.useEffect(()=>{
@@ -75,8 +79,7 @@ const Main = () => {
         isLoading: false,
       }));
     }
-
-  }, [state.isLoading===true]);
+  }, [state.isLoading === true]);
 
   return (
     <>
@@ -97,7 +100,10 @@ const Main = () => {
               window.location.href = "/reviewlist/1";
             }}
           >
-            <Title>함께한 스친들의 후기</Title> <Title>&gt;</Title>
+            <Title>함께한 스친들의 후기</Title>{" "}
+            <Title>
+              <IoIosArrowForward size={30} />
+            </Title>
           </TitleBox>
 
           <RCslider review={review} />
@@ -111,7 +117,9 @@ const Main = () => {
           }}
         >
           <Title>여기여기 붙어라</Title>
-          <Title>&gt;</Title>
+          <Title>
+            <IoIosArrowForward size={30} />
+          </Title>
         </TitleBox>
         <ListBox>
           <CardBox>
@@ -162,7 +170,7 @@ const Main = () => {
         </Float>
         {/* 푸터 */}
       </Container>
-      <FooterMenu socket={socket}/>
+      <FooterMenu socket={socket} />
     </>
   );
 };
@@ -181,7 +189,6 @@ const TopLive = styled.section`
 `;
 
 // 여기여기 붙어라
-
 const ListBox = styled.section`
   background-color: white;
   padding-bottom: 80px;
@@ -192,9 +199,11 @@ const CardBox = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
 const TitleBox = styled.div`
   justify-content: space-between;
   display: flex;
+  flex-direction: row;
   background-color: white;
   z-index: 20;
   margin-bottom: -9px;
@@ -203,7 +212,7 @@ const TitleBox = styled.div`
 const Title = styled.div`
   font-size: 24px;
   font-weight: 700;
-  padding: 25px;
+  padding: 25px 25px 20px 25px;
 `;
 //-- 여기여기 붙어라
 
@@ -214,19 +223,21 @@ const ReviewBox = styled.section`
 `;
 
 const Survey = styled.button`
-  position: fixed;
+  position: absolute;
   bottom: 170px;
-  left: 312px;
+  right: 23px;
   background: transparent;
   border: none;
   z-index: 1000;
+  cursor: pointer;
 `;
 
 const Float = styled.button`
-  position: fixed;
+  position: absolute;
   bottom: 100px;
-  left: 300px;
+  right: 10px;
   background: transparent;
   border: none;
   z-index: 1000;
+  cursor: pointer;
 `;

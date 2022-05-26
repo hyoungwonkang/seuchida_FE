@@ -10,6 +10,7 @@ import Picker from "react-mobile-picker-scroll";
 import { Grid, Text, GoBack } from "../elements/Index";
 import Modal from "../components/Modal/Modal";
 import ModalData from "../components/Modal/ModalData";
+import { Redirect } from "react-router-dom";
 
 import { IconContext } from "react-icons";
 import { BsFillCalendarFill } from "react-icons/bs";
@@ -20,30 +21,6 @@ const PostWrite_3 = (props) => {
   document.body.style.overscrollBehavior = "none";
   const history = useHistory();
   const dispatch = useDispatch();
-
-  //새로고침 시 작성 첫 번째 페이지로 이동
-  if (document.readyState === "interactive") {
-    //로컬 값 날림
-    localStorage.removeItem("address");
-    localStorage.removeItem("spot");
-    localStorage.removeItem("latitude");
-    localStorage.removeItem("longitude");
-    localStorage.removeItem("datemate");
-    localStorage.removeItem("memberAge");
-    localStorage.removeItem("memberGender");
-    localStorage.removeItem("maxMember");
-    localStorage.removeItem("postCategory");
-    localStorage.removeItem("postTitle");
-    localStorage.removeItem("postDesc");
-    localStorage.removeItem("showOptions");
-    localStorage.removeItem("showDate");
-    localStorage.removeItem("showTime");
-    //새로고침 경고
-    window.onbeforeunload = function () {
-      return "새로고침 경고";
-    };
-    history.replace("/postcategory");
-  }
 
   //localStorage에 있는 데이터를 불러옵니다.
   const address = localStorage.getItem("address");
@@ -230,15 +207,134 @@ const PostWrite_3 = (props) => {
   // console.log(spot);
   // console.log(valueGroups);
 
+  //새로고침 시 작성 첫 번째 페이지로 이동
+  if (document.readyState === "interactive") {
+    //로컬 값 날림localStorage.setItem("address", "");
+    localStorage.setItem("spot", "");
+    localStorage.setItem("latitude", "");
+    localStorage.setItem("longitude", "");
+    localStorage.setItem("datemate", "");
+    localStorage.setItem("memberAge", "");
+    localStorage.setItem("memberGender", "");
+    localStorage.setItem("maxMember", 2);
+    localStorage.setItem("postCategory", "");
+    localStorage.setItem("postTitle", "");
+    localStorage.setItem("postDesc", "");
+    localStorage.setItem("showOptions", "");
+    localStorage.setItem("showDate", "");
+    localStorage.setItem("showTime", "");
+    //새로고침 경고
+    window.onbeforeunload = function () {
+      return "새로고침 경고";
+    };
+    return <Redirect to="/postcategory" />;
+  }
+
   return (
-    <Grid>
-      <GoBack postBack text="모임 만들기" path="/postwrite2" />
-      <Grid margin="24px 0px 40px 0px">
-        <ProgressBar>
-          <HighLight width={(count / 3) * 100 + "%"} />
-        </ProgressBar>
-      </Grid>
-      <LineBox>
+    <>
+      <Container>
+        <GoBack postBack text="모임 만들기" path="/postwrite2" />
+        <Grid margin="24px 0px 40px 0px">
+          <ProgressBar>
+            <HighLight width={(count / 3) * 100 + "%"} />
+          </ProgressBar>
+        </Grid>
+        <LineBox>
+          <Grid
+            row
+            margin="12px 0px"
+            height="auto"
+            padding="0px 24px 4px 0px"
+            justify="space-between"
+          >
+            <Grid>
+              <Grid row padding="6px 0px 0px 26px">
+                <IconContext.Provider
+                  value={{ color: "#787878", size: "16px" }}
+                >
+                  <BsFillCalendarFill />
+                </IconContext.Provider>
+                <Text bold width="80px" margin="0px 0px 0px 14px" size="16px">
+                  날짜
+                </Text>
+                <Grid isFlex_end>
+                  <div onClick={() => setShow(!show)}>
+                    {show ? (
+                      <div
+                        onClick={() => setShowDate(dayDate)}
+                        style={{
+                          fontSize: "16px",
+                        }}
+                      >
+                        확인
+                      </div>
+                    ) : showDate ? (
+                      showDate
+                    ) : (
+                      <div style={{ color: "#C4C4C4" }}>조건 선택</div>
+                    )}
+                  </div>
+                </Grid>
+              </Grid>
+              <Grid row margin="0px 12px" padding="0px 8px">
+                {show ? (
+                  <CalendarContainer>
+                    <Calendar
+                      onChange={setValue}
+                      calendarType="US"
+                      locale="EN"
+                      value={value}
+                    />
+                  </CalendarContainer>
+                ) : null}
+              </Grid>
+            </Grid>
+          </Grid>
+        </LineBox>
+        <LineBox>
+          <Grid
+            row
+            height="auto"
+            padding="12px 24px 12px 0px"
+            justify="space-between"
+          >
+            <Grid row margin="0px 0px 0px 24px">
+              <IconContext.Provider value={{ color: "#787878", size: "16px" }}>
+                <AiFillClockCircle />
+              </IconContext.Provider>
+              <Text bold width="32px" margin="0px 12px">
+                시간
+              </Text>
+            </Grid>
+            <Grid isFlex_end>
+              <div className="Test" onClick={() => setShow2(!show2)}>
+                {show2 ? (
+                  <div
+                    onClick={() => {
+                      setShowTime(pageTime);
+                    }}
+                    style={{
+                      fontSize: "16px",
+                    }}
+                  >
+                    확인
+                  </div>
+                ) : showTime ? (
+                  showTime
+                ) : (
+                  <div style={{ color: "#C4C4C4" }}>조건 선택</div>
+                )}
+              </div>
+            </Grid>
+          </Grid>
+          {show2 ? (
+            <Picker
+              optionGroups={optionGroups}
+              valueGroups={valueGroups}
+              onChange={handleChange}
+            />
+          ) : null}
+        </LineBox>
         <Grid
           row
           margin="12px 0px"
@@ -246,146 +342,58 @@ const PostWrite_3 = (props) => {
           padding="0px 24px 4px 0px"
           justify="space-between"
         >
-          <Grid>
-            <Grid row padding="6px 0px 0px 26px">
-              <IconContext.Provider value={{ color: "#787878", size: "16px" }}>
-                <BsFillCalendarFill />
-              </IconContext.Provider>
-              <Text bold width="80px" margin="0px 0px 0px 14px" size="16px">
-                날짜
-              </Text>
-              <Grid isFlex_end>
-                <div onClick={() => setShow(!show)}>
-                  {show ? (
-                    <div
-                      onClick={() => setShowDate(dayDate)}
-                      style={{
-                        fontSize: "16px",
-                      }}
-                    >
-                      확인
-                    </div>
-                  ) : showDate ? (
-                    showDate
-                  ) : (
-                    <div style={{ color: "#C4C4C4" }}>조건 선택</div>
-                  )}
-                </div>
-              </Grid>
-            </Grid>
-            <Grid row margin="0px 12px" padding="0px 8px">
-              {show ? (
-                <CalendarContainer>
-                  <Calendar
-                    onChange={setValue}
-                    calendarType="US"
-                    locale="EN"
-                    value={value}
-                  />
-                </CalendarContainer>
-              ) : null}
-            </Grid>
-          </Grid>
-        </Grid>
-      </LineBox>
-      <LineBox>
-        <Grid
-          row
-          height="auto"
-          padding="12px 24px 12px 0px"
-          justify="space-between"
-        >
-          <Grid row margin="0px 0px 0px 24px">
+          <Grid row margin="6px 0px 0px 24px">
             <IconContext.Provider value={{ color: "#787878", size: "16px" }}>
-              <AiFillClockCircle />
+              <FaMapMarkerAlt />
             </IconContext.Provider>
-            <Text bold width="32px" margin="0px 12px">
-              시간
+            <Text bold margin="0px 13px" size="16px">
+              장소
             </Text>
           </Grid>
           <Grid isFlex_end>
-            <div className="Test" onClick={() => setShow2(!show2)}>
-              {show2 ? (
-                <div
-                  onClick={() => {
-                    setShowTime(pageTime);
-                  }}
-                  style={{
-                    fontSize: "16px",
-                  }}
-                >
-                  확인
-                </div>
-              ) : showTime ? (
-                showTime
-              ) : (
-                <div style={{ color: "#C4C4C4" }}>조건 선택</div>
-              )}
-            </div>
+            {!spot ? (
+              <div
+                onClick={() => {
+                  history.push("/postwrite4");
+                }}
+                style={{
+                  color: "#C4C4C4",
+                  textDecorationLine: "none",
+                }}
+              >
+                조건 선택
+              </div>
+            ) : (
+              <div
+                onClick={() => {
+                  history.push("/postwrite4");
+                }}
+                style={{
+                  color: "black",
+                }}
+              >
+                {spot}
+              </div>
+            )}
           </Grid>
         </Grid>
-        {show2 ? (
-          <Picker
-            optionGroups={optionGroups}
-            valueGroups={valueGroups}
-            onChange={handleChange}
+        <FooterMenu next event={addPost} text="다음" />
+        {/* 경고창 모달 */}
+        <Modal open={isOpen}>
+          <ModalData
+            Alert
+            text="내용을 모두 입력해주세요"
+            onClose={() => setIsOpen(false)}
           />
-        ) : null}
-      </LineBox>
-      <Grid
-        row
-        margin="12px 0px"
-        height="auto"
-        padding="0px 24px 4px 0px"
-        justify="space-between"
-      >
-        <Grid row margin="6px 0px 0px 24px">
-          <IconContext.Provider value={{ color: "#787878", size: "16px" }}>
-            <FaMapMarkerAlt />
-          </IconContext.Provider>
-          <Text bold margin="0px 13px" size="16px">
-            장소
-          </Text>
-        </Grid>
-        <Grid isFlex_end>
-          {!spot ? (
-            <div
-              onClick={() => {
-                history.push("/postwrite4");
-              }}
-              style={{
-                color: "#C4C4C4",
-                textDecorationLine: "none",
-              }}
-            >
-              조건 선택
-            </div>
-          ) : (
-            <div
-              onClick={() => {
-                history.push("/postwrite4");
-              }}
-              style={{
-                color: "black",
-              }}
-            >
-              {spot}
-            </div>
-          )}
-        </Grid>
-      </Grid>
-      <FooterMenu next event={addPost} text="다음" />
-      {/* 경고창 모달 */}
-      <Modal open={isOpen}>
-        <ModalData
-          Alert
-          text="내용을 모두 입력해주세요"
-          onClose={() => setIsOpen(false)}
-        />
-      </Modal>
-    </Grid>
+        </Modal>
+      </Container>
+    </>
   );
 };
+
+const Container = styled.div`
+  padding-top: 0px;
+`;
 
 const LineBox = styled.div`
   border-bottom: 1px solid #e9e9e9;

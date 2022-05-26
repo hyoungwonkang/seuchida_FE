@@ -18,6 +18,7 @@ const socket = io.connect("https://seuchidabackend.shop", {
 
 const ChatList = () => {
   const dispatch = useDispatch();
+
   const room_list = useSelector((state) => state.room?.list?.chattingRoom);
   const last_chat = useSelector((state) => state.room?.list?.lastChatting);
   const unreadChatlist = useSelector(
@@ -26,6 +27,7 @@ const ChatList = () => {
 
   const [alarm, setAlarm] = React.useState();
   console.log(alarm);
+  
   React.useEffect(() => {
     dispatch(roomCreators.getchatRoomDB());
   }, []);
@@ -41,8 +43,10 @@ const ChatList = () => {
   React.useEffect(() => {
     socket?.on("alert", (data) => {
       console.log(data);
+
       setAlarm(data);
       // setAlarm((alarm) => alarm.concat(data));
+
     });
   }, []);
 

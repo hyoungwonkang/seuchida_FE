@@ -11,19 +11,22 @@ const socket = io.connect("https://seuchidabackend.shop", {
     auth: token,
   },
 });
+
 const FooterMenu = (props) => {
   const history = useHistory();
   const { next, is_check, __onClick } = props;
   const dispatch = useDispatch()
   const alarm = useSelector(state=> state.room.alarm)
-  const [click, setClick] = React.useState("");
+  
   const readArlam = () =>{
-
   dispatch(roomCreators.setalarm(false))
-  setClick("chat");
+              localStorage.removeItem("main");
+            localStorage.removeItem("map");
+            localStorage.setItem("chat", "chat");
+            localStorage.removeItem("mypage");
   history.push("/chatlist");
   }
-
+  
   React.useEffect(() => {
     socket?.on("alert", (data) => {
       dispatch(roomCreators.setalarm(true))
@@ -31,6 +34,7 @@ const FooterMenu = (props) => {
     
     },[]);
   
+
   if (next) {
     return (
       <Btn>
@@ -71,52 +75,61 @@ const FooterMenu = (props) => {
       <MenuBox>
         <Menu
           onClick={(e) => {
+            localStorage.setItem("main", "main");
+            localStorage.removeItem("map");
+            localStorage.removeItem("chat");
+            localStorage.removeItem("mypage");
             history.push("/main");
-            setClick("main");
-            // window.location.href = "/main";
           }}
         >
-          {click === "main" ? (
-            <img alt="home" src="./img/footer/homeg.png" />
+          {localStorage.getItem("main") === "main" ? (
+            <img alt="home" src="/img/footer/homeg.png" />
           ) : (
-            <img alt="home" src="./img/footer/home.png" />
+            <img alt="home" src="/img/footer/home.png" />
           )}
         </Menu>
         <Menu
           onClick={() => {
-            setClick("map");
+            localStorage.removeItem("main");
+            localStorage.setItem("map", "map");
+            localStorage.removeItem("chat");
+            localStorage.removeItem("mypage");
             history.push("/map");
-            // window.location.href = "/map";
           }}
         >
-          {click === "map" ? (
-            <img alt="around" src="./img/footer/aroundg.png" />
+          {localStorage.getItem("map") === "map" ? (
+            <img alt="around" src="/img/footer/aroundg.png" />
           ) : (
-            <img alt="around" src="./img/footer/around.png" />
+            <img alt="around" src="/img/footer/around.png" />
           )}
         </Menu>
         <Menu
-          onClick={
-            readArlam
-          }
-        >
+          onClick={readArlam}>
           {alarm && <NewArlam>new</NewArlam>}
           {click === "chat" ? (
             <img alt="chat" src="./img/footer/chatg.png" />
+
+
+          {localStorage.getItem("chat") === "chat" ? (
+            <img alt="chat" src="/img/footer/chatg.png" />
+
           ) : (
-            <img alt="chat" src="./img/footer/chat.png" />
+            <img alt="chat" src="/img/footer/chat.png" />
           )}
         </Menu>
         <Menu
           onClick={(e) => {
-            setClick("mypage");
+            localStorage.removeItem("main");
+            localStorage.removeItem("map");
+            localStorage.removeItem("chat");
+            localStorage.setItem("mypage", "mypage");
             history.push("/mypage");
           }}
         >
-          {click === "mypage" ? (
-            <img alt="profile" src="./img/footer/smileg.png" />
+          {localStorage.getItem("mypage") === "mypage" ? (
+            <img alt="profile" src="/img/footer/smileg.png" />
           ) : (
-            <img alt="profile" src="./img/footer/smile.png" />
+            <img alt="profile" src="/img/footer/smile.png" />
           )}
         </Menu>
       </MenuBox>
@@ -127,7 +140,7 @@ const FooterMenu = (props) => {
 export default FooterMenu;
 
 const Container = styled.div`
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
@@ -157,7 +170,7 @@ const Btn = styled.div`
   left: 0;
   height: 100px;
   border-top: 1px solid #e9e9e9;
-  width: 100vw;
+  width: 20vw;
   display: flex;
   flex-direction: column;
   align-items: center;

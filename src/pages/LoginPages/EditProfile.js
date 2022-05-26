@@ -21,14 +21,20 @@ const EditProfile = (props) => {
 
   const userInfo = useSelector((state) => state.user.userInfo);
 
+  //로컬 값 불러오기(4)
+  const localNickname = localStorage.getItem("nickName");
+  const localGender = localStorage.getItem("gender");
+  const localAge = localStorage.getItem("age");
+  const localContent = localStorage.getItem("content");
+
   //수정 페이지 기본 정보 불러오기
   React.useEffect(() => {
     setProfile(userInfo?.userImg);
-    setNickName(userInfo?.nickName);
-    setGender(userInfo?.userGender);
-    setAge(userInfo?.userAge);
-    setContent(userInfo?.userContent);
-  }, [userInfo, userInfo.userImg]);
+    setNickName(localNickname ? localNickname : userInfo?.nickName);
+    setGender(localGender ? localGender : userInfo?.userGender);
+    setAge(localAge ? localAge : userInfo?.userAge);
+    setContent(localContent ? localContent : userInfo?.userContent);
+  }, [userInfo]);
 
   //모달 오픈 state
   const [isOpen, setIsOpen] = React.useState(false);
@@ -37,17 +43,18 @@ const EditProfile = (props) => {
   //입력값 state
   const [preview, setPreview] = useState("");
   const [profile, setProfile] = useState("");
-  const [nickName, setNickName] = useState(localStorage.getItem("nickName"));
-  const [gender, setGender] = useState(localStorage.getItem("gender"));
-  const [age, setAge] = useState(localStorage.getItem("age"));
-  const [content, setContent] = useState(localStorage.getItem("content"));
+  const [nickName, setNickName] = useState("");
+  const [gender, setGender] = useState("");
+  const [age, setAge] = useState("");
+  const [content, setContent] = useState("");
 
-  //로컬 값 저장
+  //로컬 값 저장(4)
   localStorage.setItem("nickName", nickName);
   localStorage.setItem("gender", gender);
   localStorage.setItem("age", age);
   localStorage.setItem("content", content);
 
+  //입력값 가져오기
   const selectPreview = (e) => {
     setPreview(window.webkitURL.createObjectURL(e.target.files[0]));
   };
@@ -87,9 +94,6 @@ const EditProfile = (props) => {
       //사진 수정
       const formData = new FormData();
       formData.append("newUserImg", profile);
-      // for (var pair of formData.entries()) {
-      //   console.log(pair[0] + ", " + pair[1]);
-      // }
       dispatch(userActions.editPhotoDB(formData));
       history.push("/category");
     }
@@ -121,108 +125,112 @@ const EditProfile = (props) => {
   }
 
   return (
-    <Grid>
-      <GoBack text="프로필 수정" path="/signuploca" />
+    <>
+      <Container>
+        <Grid bg="white">
+          <GoBack text="프로필 수정" path="/signuploca" />
 
-      <Grid column height="650px">
-        <Grid height="auto" column margin="30px 0px">
-          {/* 프로필 이미지 */}
-          <Image
-            size={80}
-            position="relative"
-            alt="profile"
-            src={preview ? preview : userInfo.userImg}
-          />
-          <FileUpload>
-            <label htmlFor="image">
-              <AiFillPlusCircle size={32} color="#5796F7" />
-            </label>
-            <input
-              type="file"
-              id="image"
-              onChange={(e) => {
-                selectPreview(e);
-                selectImage(e);
-              }}
-            />
-          </FileUpload>
-
-          {/* 닉네임 */}
-          <Input
-            height="56px"
-            type="text"
-            placeholder="닉네임"
-            _onChange={selectNickName}
-            value={nickName || ""}
-          />
-
-          {/* 성별 */}
-          <Option>
-            <select onChange={selectGender} defaultValue="default">
-              <option className="title" value="default" disabled>
-                {userInfo.userGender ? userInfo.userGender : "성별"}
-              </option>
-              <option value="남성">남성</option>
-              <option value="여성">여성</option>
-            </select>
-
-            {/* 나이 */}
-            <div>
-              <Age
-                type="number"
-                placeholder="나이"
-                onChange={selectAge}
-                pattern="/[^ㄱ-ㅎ가-힣]/g"
-                value={age || ""}
+          <Grid column height="650px">
+            <Grid height="auto" column margin="30px 0px">
+              {/* 프로필 이미지 */}
+              <Image
+                size={80}
+                position="relative"
+                alt="profile"
+                src={preview ? preview : userInfo.userImg}
               />
-            </div>
-          </Option>
+              <FileUpload>
+                <label htmlFor="image">
+                  <AiFillPlusCircle size={32} color="#5796F7" />
+                </label>
+                <input
+                  type="file"
+                  id="image"
+                  onChange={(e) => {
+                    selectPreview(e);
+                    selectImage(e);
+                  }}
+                />
+              </FileUpload>
 
-          {/* 자기소개 한 줄 */}
-          <Input
-            bg="#F1F1F5"
-            multiLine
-            height="160px"
-            margin="0px 0px 100px 100px"
-            type="text"
-            placeholder="당신에 대해 조금 더 알려주세요!"
-            _onChange={selectContent}
-            value={content || ""}
-          />
-          <Text size="16px" color="#787878" margin="0px 0px 0px 300px">
-            {content?.length}/100
-          </Text>
+              {/* 닉네임 */}
+              <Input
+                height="56px"
+                type="text"
+                placeholder="닉네임"
+                _onChange={selectNickName}
+                value={nickName || ""}
+              />
 
-          {/* 푸터 */}
-          <Link
-            to={{
-              state: {
-                profile,
-              },
-            }}
-          >
-            <FooterMenu next text="다음" state={alert} />
-          </Link>
-          {/* 경고창 모달 */}
-          <Modal open={isOpen}>
-            <ModalData
-              Alert
-              onClose={() => setIsOpen(false)}
-              text="내용을 모두 입력해 주세요!"
-            />
-          </Modal>
+              {/* 성별 */}
+              <Option>
+                <select onChange={selectGender} defaultValue="default">
+                  <option className="title" value="default" disabled>
+                    {userInfo.userGender ? userInfo.userGender : "성별"}
+                  </option>
+                  <option value="남성">남성</option>
+                  <option value="여성">여성</option>
+                </select>
 
-          {/* 글자수 모달 */}
-          <Modal open={isOpen2}>
-            <ModalData
-              Alert
-              onClose={() => setIsOpen2(false)}
-              text="100글자 이하로 작성해주세요!"
-            />
-          </Modal>
+                {/* 나이 */}
+                <div>
+                  <Age
+                    type="number"
+                    placeholder="나이"
+                    onChange={selectAge}
+                    pattern="/[^ㄱ-ㅎ가-힣]/g"
+                    value={age || ""}
+                  />
+                </div>
+              </Option>
+
+              {/* 자기소개 한 줄 */}
+              <Input
+                bg="#F1F1F5"
+                multiLine
+                height="160px"
+                margin="0px 0px 100px 100px"
+                type="text"
+                placeholder="당신에 대해 조금 더 알려주세요!"
+                _onChange={selectContent}
+                value={content || ""}
+              />
+              <Text size="16px" color="#787878" margin="0px 0px 0px 300px">
+                {content?.length}/100
+              </Text>
+
+              {/* 푸터 */}
+              <Link
+                to={{
+                  state: {
+                    profile,
+                  },
+                }}
+              >
+                <FooterMenu next text="다음" state={alert} />
+              </Link>
+              {/* 경고창 모달 */}
+              <Modal open={isOpen}>
+                <ModalData
+                  Alert
+                  onClose={() => setIsOpen(false)}
+                  text="내용을 모두 입력해 주세요!"
+                />
+              </Modal>
+
+              {/* 글자수 모달 */}
+              <Modal open={isOpen2}>
+                <ModalData
+                  Alert
+                  onClose={() => setIsOpen2(false)}
+                  text="100글자 이하로 작성해주세요!"
+                />
+              </Modal>
+            </Grid>
+          </Grid>
         </Grid>
-      </Grid>
-    </Grid>
+      </Container>
+    </>
   );
 };
 export default EditProfile;
@@ -268,6 +276,10 @@ const Option = styled.div`
   .title[value="default"][disabled] {
     display: none;
   }
+`;
+
+const Container = styled.div`
+  padding-top: 0px;
 `;
 
 const Age = styled.input`

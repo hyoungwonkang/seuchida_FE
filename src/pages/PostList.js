@@ -7,6 +7,8 @@ import GoBack from "../elements/GoBack";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { useHistory } from "react-router-dom";
+import { IoMdTennisball } from "react-icons/io";
+import axios from "axios";
 
 const PostList = ({ list, params }) => {
   const dispatch = useDispatch();
@@ -15,24 +17,10 @@ const PostList = ({ list, params }) => {
   // 포스트 목록
   const post_list = useSelector((state) => state.post.list.nearPosts);
 
-  // const division = (arr, n) => {
-  //   const length = arr.length;
-  //   const divide =
-  //     Math.floor(length / n) + (Math.floor(length % n) > 0 ? 1 : 0);
-  //   const newArray = [];
-
-  //   for (let i = 0; i <= divide; i++) {
-  //     // 배열 0부터 n개씩 잘라 새 배열에 넣기
-  //     newArray.push(arr.splice(0, n));
-  //   }
-
-  //   return newArray;
-  // };
-  // const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-  // const result = division(arr, 3);
-  // console.log(result);
-
+  const [postList, setPostList] = useState([]);
+  console.log(postList);
   const [pageNumber, setPageNumber] = useState(1);
+  console.log(pageNumber);
   const [isLoading, setIsLoading] = useState(true);
   const pageEnd = React.useRef(null);
 
@@ -75,8 +63,25 @@ const PostList = ({ list, params }) => {
         isLoading: false,
       }));
     }
-    dispatch(postActions.getPostlistDB());
-    setIsLoading(false);
+  }, []);
+
+  React.useEffect(() => {
+    setIsLoading(true);
+    axios({
+      method: "get",
+      url: `https://seuchidabackend.shop/api/nearPostList/${pageNumber}`,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((res) => {
+        console.log(res.data.nearPosts);
+        setIsLoading(false);
+        setPostList((items) => [...items, ...res.data.nearPosts]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [pageNumber]);
 
   //무한 스크롤
@@ -88,6 +93,7 @@ const PostList = ({ list, params }) => {
     });
   };
 
+  //바닥 감지
   React.useEffect(() => {
     const options = {
       root: null,
@@ -114,9 +120,8 @@ const PostList = ({ list, params }) => {
           <div> 여기여기 붙어라</div>
         </HeadContents>
       </Header>
-
       <ListBox>
-        {post_list?.map((p, i) => {
+        {postList?.map((p, i) => {
           return (
             <Card
               {...p}
@@ -129,7 +134,13 @@ const PostList = ({ list, params }) => {
           );
         })}
         <div ref={pageEnd} className="pageEnd">
-          {isLoading && <img alt="loading" src="./img/loading.gif" />}
+          {isLoading ? (
+            <Pos>
+              <Seuchin alt="loading" src="./img/loading.gif" width={130} />
+            </Pos>
+          ) : (
+            ""
+          )}
         </div>
       </ListBox>
 
@@ -161,4 +172,15 @@ const HeadContents = styled.div`
 
 const ListBox = styled.div`
   margin: 64px 0px 80px 0px;
+`;
+
+const Pos = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Seuchin = styled.img`
+  width: 100px;
 `;

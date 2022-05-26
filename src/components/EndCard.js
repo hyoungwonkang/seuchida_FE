@@ -3,7 +3,7 @@ import { Grid, Image, Text } from "../elements/Index";
 import { history } from "../redux/configStore";
 import { FaPen } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { actionCreators as userActions } from "../redux/modules/user";
+import styled from "styled-components";
 
 const EndCard = (props) => {
   if (!props) return;
@@ -14,7 +14,7 @@ const EndCard = (props) => {
       width="342px"
       height="168px"
       br="12px"
-      padding="10px 20px"
+      padding="8px 20px"
       bg="white"
     >
       <Grid row height="auto">
@@ -26,24 +26,32 @@ const EndCard = (props) => {
         </Text>
       </Grid>
 
-      <Text size="16px" margin="0px 0px 25px 0px">
-        {props?.postDesc}
-      </Text>
+      <Desc>{props?.postDesc}</Desc>
 
-      <Grid row height="auto" justify="space-between">
+      <Grid
+        row
+        height="auto"
+        justify="space-between"
+        padding="15px 0px 0px 0px"
+      >
         <Grid row>
           {props.nowMember?.map((v, i) => {
-            return (
-              <div key={v + i}>
-                <Image
-                  shape="circle"
-                  src={v.memberImg}
-                  size={32}
-                  margin="0px 0px 0px 3px"
-                />
-              </div>
-            );
+            if (i < 3) {
+              return (
+                <div key={v + i}>
+                  <Image
+                    shape="circle"
+                    src={v.memberImg}
+                    size={32}
+                    margin="0px 0px 0px 3px"
+                  />
+                </div>
+              );
+            }
           })}
+          {props.nowMember.length > 3 ? (
+            <div>+{props.nowMember.length - 3}</div>
+          ) : null}
         </Grid>
 
         {props?.status === true ? (
@@ -57,7 +65,6 @@ const EndCard = (props) => {
             />
             <Text
               size="12px"
-              // margin="0px 0px 0px 150px"
               _onClick={() => history.push(`/reviewwrite/${props.postId}`)}
               post={props.PostId}
             >
@@ -71,3 +78,17 @@ const EndCard = (props) => {
 };
 
 export default EndCard;
+const Desc = styled.div`
+  font-size: 16px;
+  height: 60px;
+  padding: 0px 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* 라인수 */
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+  line-height: 1.3em;
+  height: 2.4em;
+  color: #585858;
+`;

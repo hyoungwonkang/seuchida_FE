@@ -20,8 +20,7 @@ const Map = () => {
     isLoading: true,
   });
 
-
-  const researchMap = ()=>{
+  const researchMap = () => {
     axios({
       method: "get",
       url: `https://seuchidabackend.shop/api/nearPostList`,
@@ -31,37 +30,40 @@ const Map = () => {
     }).then((response) => {
       setPost(response.data.nearPosts);
     });
-  }
+  };
 
- React.useEffect(()=>{
-  researchMap()
- },[])
+  React.useEffect(() => {
+    researchMap();
+  }, []);
 
-
- //비동기처리 마스터하자 ...
- const getPos = () => {
-	return new Promise((resolve, reject) => {
-		navigator.geolocation.getCurrentPosition(resolve, reject);
-	});
-};
-const getCoordinate = async () => {
+  //비동기처리 마스터하자 ...
+  const getPos = () => {
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve, reject);
+    });
+  };
+  const getCoordinate = async () => {
     if (navigator.geolocation) {
-		const position = await getPos();
-    return setState({center:{
-      lat: position.coords.latitude,
-      lng: position.coords.longitude,
-		}})
-    }else {
-        // Geolocation API에 액세스할 수 없으면 기본값 리턴
-		return  setState({center:{
-		  lat: 33.450701,
-      lng: 126.570667,
-		}})
+      const position = await getPos();
+      return setState({
+        center: {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        },
+      });
+    } else {
+      // Geolocation API에 액세스할 수 없으면 기본값 리턴
+      return setState({
+        center: {
+          lat: 33.450701,
+          lng: 126.570667,
+        },
+      });
     }
-};
+  };
 
-  React.useEffect( () => {
-    getCoordinate()
+  React.useEffect(() => {
+    getCoordinate();
   }, []);
 
   let UserLoca = state.center;
@@ -76,7 +78,7 @@ const getCoordinate = async () => {
           </Title>
         </Header>
         <div style={{ marginTop: "128px" }}>
-          <ResearchBtn onClick={()=>researchMap()}>재검색</ResearchBtn>
+          <ResearchBtn onClick={() => researchMap()}>재검색</ResearchBtn>
           {/* <MyLoca
             src="./img/locaagain.png"
             onClick={() => {
@@ -121,7 +123,8 @@ const Header = styled.div`
   z-index: 3;
   background-color: white;
   width: 100%;
-  height: 110px;
+  height: 150px;
+  box-sizing: border-box;
   max-width: 390px;
   padding: 24px;
   position: fixed;
@@ -154,7 +157,7 @@ const Modal = styled.div`
   animation-name: ${slideUp};
   animation-fill-mode: forwards;
   overflow: auto;
-  overflow:x-hidden;
+  overflow: x-hidden;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
 `;
@@ -171,18 +174,16 @@ const OpenModal = styled.div`
 `;
 
 const ResearchBtn = styled.div`
-position: fixed;
-z-index: 9999;
-background-color: white;
+  position: fixed;
+  z-index: 9999;
+  background-color: white;
   padding: 8px 16px;
   border-radius: 50px;
   top: 175px;
   left: 42%;
   font-size: 14px;
   color: #c4c4c4;
-
-`
-
+`;
 
 const MyLoca = styled.img`
   position: fixed;
