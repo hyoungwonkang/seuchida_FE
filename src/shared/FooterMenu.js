@@ -25,21 +25,12 @@ const FooterMenu = (props) => {
   }
 
   React.useEffect(() => {
-    // if (socketLogin === false) {
-    socket?.emit("login");
-    // }
-  }, []);
-
-  
-  React.useEffect(() => {
     socket?.on("alert", (data) => {
       dispatch(roomCreators.setalarm(true))
     })
     
     },[]);
   
-
-
   if (next) {
     return (
       <Btn>
@@ -109,7 +100,7 @@ const FooterMenu = (props) => {
             readArlam
           }
         >
-          <NewArlam>{alarm && 'new'}</NewArlam>
+          {alarm && <NewArlam>new</NewArlam>}
           {click === "chat" ? (
             <img alt="chat" src="./img/footer/chatg.png" />
           ) : (
@@ -180,6 +171,10 @@ const Btn = styled.div`
 const NewArlam = styled.div`
 position: fixed;
 z-index: 999;
-background-color: red;
-margin-left: 25px;
+background-color: #fe3c30;
+margin-left: 20px;
+bottom: 50px;
+padding: 4px;
+border-radius: 20px;
+font-size: 12px;
 `

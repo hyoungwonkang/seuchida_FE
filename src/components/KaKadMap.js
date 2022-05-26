@@ -148,7 +148,7 @@ const EventMarkerContainer = (props) => {
             >
               <Grid row>
                 {level.map((v, i) => {
-                  if (v.level == props.level) return v.image;
+                  if (v.level == props.level) return <span key={v.id}>{v.image}</span>
                 })}
                 <Text size="14px" bold>
                   {props.nickName}
