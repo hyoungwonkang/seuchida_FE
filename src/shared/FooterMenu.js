@@ -16,41 +16,40 @@ const FooterMenu = (props) => {
   const history = useHistory();
 
   const { next, is_check, __onClick, Chat } = props;
-  const dispatch = useDispatch()
-  const chatalarm = useSelector(state=> state.room.alarm)
-  const mainalarm = useSelector(state=> state.room.mainarr)
-  console.log(mainalarm)
+  const dispatch = useDispatch();
+  const chatalarm = useSelector((state) => state.room.alarm);
+  const mainalarm = useSelector((state) => state.room.mainarr);
+  console.log(mainalarm);
 
-  const readArlam = () =>{
-  dispatch(roomCreators.setalarm(false))
-              localStorage.removeItem("main");
-            localStorage.removeItem("map");
-            localStorage.setItem("chat", "chat");
-            localStorage.removeItem("mypage");
-  history.push("/chatlist");
-  }
-  const readMain = () =>{
-    dispatch(roomCreators.mainArlam(false))
+  const readArlam = () => {
+    dispatch(roomCreators.setalarm(false));
+    localStorage.removeItem("main");
+    localStorage.removeItem("map");
+    localStorage.setItem("chat", "chat");
+    localStorage.removeItem("mypage");
+    history.push("/chatlist");
+  };
+  const readMain = () => {
+    dispatch(roomCreators.mainArlam(false));
     localStorage.setItem("main", "main");
     localStorage.removeItem("map");
     localStorage.removeItem("chat");
     localStorage.removeItem("mypage");
     history.push("/main");
-  }
-  
+  };
+
   React.useEffect(() => {
     socket?.on("alert", (data) => {
-      dispatch(roomCreators.setalarm(true))
-    })
-    
-    },[]);
-  
-    React.useEffect(()=>{
-      socket.on("joinPartyAlert", (data) => {
-        dispatch(roomCreators.joinArlam(data))
-       dispatch(roomCreators.mainArlam(true))
-      })       
-      },[])
+      dispatch(roomCreators.setalarm(true));
+    });
+  }, []);
+
+  React.useEffect(() => {
+    socket.on("joinPartyAlert", (data) => {
+      dispatch(roomCreators.joinArlam(data));
+      dispatch(roomCreators.mainArlam(true));
+    });
+  }, []);
 
   if (Chat) {
     return (
@@ -94,7 +93,6 @@ const FooterMenu = (props) => {
     );
   }
 
-
   if (next) {
     return (
       <Btn>
@@ -133,10 +131,8 @@ const FooterMenu = (props) => {
   return (
     <Container>
       <MenuBox>
-        <Menu     
-          onClick={readMain}
-        >
-           {mainalarm && <NewArlam>new</NewArlam>}
+        <Menu onClick={readMain}>
+          {mainalarm && <NewArlam>new</NewArlam>}
           {localStorage.getItem("main") === "main" ? (
             <img alt="home" src="/img/footer/homeg.png" />
           ) : (
@@ -158,9 +154,7 @@ const FooterMenu = (props) => {
             <img alt="around" src="/img/footer/around.png" />
           )}
         </Menu>
-        <Menu
-
-          onClick={readArlam}>
+        <Menu onClick={readArlam}>
           {chatalarm && <NewArlam>new</NewArlam>}
           {localStorage.getItem("chat") === "chat" ? (
             <img alt="chat" src="/img/footer/chatg.png" />
@@ -233,16 +227,15 @@ const Btn = styled.div`
 `;
 
 const NewArlam = styled.div`
-
-position: fixed;
-z-index: 999;
-background-color: #FF6A52;
-margin-left: 20px;
-bottom: 50px;
-padding: 4px;
-border-radius: 20px;
-font-size: 12px;
-`
+  position: fixed;
+  z-index: 999;
+  background-color: #ff6a52;
+  margin-left: 20px;
+  bottom: 50px;
+  padding: 4px;
+  border-radius: 20px;
+  font-size: 12px;
+`;
 
 const Btns = styled.div`
   position: fixed;
@@ -261,4 +254,3 @@ const Btns = styled.div`
   min-width: 390px;
   z-index: 5;
 `;
-

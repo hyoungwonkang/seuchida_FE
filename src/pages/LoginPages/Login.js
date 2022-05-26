@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { KAKAO_AUTH_URL, GOOGLE_AUTH_URL } from "../../shared/OAuth";
-import { Grid, Button, Image, Text } from "../../elements/Index";
+import { Grid } from "../../elements/Index";
 import { useHistory } from "react-router-dom";
 
 const Login = (props) => {

@@ -23,8 +23,8 @@ const PostWrite_1 = (props) => {
   let [postDesc, setPostDesc] = useState("");
 
   const selectPostTitle = (e) => {
-    if (e.target.value?.length >= 60) {
-      e.target.value = e.target.value.substr(0, 60);
+    if (e.target.value?.length >= 15) {
+      e.target.value = e.target.value.substr(0, 15);
     }
     setPostTitle(e.target.value);
   };
@@ -52,7 +52,7 @@ const PostWrite_1 = (props) => {
     }
   };
   useEffect(() => {
-    if (postTitle?.length >= 20) {
+    if (postTitle?.length >= 15) {
       setIsOpen2(true);
     }
   }, [postTitle]);
@@ -113,17 +113,18 @@ const PostWrite_1 = (props) => {
       </Text>
       <Grid padding="8px 0px 20px 24px">
         <Input
+          bg="#F1F1F5"
           size="16px"
           height="56px"
           type="textarea"
           value={postTitle}
-          maxLength="20"
+          maxLength="15"
           _onChange={selectPostTitle}
           placeholder="어떤 활동을 같이하고 싶나요?"
         />
         <Grid isFlex_end>
           <Text margin="4px 28px 0px 0px" size="12px" color="#787878">
-            {postTitle?.length}/20
+            {postTitle?.length}/15
           </Text>
         </Grid>
       </Grid>
@@ -160,7 +161,7 @@ const PostWrite_1 = (props) => {
       <Modal open={isOpen2}>
         <ModalData
           Alert
-          text="20자 이하만 가능해요"
+          text="15자 이하만 가능해요"
           onClose={() => setIsOpen2(false)}
         />
       </Modal>
