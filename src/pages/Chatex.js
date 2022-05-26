@@ -11,6 +11,7 @@ import { history } from "../redux/configStore";
 import ChatMenu from "./ChatMenu";
 import { MdSend } from "react-icons/md";
 
+
 const token = localStorage.getItem("token");
 const socket = io.connect("https://seuchidabackend.shop", {
   auth: {
@@ -132,6 +133,7 @@ function Chatex(props) {
     history.goBack();
   };
 
+
   //앱에서 페이지 새로고침 막기
   document.body.style.overscrollBehavior = "none";
 
@@ -143,6 +145,7 @@ function Chatex(props) {
     };
     history.replace("/chatlist");
   }
+
 
   return (
     <>

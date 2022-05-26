@@ -8,11 +8,17 @@ const token = localStorage.getItem("token");
 
 const SET_CHAT = "SET_CHAT";
 const SET_MEMBER = "SET_MEMBER";
+const SK_LOGIN = "SK_LOGIN";
+const SET_ALARM = "SET_ALARM";
+
 
 //Action Creators
 
 const chatRoom = createAction(SET_CHAT, (chat_list) => ({ chat_list }));
 const chatMember = createAction(SET_MEMBER, (member) => ({ member }));
+const socketLogin = createAction(SK_LOGIN, (socket) => ({ socket }));
+const setalarm = createAction(SET_ALARM, (alarm) => ({ alarm }));
+
 
 //initialState (default props 같은 것, 기본값)
 
@@ -22,8 +28,11 @@ const initialState = {
     chattingRoom: [],
     lastChatting: [],
     nowMember: [],
-    unreadChat: [],
+    unreadChatlist: [],
+
   },
+  socket: false,
+  alarm: false,
 };
 
 //middleware
@@ -122,23 +131,6 @@ const roomDoneDB = (postId) => {
   };
 };
 
-const getunreadChatDB = () => {
-  return async function (dispatch, getState) {
-    try {
-      await axios({
-        method: "get",
-        url: `https://seuchidabackend.shop/api/unreadChat`,
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      }).then((response) => {
-        console.log(response.data);
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-};
 
 //reducer
 export default handleActions(
@@ -151,6 +143,16 @@ export default handleActions(
       produce(state, (draft) => {
         draft.list = action.payload.member;
       }),
+
+    [SK_LOGIN]: (state, action) =>
+      produce(state, (draft) => {
+        draft.socket = action.payload.socket === true;
+      }),
+    [SET_ALARM]: (state, action) =>
+      produce(state, (draft) => {
+        draft.alarm = action.payload.alarm;
+      }),
+
   },
   initialState
 );
@@ -164,7 +166,9 @@ const actionCreators = {
   getchatMemberDB,
   roomDoneDB,
   joinCancleDB,
-  getunreadChatDB,
+  socketLogin,
+  setalarm,
+
 };
 
 export { actionCreators };

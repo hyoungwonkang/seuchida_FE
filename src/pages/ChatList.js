@@ -1,7 +1,7 @@
 import React from "react";
 import FooterMenu from "../shared/FooterMenu";
 import { useSelector, useDispatch } from "react-redux";
-import { actionCreators as roomCreators } from "../redux/modules/room";
+import room, { actionCreators as roomCreators } from "../redux/modules/room";
 import styled from "styled-components";
 import { history } from "../redux/configStore";
 import Image from "../elements/Image";
@@ -18,36 +18,35 @@ const socket = io.connect("https://seuchidabackend.shop", {
 
 const ChatList = () => {
   const dispatch = useDispatch();
-  const room_list = useSelector((state) => state.room.list.chattingRoom);
-  const last_chat = useSelector((state) => state.room.list.lastChatting);
-  const unreadChat = useSelector((state) => state.room.list);
-  console.log(unreadChat);
-  console.log(socket.connected);
-  if (socket.connected === false) {
-    socket.emit("login");
-  }
+
+  const room_list = useSelector((state) => state.room?.list?.chattingRoom);
+  const last_chat = useSelector((state) => state.room?.list?.lastChatting);
+  const unreadChatlist = useSelector(
+    (state) => state.room?.list?.unreadChatlist
+  );
+
+  const [alarm, setAlarm] = React.useState();
+  console.log(alarm);
+  
   React.useEffect(() => {
     dispatch(roomCreators.getchatRoomDB());
   }, []);
 
   React.useEffect(() => {
-    dispatch(roomCreators.getunreadChatDB());
+    dispatch(roomCreators.socketLogin());
   }, []);
 
-  // let roomId = []
-  // for(let i=0; i< room_list?.length; i++){
-  //   roomId.push(room_list[i]?.roomId)
-
-  // }
   // React.useEffect(() => {
-  //   socket?.emit("chatNum", {
-  //     roomId,
-  //   });
+  //   socket?.emit("login");
   // }, []);
 
   React.useEffect(() => {
     socket?.on("alert", (data) => {
       console.log(data);
+
+      setAlarm(data);
+      // setAlarm((alarm) => alarm.concat(data));
+
     });
   }, []);
 
@@ -68,16 +67,37 @@ const ChatList = () => {
             >
               <ContentBox>
                 <ChatTitleBox>
-                  <Image src={room.ownerImg} size={50} />
+                  <Image src={room?.ownerImg} size={50} />
                   <div style={{ marginLeft: "10px" }}>
-                    <div style={{ marginBottom: "5px" }}>
+                    <div style={{ marginBottom: "5px", display: "flex" }}>
                       <ChatTitle>{room?.postTitle} </ChatTitle>
-                      <UserCount> {room.userList?.length}</UserCount>
+                      {/* 알람 length 더해보기. 하나는 state 하나는 일반 되나 ? +alarm.length 
+                      되긴되는데 룸아이디로 비교를 어케하냐 ??...*/}
+                      <UserCount> {room?.nowMember?.length}</UserCount>
                     </div>
-                    <LastMsg>{last_chat[index]?.msg}</LastMsg>
+                    {/* 알림과 방의 아이디가 일치하고 알람내용이 있을때  */}
+
+                    <LastMsg>
+                      {room.roomId === alarm?.room
+                        ? alarm?.msg
+                        : last_chat[index]?.msg}
+                   
+                    </LastMsg>
+               
                   </div>
                 </ChatTitleBox>
-                <div>{moment(last_chat[index]?.createdAt).fromNow()}</div>
+
+                <div>
+                  {/* 알림과 방의 아이디가 일치하고 알람내용의 시간비교  */}
+                  {moment(
+                    room.roomId === alarm?.room
+                      ? alarm?.createdAt
+                      : last_chat[index]?.createdAt
+                  ).fromNow()}
+                      {unreadChatlist[index]?.length === 0 ? null : (
+                      <NewMsg>{unreadChatlist[index]?.length}</NewMsg>
+                    )}
+                </div>
               </ContentBox>
             </ChatBox>
           );
@@ -143,4 +163,17 @@ const ContentBox = styled.div`
   justify-content: space-between;
   flex-direction: row;
   padding: 20px 24px;
+`;
+
+const NewMsg = styled.div`
+  margin: 8px 0px 0px 24px;
+  position: absolute;
+  background-color: #fe3c30;
+  height: 18px;
+  width: 18px;
+  font-size: 14px;
+  align-items: center;
+  text-align: center;
+  border-radius: 30px;
+  color: white;
 `;

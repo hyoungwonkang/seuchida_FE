@@ -46,7 +46,6 @@ function App() {
       <GlobalStyle />
       <Wrapper>
         <WebView>
-          <Download>앱 사용자 평가하러 GO!</Download>
         </WebView>
 
         <ConnectedRouter history={history}>
