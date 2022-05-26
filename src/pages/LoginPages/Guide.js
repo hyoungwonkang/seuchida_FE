@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 
 function Guide() {
   const history = useHistory();
+
   const settings = {
     dots: true,
     infinite: true,
@@ -15,6 +16,7 @@ function Guide() {
     slidesToScroll: 1,
     variableWidth: true,
   };
+
   return (
     <div>
       <Sliders {...settings} styled={{ height: "100px" }}>

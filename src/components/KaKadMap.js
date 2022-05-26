@@ -6,45 +6,42 @@ import { useMap, kakao } from "react-kakao-maps-sdk";
 import { HiOutlineX } from "react-icons/hi";
 import { history } from "../redux/configStore";
 
-
 function KakaoMap(props) {
   const { MainMap, UserLoca, post, _onClick } = props;
- 
+
   if (MainMap) {
     return (
       <>
-      <Map
-        center={{ lat: UserLoca.lat, lng: UserLoca.lng }}
-        style={{ width: "100%", height: "100vh" }}
-        onClick={_onClick}
-        level={7}
-      >
-       
-        <MapMarker // 마커를 생성합니다
-          position={{ lat: UserLoca.lat, lng: UserLoca.lng }}
-          image={{
-            src: "./img/mypoint.png", // 마커이미지의 주소입니다
-            size: {
-              width: 51,
-              height: 70,
-            }, // 마커이미지의 크기입니다
-            options: {
-              offset: {
-                x: 27,
-                y: 69,
-              }, // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-            },
-          }}
-        />
-        {post?.map((position, index) => (
-         
+        <Map
+          center={{ lat: UserLoca.lat, lng: UserLoca.lng }}
+          style={{ width: "100%", height: "100vh" }}
+          onClick={_onClick}
+          level={7}
+        >
+          <MapMarker // 마커를 생성합니다
+            position={{ lat: UserLoca.lat, lng: UserLoca.lng }}
+            image={{
+              src: "./img/mypoint.png", // 마커이미지의 주소입니다
+              size: {
+                width: 51,
+                height: 70,
+              }, // 마커이미지의 크기입니다
+              options: {
+                offset: {
+                  x: 27,
+                  y: 69,
+                }, // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+              },
+            }}
+          />
+          {post?.map((position, index) => (
             <EventMarkerContainer
               {...position}
               key={`${position.postId} + ${position.latitude}`}
             />
-         
-        ))}
-      </Map></>
+          ))}
+        </Map>
+      </>
     );
   }
 
@@ -79,11 +76,11 @@ const DetailMap = styled.div`
 `;
 
 const Mebtn = styled.div`
-background-color: black;
-position: fixed;
-bottom: 120px;
-z-index: 99;
-`
+  background-color: black;
+  position: fixed;
+  bottom: 120px;
+  z-index: 99;
+`;
 
 const Box = styled.div`
   position: absolute;
@@ -149,6 +146,7 @@ const EventMarkerContainer = (props) => {
                 <Grid row>
                   {level.map((v, i) => {
                     if (v.level == props.level) return v.image;
+                    if (props.level >= "7") return v[6]?.image;
                   })}
                   <Text size="14px" bold>
                     {props.nickName}
@@ -172,10 +170,10 @@ const Desc = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   /* display: -webkit-box;
-  -webkit-line-clamp: 2; 
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical; */
-  word-wrap: break-word;
-  line-height: 1.3em;
-  height: 2.4em;
+  /* word-wrap: break-word; */
+  /* line-height: 1.3em;
+  height: 2.4em; */
   color: #585858;
 `;

@@ -4,25 +4,29 @@ import Image from "../elements/Image";
 import Modal from "../components/Modal/Modal"; //모달 창
 import FooterMenu from "../shared/FooterMenu";
 import { useDispatch, useSelector } from "react-redux";
-import { actionCreators as postActions } from "../redux/modules/post";
+// import { actionCreators as postActions } from "../redux/modules/post";
 import { useParams } from "react-router-dom";
 import { BiDumbbell } from "react-icons/bi";
 import { MdPlace } from "react-icons/md";
 import GoBack from "../elements/GoBack";
-import { history } from "../redux/configStore";
-import { goBack } from "connected-react-router";
+import axios from "axios";
+
 const ReviewList = () => {
   const review = useSelector((state) => state.post.review);
+  console.log();
   const dispatch = useDispatch();
   const params = useParams();
 
+  const [postList, setPostList] = useState([]);
+  console.log(postList);
   const [pageNumber, setPageNumber] = useState(1);
+  console.log(pageNumber);
   const [isLoading, setIsLoading] = useState(true);
   const pageEnd = React.useRef(null);
 
   const review_list = [
-    ...review.filter((d) => d._id === params.reviewId),
-    ...review.filter((d) => d._id !== params.reviewId),
+    ...postList.filter((d) => d._id === params.reviewId),
+    ...postList.filter((d) => d._id !== params.reviewId),
   ]; //선택된 리뷰를 가장 먼저 보여지도록 정렬을 수정
 
   const [modalOn, setModalOn] = React.useState(false);
@@ -31,16 +35,26 @@ const ReviewList = () => {
     setModalOn(true);
   };
 
-  const closeModal = (e) => {
-    setModalOn(false);
-  };
-
   React.useEffect(() => {
-    dispatch(postActions.getReviewlistDB());
-    setIsLoading(false);
+    setIsLoading(true);
+    axios({
+      method: "get",
+      url: `https://seuchidabackend.shop/api/reviewAll/${pageNumber}`,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((res) => {
+        console.log(res.data);
+        setIsLoading(false);
+        setPostList((items) => [...items, ...res.data]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [pageNumber]);
 
-  //무한 스크롤
+  //무한 스크롤(entries: 관찰 대상의 리스트)
   const onIntersect = (entries) => {
     entries.forEach((element) => {
       if (element.isIntersecting) {
@@ -111,7 +125,13 @@ const ReviewList = () => {
           );
         })}
         <div ref={pageEnd} className="pageEnd">
-          {isLoading && <img alt="loading" src="./img/loading.gif" />}
+          {isLoading ? (
+            <Pos>
+              <Seuchin alt="loading" src="./img/loading.gif" width={130} />
+            </Pos>
+          ) : (
+            ""
+          )}
         </div>
       </div>
       <FooterMenu />
@@ -154,4 +174,15 @@ const User = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+`;
+
+const Pos = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Seuchin = styled.img`
+  width: 100px;
 `;

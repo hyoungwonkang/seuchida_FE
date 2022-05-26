@@ -20,18 +20,19 @@ const ReviewWrite = (props) => {
   }, []);
 
   //이미지 가져오기
-  const photo = useSelector((state) => state.mypage.reviewImg);
+  // const photo = useSelector((state) => state.mypage.reviewImg);
   const postInfo = useSelector((state) => state.mypage.myPostOne);
   const postId = props.match.params.postId;
 
   //로컬 값 불러오기(4)
   const localreview = localStorage.getItem("review");
+  const localreviewImg = localStorage.getItem("reviewImg");
 
   useEffect(() => {
-    setPreview(photo);
-    setReviewImg(photo);
+    setPreview(localreviewImg ? localreviewImg : "");
+    setReviewImg(localreviewImg ? localreviewImg : "");
     setReview(localreview ? localreview : "");
-  }, [photo, localreview]);
+  }, [localreviewImg, localreview]);
 
   //모달 오픈 state
   const [isOpen, setIsOpen] = React.useState(false);
@@ -64,7 +65,7 @@ const ReviewWrite = (props) => {
       //로컬 값 저장
       localStorage.setItem("review", review);
       //이미지 추가
-      if (reviewImg === photo) {
+      if (reviewImg === localreviewImg) {
         history.push("/reviewevalue");
       } else {
         const formData = new FormData();
@@ -83,6 +84,7 @@ const ReviewWrite = (props) => {
   //뒤로가기 시 로컬 값 삭제
   const remove = () => {
     localStorage.removeItem("review");
+    localStorage.removeItem("reviewImg");
     localStorage.removeItem("otherId");
     localStorage.removeItem("evalue");
     localStorage.removeItem("report");
@@ -95,6 +97,7 @@ const ReviewWrite = (props) => {
   if (document.readyState === "interactive") {
     //로컬 값 날림
     localStorage.removeItem("review");
+    localStorage.removeItem("reviewImg");
     localStorage.removeItem("otherId");
     localStorage.removeItem("evalue");
     localStorage.removeItem("report");
@@ -105,7 +108,7 @@ const ReviewWrite = (props) => {
   }
 
   return (
-    <Grid>
+    <Grid bg="white">
       <GoBack text="후기 작성하기" path="/mypage" remove={remove} />
       <Grid height="950px">
         {/* 포스트 내용  */}
@@ -135,7 +138,13 @@ const ReviewWrite = (props) => {
               position="relative"
               alt="profile"
               // z-index
-              src={preview ? preview : photo ? photo : "../img/addimage.png"}
+              src={
+                preview
+                  ? preview
+                  : localreviewImg
+                  ? localreviewImg
+                  : "../img/addimage.png"
+              }
             />
           </label>
           <input
