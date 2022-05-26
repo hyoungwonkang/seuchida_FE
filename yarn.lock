@@ -10458,19 +10458,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-google-login@npm:^5.2.2":
-  version: 5.2.2
-  resolution: "react-google-login@npm:5.2.2"
-  dependencies:
-    "@types/react": "*"
-    prop-types: ^15.6.0
-  peerDependencies:
-    react: ^16 || ^17
-    react-dom: ^16 || ^17
-  checksum: 29199c7035c3c1070a82241dc4063628d693f35a1736d292e3db736e52da825e8a53f9287b0b12b08a50d676973ce1349a4d8243cd849ca25fed6a4284378880
-  languageName: node
-  linkType: hard
-
 "react-icons@npm:^4.3.1":
   version: 4.3.1
   resolution: "react-icons@npm:4.3.1"
@@ -11404,7 +11391,6 @@ __metadata:
     react-calendar: ^3.7.0
     react-datetime-picker: ^3.5.0
     react-dom: ^18.0.0
-    react-google-login: ^5.2.2
     react-icons: ^4.3.1
     react-kakao-maps-sdk: ^1.0.6
     react-mobile-picker-scroll: ^0.2.14
