@@ -11,14 +11,16 @@ const SET_MEMBER = "SET_MEMBER";
 const SK_LOGIN = "SK_LOGIN";
 const SET_ALARM = "SET_ALARM";
 const JOIN_ARR = "JOIN_ARR"
+const MAIN_ARR = "MAIN_ARR"
 
 //Action Creators
 
 const chatRoom = createAction(SET_CHAT, (chat_list) => ({ chat_list }));
 const chatMember = createAction(SET_MEMBER, (member) => ({ member }));
 const socketLogin = createAction(SK_LOGIN, (socket) => ({ socket }));
-const setalarm = createAction(SET_ALARM, (alarm) => ({ alarm }));
-const joinArlam = createAction(JOIN_ARR, (joinArlam) => ({ joinArlam }));
+const setalarm = createAction(SET_ALARM, (alarm, mainarr) => ({ alarm,mainarr }));
+const joinArlam = createAction(JOIN_ARR, (join) => ({ join }));
+const mainArlam = createAction(MAIN_ARR, (main) => ({ main }));
 
 
 //initialState (default props 같은 것, 기본값)
@@ -30,10 +32,11 @@ const initialState = {
     lastChatting: [],
     nowMember: [],
     unreadChatlist: [],
-    joinArr:[],
   },
+  joinArr:[],
   socket: false,
   alarm: false,
+  mainarr:false,
 };
 
 //middleware
@@ -153,9 +156,13 @@ export default handleActions(
       produce(state, (draft) => {
         draft.alarm = action.payload.alarm;
       }),
+    [MAIN_ARR]: (state, action) =>
+      produce(state, (draft) => {
+        draft.mainarr = action.payload.main;
+      }),
     [JOIN_ARR]: (state, action) =>
       produce(state, (draft) => {
-        draft.joinArr.concat(action.payload.joinArlam);
+        draft.joinArr.push(action.payload.join);
       }),
 
   },
@@ -174,6 +181,7 @@ const actionCreators = {
   socketLogin,
   setalarm,
   joinArlam,
+  mainArlam,
 };
 
 export { actionCreators };
