@@ -104,15 +104,18 @@ const FooterMenu = (props) => {
           )}
         </Menu>
         <Menu
-          onClick={readArlam}>
+          onClick={() => {
+            readArlam();
+            localStorage.removeItem("main");
+            localStorage.removeItem("map");
+            localStorage.setItem("chat", "chat");
+            localStorage.removeItem("mypage");
+            history.push("/chatlist");
+          }}
+        >
           {alarm && <NewArlam>new</NewArlam>}
-          {click === "chat" ? (
-            <img alt="chat" src="./img/footer/chatg.png" />
-
-
           {localStorage.getItem("chat") === "chat" ? (
             <img alt="chat" src="/img/footer/chatg.png" />
-
           ) : (
             <img alt="chat" src="/img/footer/chat.png" />
           )}
