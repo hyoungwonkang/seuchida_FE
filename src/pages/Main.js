@@ -26,7 +26,7 @@ const Main = () => {
   const review = useSelector((state) => state.post.list.filterRe);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const [mainalert, setMainalert] = React.useState([])
+  // const [mainalert, setMainalert] = React.useState([])
   const [state, setState] = React.useState({
     center: {
       lat: 33.450701,
@@ -92,7 +92,6 @@ const Main = () => {
             catepost={catepost}
             center={state.center}
             user={user.userInfo.nickName}
-            mainalert={mainalert}
           />
         </TopLive>
 
