@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import styled from "styled-components";
 import ReviewCardD from "../components/ReviewCardD";
 import FooterMenu from "../shared/FooterMenu";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,16 +19,24 @@ const MyReview = () => {
   if (!myReviewList) return;
 
   return (
-    <Grid bg="white">
-      <GoBack text="내가 쓴 후기" path="/mypage" />
-      <Grid padding="0px 0px 80px 0px">
-        {myReviewList.map((p, i) => {
-          return <ReviewCardD {...p} key={p.id} />;
-        })}
-      </Grid>
-      <FooterMenu />
-    </Grid>
+    <>
+      <Container>
+        <Grid bg="white">
+          <GoBack text="내가 쓴 후기" path="/mypage" />
+          <Grid padding="0px 0px 80px 0px">
+            {myReviewList.map((p, i) => {
+              return <ReviewCardD {...p} key={p.id} />;
+            })}
+          </Grid>
+          <FooterMenu />
+        </Grid>
+      </Container>
+    </>
   );
 };
+
+const Container = styled.div`
+  padding-top: 0px;
+`;
 
 export default MyReview;

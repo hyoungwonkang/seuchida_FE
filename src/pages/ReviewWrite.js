@@ -108,92 +108,100 @@ const ReviewWrite = (props) => {
   }
 
   return (
-    <Grid bg="white">
-      <GoBack text="후기 작성하기" path="/mypage" remove={remove} />
-      <Grid height="950px">
-        {/* 포스트 내용  */}
-        <Grid height="46px" width="342px" margin="0px 0px 0px 25px">
-          <Text size="18px" bold>
-            {postInfo?.postTitle}
-          </Text>
-        </Grid>
-        <Grid border="1px solid gray" height="92px" padding="15px 22px">
-          <Text margin="0px" size="14px">
-            <MdPlace color="#787878" /> {postInfo?.spot}
-          </Text>
-          <Text margin="0px" size="14px">
-            <BiDumbbell color="#787878" /> {postInfo?.postCategory}
-          </Text>
-          <Text margin="0px" size="14px">
-            <AiFillCalendar color="#787878" /> {postInfo?.datemate}
-          </Text>
-        </Grid>
+    <>
+      <Container>
+        <Grid bg="white">
+          <GoBack text="후기 작성하기" path="/mypage" remove={remove} />
+          <Grid height="950px">
+            {/* 포스트 내용  */}
+            <Grid height="46px" width="342px" margin="0px 0px 0px 25px">
+              <Text size="18px" bold>
+                {postInfo?.postTitle}
+              </Text>
+            </Grid>
+            <Grid border="1px solid gray" height="92px" padding="15px 22px">
+              <Text margin="0px" size="14px">
+                <MdPlace color="#787878" /> {postInfo?.spot}
+              </Text>
+              <Text margin="0px" size="14px">
+                <BiDumbbell color="#787878" /> {postInfo?.postCategory}
+              </Text>
+              <Text margin="0px" size="14px">
+                <AiFillCalendar color="#787878" /> {postInfo?.datemate}
+              </Text>
+            </Grid>
 
-        {/* 사진추가 */}
-        <FileUpload>
-          <label htmlFor="image">
-            <Image
-              shape="rectangle"
-              size={39}
-              position="relative"
-              alt="profile"
-              // z-index
-              src={
-                preview
-                  ? preview
-                  : localreviewImg
-                  ? localreviewImg
-                  : "../img/addimage.png"
-              }
+            {/* 사진추가 */}
+            <FileUpload>
+              <label htmlFor="image">
+                <Image
+                  shape="rectangle"
+                  size={39}
+                  position="relative"
+                  alt="profile"
+                  // z-index
+                  src={
+                    preview
+                      ? preview
+                      : localreviewImg
+                      ? localreviewImg
+                      : "../img/addimage.png"
+                  }
+                />
+              </label>
+              <input
+                type="file"
+                id="image"
+                onChange={(e) => {
+                  selectPreview(e);
+                  selectImage(e);
+                }}
+              />
+            </FileUpload>
+
+            {/* 후기작성 */}
+            <Grid column margin="20px auto" height="auto">
+              <Input
+                multiLine
+                type="text"
+                placeholder="후기를 작성해주세요:)"
+                height="160px"
+                _onChange={writeReview}
+                value={review || ""}
+              />
+              <Text
+                size="16px"
+                color="#787878"
+                margin="0px 0px 0px 300px"
+                height="auto"
+              >
+                {review?.length}/100
+              </Text>
+            </Grid>
+          </Grid>
+
+          {/* 다음 버튼 */}
+          <FooterMenu next text="다음" state={alert} />
+
+          {/* 경고창 모달 */}
+          <Modal open={isOpen}>
+            <ModalData
+              Alert
+              onClose={() => setIsOpen(false)}
+              text="내용을 모두 입력해 주세요!"
             />
-          </label>
-          <input
-            type="file"
-            id="image"
-            onChange={(e) => {
-              selectPreview(e);
-              selectImage(e);
-            }}
-          />
-        </FileUpload>
-
-        {/* 후기작성 */}
-        <Grid column margin="20px auto" height="auto">
-          <Input
-            multiLine
-            type="text"
-            placeholder="후기를 작성해주세요:)"
-            height="160px"
-            _onChange={writeReview}
-            value={review || ""}
-          />
-          <Text
-            size="16px"
-            color="#787878"
-            margin="0px 0px 0px 300px"
-            height="auto"
-          >
-            {review?.length}/100
-          </Text>
+          </Modal>
         </Grid>
-      </Grid>
-
-      {/* 다음 버튼 */}
-      <FooterMenu next text="다음" state={alert} />
-
-      {/* 경고창 모달 */}
-      <Modal open={isOpen}>
-        <ModalData
-          Alert
-          onClose={() => setIsOpen(false)}
-          text="내용을 모두 입력해 주세요!"
-        />
-      </Modal>
-    </Grid>
+      </Container>
+    </>
   );
 };
 
 export default ReviewWrite;
+
+const Container = styled.div`
+  padding-top: 0px;
+`;
 
 const FileUpload = styled.div`
   margin: 0px 0px 50px 0px;

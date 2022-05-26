@@ -284,76 +284,82 @@ const PostWrite_4 = (props) => {
   }
 
   return (
-    <Grid>
-      {/* 검색 */}
-      <Grid margin="12px 0px 0px 0px" padding="0px 0px 0px 24px">
-        <form className="inputForm" onSubmit={handleSubmit}>
-          <SearchContainer>
-            <Search
-              placeholder="장소 또는 지역을 검색하세요"
-              onChange={onChange}
-              value={inputText || ""}
-            />
-            <img src="/img/search.png" onClick={handleSubmit} alt="search" />
-          </SearchContainer>
-        </form>
-      </Grid>
-      <Grid
-        row
-        margin="12px 0px"
-        height="auto"
-        padding="12px 24px 12px 0px"
-        justify="space-between"
-      >
-        {" "}
-        <Grid row margin="12px 0px 0px 24px">
-          <IconContext.Provider value={{ color: "#FF6B52", size: "16px" }}>
-            <FaMapMarkerAlt />
-          </IconContext.Provider>
-          <Text bold width="100px" margin="0px 12px" size="16px">
-            현재위치
-          </Text>
-          <Grid isFlex_end>{spot === "null" ? "" : spot}</Grid>
+    <>
+      <Container>
+        {/* 검색 */}
+        <Grid margin="12px 0px 0px 0px" padding="0px 0px 0px 24px">
+          <form className="inputForm" onSubmit={handleSubmit}>
+            <SearchContainer>
+              <Search
+                placeholder="장소 또는 지역을 검색하세요"
+                onChange={onChange}
+                value={inputText || ""}
+              />
+              <img src="/img/search.png" onClick={handleSubmit} alt="search" />
+            </SearchContainer>
+          </form>
         </Grid>
-      </Grid>
+        <Grid
+          row
+          margin="12px 0px"
+          height="auto"
+          padding="12px 24px 12px 0px"
+          justify="space-between"
+        >
+          {" "}
+          <Grid row margin="12px 0px 0px 24px">
+            <IconContext.Provider value={{ color: "#FF6B52", size: "16px" }}>
+              <FaMapMarkerAlt />
+            </IconContext.Provider>
+            <Text bold width="100px" margin="0px 12px" size="16px">
+              현재위치
+            </Text>
+            <Grid isFlex_end>{spot === "null" ? "" : spot}</Grid>
+          </Grid>
+        </Grid>
 
-      <div
-        id="map"
-        style={{
-          width: "100%",
-          height: "600px",
-          margin: "12px 0px",
-        }}
-      ></div>
-      <Link
-        to={{
-          state: {
-            maxMember,
-            memberAge,
-            memberGender,
-            postCategory,
-            postDesc,
-            postTitle,
-            address,
-            latitude,
-            longitude,
-            spot,
-          },
-        }}
-      >
-        <FooterMenu next text="확인" state={check} />
-      </Link>
-      {/* 경고창 모달 */}
-      <Modal open={isOpen}>
-        <ModalData
-          Alert
-          text="장소를 선택해주세요"
-          onClose={() => setIsOpen(false)}
-        />
-      </Modal>
-    </Grid>
+        <div
+          id="map"
+          style={{
+            width: "100%",
+            height: "600px",
+            margin: "12px 0px",
+          }}
+        ></div>
+        <Link
+          to={{
+            state: {
+              maxMember,
+              memberAge,
+              memberGender,
+              postCategory,
+              postDesc,
+              postTitle,
+              address,
+              latitude,
+              longitude,
+              spot,
+            },
+          }}
+        >
+          <FooterMenu next text="확인" state={check} />
+        </Link>
+        {/* 경고창 모달 */}
+        <Modal open={isOpen}>
+          <ModalData
+            Alert
+            text="장소를 선택해주세요"
+            onClose={() => setIsOpen(false)}
+          />
+        </Modal>
+      </Container>
+    </>
   );
 };
+
+const Container = styled.div`
+  padding-top: 0px;
+`;
 
 const SearchContainer = styled.div`
   display: flex;

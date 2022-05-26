@@ -78,7 +78,7 @@ const GoBack = (props) => {
             }
           }}
         />
-        <Text size="20px" position margin="0px 0px 0px 40px" bold>
+        <Text size="20px" margin="0px 0px 0px 16px" bold>
           {props.text}
         </Text>
       </Grid>

@@ -4,6 +4,7 @@ import GlobalStyle from "../elements/style/GlobalStyle";
 import { Route, Switch } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configStore";
+// import Device from "./Device";
 
 import MobileFrame from "../shared/MoileFrame";
 import {
@@ -45,6 +46,7 @@ function App() {
     <>
       <GlobalStyle />
       <Wrapper>
+        {/* <Device> */}
         <ConnectedRouter history={history}>
           <WebView>
             <Download>앱 사용자 평가하러 GO!</Download>
@@ -112,6 +114,7 @@ function App() {
             </MobileFrame>
           </Suspense>
         </ConnectedRouter>
+        {/* </Device> */}
       </Wrapper>
     </>
   );

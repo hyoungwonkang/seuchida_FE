@@ -14,7 +14,7 @@ const Login = (props) => {
           <img src="./img/login.png" style={{ margin: "150px 0px" }} />
         </Grid>
         <Around onClick={() => history.push("/guide")}>둘러보기</Around>
-        <div style={{ margin: "250px 0px 20px 0px" }}>
+        <div style={{ margin: "30vh 0px 20px 0px" }}>
           <Akakao
             href={KAKAO_AUTH_URL}
             onClick={() => {
