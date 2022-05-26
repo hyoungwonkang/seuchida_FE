@@ -28,7 +28,7 @@ jobs:                                # Job 설정
           aws-region: ${{ secrets.AWS_REGION }}
       
       - name: Deploy to S3            # Upload build file to S3
-        run: aws s3 sync ./dist s3://${{ secrets.DEV_AWS_S3_BUCKET }} --delete
+        run: aws s3 sync ./build s3://${{ secrets.DEV_AWS_S3_BUCKET }} --delete
       
       - name: Invalidate CloudFront Cache #CloudFront 캐시 갱신
         run: aws cloudfront create-invalidation --distribution-id ${{secrets.DEV_AWS_DISTRIBUTION_ID}} --paths "/*"
