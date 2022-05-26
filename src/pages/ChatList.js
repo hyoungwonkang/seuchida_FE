@@ -15,23 +15,48 @@ const socket = io.connect("https://seuchidabackend.shop", {
     auth: token,
   },
 });
-
 const ChatList = () => {
   const dispatch = useDispatch();
-  const room_list = useSelector((state) => state.room.list.chattingRoom);
-  const last_chat = useSelector((state) => state.room.list.lastChatting);
-  const unreadChat = useSelector((state) => state.room.list)
-  console.log(unreadChat)
-  console.log(socket.connected)
-  if(socket.connected===false){socket.emit('login')}
+  const room_list = useSelector((state) => state.room?.list?.chattingRoom);
+  const last_chat = useSelector((state) => state.room?.list?.lastChatting);
+  const unreadChatlist = useSelector(
+    (state) => state.room?.list?.unreadChatlist
+  );
+  const socketLogin = useSelector((state) => state.room.socket);
+  const [alarmlength , setAlarmlength]= React.useState()
+    const [unreadChat, setUnreadChat] = React.useState([])
+  
+//     let urc = []
+// console.log(urc)
+//     for(let i=0; i < unreadChatlist?.length; i++){
+//       urc.push(unreadChatlist[i])
+//     }
+
+
+
+  const [alarm, setAlarm] = React.useState([]);
+console.log(alarm)
   React.useEffect(() => {
     dispatch(roomCreators.getchatRoomDB());
   }, []);
 
   React.useEffect(() => {
-    dispatch(roomCreators.getunreadChatDB());
+    dispatch(roomCreators.socketLogin());
   }, []);
-  
+
+  React.useEffect(() => {
+    // if (socketLogin === false) {
+      socket?.emit("login");
+    // }
+  }, []);
+
+  React.useEffect(() => {
+    socket?.on("alert", (data) => {
+      console.log(data)
+      // setAlarm(data);
+      setAlarm((alarm) => alarm.concat(data))
+    });
+  }, []);
 
   // let roomId = []
   // for(let i=0; i< room_list?.length; i++){
@@ -44,42 +69,49 @@ const ChatList = () => {
   //   });
   // }, []);
 
- 
-  React.useEffect(() => {
-    socket?.on("alert" ,(data)=>{
-      console.log(data)
-    })
-  }, []);
-
-
-
   return (
     <>
       <Header>채팅</Header>
       <Body>
         {room_list?.map((room, index) => {
+          
           return (
             <ChatBox
               key={`${room.roomId}+${index}`}
               onClick={() => {
                 history.push({
-                  pathname: `/chatex/${room.roomId}`,
+                  pathname: `/chatex/${room?.roomId}`,
                   state: { ...room },
                 });
               }}
             >
               <ContentBox>
                 <ChatTitleBox>
-                  <Image src={room.ownerImg} size={50} />
+                  <Image src={room?.ownerImg} size={50} />
                   <div style={{ marginLeft: "10px" }}>
                     <div style={{ marginBottom: "5px" }}>
                       <ChatTitle>{room?.postTitle} </ChatTitle>
-                      <UserCount> {room.userList?.length}</UserCount>
+                      {/* 알람 length 더해보기. 하나는 state 하나는 일반 되나 ? +alarm.length 
+                      되긴되는데 룸아이디로 비교를 어케하냐 ??...*/}
+                      <div>{unreadChatlist[index]?.length}</div>
+                      <UserCount> {room?.userList?.length}</UserCount>
                     </div>
-                    <LastMsg>{last_chat[index]?.msg}</LastMsg>
+                    {/* 알림과 방의 아이디가 일치하고 알람내용이 있을때  */}
+                    <LastMsg>
+                      {room.roomId === alarm[index]?.room && alarm?.msg
+                        ? alarm[index]?.msg
+                        : last_chat[index]?.msg}
+                    </LastMsg>
                   </div>
                 </ChatTitleBox>
-                <div>{moment(last_chat[index]?.createdAt).fromNow()}</div>
+                <div>
+                  {/* 알림과 방의 아이디가 일치하고 알람내용의 시간비교  */}
+                  {moment(
+                    room.roomId === alarm[index]?.room && alarm?.createdAt
+                      ? alarm[index]?.createdAt
+                      : last_chat[index]?.createdAt
+                  ).fromNow()}
+                </div>
               </ContentBox>
             </ChatBox>
           );

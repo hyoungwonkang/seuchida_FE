@@ -6,7 +6,6 @@ import Image from "../elements/Image";
 import { history } from "../redux/configStore";
 
 const ChatMenu = ({ comModalOn, closecomModal, roomId, leaveRoom, socket }) => {
-  const dispatch = useDispatch();
   const user_list = useSelector((state) => state.room.list.nowMember);
   const postId = useSelector((state) => state.room.list.postId);
   const ownerId = useSelector((state) => state.room.list.owner);

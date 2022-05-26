@@ -12,18 +12,21 @@ import io from "socket.io-client";
 import { RiMessage3Fill } from "react-icons/ri";
 
 const token = localStorage.getItem("token");
-const socket = io.connect("https://seuchidabackend.shop", {
-  auth: {
-    auth: token,
-  },
-});
+// const ENDPOINT = "https://seuchidabackend.shop";
+const socket =  io.connect("https://seuchidabackend.shop", {
+      auth: {
+        auth: token,
+      },
+    }); 
 
 const Main = () => {
+
   const catepost = useSelector((state) => state.post.list.caPost);
   const post_list = useSelector((state) => state.post.list.nearPost);
   const review = useSelector((state) => state.post.list.filterRe);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  // const [socket, setSocket] = React.useState()
   const [state, setState] = React.useState({
     center: {
       lat: 33.450701,
@@ -33,10 +36,29 @@ const Main = () => {
     isLoading: true,
   });
 
+  // React.useEffect(() => {
+    // const socket =  io.connect("https://seuchidabackend.shop", {
+    //   auth: {
+    //     auth: token,
+    //   },
+    // }); 
+  //
 
-  React.useEffect(()=>{
-  if(socket.connected===false)socket.emit('login')
-  },[])
+  // }, []);
+  React.useEffect(() => {
+     socket.emit('login') 
+    //  return ()=>{
+    //   socket?.disconnect()
+    // } 
+  }, []);
+ 
+
+  React.useEffect(() => {
+    socket?.on("alert" ,(data)=>{
+
+      console.log(data)
+    })
+  }, []);
 
   React.useEffect(()=>{
     dispatch(userActions.isLoginDB());   
@@ -44,11 +66,8 @@ const Main = () => {
   React.useEffect(()=>{
     dispatch(postActions.getMainDB());    
   },[])
-  React.useEffect(() => {
-    socket?.on("alert" ,(data)=>{
-      console.log(data)
-    })
-  }, []);
+
+
 
   React.useEffect(() => {
     if (navigator.geolocation) {
@@ -152,7 +171,7 @@ const Main = () => {
         </Float>
         {/* 푸터 */}
       </Container>
-      <FooterMenu socket={socket}/>
+      <FooterMenu />
     </>
   );
 };
