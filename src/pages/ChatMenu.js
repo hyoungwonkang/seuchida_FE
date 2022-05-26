@@ -78,11 +78,15 @@ const ChatMenu = ({ comModalOn, closecomModal, roomId, leaveRoom, socket }) => {
             );
         })}
         <OutChat onClick={leaveRoom}>채팅방 나가기</OutChat>
+        {/* 참여자 프로필 모달 */}
+        <Modal open={isOpen}>
+          <ModalData
+            Members
+            post={modalData}
+            onClose={() => setIsOpen(false)}
+          />
+        </Modal>
       </Container>
-      {/* 참여자 프로필 모달 */}
-      <Modal open={isOpen}>
-        <ModalData Members post={modalData} onClose={() => setIsOpen(false)} />
-      </Modal>
       ;
     </Overlay>
   ) : null;
@@ -113,7 +117,7 @@ const Container = styled.section`
   min-height: 100vh;
   height: auto;
   background-color: white;
-  width: 20vw;
+  width: 300px;
   position: fixed;
   right: 0;
   top: 0;
@@ -143,7 +147,7 @@ const GoOut = styled.button`
   position: absolute;
   right: 10px;
   font-size: 16px;
-  /* top: 10px; */
+  cursor: pointer;
 `;
 
 const OutChat = styled.div`

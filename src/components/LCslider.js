@@ -4,18 +4,18 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import LiveCard from "./LiveCard";
 import styled from "styled-components";
+import { Grid, Text } from "../elements/Index";
 
 function LCslider(props) {
   const post = props.catepost;
 
   const [state, setState] = useState("");
-  console.log(state);
 
   React.useEffect(() => {
     if (post) {
       setState(post[0]?.postCategory);
     }
-  }, [state]);
+  }, [post]);
 
   //인덱스 값 변화에 따른 category 변화 조건
   post?.map((p, i) => {
@@ -46,27 +46,33 @@ function LCslider(props) {
           alt="point"
           src="../img/main.png"
           style={{
-            margin: "30px 0px 0px 0px",
-            // padding: "30px 0px 0px 30px",
-            // position: "absolute",
             width: "65px",
             height: "76px",
           }}
         />
       </WellcomeBox>
-      <Sliders {...settings} style={{ height: "270px" }}>
-        {post?.map((p, i) => {
-          if (i < 6)
-            return (
-              <LiveCard
-                {...p}
-                key={p.id}
-                center={props.center}
-                _onClick={props._onClick}
-              />
-            );
-        })}
-      </Sliders>
+      {post.length === 0 ? (
+        <Grid padding="0px 0px 40px 0px" column>
+          <img src="./img/seuchin.png" style={{ margin: "40px 0px 0px 0px" }} />
+          <Text bold margin="0px" color="#C4C4C4">
+            카테고리에 해당하는 글이 없어요!
+          </Text>
+        </Grid>
+      ) : (
+        <Sliders {...settings} style={{ height: "270px" }}>
+          {post?.map((p, i) => {
+            if (i < 6)
+              return (
+                <LiveCard
+                  {...p}
+                  key={p.id}
+                  center={props.center}
+                  _onClick={props._onClick}
+                />
+              );
+          })}
+        </Sliders>
+      )}
     </div>
   );
 }

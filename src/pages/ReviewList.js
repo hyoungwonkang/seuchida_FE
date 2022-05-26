@@ -4,12 +4,11 @@ import Image from "../elements/Image";
 import Modal from "../components/Modal/Modal"; //모달 창
 import FooterMenu from "../shared/FooterMenu";
 import { useDispatch, useSelector } from "react-redux";
-// import { actionCreators as postActions } from "../redux/modules/post";
 import { useParams } from "react-router-dom";
 import { BiDumbbell } from "react-icons/bi";
 import { MdPlace } from "react-icons/md";
 import GoBack from "../elements/GoBack";
-import { Grid } from "../elements/Index";
+import { Grid, Text } from "../elements/Index";
 import ReviewCardD from "../components/ReviewCardD";
 import axios from "axios";
 
@@ -66,14 +65,16 @@ const ReviewList = () => {
   };
 
   React.useEffect(() => {
-    const options = {
-      root: null,
-      rootMargin: "0px",
-      threshold: 0.25,
-    };
-    const observer = new IntersectionObserver(onIntersect, options);
-    observer.observe(pageEnd.current);
-    return () => observer.disconnect();
+    if (review_list.length > 0) {
+      const options = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.25,
+      };
+      const observer = new IntersectionObserver(onIntersect, options);
+      observer.observe(pageEnd.current);
+      return () => observer.disconnect();
+    }
   }, [pageEnd]);
 
   if (!review_list) return;
@@ -83,59 +84,75 @@ const ReviewList = () => {
       <Header>
         <GoBack text={"함께한 스친들의 후기"} path="/main"></GoBack>
       </Header>
-      <div style={{ margin: "0px 0px 80px 0px" }}>
-        {review_list?.map((review, index) => {
-          return (
-            <div key={review._id}>
-              {modalOn && <Modal />}
+      {review_list.length === 0 ? (
+        <Grid padding="0px 0px 80px 0px" column>
+          <img
+            src="./img/seuchin.png"
+            style={{ margin: "150px 0px 0px 0px" }}
+          />
+          <Text bold margin="0px" color="#C4C4C4">
+            아직 쓴 후기가 없어요!
+          </Text>
+          <Text bold margin="0px" color="#C4C4C4">
+            지금 바로 후기를 쓰러 가볼까요?
+          </Text>
+        </Grid>
+      ) : (
+        <div style={{ margin: "0px 0px 80px 0px" }}>
+          {review_list?.map((review, index) => {
+            return (
+              <div key={review._id}>
+                {modalOn && <Modal />}
 
-              <ProfileBox>
-                <Image
-                  margin="5px 15px 0px 0px"
-                  shape="circle"
-                  src={review.userImg}
-                  size={36}
-                  _onClick={openModal}
-                />
+                <ProfileBox>
+                  <Image
+                    margin="5px 15px 0px 0px"
+                    shape="circle"
+                    src={review.userImg}
+                    size={36}
+                    _onClick={openModal}
+                  />
 
-                <User>
-                  <Master>
-                    {review.nickName === "undefined"
-                      ? "탈퇴한 회원"
-                      : review.nickName}
-                  </Master>
-                  <div style={{ color: "rgba(120, 120, 120, 1)" }}>
-                    {review.createdAt}
+                  <User>
+                    <Master>
+                      {review.nickName === "undefined"
+                        ? "탈퇴한 회원"
+                        : review.nickName}
+                    </Master>
+                    <div style={{ color: "rgba(120, 120, 120, 1)" }}>
+                      {review.createdAt}
+                    </div>
+                  </User>
+                </ProfileBox>
+                {review.reviewImg ? (
+                  <Image shape="rectangle" size={390} src={review.reviewImg} />
+                ) : null}
+                <Desc>{review.content} </Desc>
+                <Info>
+                  <div>
+                    <MdPlace color="#787878" />
+                    <span>{review.spot}</span>
                   </div>
-                </User>
-              </ProfileBox>
-              {review.reviewImg ? (
-                <Image shape="rectangle" size={390} src={review.reviewImg} />
-              ) : null}
-              <Desc>{review.content} </Desc>
-              <Info>
-                <div>
-                  <MdPlace color="#787878" />
-                  <span>{review.spot}</span>
-                </div>
-                <div>
-                  <BiDumbbell color="#787878" />
-                  <span>{review.postCategory}</span>
-                </div>
-              </Info>
-            </div>
-          );
-        })}
-        <div ref={pageEnd} className="pageEnd">
-          {isLoading ? (
-            <Pos>
-              <Seuchin alt="loading" src="./img/loading.gif" width={130} />
-            </Pos>
-          ) : (
-            ""
-          )}
+                  <div>
+                    <BiDumbbell color="#787878" />
+                    <span>{review.postCategory}</span>
+                  </div>
+                </Info>
+              </div>
+            );
+          })}
+          <div ref={pageEnd} className="pageEnd">
+            {isLoading ? (
+              <Pos>
+                <Seuchin alt="loading" src="./img/loading.gif" width={130} />
+              </Pos>
+            ) : (
+              ""
+            )}
+          </div>
         </div>
-      </div>
+      )}
+
       <FooterMenu />
     </>
   );

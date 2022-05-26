@@ -46,7 +46,8 @@ function App() {
       <GlobalStyle />
       <Wrapper>
         <WebView>
-          <Download>앱 사용자 평가하러 GO!</Download>
+          {/* <Download>앱 사용자 평가하러 GO!</Download> */}
+          <Seuchin src={"./img/loading.gif"} />
         </WebView>
 
         <ConnectedRouter history={history}>
@@ -170,3 +171,5 @@ const Txt = styled.div`
   font-size: 20px;
   font-weight: 800;
 `;
+
+const Seuchin = styled.div``;

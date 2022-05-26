@@ -12,7 +12,7 @@ import { io } from "socket.io-client";
 // });
 const FooterMenu = (props) => {
   const history = useHistory();
-  const { next, is_check, __onClick, socket } = props;
+  const { next, is_check, __onClick, socket, Chat } = props;
   // const [alarm, setAlarm] = React.useState([]);
 
   React.useEffect(() => {
@@ -20,6 +20,48 @@ const FooterMenu = (props) => {
       console.log(data);
     });
   }, []);
+
+  if (Chat) {
+    return (
+      <Btns>
+        <Button
+          bg="white"
+          color="#5796f7"
+          br="1px solid #5796f7"
+          wd="150px"
+          _onClick={() => {
+            //액션 실행
+            if (props.event) {
+              return props.event();
+            }
+          }}
+          margin={"12px 10px 0px 0px"}
+        >
+          참여취소
+        </Button>
+        <Button
+          wd="150px"
+          _onClick={() => {
+            //페이지 이동
+            if (props.path) {
+              history.push(props.path);
+            }
+            //액션 실행
+            if (props.event) {
+              return props.event();
+            }
+            //유효성 검사 실행
+            if (props.state) {
+              return props.state();
+            }
+          }}
+          margin={"12px 0px 0px 0px"}
+        >
+          채팅하기
+        </Button>
+      </Btns>
+    );
+  }
 
   if (next) {
     return (
@@ -161,6 +203,24 @@ const Btn = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: auto;
+  background-color: white;
+  box-shadow: 0px -2px 4px 2.5px #ddd;
+  min-width: 390px;
+  z-index: 5;
+`;
+
+const Btns = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 100px;
+  border-top: 1px solid #e9e9e9;
+  width: 20vw;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px 0px 0px 45px;
   margin: auto;
   background-color: white;
   box-shadow: 0px -2px 4px 2.5px #ddd;

@@ -21,7 +21,7 @@ const EditDone = () => {
   return (
     <>
       <Container>
-        <Grid column margin="167px auto 0px auto">
+        <Grid column padding="167px 0px 0px 0px">
           <img src="./img/seuchin.png" />
           <Text size="24px" bold>
             프로필 수정이 <br />

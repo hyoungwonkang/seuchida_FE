@@ -79,12 +79,6 @@ const Map = () => {
         </Header>
         <div style={{ marginTop: "128px" }}>
           <ResearchBtn onClick={() => researchMap()}>재검색</ResearchBtn>
-          {/* <MyLoca
-            src="./img/locaagain.png"
-            onClick={() => {
-              MyPoint();
-            }}
-          /> */}
           <OpenModal onClick={() => setIsOpen(!isOpen)}>목록보기</OpenModal>
           {isOpen && (
             <Modal>
@@ -152,6 +146,7 @@ const Modal = styled.div`
   position: fixed;
   z-index: 29;
   bottom: 80px;
+  background: #fff;
   animation-duration: 0.5s;
   animation-timing-function: ease-out;
   animation-name: ${slideUp};

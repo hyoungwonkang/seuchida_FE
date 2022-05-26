@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as roomCreators } from "../redux/modules/room";
 import styled from "styled-components";
 import { history } from "../redux/configStore";
-import Image from "../elements/Image";
+import { Image, Grid, Text } from "../elements/Index";
 import moment from "moment";
 import "moment/locale/ko";
 import { io } from "socket.io-client";
@@ -19,6 +19,7 @@ const socket = io.connect("https://seuchidabackend.shop", {
 const ChatList = () => {
   const dispatch = useDispatch();
   const room_list = useSelector((state) => state.room.list.chattingRoom);
+  console.log(room_list);
   const last_chat = useSelector((state) => state.room.list.lastChatting);
   const unreadChat = useSelector((state) => state.room.list);
   console.log(unreadChat);
@@ -47,42 +48,58 @@ const ChatList = () => {
 
   React.useEffect(() => {
     socket?.on("alert", (data) => {
-      console.log(data);
+      // console.log(data);
     });
   }, []);
 
   return (
     <>
       <Header>채팅</Header>
-      <Body>
-        {room_list?.map((room, index) => {
-          return (
-            <ChatBox
-              key={`${room.roomId}+${index}`}
-              onClick={() => {
-                history.push({
-                  pathname: `/chatex/${room.roomId}`,
-                  state: { ...room },
-                });
-              }}
-            >
-              <ContentBox>
-                <ChatTitleBox>
-                  <Image src={room.ownerImg} size={50} />
-                  <div style={{ marginLeft: "10px" }}>
-                    <div style={{ marginBottom: "5px" }}>
-                      <ChatTitle>{room?.postTitle} </ChatTitle>
-                      <UserCount> {room.userList?.length}</UserCount>
+      {room_list.length === 0 ? (
+        <Grid padding="0px 0px 80px 0px" column height="auto">
+          <img
+            src="./img/seuchin.png"
+            style={{ margin: "220px 0px 0px 0px" }}
+          />
+          <Text bold margin="0px" color="#C4C4C4">
+            아직 채팅방이 없어요!
+          </Text>
+          <Text bold margin="0px" color="#C4C4C4">
+            지금 바로 새 글을 쓰러 가볼까요?
+          </Text>
+        </Grid>
+      ) : (
+        <Body>
+          {room_list?.map((room, index) => {
+            return (
+              <ChatBox
+                key={`${room.roomId}+${index}`}
+                onClick={() => {
+                  history.push({
+                    pathname: `/chatex/${room.roomId}`,
+                    state: { ...room },
+                  });
+                }}
+              >
+                <ContentBox>
+                  <ChatTitleBox>
+                    <Image src={room.ownerImg} size={50} />
+                    <div style={{ marginLeft: "10px" }}>
+                      <div style={{ marginBottom: "5px" }}>
+                        <ChatTitle>{room?.postTitle} </ChatTitle>
+                        <UserCount> {room.userList?.length}</UserCount>
+                      </div>
+                      <LastMsg>{last_chat[index]?.msg}</LastMsg>
                     </div>
-                    <LastMsg>{last_chat[index]?.msg}</LastMsg>
-                  </div>
-                </ChatTitleBox>
-                <div>{moment(last_chat[index]?.createdAt).fromNow()}</div>
-              </ContentBox>
-            </ChatBox>
-          );
-        })}
-      </Body>
+                  </ChatTitleBox>
+                  <div>{moment(last_chat[index]?.createdAt).fromNow()}</div>
+                </ContentBox>
+              </ChatBox>
+            );
+          })}
+        </Body>
+      )}
+
       <FooterMenu />
     </>
   );

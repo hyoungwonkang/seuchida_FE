@@ -19,7 +19,7 @@ const Done = () => {
   };
 
   return (
-    <Grid column margin="167px auto 0px auto" stop>
+    <Grid column padding="167px 0px 0px 0px">
       <img src="./img/seuchin.png" />
       <Text size="24px" bold>
         프로필 작성이 <br />
