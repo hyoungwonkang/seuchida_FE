@@ -43,7 +43,6 @@ const ChatList = () => {
   React.useEffect(() => {
     socket?.on("alert", (data) => {
       console.log(data);
-
       setAlarm(data);
       // setAlarm((alarm) => alarm.concat(data));
     });
@@ -160,8 +159,6 @@ const ContentBox = styled.div`
 `;
 
 const NewMsg = styled.div`
-  margin: 8px 0px 0px 24px;
-  position: absolute;
   background-color: #fe3c30;
   height: 18px;
   width: 18px;

@@ -26,7 +26,7 @@ const Main = () => {
   const review = useSelector((state) => state.post.list.filterRe);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  // const [socket, setSocket] = React.useState()
+  // const [mainalert, setMainalert] = React.useState([])
   const [state, setState] = React.useState({
     center: {
       lat: 33.450701,
@@ -36,11 +36,6 @@ const Main = () => {
     isLoading: true,
   });
 
-  React.useEffect(() => {
-    if (socket.connected === false) socket.emit("login");
-  }, []);
-
-
   React.useEffect(()=>{
     dispatch(userActions.isLoginDB());   
   },[])
@@ -49,6 +44,13 @@ const Main = () => {
   },[])
 
 
+  // React.useEffect(()=>{
+  //   socket.on("joinPartyAlert", (data) => {
+  //    console.log(data)
+  //    setMainalert((mainalert) => mainalert.concat(data));
+  //   }) 
+     
+  //   },[])
 
   React.useEffect(() => {
     if (navigator.geolocation) {
@@ -104,7 +106,7 @@ const Main = () => {
         <ReviewBox>
           <TitleBox
             onClick={() => {
-              window.location.href = "/reviewlist/1";
+              history.push("/reviewlist/1");
             }}
           >
             <Title>함께한 스친들의 후기</Title>{" "}

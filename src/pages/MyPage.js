@@ -14,15 +14,18 @@ import { actionCreators as mypageActions } from "../redux/modules/mypage";
 import Modal from "../components/Modal/Modal"; //모달 창
 import ModalData from "../components/Modal/ModalData";
 
+
 const NameCard = () => {
+  
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(userActions.isLoginDB());
     dispatch(mypageActions.myExerciseDB());
   }, []);
 
-  const userInfo = useSelector((state) => state.user.userInfo);
 
+  const userInfo = useSelector((state) => state.user.userInfo);
   const level = [
     { id: 1, level: 1, image: <Image src="./img/badge/red.png" /> },
     { id: 2, level: 2, image: <Image src="./img/badge/orange.png" /> },
@@ -34,6 +37,7 @@ const NameCard = () => {
   ];
 
   return (
+
     <Grid column height="auto" margin="0px" bg="white">
       {/* 프로필 수정, 알람 */}
       <Grid row height="auto" margin="20px 0px 0px 0px" justify="right">
