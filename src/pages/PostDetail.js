@@ -17,13 +17,11 @@ import { io } from "socket.io-client";
 
 const token = localStorage.getItem("token");
 // const ENDPOINT = "https://seuchidabackend.shop";
-
-const socket =  io.connect("https://seuchidabackend.shop", {
-      auth: {
-        auth: token,
-      },
-    }); 
-
+const socket = io.connect("https://seuchidabackend.shop", {
+  auth: {
+    auth: token,
+  },
+});
 const PostDetail = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -48,8 +46,7 @@ const PostDetail = (props) => {
 
   let partymember = [];
   for (let i = 0; i < post?.nowMember?.length; i++) {
-    if (user?.userId !==post?.nowMember[i]?.memberId) {
-
+    if (user?.userId !== post?.nowMember[i]?.memberId) {
       partymember.push(post?.nowMember[i]?.memberId);
     }
   }
@@ -69,15 +66,15 @@ const PostDetail = (props) => {
   };
   //방 참여
   const joinRoom = () => {
-    socket.emit("joinParty", { postId, userId : partymember });
+    socket.emit("joinParty", { postId, userId: partymember });
     dispatch(roomActions.joinRoomDB(post.roomId, postId));
   };
   //모집완료
   const roomDone = () => {
     dispatch(roomActions.roomDoneDB(postId));
   };
-  
-  //참여 취소 
+
+  //참여 취소
 
   const joinCancle = () => {
     dispatch(roomActions.joinCancleDB(post.roomId, postId));
@@ -132,7 +129,6 @@ const PostDetail = (props) => {
   // const joinParty = () => {
   //   socket.emit("joinParty", { postId, userId : post.nowMember });
   // };
-
 
   if (banUser?.length === 1) {
     window.alert("강퇴당함 ");
