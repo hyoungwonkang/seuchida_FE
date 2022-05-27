@@ -30,13 +30,6 @@ const FooterMenu = (props) => {
     history.push("/main");
   };
 
-  //ㅠㅠㅠ
-  // React.useEffect(() => {
-  //   return ()=>{
-  //     socket.disconnect()
-  //   }
-  //   },[]);
-
   if (Chat) {
     return (
       <Btns>

@@ -7,16 +7,9 @@ import { history } from "../redux/configStore";
 import { Image, Grid, Text } from "../elements/Index";
 import moment from "moment";
 import "moment/locale/ko";
-import { io } from "socket.io-client";
 
-const token = localStorage.getItem("token");
-const socket = io.connect("https://seuchidabackend.shop", {
-  auth: {
-    auth: token,
-  },
-});
 
-const ChatList = () => {
+const ChatList = ({socket}) => {
   const dispatch = useDispatch();
 
   const room_list = useSelector((state) => state.room?.list?.chattingRoom);
@@ -31,14 +24,10 @@ const ChatList = () => {
     dispatch(roomCreators.getchatRoomDB());
   }, []);
 
-  // React.useEffect(() => {
-  //   socket?.emit("login");
-  // }, []);
 
   React.useEffect(() => {
     socket?.on("alert", (data) => {
       setAlarm(data);
-      // setAlarm((alarm) => alarm.concat(data));
     });
   }, []);
 
@@ -55,7 +44,7 @@ const ChatList = () => {
             아직 채팅방이 없어요!
           </Text>
           <Text bold margin="0px" color="#C4C4C4">
-            지금 바로 새 글을 쓰러 가볼까요?
+            모임에 참여후 채팅으로 이야기해요!
           </Text>
         </Grid>
       ) : (
@@ -77,10 +66,9 @@ const ChatList = () => {
                     <div style={{ marginLeft: "10px" }}>
                       <div style={{ marginBottom: "5px" }}>
                         <ChatTitle>{room?.postTitle} </ChatTitle>
+                        <UserCount> {room?.nowMember?.length}</UserCount>
                         {/* 알람 length 더해보기. 하나는 state 하나는 일반 되나 ? +alarm.length 
                       되긴되는데 룸아이디로 비교를 어케하냐 ??...*/}
-                        <div>{unreadChatlist[index].length}</div>
-                        {/* <UserCount> {room?.nowMember?.length}</UserCount> */}
                       </div>
                       {/* 알림과 방의 아이디가 일치하고 알람내용이 있을때  */}
                       <LastMsg>
@@ -90,14 +78,18 @@ const ChatList = () => {
                       </LastMsg>
                     </div>
                   </ChatTitleBox>
+                 
+                 <div>
                   <div>
                     {/* 알림과 방의 아이디가 일치하고 알람내용의 시간비교  */}
                     {moment(
                       room?.roomId === alarm?.room
-                        ? alarm?.createdAt
-                        : last_chat[index]?.createdAt
-                    ).fromNow()}
+                      ? alarm?.createdAt
+                      : last_chat[index]?.createdAt
+                      ).fromNow()}
                   </div>
+                      <NewMsg>{unreadChatlist[index].length}</NewMsg>
+               </div>
                 </ContentBox>
               </ChatBox>
             );
@@ -168,7 +160,7 @@ const ContentBox = styled.div`
 `;
 
 const NewMsg = styled.div`
-  background-color: #fe3c30;
+  background-color: #ff6a52;
   height: 18px;
   width: 18px;
   font-size: 14px;
@@ -176,4 +168,6 @@ const NewMsg = styled.div`
   text-align: center;
   border-radius: 30px;
   color: white;
+  float: right;
+  margin-top: 5px;
 `;
