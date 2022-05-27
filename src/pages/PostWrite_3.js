@@ -122,13 +122,14 @@ const PostWrite_3 = (props) => {
   let pageTime = b + ` ` + c + `:` + d;
 
   //토글
+  // 뒤로가기 시에도 데이터를 유지합니다.
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
-  let [showDate, setShowDate] = useState("");
-  let [showTime, setShowTime] = useState("");
+  let [showDate, setShowDate] = useState(localStorage.getItem("showDate"));
+  let [showTime, setShowTime] = useState(localStorage.getItem("showTime"));
 
   //날짜와 시간을 datemate로 합성합니다.
-  let [datemate, setDatemate] = useState("");
+  let [datemate, setDatemate] = useState(localStorage.getItem("datemate"));
 
   //프로그레스바
   let count = 2;
@@ -173,26 +174,14 @@ const PostWrite_3 = (props) => {
     }
   };
 
-  // 뒤로가기 시에도 데이터를 유지합니다.
-
-  useEffect(() => {
-    setShowDate(window.localStorage.getItem("showDate"));
-    setShowTime(window.localStorage.getItem("showTime"));
-    setDatemate(window.localStorage.getItem("datemate"));
-  }, []);
-
-  useEffect(() => {
-    window.localStorage.setItem("spot", spot);
-  }, [spot]);
-  useEffect(() => {
-    window.localStorage.setItem("datemate", datemate);
-  }, [datemate]);
-  useEffect(() => {
-    window.localStorage.setItem("showDate", showDate);
-  }, [showDate]);
-  useEffect(() => {
-    window.localStorage.setItem("showTime", showTime);
-  }, [showTime]);
+  const backEvent = () => {
+    localStorage.setItem("spot", spot);
+    localStorage.setItem("datemate", datemate);
+    localStorage.setItem("showDate", showDate);
+    localStorage.setItem("showTime", showTime);
+    localStorage.setItem("memberAge", memberAge);
+    history.push("/postwrite2");
+  };
 
   // console.log(address);
   // console.log(datemate);
@@ -233,7 +222,7 @@ const PostWrite_3 = (props) => {
   return (
     <>
       <Container>
-        <GoBack postBack text="모임 만들기" path="/postwrite2" />
+        <GoBack postBack text="모임 만들기" state={backEvent} />
         <Grid margin="24px 0px 40px 0px">
           <ProgressBar>
             <HighLight width={(count / 3) * 100 + "%"} />

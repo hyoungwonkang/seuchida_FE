@@ -19,20 +19,25 @@ const PostWrite_1 = (props) => {
   const [isOpen3, setIsOpen3] = useState(false);
 
   //제목과 설명 state
-  let [postTitle, setPostTitle] = useState("");
-  let [postDesc, setPostDesc] = useState("");
+  // 뒤로가기 시에도 데이터를 유지합니다.
+  let [postTitle, setPostTitle] = useState(localStorage.getItem("postTitle"));
+  let [postDesc, setPostDesc] = useState(localStorage.getItem("postDesc"));
+
+  //특수문자 제한
+  const notSpecial = /^[^/!/~/.\sㄱ-ㅎ가-힣a-z0-9]/gi;
 
   const selectPostTitle = (e) => {
     if (e.target.value?.length >= 15) {
       e.target.value = e.target.value.substr(0, 15);
     }
-    setPostTitle(e.target.value);
+    setPostTitle(e.target.value.replace(notSpecial));
   };
+
   const selectPostDesc = (e) => {
     if (e.target.value?.length >= 200) {
       e.target.value = e.target.value.substr(0, 200);
     }
-    setPostDesc(e.target.value);
+    setPostDesc(e.target.value.replace(notSpecial));
   };
 
   //프로그레스바
@@ -41,8 +46,8 @@ const PostWrite_1 = (props) => {
     count++;
   }
 
-  //유효성 검사
   const check = () => {
+    //유효성 검사
     if (!postTitle || !postDesc) {
       setIsOpen(true);
     } else {
@@ -51,6 +56,13 @@ const PostWrite_1 = (props) => {
       history.push("/postwrite2");
     }
   };
+
+  const backEvent = () => {
+    localStorage.setItem("postTitle", postTitle);
+    localStorage.setItem("postDesc", postDesc);
+    history.push("/postcategory");
+  };
+
   useEffect(() => {
     if (postTitle?.length >= 15) {
       setIsOpen2(true);
@@ -61,19 +73,6 @@ const PostWrite_1 = (props) => {
     if (postDesc?.length >= 200) {
       setIsOpen3(true);
     }
-  }, [postDesc]);
-
-  // 뒤로가기 시에도 데이터를 유지합니다.
-  useEffect(() => {
-    setPostTitle(window.localStorage.getItem("postTitle"));
-    setPostDesc(window.localStorage.getItem("postDesc"));
-  }, []);
-
-  useEffect(() => {
-    window.localStorage.setItem("postTitle", postTitle);
-  }, [postTitle]);
-  useEffect(() => {
-    window.localStorage.setItem("postDesc", postDesc);
   }, [postDesc]);
 
   //새로고침 시 작성 첫 번째 페이지로 이동
@@ -102,7 +101,7 @@ const PostWrite_1 = (props) => {
 
   return (
     <div>
-      <GoBack postBack text="모임 만들기" path="/postcategory" />
+      <GoBack postBack text="모임 만들기" state={backEvent} />
       <Grid margin="24px 0px 40px 0px">
         <ProgressBar>
           <HighLight width={(count / 3) * 100 + "%"} />

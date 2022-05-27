@@ -10,20 +10,22 @@ const SET_CHAT = "SET_CHAT";
 const SET_MEMBER = "SET_MEMBER";
 const SK_LOGIN = "SK_LOGIN";
 const SET_ALARM = "SET_ALARM";
-const JOIN_ARR = "JOIN_ARR"
-const MAIN_ARR = "MAIN_ARR"
-const DEL_ARR = "DEL_ARR"
+const JOIN_ARR = "JOIN_ARR";
+const MAIN_ARR = "MAIN_ARR";
+const DEL_ARR = "DEL_ARR";
 
 //Action Creators
 
 const chatRoom = createAction(SET_CHAT, (chat_list) => ({ chat_list }));
 const chatMember = createAction(SET_MEMBER, (member) => ({ member }));
 const socketLogin = createAction(SK_LOGIN, (socket) => ({ socket }));
-const setalarm = createAction(SET_ALARM, (alarm, mainarr) => ({ alarm,mainarr }));
+const setalarm = createAction(SET_ALARM, (alarm, mainarr) => ({
+  alarm,
+  mainarr,
+}));
 const joinArlam = createAction(JOIN_ARR, (join) => ({ join }));
 const mainArlam = createAction(MAIN_ARR, (main) => ({ main }));
-const deleteArr = createAction(DEL_ARR, (delete_arr) => ({ delete_arr}));
-
+const deleteArr = createAction(DEL_ARR, (delete_arr) => ({ delete_arr }));
 
 //initialState (default props 같은 것, 기본값)
 
@@ -35,10 +37,10 @@ const initialState = {
     nowMember: [],
     unreadChatlist: [],
   },
-  joinArr:[],
+  joinArr: [],
   socket: false,
   alarm: false,
-  mainarr:false,
+  mainarr: false,
 };
 
 //middleware
@@ -51,7 +53,7 @@ const joinRoomDB = (roomId, postId) => {
         url: `https://seuchidabackend.shop/api/postPush/${roomId}`,
 
         headers: {
-          authorization: `Bearer ${token}`,
+          authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }).then((response) => {
         console.log(response);
@@ -69,7 +71,7 @@ const joinCancleDB = (roomId, postId) => {
         method: "get",
         url: `https://seuchidabackend.shop/api/postPushCancle/${roomId}`,
         headers: {
-          authorization: `Bearer ${token}`,
+          authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }).then((response) => {
         console.log(response.data.postInfo);
@@ -88,7 +90,7 @@ const getchatRoomDB = () => {
         method: "get",
         url: `https://seuchidabackend.shop/api/chatting`,
         headers: {
-          authorization: `Bearer ${token}`,
+          authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }).then((response) => {
         console.log(response);
@@ -106,7 +108,7 @@ const getchatMemberDB = (roomId) => {
         method: "get",
         url: `https://seuchidabackend.shop/api/chatUserList/${roomId}`,
         headers: {
-          authorization: `Bearer ${token}`,
+          authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }).then((response) => {
         console.log(response.data);
@@ -125,7 +127,7 @@ const roomDoneDB = (postId) => {
         method: "get",
         url: `https://seuchidabackend.shop/api/complete/${postId}`,
         headers: {
-          authorization: `Bearer ${token}`,
+          authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }).then((response) => {
         console.log(response.data);
@@ -136,7 +138,6 @@ const roomDoneDB = (postId) => {
     }
   };
 };
-
 
 //reducer
 export default handleActions(
@@ -164,9 +165,9 @@ export default handleActions(
     [DEL_ARR]: (state, action) =>
       produce(state, (draft) => {
         draft.joinArr = draft.joinArr.filter(
-        (msg) => msg.msgId !== action.payload.delete_arr)
+          (msg) => msg.msgId !== action.payload.delete_arr
+        );
       }),
-
   },
   initialState
 );

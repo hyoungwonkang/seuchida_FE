@@ -9,7 +9,7 @@ import { Redirect } from "react-router-dom";
 
 import { IconContext } from "react-icons";
 import { BsFillPeopleFill } from "react-icons/bs";
-import { MdEdit } from "react-icons/md";
+import { MdEdit, MdRememberMe } from "react-icons/md";
 import { AiOutlineMinusCircle } from "react-icons/ai";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 
@@ -18,8 +18,9 @@ const PostWrite_2 = (props) => {
   const history = useHistory();
 
   //모달 오픈 state
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
+  const [isOpen3, setIsOpen3] = useState(false);
 
   //인원
   let [maxMember, setMaxMember] = useState("");
@@ -61,14 +62,48 @@ const PostWrite_2 = (props) => {
   };
 
   if (memberAge === "나이무관") {
-    member.fage = "";
-    member.lage = "";
+    member.fage = "나이가";
+    member.lage = "무관하다";
   }
 
+  console.log(member.lage);
+  console.log(member.fage);
+
   // '직접입력' 시 조합된 나이로 보내줍니다.
-  if (combine_member.length > 2) {
+  if (7 > combine_member.length) {
     memberAge = combine_member;
   }
+
+  const AgeCompare = () => {
+    //유효성 검사
+    if (memberGender === "" || memberAge === "" || !showOptions) {
+      setIsOpen(true);
+    }
+    // 나이 이상한 값 체크
+    if (
+      Number(member.lage) <= Number(member.fage) ||
+      member.fage === "0" ||
+      member.lage === "0" ||
+      Number(member.lage) >= 100 ||
+      Number(member.fage) >= 99
+    ) {
+      setIsOpen3(true);
+    } else {
+      localStorage.setItem("maxMember", maxMember); // 로컬스토리지에 저장합니다.
+      localStorage.setItem("memberGender", memberGender); // 로컬스토리지에 저장합니다.
+      localStorage.setItem("memberAge", memberAge); // 로컬스토리지에 저장합니다.
+      localStorage.setItem("showOptions", showOptions); // 로컬스토리지에 저장합니다.
+      history.push("/postwrite3");
+    }
+  };
+
+  // 뒤로가기 시에도 데이터를 유지합니다.
+  useEffect(() => {
+    setMaxMember(window.localStorage.getItem("maxMember"));
+    setMemberGender(window.localStorage.getItem("memberGender"));
+    setMemberAge(window.localStorage.getItem("memberAge"));
+    setShowOptions(window.localStorage.getItem("showOptions"));
+  }, []);
 
   //토글
   const [show, setShow] = useState(false);
@@ -80,47 +115,20 @@ const PostWrite_2 = (props) => {
     count++;
   }
 
-  //유효성 검사
-  const check = (e) => {
-    if (memberGender === "" || memberAge === "" || !showOptions) {
-      setIsOpen(true);
-    } else {
-      history.push("/postwrite3");
-    }
+  const backEvent = () => {
+    localStorage.setItem("maxMember", maxMember);
+    localStorage.setItem("memberGender", memberGender);
+    localStorage.setItem("memberAge", memberAge);
+    localStorage.setItem("showOptions", showOptions);
+    history.push("/postwrite1");
   };
-  const chkCharCode = (e) => {
-    const regExp = /[^0-9]/g;
-    const ele = e.target;
-    if (regExp.test(ele.value)) {
-      ele.value = ele.value.replace(regExp, "");
-    }
-  };
+
   // console.log(postCategory, postTitle, postDesc);
-
-  // 뒤로가기 시에도 데이터를 유지합니다.
-  useEffect(() => {
-    setMaxMember(window.localStorage.getItem("maxMember"));
-    setMemberGender(window.localStorage.getItem("memberGender"));
-    setMemberAge(window.localStorage.getItem("memberAge"));
-    setShowOptions(window.localStorage.getItem("showOptions"));
-  }, []);
-
-  useEffect(() => {
-    window.localStorage.setItem("maxMember", maxMember);
-  }, [maxMember]);
-  useEffect(() => {
-    window.localStorage.setItem("memberGender", memberGender);
-  }, [memberGender]);
-  useEffect(() => {
-    window.localStorage.setItem("memberAge", memberAge);
-  }, [memberAge]);
-  useEffect(() => {
-    window.localStorage.setItem("showOptions", showOptions);
-  }, [showOptions]);
 
   //새로고침 시 작성 첫 번째 페이지로 이동
   if (document.readyState === "interactive") {
-    //로컬 값 날림localStorage.setItem("address", "");
+    //로컬 값 날림
+    localStorage.setItem("address", "");
     localStorage.setItem("spot", "");
     localStorage.setItem("latitude", "");
     localStorage.setItem("longitude", "");
@@ -144,7 +152,7 @@ const PostWrite_2 = (props) => {
   return (
     <>
       <Container>
-        <GoBack postBack text="모임 만들기" path="/postwrite1" />
+        <GoBack postBack text="모임 만들기" state={backEvent} />
         <Grid margin="24px 0px 40px 0px">
           <ProgressBar>
             <HighLight width={(count / 3) * 100 + "%"} />
@@ -198,7 +206,11 @@ const PostWrite_2 = (props) => {
                 확인
               </div>
             ) : showOptions ? (
-              memberGender + `, ` + memberAge
+              showOptions === localStorage.getItem("showOptions") ? (
+                memberGender + `, ` + localStorage.getItem("memberAge")
+              ) : (
+                memberGender + `, ` + memberAge
+              )
             ) : (
               <div style={{ color: "#C4C4C4" }}>조건 선택</div>
             )}
@@ -254,7 +266,7 @@ const PostWrite_2 = (props) => {
                     </Grid>
                     <Grid row margin="28px 0px" padding="0px 8px">
                       <label>
-                        <AgeInput
+                        <input
                           type="number"
                           name="fage"
                           value={member.fage}
@@ -268,8 +280,9 @@ const PostWrite_2 = (props) => {
                             background: "#f1f1f5",
                             border: "none",
                           }}
-                          pattern="[0-9]+"
-                          onKeyUp={chkCharCode}
+                          pattern="/[^ㄱ-ㅎ가-힣]/g"
+                          min="1"
+                          max="98"
                         />
                       </label>
                       &nbsp;&nbsp;&nbsp;
@@ -278,7 +291,7 @@ const PostWrite_2 = (props) => {
                       </Text>
                       &nbsp;&nbsp;&nbsp;
                       <label>
-                        <AgeInput
+                        <input
                           type="number"
                           name="lage"
                           value={member.lage}
@@ -292,8 +305,9 @@ const PostWrite_2 = (props) => {
                             background: "#f1f1f5",
                             border: "none",
                           }}
-                          pattern="[0-9]+"
-                          onKeyUp={chkCharCode}
+                          pattern="/[^ㄱ-ㅎ가-힣]/g"
+                          min="2"
+                          max="99"
                         />
                       </label>
                     </Grid>
@@ -303,7 +317,7 @@ const PostWrite_2 = (props) => {
             </div>
           ) : null}
         </Grid>
-        <FooterMenu next text="다음" state={check} />
+        <FooterMenu next text="다음" event={AgeCompare} />
         {/* 경고창 모달 */}
         <Modal open={isOpen}>
           <ModalData
@@ -317,6 +331,13 @@ const PostWrite_2 = (props) => {
             Alert
             text="2 ~ 30명만 가능해요"
             onClose={() => setIsOpen2(false)}
+          />
+        </Modal>
+        <Modal open={isOpen3}>
+          <ModalData
+            Alert
+            text="나이를 정확히 입력해주세요"
+            onClose={() => setIsOpen3(false)}
           />
         </Modal>
       </Container>
@@ -355,16 +376,16 @@ const HighLight = styled.div`
   height: 4.5px;
 `;
 
-const AgeInput = styled.input`
-  ::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-  ::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-`;
+// const AgeInput = styled.input`
+//   /* ::-webkit-inner-spin-button {
+//     -webkit-appearance: none;
+//     margin: 0;
+//   } */
+//   ::-webkit-outer-spin-button {
+//     -webkit-appearance: none;
+//     margin: 0;
+//   }
+// `;
 
 const RadioInput = styled.input`
   -webkit-appearance: none;
