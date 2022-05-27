@@ -12,6 +12,7 @@ const SK_LOGIN = "SK_LOGIN";
 const SET_ALARM = "SET_ALARM";
 const JOIN_ARR = "JOIN_ARR"
 const MAIN_ARR = "MAIN_ARR"
+const DEL_ARR = "DEL_ARR"
 
 //Action Creators
 
@@ -21,6 +22,7 @@ const socketLogin = createAction(SK_LOGIN, (socket) => ({ socket }));
 const setalarm = createAction(SET_ALARM, (alarm, mainarr) => ({ alarm,mainarr }));
 const joinArlam = createAction(JOIN_ARR, (join) => ({ join }));
 const mainArlam = createAction(MAIN_ARR, (main) => ({ main }));
+const deleteArr = createAction(DEL_ARR, (delete_arr) => ({ delete_arr}));
 
 
 //initialState (default props 같은 것, 기본값)
@@ -147,11 +149,6 @@ export default handleActions(
       produce(state, (draft) => {
         draft.list = action.payload.member;
       }),
-
-    [SK_LOGIN]: (state, action) =>
-      produce(state, (draft) => {
-        draft.socket = action.payload.socket === true;
-      }),
     [SET_ALARM]: (state, action) =>
       produce(state, (draft) => {
         draft.alarm = action.payload.alarm;
@@ -163,6 +160,11 @@ export default handleActions(
     [JOIN_ARR]: (state, action) =>
       produce(state, (draft) => {
         draft.joinArr.push(action.payload.join);
+      }),
+    [DEL_ARR]: (state, action) =>
+      produce(state, (draft) => {
+        draft.joinArr = draft.joinArr.filter(
+        (msg) => msg.msgId !== action.payload.delete_arr)
       }),
 
   },
@@ -182,6 +184,7 @@ const actionCreators = {
   setalarm,
   joinArlam,
   mainArlam,
+  deleteArr,
 };
 
 export { actionCreators };

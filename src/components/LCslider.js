@@ -83,9 +83,10 @@ function LCslider(props) {
 
           {joinARR[0]? 
           joinARR?.map((a, index) => {
-            if(index<6)return (
+            if(index<7)return (
               <React.Fragment key={index}>
                 <ArrsmallBox onClick={()=>{
+                  dispatch(roomActions.deleteArr(a.msgId))
                   history.push(`/postdetail/${a?.postId}`)
                 }}>
                
