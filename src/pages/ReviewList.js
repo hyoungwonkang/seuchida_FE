@@ -43,7 +43,7 @@ const ReviewList = () => {
       },
     })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setIsLoading(false);
         setPostList((items) => [...items, ...res.data]);
       })

@@ -130,6 +130,9 @@ const ModalData = (props) => {
     return (
       <Grid width="342px" height="250px" padding="10px">
         <SelectBox>
+          <Text bold margin="10px 0px 10px 13px" size="16px">
+            어떤 점이 별로였나요?
+          </Text>
           {BadList.map((item) => {
             return (
               <Content key={item.id} row>
@@ -150,7 +153,7 @@ const ModalData = (props) => {
               </Content>
             );
           })}
-          <Grid row height="20px" justify="right" padding="20px 5px 0px 0px">
+          <Grid row height="20px" justify="right" padding="20px 5px 15px 0px">
             <Button
               is_close
               _onClick={() => {

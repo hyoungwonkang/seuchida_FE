@@ -36,11 +36,15 @@ const ReviewWrite = (props) => {
 
   //모달 오픈 state
   const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen2, setIsOpen2] = React.useState(false);
 
   //페이지 값
   const [preview, setPreview] = useState("");
   const [reviewImg, setReviewImg] = useState("");
   const [review, setReview] = useState("");
+
+  //특수 문자 제한
+  const notSpecial = /[^/!/~/./,\sㄱ-ㅎ가-힣a-z0-9]/gi;
 
   const selectPreview = (e) => {
     setPreview(window.webkitURL.createObjectURL(e.target.files[0]));
@@ -54,7 +58,7 @@ const ReviewWrite = (props) => {
     if (e.target.value.length >= 100) {
       e.target.value = e.target.value.substr(0, 100);
     }
-    setReview(e.target.value);
+    setReview(e.target.value.replace(notSpecial, ""));
   };
 
   //빈값 유효성 검사
@@ -76,10 +80,12 @@ const ReviewWrite = (props) => {
     }
   };
 
-  //100글자 제한
-  if (review?.length >= 100) {
-    window.alert("100글자 이내로 작성해주세요:)");
-  }
+  //글자수 100글자 제한
+  useEffect(() => {
+    if (review?.length >= 100) {
+      setIsOpen2(true);
+    }
+  }, [review]);
 
   //뒤로가기 시 로컬 값 삭제
   const remove = () => {
@@ -182,6 +188,15 @@ const ReviewWrite = (props) => {
 
           {/* 다음 버튼 */}
           <FooterMenu next text="다음" state={alert} />
+
+          {/* 글자수 모달 */}
+          <Modal open={isOpen2}>
+            <ModalData
+              Alert
+              onClose={() => setIsOpen2(false)}
+              text="100글자 이하로 작성해주세요!"
+            />
+          </Modal>
 
           {/* 경고창 모달 */}
           <Modal open={isOpen}>
