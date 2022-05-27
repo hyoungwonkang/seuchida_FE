@@ -21,20 +21,20 @@ function Guide() {
     <div>
       <Sliders {...settings} styled={{ height: "100px" }}>
         <div>
-          <Img alt="guide1" src="./img/guide/guide1.png" />
-          <Btn>다음</Btn>
+          <Img alt="guide1" src="/img/guide/guide1.png" />
+          {/* <Btn>다음</Btn> */}
         </div>
         <div>
           <Img alt="guide2" src="./img/guide/guide2.png" />
-          <Btn>다음</Btn>
+          {/* <Btn>다음</Btn> */}
         </div>
         <div>
           <Img alt="guide3" src="./img/guide/guide3.png" />
-          <Btn>다음</Btn>
+          {/* <Btn>다음</Btn> */}
         </div>
         <div>
           <Img alt="guide4" src="./img/guide/guide4.png" />
-          <Btn>다음</Btn>
+          {/* <Btn>다음</Btn> */}
         </div>
         <div>
           <Img alt="guide5" src="./img/guide/guide5.png" />
@@ -70,7 +70,7 @@ const Btn = styled.button`
 
 const LastBtn = styled.button`
   min-width: 390px;
-  height: 74px;
+  height: 70px;
   position: absolute;
   bottom: 5px;
   color: white;

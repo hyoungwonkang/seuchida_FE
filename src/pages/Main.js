@@ -10,6 +10,8 @@ import { history } from "../redux/configStore";
 import io from "socket.io-client";
 import { RiMessage3Fill } from "react-icons/ri";
 import { IoIosArrowForward } from "react-icons/io";
+import Modal from "../components/Modal/Modal"; //모달 창
+import ModalData from "../components/Modal/ModalData";
 
 // const token = localStorage.getItem("token");
 // // const ENDPOINT = "https://seuchidabackend.shop";
@@ -17,16 +19,17 @@ import { IoIosArrowForward } from "react-icons/io";
 //       auth: {
 //         auth: token,
 //       },
-//     }); 
+//     });
 
 const Main = () => {
-
   const catepost = useSelector((state) => state.post.list.caPost);
   const post_list = useSelector((state) => state.post.list.nearPost);
   const review = useSelector((state) => state.post.list.filterRe);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   // const [mainalert, setMainalert] = React.useState([])
+  //모달
+  const [isOpen, setIsOpen] = React.useState(false);
   const [state, setState] = React.useState({
     center: {
       lat: 33.450701,
@@ -36,20 +39,20 @@ const Main = () => {
     isLoading: true,
   });
 
-  React.useEffect(()=>{
-    dispatch(userActions.isLoginDB());   
-  },[])
-  React.useEffect(()=>{
-    dispatch(postActions.getMainDB());    
-  },[])
-
+  React.useEffect(() => {
+    dispatch(userActions.isLoginDB());
+    setIsOpen(true);
+  }, []);
+  React.useEffect(() => {
+    dispatch(postActions.getMainDB());
+  }, []);
 
   // React.useEffect(()=>{
   //   socket.on("joinPartyAlert", (data) => {
   //    console.log(data)
   //    setMainalert((mainalert) => mainalert.concat(data));
-  //   }) 
-     
+  //   })
+
   //   },[])
 
   React.useEffect(() => {
@@ -151,6 +154,16 @@ const Main = () => {
         <Survey onClick={handleClick}>
           <RiMessage3Fill size={40} color="#FDE333" />
         </Survey>
+
+        <Modal open={isOpen}>
+          <ModalData
+            Survey
+            onClose={() => setIsOpen(false)}
+            text="설문조사 참여해주시면 소정의 선물을 드립니다!"
+            text2="노란색 메세지 아이콘을 클릭해 주세요:)"
+          />
+        </Modal>
+
         {/* 프로필 작성 */}
         <Float
           onClick={() => {
@@ -173,8 +186,8 @@ const Main = () => {
         >
           <img alt="plus" src="./img/addpost.png" width={64} />
         </Float>
-        {/* 푸터 */}
-      </Container>
+      </Container>{" "}
+      {/* 푸터 */}
       <FooterMenu />
     </>
   );

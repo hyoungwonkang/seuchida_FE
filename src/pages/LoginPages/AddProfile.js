@@ -16,8 +16,9 @@ const AddProfile = (props) => {
   //모달 오픈 state
   const [isOpen, setIsOpen] = React.useState(false);
   const [isOpen2, setIsOpen2] = React.useState(false);
+  const [isOpen3, setIsOpen3] = React.useState(false);
+
   const userInfo = useSelector((state) => state.user.userInfo);
-  // console.log(userInfo);
 
   useEffect(() => {
     setPreview(userInfo?.userImg);
@@ -36,7 +37,9 @@ const AddProfile = (props) => {
   const [age, setAge] = useState(localStorage.getItem("age"));
   const [content, setContent] = useState(localStorage.getItem("content"));
 
-  //로컬 값 저장
+  //특수 문자 제한
+  const notNum = /[^ㄱ-ㅎ가-힣a-z0-9]/gi;
+  const notSpecial = /[^/!/~/./,\sㄱ-ㅎ가-힣a-z0-9]/gi;
 
   const selectPreview = (e) => {
     setPreview(window.webkitURL.createObjectURL(e.target.files[0]));
@@ -47,7 +50,11 @@ const AddProfile = (props) => {
   };
 
   const selectNickName = (e) => {
-    setNickName(e.target.value);
+    //글 수 제한
+    if (e.target.value.length >= 8) {
+      e.target.value = e.target.value.substr(0, 8);
+    }
+    setNickName(e.target.value.replace(notNum, ""));
   };
 
   const selectGender = (e) => {
@@ -62,17 +69,17 @@ const AddProfile = (props) => {
     if (e.target.value.length >= 100) {
       e.target.value = e.target.value.substr(0, 100);
     }
-    setContent(e.target.value);
+    setContent(e.target.value.replace(notSpecial, ""));
   };
 
   //빈값 유효성 검사
   const alert = (e) => {
     if (
-      profile === "" ||
-      nickName === "" ||
-      gender === "" ||
-      age === "" ||
-      content === ""
+      profile === null ||
+      nickName === null ||
+      gender === null ||
+      age === null ||
+      content === null
     ) {
       setIsOpen(true);
     } else {
@@ -81,6 +88,22 @@ const AddProfile = (props) => {
       localStorage.setItem("gender", gender);
       localStorage.setItem("age", age);
       localStorage.setItem("content", content);
+
+      if (
+        profile === "" ||
+        nickName === "" ||
+        gender === "" ||
+        age === "" ||
+        content === ""
+      ) {
+        setIsOpen(true);
+      } else {
+        //로컬 값 저장
+        localStorage.setItem("nickName", nickName);
+        localStorage.setItem("gender", gender);
+        localStorage.setItem("age", age);
+        localStorage.setItem("content", content);
+      }
 
       //사진 추가
       if (profile === userInfo?.userImg) {
@@ -97,10 +120,13 @@ const AddProfile = (props) => {
 
   //글자수 100글자 제한
   useEffect(() => {
+    if (nickName?.length >= 8) {
+      setIsOpen3(true);
+    }
     if (content?.length >= 100) {
       setIsOpen2(true);
     }
-  }, [content]);
+  }, [content, nickName]);
 
   //앱에서 페이지 새로고침 막기
   document.body.style.overscrollBehavior = "none";
@@ -114,6 +140,7 @@ const AddProfile = (props) => {
     localStorage.removeItem("gender");
     localStorage.removeItem("age");
     localStorage.removeItem("content");
+    localStorage.removeItem("userInterest");
     //새로고침 경고
     window.onbeforeunload = function () {
       return "새로고침 경고";
@@ -161,6 +188,7 @@ const AddProfile = (props) => {
                 height="56px"
                 type="text"
                 placeholder="닉네임"
+                pattern="/[^ㄱ-ㅎ가-힣]/g"
                 _onChange={selectNickName}
                 value={nickName || ""}
               />
@@ -181,8 +209,9 @@ const AddProfile = (props) => {
                     type="number"
                     placeholder="나이"
                     onChange={selectAge}
-                    pattern="/[^ㄱ-ㅎ가-힣]/g"
+                    pattern="/[ㄱ-ㅎ가-힣]/g"
                     value={age || ""}
+                    min="0"
                   />
                 </div>
               </Option>
@@ -204,7 +233,6 @@ const AddProfile = (props) => {
               </Text>
 
               {/* 푸터 */}
-
               <FooterMenu next text="다음" state={alert} />
 
               {/* 경고창 모달 */}
@@ -222,6 +250,14 @@ const AddProfile = (props) => {
                   Alert
                   onClose={() => setIsOpen2(false)}
                   text="100글자 이하로 작성해주세요!"
+                />
+              </Modal>
+              {/* 글자수 모달(닉네임) */}
+              <Modal open={isOpen3}>
+                <ModalData
+                  Alert
+                  onClose={() => setIsOpen3(false)}
+                  text="8글자 이하로 작성해주세요!"
                 />
               </Modal>
             </Grid>

@@ -4,8 +4,20 @@ import styled from "styled-components";
 import { HiOutlineX } from "react-icons/hi";
 
 const ModalData = (props) => {
-  console.log(props);
-  const { Members, Alert, Check, Evaluate, text, onCheck, onClose } = props;
+  const { Members, Alert, Check, Evaluate, text, onCheck, onClose, Survey } =
+    props;
+
+  if (Survey) {
+    return (
+      <>
+        {/* close버튼 */}
+        <Grid row justify="right" height="30px">
+          <HiOutlineX size={35} onClick={onClose} />
+        </Grid>
+        <img alt="seuchin" src="./img/seuchin.png" />
+      </>
+    );
+  }
 
   //재확인 창
   if (Check) {

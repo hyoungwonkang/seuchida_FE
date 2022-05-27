@@ -14,9 +14,7 @@ import { actionCreators as mypageActions } from "../redux/modules/mypage";
 import Modal from "../components/Modal/Modal"; //모달 창
 import ModalData from "../components/Modal/ModalData";
 
-
 const NameCard = () => {
-  
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -24,20 +22,18 @@ const NameCard = () => {
     dispatch(mypageActions.myExerciseDB());
   }, []);
 
-
   const userInfo = useSelector((state) => state.user.userInfo);
   const level = [
-    { id: 1, level: 1, image: <Image src="./img/badge/red.png" /> },
-    { id: 2, level: 2, image: <Image src="./img/badge/orange.png" /> },
-    { id: 3, level: 3, image: <Image src="./img/badge/yellow.png" /> },
-    { id: 4, level: 4, image: <Image src="./img/badge/green.png" /> },
-    { id: 5, level: 5, image: <Image src="./img/badge/skyblue.png" /> },
-    { id: 6, level: 6, image: <Image src="./img/badge/blue.png" /> },
-    { id: 7, level: 7, image: <Image src="./img/badge/purple.png" /> },
+    { id: 1, level: 1, image: <Image src="/img/badge/red.png" /> },
+    { id: 2, level: 2, image: <Image src="/img/badge/orange.png" /> },
+    { id: 3, level: 3, image: <Image src="/img/badge/yellow.png" /> },
+    { id: 4, level: 4, image: <Image src="/img/badge/green.png" /> },
+    { id: 5, level: 5, image: <Image src="/img/badge/skyblue.png" /> },
+    { id: 6, level: 6, image: <Image src="/img/badge/blue.png" /> },
+    { id: 7, level: 7, image: <Image src="/img/badge/purple.png" /> },
   ];
 
   return (
-
     <Grid column height="auto" margin="0px" bg="white">
       {/* 프로필 수정, 알람 */}
       <Grid row height="auto" margin="20px 0px 0px 0px" justify="right">

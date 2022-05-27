@@ -101,7 +101,7 @@ const getPostlistDB = () => {
         method: "get",
         url: `https://seuchidabackend.shop/api/nearPostList`,
         headers: {
-          authorization: `Bearer ${token}`,
+          authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }).then((response) => {
         console.log(response);
