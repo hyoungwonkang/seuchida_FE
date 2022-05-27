@@ -4,10 +4,8 @@ import GlobalStyle from "../elements/style/GlobalStyle";
 import { Route, Switch } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configStore";
-import { io } from "socket.io-client";
+
 import MobileFrame from "../shared/MoileFrame";
-import { useDispatch } from "react-redux";
-import { actionCreators as roomCreators } from "../redux/modules/room";
 import {
   Guide,
   Login,
@@ -42,15 +40,8 @@ import {
   NotFound,
 } from "../pages/Index";
 
-const token = localStorage.getItem("token");
-const socket = io.connect("https://seuchidabackend.shop", {
-  auth: {
-    auth: token,
-  },
-});
-
-
 function App() {
+
  
   const dispatch = useDispatch()
   React.useEffect(()=>{
@@ -71,6 +62,12 @@ function App() {
     <>
       <GlobalStyle />
       <Wrapper>
+        <WebView>
+          <MobileFrame className="MobileFramePage">
+            <Img src="/img/test.png" />
+          </MobileFrame>
+        </WebView>
+
         <ConnectedRouter history={history}>
           <Suspense
             fallback={
@@ -133,7 +130,6 @@ function App() {
               </Switch>
             </MobileFrame>
           </Suspense>
-          <WebView></WebView>
         </ConnectedRouter>
       </Wrapper>
     </>
@@ -154,7 +150,6 @@ const WebView = styled.div`
   height: 100vh;
   background-image: url("/img/webpage2.png");
   background-size: cover;
-  /* overflow: hidden; */
   position: absolute;
   top: 0;
   right: 0;
@@ -166,7 +161,6 @@ const Loading = styled.div`
   width: 100%;
   height: 100%;
   max-width: 390px;
-  /* padding: 300px 0px; */
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -181,4 +175,19 @@ const Txt = styled.div`
   font-weight: 800;
 `;
 
-const Seuchin = styled.div``;
+const Img = styled.img`
+  position: absolute;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  vertical-align: middle;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 390px;
+  height: 100%;
+  margin: 0 auto;
+  background-color: #fff;
+  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.3);
+  z-index: 999;
+`;
