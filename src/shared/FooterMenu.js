@@ -14,6 +14,8 @@ const FooterMenu = (props) => {
   const chatalarm = useSelector(state=> state.room.alarm)
   const mainalarm = useSelector(state=> state.room.mainarr)
 
+  const url = history.location.pathname
+
   const readArlam = () => {
     dispatch(roomCreators.setalarm(false));
     localStorage.removeItem("main");
@@ -30,6 +32,18 @@ const FooterMenu = (props) => {
     localStorage.removeItem("mypage");
     history.push("/main");
   };
+
+  React.useEffect(() =>{
+    if(url ==="/main"){
+      dispatch(roomCreators.mainArlam(false));
+     }
+  }, [])
+
+  React.useEffect(() =>{
+    if(url === "/chatlist" ){
+      dispatch(roomCreators.setalarm(false));
+     }
+  }, [])
 
 
   if (Chat) {
@@ -113,7 +127,7 @@ const FooterMenu = (props) => {
     <Container>
       <MenuBox>
         <Menu onClick={readMain}>
-          {mainalarm && <NewArlam>new</NewArlam>}
+          {  mainalarm && <NewArlam>new</NewArlam>}
           {localStorage.getItem("main") === "main" ? (
             <img alt="home" src="/img/footer/homeg.png" />
           ) : (
@@ -136,7 +150,7 @@ const FooterMenu = (props) => {
           )}
         </Menu>
         <Menu onClick={readArlam}>
-          {chatalarm && <NewArlam>new</NewArlam>}
+          { url !=="/chatlist" && chatalarm && <NewArlam>new</NewArlam>}
           {localStorage.getItem("chat") === "chat" ? (
             <img alt="chat" src="/img/footer/chatg.png" />
           ) : (

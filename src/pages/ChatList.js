@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import FooterMenu from "../shared/FooterMenu";
 import { useSelector, useDispatch } from "react-redux";
 import room, { actionCreators as roomCreators } from "../redux/modules/room";
@@ -17,19 +17,28 @@ const ChatList = ({socket}) => {
   const unreadChatlist = useSelector(
     (state) => state.room?.list?.unreadChatlist
   );
+  const alarm = useSelector((state)=>state.room.chatarr)
+  console.log(alarm)
+  // const [newChat , setNewChat] = React.useState()
 
-  const [alarm, setAlarm] = React.useState();
+  
 
   React.useEffect(() => {
     dispatch(roomCreators.getchatRoomDB());
   }, []);
 
+    const groupValues = alarm?.reduce((acc, current) => {
+      acc[current.room] = acc[current.room] || [];
+      acc[current.room].push(current.msg,current.createdAt);
+      return acc;
+  }, {});
+  
+  // 위에서 만든 객체를 key로 돌려서 새로운 객체 return
+  const newChat = Object.keys(groupValues).map((key) => {
+    return ({ room: key, msg: groupValues[key], });
+  });
 
-  React.useEffect(() => {
-    socket?.on("alert", (data) => {
-      setAlarm(data);
-    });
-  }, []);
+  console.log(newChat)
 
   return (
     <>
@@ -71,10 +80,10 @@ const ChatList = ({socket}) => {
                       되긴되는데 룸아이디로 비교를 어케하냐 ??...*/}
                       </div>
                       {/* 알림과 방의 아이디가 일치하고 알람내용이 있을때  */}
-                      <LastMsg>
-                        {room?.roomId === alarm?.room
-                          ? alarm?.msg
-                          : last_chat[index]?.msg}
+                      <LastMsg> 
+                       {room?.roomId === newChat[index]?.room
+                          ? newChat[index]?.msg[newChat[index].msg?.length-1]
+                          : last_chat[index]?.msg} 
                       </LastMsg>
                     </div>
                   </ChatTitleBox>
@@ -88,7 +97,8 @@ const ChatList = ({socket}) => {
                       : last_chat[index]?.createdAt
                       ).fromNow()}
                   </div>
-                      <NewMsg>{unreadChatlist[index].length}</NewMsg>
+                      { unreadChatlist[index].length!==0 && <NewMsg>{unreadChatlist[index]?.length}</NewMsg>
+                      } 
                </div>
                 </ContentBox>
               </ChatBox>

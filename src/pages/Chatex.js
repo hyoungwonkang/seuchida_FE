@@ -135,6 +135,7 @@ function Chatex(props) {
   };
 
 
+
   //앱에서 페이지 새로고침 막기
   document.body.style.overscrollBehavior = "none";
 
@@ -230,6 +231,7 @@ function Chatex(props) {
             value={message}
             placeholder="내용을 입력하세요."
             onChange={(e) => setMessage(e.target.value)}
+            onkeyup="enterkey()"
           />
 
           <Send onClick={sendMessage}>

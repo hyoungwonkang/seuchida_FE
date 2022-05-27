@@ -63,6 +63,7 @@ function App() {
 
     React.useEffect(() => {
       socket?.on("alert", (data) => {
+        dispatch(roomCreators.chattingArr(data))
         dispatch(roomCreators.setalarm(true))
       })
       },[]);
@@ -125,7 +126,7 @@ function App() {
                 <Route path="/postwrite3" exact component={PostWrite_3} />
                 <Route path="/postwrite4" exact component={PostWrite_4} />
                 <Route path="/postdone" exact component={PostDone} />
-                <Route path="/ChatList" exact component={ChatList} socket={socket} />
+                <Route path="/ChatList" exact component={ChatList} />
                 <Route path="/chatex/:roomId" exact component={Chatex} />
                 <Route>
                   <NotFound />
