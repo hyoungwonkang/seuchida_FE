@@ -233,7 +233,7 @@ const Btns = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 0px 0px 0px 45px;
+  padding: 0px 0px 0px 40px;
   margin: auto;
   background-color: white;
   box-shadow: 0px -2px 4px 2.5px #ddd;

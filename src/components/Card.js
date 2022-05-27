@@ -57,11 +57,11 @@ const Card = (props) => {
         <MainContainer>
           <div onClick={_onClick}>
             <TextBox style={{ paddingBottom: "5px", height: "85px" }}>
-              <div style={{ marginBottom: "0px" }}>
+              <div style={{ marginBottom: "0px", display: "flex" }}>
                 <BoldTitle style={{ color: "#FF6B52" }}>
                   · {props?.status === true ? "모집중" : "모집완료"}
                 </BoldTitle>
-                <BoldTitle>{props?.postTitle}</BoldTitle>
+                <BoldTitleel>{props?.postTitle}</BoldTitleel>
               </div>
 
               <MainDesc>{props?.postDesc} </MainDesc>
@@ -310,11 +310,13 @@ const Desc = styled.div`
   padding-top: 4px;
   height: 60px;
 `;
+
 const DetailDesc = styled.div`
   font-size: 17px;
   padding-top: 15px;
   min-height: 60px;
 `;
+
 const ListDesc = styled.div`
   font-size: 17px;
   padding-top: 4px;
@@ -328,6 +330,7 @@ const ListDesc = styled.div`
   line-height: 1.3em;
   height: 3.9em;
 `;
+
 const MainDesc = styled.div`
   font-size: 17px;
   padding-top: 8px;
@@ -408,6 +411,22 @@ const BoldTitler = styled.span`
   width: 250px;
   line-height: 1.3em;
   height: 2.4em;
+  color: #585858;
+`;
+
+const BoldTitleel = styled.span`
+  font-weight: bold;
+  font-size: 17px;
+  /* margin-right: 15px; */
+  width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 라인수 */
+  -webkit-box-orient: vertical;
+  /* word-wrap: break-word; */
+  /* line-height: 1.3em;
+  height: 2.4em; */
   color: #585858;
 `;
 

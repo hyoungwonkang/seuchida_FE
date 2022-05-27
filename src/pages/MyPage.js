@@ -89,7 +89,6 @@ const MyPage = () => {
   const point = JSON.stringify(userInfo?.userEvalue);
 
   //모달창 state
-  const [isOpen, setIsOpen] = React.useState(false);
   const [isOpen2, setIsOpen2] = React.useState(false);
 
   //로그아웃

@@ -50,17 +50,16 @@ function App() {
             <Img src="/img/test.png" />
           </MobileFrame>
         </WebView>
-
-        <ConnectedRouter history={history}>
-          <Suspense
-            fallback={
-              <Loading>
-                <img alt="seuchin" src="/img/loading.gif" width={130} />
-                <Txt>Loading...</Txt>
-              </Loading>
-            }
-          >
-            <MobileFrame className="MobileFramePage">
+        <MobileFrame className="MobileFramePage">
+          <ConnectedRouter history={history}>
+            <Suspense
+              fallback={
+                <Loading>
+                  <img alt="seuchin" src="/img/loading.gif" width={130} />
+                  <Txt>Loading...</Txt>
+                </Loading>
+              }
+            >
               <Switch>
                 <Route path="/" exact component={Login} />
                 <Route path="/guide" exact component={Guide} />
@@ -111,9 +110,9 @@ function App() {
                   <NotFound />
                 </Route>
               </Switch>
-            </MobileFrame>
-          </Suspense>
-        </ConnectedRouter>
+            </Suspense>
+          </ConnectedRouter>
+        </MobileFrame>
       </Wrapper>
     </>
   );
@@ -131,7 +130,7 @@ const Wrapper = styled.div`
 const WebView = styled.div`
   width: 100vw;
   height: 100vh;
-  background-image: url("/img/webpage2.png");
+  background-image: url("/img/background.png");
   background-size: cover;
   position: absolute;
   top: 0;

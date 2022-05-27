@@ -1,8 +1,6 @@
 import { io } from "socket.io-client";
 
-
 const token = localStorage.getItem("token");
-
 
 const socket = io.connect("https://seuchidabackend.shop", {
   auth: {
@@ -20,10 +18,9 @@ export const initSocketConnection = () => {
 };
 
 export const disconnectSocket = () => {
-  if (socket == null ) {
+  if (socket == null) {
     return;
   }
   socket.disconnect();
   socket = undefined;
 };
-

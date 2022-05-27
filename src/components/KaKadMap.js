@@ -85,7 +85,7 @@ const Mebtn = styled.div`
 
 const Box = styled.div`
   position: absolute;
-  padding: 10px;
+  padding: 5px;
   top: -190px;
   left: -80px;
   background-color: white;
@@ -196,16 +196,16 @@ const EventMarkerContainer = (props) => {
 
 const Desc = styled.div`
   font-size: 14px;
-  width: 120px;
+  width: 140px;
   height: 60px;
   padding: 10px 6px;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: -webkit-box;
+  /* display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   word-wrap: break-word;
   line-height: 1.3em;
   height: 2.6em;
-  color: #585858;
+  color: #585858; */
 `;

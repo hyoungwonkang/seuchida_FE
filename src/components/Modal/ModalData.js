@@ -1,21 +1,49 @@
 import React, { useState } from "react";
 import { Button, Text, Grid, Image } from "../../elements/Index";
 import styled from "styled-components";
-import { HiOutlineX } from "react-icons/hi";
+import { HiOutlineX, HiTranslate } from "react-icons/hi";
 
 const ModalData = (props) => {
   const { Members, Alert, Check, Evaluate, text, onCheck, onClose, Survey } =
     props;
-
+  console.log(props);
   if (Survey) {
     return (
-      <>
+      <div style={{ position: "absolute", transform: "translate(-50%, -50%)" }}>
         {/* close버튼 */}
-        <Grid row justify="right" height="30px">
-          <HiOutlineX size={35} onClick={onClose} />
+        <Grid row justify="right" height="50px" position>
+          <HiOutlineX size={38} onClick={onClose} />
         </Grid>
-        <img alt="seuchin" src="./img/seuchin.png" />
-      </>
+        <BannerBtn
+          src="./img/bannerbutton.png"
+          onClick={() => {
+            onCheck();
+          }}
+        />
+
+        <img alt="banner" src="./img/banner.png" style={{ width: "320px" }} />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "right",
+            color: "white",
+          }}
+        >
+          <button
+            style={{
+              background: "transparent",
+              border: "none",
+              color: "white",
+            }}
+            onClick={() => {
+              props.nottoday();
+              onClose();
+            }}
+          >
+            오늘 하루 더 이상 보지 않기 X
+          </button>
+        </div>
+      </div>
     );
   }
 
@@ -316,4 +344,13 @@ const Line = styled.hr`
   width: "500px";
   height: "50%";
   border: 1px solid black;
+`;
+
+const BannerBtn = styled.img`
+  width: 150px;
+  background-image: url(".img/bannerbutton.png");
+  position: absolute;
+  bottom: 40px;
+  left: 90px;
+  cursor: pointer;
 `;

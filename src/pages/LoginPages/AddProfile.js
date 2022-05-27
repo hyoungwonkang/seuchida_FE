@@ -32,6 +32,7 @@ const AddProfile = (props) => {
   const [profile, setProfile] = useState(
     userInfo.userImg ? userInfo.userImg : ""
   );
+
   const [nickName, setNickName] = useState(localStorage.getItem("nickName"));
   const [gender, setGender] = useState(localStorage.getItem("gender"));
   const [age, setAge] = useState(localStorage.getItem("age"));
