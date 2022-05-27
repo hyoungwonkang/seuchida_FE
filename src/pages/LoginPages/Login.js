@@ -1,8 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { KAKAO_AUTH_URL, GOOGLE_AUTH_URL } from "../../shared/OAuth";
-import { Grid, Button, Image, Text } from "../../elements/Index";
+import { Grid } from "../../elements/Index";
 import { useHistory } from "react-router-dom";
+import { history } from "../../redux/configStore";
+
 
 const Login = (props) => {
   const history = useHistory();
@@ -18,7 +20,7 @@ const Login = (props) => {
           <Akakao
             href={KAKAO_AUTH_URL}
             onClick={() => {
-              window.location.href = "/main";
+              history.push("/main")
             }}
           >
             <img src="./img/kakao_login_medium_wide.png" alt="카카오로그인" />
@@ -26,7 +28,7 @@ const Login = (props) => {
         </div>
         <GoogleBtn
           onClick={() => {
-            window.location.href = "/main";
+            history.push("/main")
           }}
         >
           <img src="./img/btn_google_light_normal_ios.svg" alt="구글로그인" />
@@ -54,6 +56,7 @@ const Agoogle = styled.a`
   display: block;
   font-weight: bold;
   font-size: 14px;
+  color: black;
 `;
 
 const GoogleBtn = styled.button`

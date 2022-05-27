@@ -73,7 +73,9 @@ const PostDetail = (props) => {
   const roomDone = () => {
     dispatch(roomActions.roomDoneDB(postId));
   };
+
   //참여 취소
+
   const joinCancle = () => {
     dispatch(roomActions.joinCancleDB(post.roomId, postId));
   };

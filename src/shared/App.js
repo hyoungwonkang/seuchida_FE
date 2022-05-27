@@ -4,8 +4,10 @@ import GlobalStyle from "../elements/style/GlobalStyle";
 import { Route, Switch } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configStore";
-
+import { io } from "socket.io-client";
 import MobileFrame from "../shared/MoileFrame";
+import { useDispatch } from "react-redux";
+import { actionCreators as roomCreators } from "../redux/modules/room";
 import {
   Guide,
   Login,
@@ -40,16 +42,33 @@ import {
   NotFound,
 } from "../pages/Index";
 
+const token = localStorage.getItem("token");
+const socket = io.connect("https://seuchidabackend.shop", {
+  auth: {
+    auth: token,
+  },
+});
+
+
 function App() {
+  const dispatch = useDispatch()
+  React.useEffect(()=>{
+    socket.on("joinPartyAlert", (data) => {
+      dispatch(roomCreators.joinArlam(data))
+     dispatch(roomCreators.mainArlam(true))
+    })       
+    },[])
+
+    React.useEffect(() => {
+      socket?.on("alert", (data) => {
+        dispatch(roomCreators.setalarm(true))
+      })
+      },[]);
+
   return (
     <>
       <GlobalStyle />
       <Wrapper>
-        <WebView>
-          {/* <Download>앱 사용자 평가하러 GO!</Download> */}
-          <Seuchin src={"./img/loading.gif"} />
-        </WebView>
-
         <ConnectedRouter history={history}>
           <Suspense
             fallback={
@@ -112,6 +131,7 @@ function App() {
               </Switch>
             </MobileFrame>
           </Suspense>
+          <WebView></WebView>
         </ConnectedRouter>
       </Wrapper>
     </>
@@ -138,19 +158,6 @@ const WebView = styled.div`
   right: 0;
   bottom: 0;
   left: 0;
-`;
-
-const Download = styled.button`
-  width: 266px;
-  height: 71px;
-  box-sizing: border-box;
-  background: transparent;
-  border: 1px solid #505050;
-  font-size: 20px;
-  position: absolute;
-  top: 300px;
-  left: 200px;
-  cursor: pointer;
 `;
 
 const Loading = styled.div`

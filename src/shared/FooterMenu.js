@@ -5,18 +5,14 @@ import { Button, Image } from "../elements/Index";
 import { io } from "socket.io-client";
 import { actionCreators as roomCreators } from "../redux/modules/room";
 import { useDispatch, useSelector } from "react-redux";
-const token = localStorage.getItem("token");
-const socket = io.connect("https://seuchidabackend.shop", {
-  auth: {
-    auth: token,
-  },
-});
+
 
 const FooterMenu = (props) => {
   const history = useHistory();
   const { next, is_check, __onClick, Chat } = props;
-  const dispatch = useDispatch();
-  const alarm = useSelector((state) => state.room.alarm);
+  const dispatch = useDispatch()
+  const chatalarm = useSelector(state=> state.room.alarm)
+  const mainalarm = useSelector(state=> state.room.mainarr)
 
   const readArlam = () => {
     dispatch(roomCreators.setalarm(false));
@@ -26,12 +22,27 @@ const FooterMenu = (props) => {
     localStorage.removeItem("mypage");
     history.push("/chatlist");
   };
+  const readMain = () => {
+    dispatch(roomCreators.mainArlam(false));
+    localStorage.setItem("main", "main");
+    localStorage.removeItem("map");
+    localStorage.removeItem("chat");
+    localStorage.removeItem("mypage");
+    history.push("/main");
+  };
 
-  React.useEffect(() => {
-    socket?.on("alert", (data) => {
-      dispatch(roomCreators.setalarm(true));
-    });
-  }, []);
+
+
+
+    //ㅠㅠㅠ
+    // React.useEffect(() => {  
+    //   return ()=>{
+    //     socket.disconnect()
+    //   } 
+    //   },[]);
+  
+
+
 
   if (Chat) {
     return (
@@ -113,15 +124,8 @@ const FooterMenu = (props) => {
   return (
     <Container>
       <MenuBox>
-        <Menu
-          onClick={(e) => {
-            localStorage.setItem("main", "main");
-            localStorage.removeItem("map");
-            localStorage.removeItem("chat");
-            localStorage.removeItem("mypage");
-            history.push("/main");
-          }}
-        >
+        <Menu onClick={readMain}>
+          {mainalarm && <NewArlam>new</NewArlam>}
           {localStorage.getItem("main") === "main" ? (
             <img alt="home" src="/img/footer/homeg.png" />
           ) : (
@@ -143,17 +147,8 @@ const FooterMenu = (props) => {
             <img alt="around" src="/img/footer/around.png" />
           )}
         </Menu>
-        <Menu
-          onClick={() => {
-            readArlam();
-            localStorage.removeItem("main");
-            localStorage.removeItem("map");
-            localStorage.setItem("chat", "chat");
-            localStorage.removeItem("mypage");
-            history.push("/chatlist");
-          }}
-        >
-          {alarm && <NewArlam>new</NewArlam>}
+        <Menu onClick={readArlam}>
+          {chatalarm && <NewArlam>new</NewArlam>}
           {localStorage.getItem("chat") === "chat" ? (
             <img alt="chat" src="/img/footer/chatg.png" />
           ) : (
@@ -227,13 +222,14 @@ const Btn = styled.div`
 const NewArlam = styled.div`
   position: fixed;
   z-index: 999;
-  background-color: #fe3c30;
+  background-color: #ff6a52;
   margin-left: 20px;
   bottom: 50px;
   padding: 4px;
   border-radius: 20px;
   font-size: 12px;
 `;
+
 const Btns = styled.div`
   position: fixed;
   bottom: 0;

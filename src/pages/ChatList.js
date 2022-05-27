@@ -26,14 +26,9 @@ const ChatList = () => {
   );
 
   const [alarm, setAlarm] = React.useState();
-  console.log(alarm);
 
   React.useEffect(() => {
     dispatch(roomCreators.getchatRoomDB());
-  }, []);
-
-  React.useEffect(() => {
-    dispatch(roomCreators.socketLogin());
   }, []);
 
   // React.useEffect(() => {
@@ -42,8 +37,6 @@ const ChatList = () => {
 
   React.useEffect(() => {
     socket?.on("alert", (data) => {
-      console.log(data);
-
       setAlarm(data);
       // setAlarm((alarm) => alarm.concat(data));
     });
@@ -80,16 +73,31 @@ const ChatList = () => {
               >
                 <ContentBox>
                   <ChatTitleBox>
-                    <Image src={room.ownerImg} size={50} />
+                    <Image src={room?.ownerImg} size={50} />
                     <div style={{ marginLeft: "10px" }}>
                       <div style={{ marginBottom: "5px" }}>
                         <ChatTitle>{room?.postTitle} </ChatTitle>
-                        <UserCount> {room.userList?.length}</UserCount>
+                        {/* 알람 length 더해보기. 하나는 state 하나는 일반 되나 ? +alarm.length 
+                      되긴되는데 룸아이디로 비교를 어케하냐 ??...*/}
+                        <div>{unreadChatlist[index].length}</div>
+                        {/* <UserCount> {room?.nowMember?.length}</UserCount> */}
                       </div>
-                      <LastMsg>{last_chat[index]?.msg}</LastMsg>
+                      {/* 알림과 방의 아이디가 일치하고 알람내용이 있을때  */}
+                      <LastMsg>
+                        {room?.roomId === alarm?.room
+                          ? alarm?.msg
+                          : last_chat[index]?.msg}
+                      </LastMsg>
                     </div>
                   </ChatTitleBox>
-                  <div>{moment(last_chat[index]?.createdAt).fromNow()}</div>
+                  <div>
+                    {/* 알림과 방의 아이디가 일치하고 알람내용의 시간비교  */}
+                    {moment(
+                      room?.roomId === alarm?.room
+                        ? alarm?.createdAt
+                        : last_chat[index]?.createdAt
+                    ).fromNow()}
+                  </div>
                 </ContentBox>
               </ChatBox>
             );
@@ -160,8 +168,6 @@ const ContentBox = styled.div`
 `;
 
 const NewMsg = styled.div`
-  margin: 8px 0px 0px 24px;
-  position: absolute;
   background-color: #fe3c30;
   height: 18px;
   width: 18px;
