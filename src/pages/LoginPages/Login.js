@@ -54,6 +54,7 @@ const Agoogle = styled.a`
   display: block;
   font-weight: bold;
   font-size: 14px;
+  color: black;
 `;
 
 const GoogleBtn = styled.button`
