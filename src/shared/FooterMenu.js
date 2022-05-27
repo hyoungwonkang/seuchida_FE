@@ -7,13 +7,14 @@ import { actionCreators as roomCreators } from "../redux/modules/room";
 import { useDispatch, useSelector } from "react-redux";
 
 const token = localStorage.getItem("token");
-        let socket = io.connect("https://seuchidabackend.shop", {
-          auth: {
-            auth: token,
-          },
-        });
+        // const socket = io.connect("https://seuchidabackend.shop", {
+        //   auth: {
+        //     auth: token,
+        //   },
+        // });
 
 const FooterMenu = (props) => {
+  let socket= io()
   const history = useHistory();
   const { next, is_check, __onClick, Chat } = props;
 
@@ -44,7 +45,13 @@ const FooterMenu = (props) => {
     })
     },[]);
 
+    //ㅠㅠㅠ
     React.useEffect(() => {
+      const socket = io.connect("https://seuchidabackend.shop", {
+          auth: {
+            auth: token,
+          },
+        });
       return ()=>socket.disconnect()
       
       },[]);
