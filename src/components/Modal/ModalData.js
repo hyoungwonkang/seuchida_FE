@@ -6,7 +6,7 @@ import { HiOutlineX, HiTranslate } from "react-icons/hi";
 const ModalData = (props) => {
   const { Members, Alert, Check, Evaluate, text, onCheck, onClose, Survey } =
     props;
-  console.log(props);
+
   if (Survey) {
     return (
       <div style={{ position: "absolute", transform: "translate(-50%, -50%)" }}>

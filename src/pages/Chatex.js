@@ -237,6 +237,7 @@ function Chatex(props) {
       <Chatting>
         <div>
           <TextMsg
+            autoFocus
             value={message}
             placeholder="내용을 입력하세요."
             onChange={(e) => setMessage(e.target.value)}

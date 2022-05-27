@@ -18,10 +18,12 @@ const PostList = ({ list, params }) => {
   const post_list = useSelector((state) => state.post.list.nearPosts);
 
   const [postList, setPostList] = useState([]);
-  console.log(postList);
+  // console.log(postList);
   const [pageNumber, setPageNumber] = useState(1);
-  console.log(pageNumber);
+  // console.log(pageNumber);
   const [isLoading, setIsLoading] = useState(true);
+  const [count, setCount] = useState("");
+  // console.log(count);
   const pageEnd = React.useRef(null);
 
   const [state, setState] = useState({
@@ -75,7 +77,6 @@ const PostList = ({ list, params }) => {
       },
     })
       .then((res) => {
-        console.log(res.data.nearPosts);
         setIsLoading(false);
         setPostList((items) => [...items, ...res.data.nearPosts]);
       })
@@ -95,16 +96,14 @@ const PostList = ({ list, params }) => {
 
   //바닥 감지
   React.useEffect(() => {
-    if (postList.length > 0) {
-      const options = {
-        root: null,
-        rootMargin: "0px",
-        threshold: 0.25,
-      };
-      const observer = new IntersectionObserver(onIntersect, options);
-      observer.observe(pageEnd.current);
-      return () => observer.disconnect();
-    }
+    const options = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.25,
+    };
+    const observer = new IntersectionObserver(onIntersect, options);
+    observer.observe(pageEnd.current);
+    return () => observer.disconnect();
   }, [pageEnd]);
 
   return (
@@ -122,45 +121,27 @@ const PostList = ({ list, params }) => {
           <div> 여기여기 붙어라</div>
         </HeadContents>
       </Header>
-      {/* 글이 없을 때 : 있을 때*/}
-      {postList.length === 0 ? (
-        <Grid padding="0px 0px 80px 0px" column height="auto">
-          <img
-            src="./img/seuchin.png"
-            style={{ margin: "220px 0px 0px 0px" }}
-          />
-          <Text bold margin="0px" color="#C4C4C4">
-            아직 글이 없어요!
-          </Text>
-          <Text bold margin="0px" color="#C4C4C4">
-            지금 바로 글을 쓰러 가볼까요?
-          </Text>
-        </Grid>
-      ) : (
-        <ListBox>
-          {postList?.map((p, i) => {
-            return (
-              <Card
-                {...p}
-                key={p.id}
-                center={state.center}
-                _onClick={() => {
-                  history.push(`/postdetail/${p._id}`);
-                }}
-              />
-            );
-          })}
-          <div ref={pageEnd} className="pageEnd">
-            {isLoading ? (
-              <Pos>
-                <Seuchin alt="loading" src="./img/loading.gif" width={130} />
-              </Pos>
-            ) : (
-              ""
-            )}
-          </div>
-        </ListBox>
-      )}
+      <ListBox>
+        {postList?.map((p, i) => {
+          return (
+            <Card
+              {...p}
+              key={p.id}
+              center={state.center}
+              _onClick={() => {
+                history.push(`/postdetail/${p._id}`);
+              }}
+            />
+          );
+        })}
+        <div ref={pageEnd} className="pageEnd">
+          {isLoading && (
+            <Pos>
+              <Seuchin alt="loading" src="./img/loading.gif" width={130} />
+            </Pos>
+          )}
+        </div>
+      </ListBox>
 
       <FooterMenu />
     </>

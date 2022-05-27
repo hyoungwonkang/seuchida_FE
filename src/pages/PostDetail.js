@@ -17,7 +17,7 @@ import { io } from "socket.io-client";
 
 const token = localStorage.getItem("token");
 // const ENDPOINT = "https://seuchidabackend.shop";
-const socket = io.connect("https://seuchidaback.link", {
+const socket = io.connect("https://seuchidabackend.shop", {
   auth: {
     auth: token,
   },

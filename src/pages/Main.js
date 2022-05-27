@@ -136,7 +136,6 @@ const Main = () => {
         </ReviewBox>
 
         {/* 여기여기 붙어라 */}
-
         <TitleBox
           onClick={() => {
             history.push("/postlist");
