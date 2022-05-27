@@ -14,17 +14,20 @@ const JOIN_ARR = "JOIN_ARR"
 const MAIN_ARR = "MAIN_ARR"
 const DEL_ARR = "DEL_ARR"
 const CHAT_ARR = "CHAT_ARR"
-
+const DEL_NEWCHAT = "DEL_NEWCHAT"
+const CLEAR_COUNT = "CLEAR_COUNT"
 //Action Creators
 
 const chatRoom = createAction(SET_CHAT, (chat_list) => ({ chat_list }));
 const chatMember = createAction(SET_MEMBER, (member) => ({ member }));
 const socketLogin = createAction(SK_LOGIN, (socket) => ({ socket }));
-const setalarm = createAction(SET_ALARM, (alarm, mainarr) => ({ alarm,mainarr }));
+// const setalarm = createAction(SET_ALARM, (alarm, mainarr) => ({ alarm,mainarr }));
 const joinArlam = createAction(JOIN_ARR, (join) => ({ join }));
 const mainArlam = createAction(MAIN_ARR, (main) => ({ main }));
 const deleteArr = createAction(DEL_ARR, (delete_arr) => ({ delete_arr}));
 const chattingArr = createAction(CHAT_ARR, (chatting) => ({ chatting}));
+const deleteNewChat = createAction(DEL_NEWCHAT, (delete_newchat) => ({ delete_newchat}));
+const clearcount = createAction(CLEAR_COUNT, (clear) => ({ clear}));
 
 
 //initialState (default props 같은 것, 기본값)
@@ -39,8 +42,9 @@ const initialState = {
   },
   joinArr:[],
   chatarr:[],
-  alarm: false,
+  // alarm: false,
   mainarr:false,
+  arrcount:0,
 };
 
 //middleware
@@ -152,14 +156,19 @@ export default handleActions(
       produce(state, (draft) => {
         draft.list = action.payload.member;
       }),
-    [SET_ALARM]: (state, action) =>
-      produce(state, (draft) => {
-        draft.alarm = action.payload.alarm;
-      }),
+    // [SET_ALARM]: (state, action) =>
+    //   produce(state, (draft) => {
+    //     draft.alarm = action.payload.alarm;
+    //   }),
     [MAIN_ARR]: (state, action) =>
       produce(state, (draft) => {
         draft.mainarr = action.payload.main;
       }),
+    [CLEAR_COUNT]: (state, action) =>
+      produce(state, (draft) => {
+        draft.arrcount = action.payload.clear;
+      }),
+    
     [JOIN_ARR]: (state, action) =>
       produce(state, (draft) => {
         draft.joinArr.push(action.payload.join);
@@ -167,11 +176,17 @@ export default handleActions(
     [CHAT_ARR]: (state, action) =>
       produce(state, (draft) => {
         draft.chatarr.push(action.payload.chatting);
+        draft.arrcount = draft.arrcount+1
       }),
     [DEL_ARR]: (state, action) =>
       produce(state, (draft) => {
         draft.joinArr = draft.joinArr.filter(
         (msg) => msg.msgId !== action.payload.delete_arr)
+      }),
+    [DEL_NEWCHAT]: (state, action) =>
+      produce(state, (draft) => {
+        draft.chatarr = draft.chatarr.filter(
+        (msg) => msg.room !== action.payload.delete_newchat)
       }),
     
   },
@@ -188,11 +203,13 @@ const actionCreators = {
   roomDoneDB,
   joinCancleDB,
   socketLogin,
-  setalarm,
+  // setalarm,
   joinArlam,
   mainArlam,
   deleteArr,
   chattingArr,
+  deleteNewChat,
+  clearcount,
 };
 
 export { actionCreators };

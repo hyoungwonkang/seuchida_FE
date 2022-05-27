@@ -7,5 +7,5 @@ export const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id
 export const GOOGLE_CLIENT_ID =
   "971208839251-jensilevsnhs8ncs6lq174h03c7gknp1.apps.googleusercontent.com";
 export const GOOGLE_REDIRECT_URI =
-"http://localhost:3000/oauth/callback/google/";
+  "http://localhost:3000/oauth/callback/google/";
 export const GOOGLE_AUTH_URL = `https://accounts.google.com/o/oauth2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${GOOGLE_REDIRECT_URI}&scope=https://www.googleapis.com/auth/userinfo.profile&response_type=code`;

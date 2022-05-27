@@ -145,8 +145,8 @@ const MyPage = () => {
                 return v.color;
               }
             })}
-            레벨까지
-            {10 - point?.charAt(point.length - 1)}
+             레벨까지
+             {10 - point?.charAt(point.length - 1)}
             포인트
           </Text>
         )}

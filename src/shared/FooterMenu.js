@@ -6,18 +6,17 @@ import { io } from "socket.io-client";
 import { actionCreators as roomCreators } from "../redux/modules/room";
 import { useDispatch, useSelector } from "react-redux";
 
-
 const FooterMenu = (props) => {
   const history = useHistory();
   const { next, is_check, __onClick, Chat } = props;
-  const dispatch = useDispatch()
-  const chatalarm = useSelector(state=> state.room.alarm)
-  const mainalarm = useSelector(state=> state.room.mainarr)
+  const dispatch = useDispatch();
 
-  const url = history.location.pathname
+  const mainalarm = useSelector((state) => state.room.mainarr);
+  const alarm = useSelector((state) => state.room.arrcount);
 
+  const url = history.location.pathname;
   const readArlam = () => {
-    dispatch(roomCreators.setalarm(false));
+    // dispatch(roomCreators.setalarm(false));
     localStorage.removeItem("main");
     localStorage.removeItem("map");
     localStorage.setItem("chat", "chat");
@@ -33,18 +32,17 @@ const FooterMenu = (props) => {
     history.push("/main");
   };
 
-  React.useEffect(() =>{
-    if(url ==="/main"){
+  React.useEffect(() => {
+    if (url === "/main") {
       dispatch(roomCreators.mainArlam(false));
-     }
-  }, [])
+    }
+  }, [mainalarm]);
 
-  React.useEffect(() =>{
-    if(url === "/chatlist" ){
-      dispatch(roomCreators.setalarm(false));
-     }
-  }, [])
-
+  React.useEffect(() => {
+    if (url === "/chatlist") {
+      dispatch(roomCreators.clearcount(0));
+    }
+  }, [alarm]);
 
   if (Chat) {
     return (
@@ -127,7 +125,7 @@ const FooterMenu = (props) => {
     <Container>
       <MenuBox>
         <Menu onClick={readMain}>
-          {  mainalarm && <NewArlam>new</NewArlam>}
+          {mainalarm && <NewArlam>new</NewArlam>}
           {localStorage.getItem("main") === "main" ? (
             <img alt="home" src="/img/footer/homeg.png" />
           ) : (
@@ -150,7 +148,11 @@ const FooterMenu = (props) => {
           )}
         </Menu>
         <Menu onClick={readArlam}>
-          { url !=="/chatlist" && chatalarm && <NewArlam>new</NewArlam>}
+          {alarm !==0  &&  (
+            <NewArlam style={{ padding: "2px 8px", fontSize: "14px" }}>
+              { alarm}
+            </NewArlam>
+          )}
           {localStorage.getItem("chat") === "chat" ? (
             <img alt="chat" src="/img/footer/chatg.png" />
           ) : (

@@ -9,6 +9,7 @@ import Image from "../elements/Image";
 import { history } from "../redux/configStore";
 import { actionCreators as roomActions } from "../redux/modules/room";
 import { Grid, Text } from "../elements/Index";
+import { BsFillChatDotsFill } from "react-icons/bs";
 
 function LCslider(props) {
   const { catepost } = props;
@@ -62,7 +63,7 @@ function LCslider(props) {
           <Sports>{state}</Sports> 매칭이에요!
         </Wellcome>
 
-        {mainalarm && <Hey>!!</Hey>}
+        {<Hey arr={joinARR[0]}><BsFillChatDotsFill/></Hey>}
         <div>
           <img
             onClick={ArlamCheck}
@@ -98,7 +99,9 @@ function LCslider(props) {
                 </ArrsmallBox>
               </React.Fragment>
             )
-          }) :<ArrsmallBox></ArrsmallBox>}
+          }) :<ArrsmallBox> <Joinwho>
+          새로운 알람이 없습니다!
+        </Joinwho></ArrsmallBox>}
 
         </ArlamBox>
       )}
@@ -203,12 +206,14 @@ const ArrsmallBox = styled.div`
 
 const Hey = styled.span`
   z-index: 555;
-  color: #ff6a52;
+
+  color:   ${(props) => props.arr? " #ff6a52" :"#C4C4C4" };
   height: 20px;
   bottom: 10px;
   float: right;
   position: relative;
-  right: -80px;
+  bottom: 10px;
+  right: -97px;
   font-size: 24px;
   font-weight: bolder;
 `;

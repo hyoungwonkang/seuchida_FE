@@ -7,9 +7,9 @@ import { history } from "../redux/configStore";
 import { Image, Grid, Text } from "../elements/Index";
 import moment from "moment";
 import "moment/locale/ko";
+import { RiPingPongFill } from "react-icons/ri";
 
-
-const ChatList = ({socket}) => {
+const ChatList = ({ socket }) => {
   const dispatch = useDispatch();
 
   const room_list = useSelector((state) => state.room?.list?.chattingRoom);
@@ -17,28 +17,13 @@ const ChatList = ({socket}) => {
   const unreadChatlist = useSelector(
     (state) => state.room?.list?.unreadChatlist
   );
-  const alarm = useSelector((state)=>state.room.chatarr)
-  console.log(alarm)
-  // const [newChat , setNewChat] = React.useState()
-
-  
+  const alarm = useSelector((state) => state.room.chatarr);
 
   React.useEffect(() => {
     dispatch(roomCreators.getchatRoomDB());
   }, []);
 
-    const groupValues = alarm?.reduce((acc, current) => {
-      acc[current.room] = acc[current.room] || [];
-      acc[current.room].push(current.msg,current.createdAt);
-      return acc;
-  }, {});
-  
-  // 위에서 만든 객체를 key로 돌려서 새로운 객체 return
-  const newChat = Object.keys(groupValues).map((key) => {
-    return ({ room: key, msg: groupValues[key], });
-  });
 
-  console.log(newChat)
 
   return (
     <>
@@ -59,10 +44,15 @@ const ChatList = ({socket}) => {
       ) : (
         <Body>
           {room_list?.map((room, index) => {
+            //이걸 왜 생각못했지?
+            const roomchat = alarm.filter((r) => r?.room === room?.roomId);
+            // const newa = unreadChatlist?.push(roomchat[index])
+            console.log(unreadChatlist,roomchat)
             return (
               <ChatBox
                 key={`${room.roomId}+${index}`}
                 onClick={() => {
+                  dispatch(roomCreators.deleteNewChat(room.roomId))
                   history.push({
                     pathname: `/chatex/${room.roomId}`,
                     state: { ...room },
@@ -76,30 +66,30 @@ const ChatList = ({socket}) => {
                       <div style={{ marginBottom: "5px" }}>
                         <ChatTitle>{room?.postTitle} </ChatTitle>
                         <UserCount> {room?.nowMember?.length}</UserCount>
-                        {/* 알람 length 더해보기. 하나는 state 하나는 일반 되나 ? +alarm.length 
-                      되긴되는데 룸아이디로 비교를 어케하냐 ??...*/}
                       </div>
-                      {/* 알림과 방의 아이디가 일치하고 알람내용이 있을때  */}
-                      <LastMsg> 
-                       {room?.roomId === newChat[index]?.room
-                          ? newChat[index]?.msg[newChat[index].msg?.length-1]
-                          : last_chat[index]?.msg} 
+                      {/* 최신메세지 갱신  */}
+                      <LastMsg>
+                        {roomchat[roomchat.length - 1]?.msg ||
+                          last_chat[index]?.msg}
                       </LastMsg>
                     </div>
                   </ChatTitleBox>
-                 
-                 <div>
+
                   <div>
-                    {/* 알림과 방의 아이디가 일치하고 알람내용의 시간비교  */}
-                    {moment(
-                      room?.roomId === alarm?.room
-                      ? alarm?.createdAt
-                      : last_chat[index]?.createdAt
+                    <div>
+                      {/* 최신메세지 시간 갱신 */}
+                      {moment(
+                        roomchat[roomchat.length - 1]?.createdAt ||
+                          last_chat[index]?.createdAt
                       ).fromNow()}
+                    </div>
+              {/* 이전 채팅기록과 갱신되는 채팅수가 없을때만 null */}
+                { unreadChatlist[index].length + roomchat?.length!==0&&
+                    <NewMsg>
+                      { unreadChatlist[index].length + roomchat?.length}     
+                      </NewMsg> }
+                    
                   </div>
-                      { unreadChatlist[index].length!==0 && <NewMsg>{unreadChatlist[index]?.length}</NewMsg>
-                      } 
-               </div>
                 </ContentBox>
               </ChatBox>
             );
@@ -171,9 +161,8 @@ const ContentBox = styled.div`
 
 const NewMsg = styled.div`
   background-color: #ff6a52;
-  height: 18px;
-  width: 18px;
-  font-size: 14px;
+  padding: 2px 4px;
+  font-size: 12px;
   align-items: center;
   text-align: center;
   border-radius: 30px;
