@@ -85,9 +85,10 @@ const ReviewList = () => {
         <GoBack text={"함께한 스친들의 후기"} path="/main"></GoBack>
       </Header>
       {review_list.length === 0 ? (
-        <Grid padding="0px 0px 80px 0px" column>
+        <Grid padding="0px 0px 80px 0px" column height="auto">
           <img
-            src="./img/seuchin.png"
+            alt="seuchin"
+            src="/img/seuchin.png"
             style={{ margin: "150px 0px 0px 0px" }}
           />
           <Text bold margin="0px" color="#C4C4C4">

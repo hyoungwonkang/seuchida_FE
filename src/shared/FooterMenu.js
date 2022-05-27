@@ -14,7 +14,7 @@ const socket = io.connect("https://seuchidabackend.shop", {
 
 const FooterMenu = (props) => {
   const history = useHistory();
-  const { next, is_check, __onClick, Chat } = props;
+  const { next, is_check, _onClick, Chat } = props;
   const dispatch = useDispatch();
   const alarm = useSelector((state) => state.room.alarm);
 

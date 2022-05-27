@@ -122,7 +122,7 @@ const AddProfile = (props) => {
   }
 
   return (
-    <Grid bg="white">
+    <Grid bg="white" height="auto">
       <GoBack text="프로필 작성" path="/signuploca" />
 
       <Grid column height="650px">
@@ -181,6 +181,7 @@ const AddProfile = (props) => {
                 onChange={selectAge}
                 pattern="/[^ㄱ-ㅎ가-힣]/g"
                 value={age || ""}
+                min="0"
               />
             </div>
           </Option>
