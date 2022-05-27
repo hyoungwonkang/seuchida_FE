@@ -4,8 +4,10 @@ import GlobalStyle from "../elements/style/GlobalStyle";
 import { Route, Switch } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configStore";
-
+import { io } from "socket.io-client";
 import MobileFrame from "../shared/MoileFrame";
+import { useDispatch } from "react-redux";
+import { actionCreators as roomCreators } from "../redux/modules/room";
 import {
   Guide,
   Login,
@@ -40,7 +42,29 @@ import {
   NotFound,
 } from "../pages/Index";
 
+const token = localStorage.getItem("token");
+const socket = io.connect("https://seuchidabackend.shop", {
+  auth: {
+    auth: token,
+  },
+});
+
+
 function App() {
+  const dispatch = useDispatch()
+  React.useEffect(()=>{
+    socket.on("joinPartyAlert", (data) => {
+      dispatch(roomCreators.joinArlam(data))
+     dispatch(roomCreators.mainArlam(true))
+    })       
+    },[])
+
+    React.useEffect(() => {
+      socket?.on("alert", (data) => {
+        dispatch(roomCreators.setalarm(true))
+      })
+      },[]);
+
   return (
     <>
       <GlobalStyle />

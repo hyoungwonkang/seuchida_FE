@@ -6,12 +6,6 @@ import { io } from "socket.io-client";
 import { actionCreators as roomCreators } from "../redux/modules/room";
 import { useDispatch, useSelector } from "react-redux";
 
-const token = localStorage.getItem("token");
-const socket = io.connect("https://seuchidabackend.shop", {
-  auth: {
-    auth: token,
-  },
-});
 
 const FooterMenu = (props) => {
   const history = useHistory();
@@ -38,26 +32,16 @@ const FooterMenu = (props) => {
   };
 
 
-  React.useEffect(() => {
-    socket?.on("alert", (data) => {
 
-      dispatch(roomCreators.setalarm(true))
-    })
-    },[]);
 
     //ㅠㅠㅠ
-    React.useEffect(() => {  
-      return ()=>{
-        socket.disconnect()
-      } 
-      },[]);
+    // React.useEffect(() => {  
+    //   return ()=>{
+    //     socket.disconnect()
+    //   } 
+    //   },[]);
   
-    React.useEffect(()=>{
-      socket.on("joinPartyAlert", (data) => {
-        dispatch(roomCreators.joinArlam(data))
-       dispatch(roomCreators.mainArlam(true))
-      })       
-      },[])
+
 
 
   if (Chat) {
