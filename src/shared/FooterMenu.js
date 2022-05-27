@@ -5,22 +5,21 @@ import { Button, Image } from "../elements/Index";
 import { io } from "socket.io-client";
 import { actionCreators as roomCreators } from "../redux/modules/room";
 import { useDispatch, useSelector } from "react-redux";
+
 const token = localStorage.getItem("token");
-const socket = io.connect("https://seuchidabackend.shop", {
-  auth: {
-    auth: token,
-  },
-});
+        let socket = io.connect("https://seuchidabackend.shop", {
+          auth: {
+            auth: token,
+          },
+        });
 
 const FooterMenu = (props) => {
   const history = useHistory();
-
   const { next, is_check, __onClick, Chat } = props;
-  const dispatch = useDispatch();
-  const chatalarm = useSelector((state) => state.room.alarm);
-  const mainalarm = useSelector((state) => state.room.mainarr);
-  console.log(mainalarm);
 
+  const dispatch = useDispatch()
+  const chatalarm = useSelector(state=> state.room.alarm)
+  const mainalarm = useSelector(state=> state.room.mainarr)
   const readArlam = () => {
     dispatch(roomCreators.setalarm(false));
     localStorage.removeItem("main");
@@ -40,16 +39,23 @@ const FooterMenu = (props) => {
 
   React.useEffect(() => {
     socket?.on("alert", (data) => {
-      dispatch(roomCreators.setalarm(true));
-    });
-  }, []);
 
-  React.useEffect(() => {
-    socket.on("joinPartyAlert", (data) => {
-      dispatch(roomCreators.joinArlam(data));
-      dispatch(roomCreators.mainArlam(true));
-    });
-  }, []);
+      dispatch(roomCreators.setalarm(true))
+    })
+    },[]);
+
+    React.useEffect(() => {
+      return ()=>socket.disconnect()
+      
+      },[]);
+  
+    React.useEffect(()=>{
+      socket.on("joinPartyAlert", (data) => {
+        dispatch(roomCreators.joinArlam(data))
+       dispatch(roomCreators.mainArlam(true))
+      })       
+      },[])
+
 
   if (Chat) {
     return (

@@ -13,9 +13,9 @@ import { Grid, Text } from "../elements/Index";
 function LCslider(props) {
   const { catepost } = props;
   const joinARR = useSelector((state) => state?.room?.joinArr);
-  const mainalarm = useSelector((state) => state.room.mainarr);
-  const dispatch = useDispatch();
-  // const post = props.catepost;
+
+  const mainalarm = useSelector(state=> state.room.mainarr)
+  const dispatch = useDispatch()
   const [isOpen, setIsOpen] = useState(false);
   const [state, setState] = useState("");
 
@@ -23,10 +23,12 @@ function LCslider(props) {
     setIsOpen(false);
   });
 
-  const ArlamCheck = () => {
-    dispatch(roomActions.mainArlam(false));
-    setIsOpen(true);
-  };
+
+  const ArlamCheck =() =>{
+    dispatch(roomActions.mainArlam(false))
+    setIsOpen(!isOpen);
+  }
+
 
   React.useEffect(() => {
     if (catepost) {
@@ -78,26 +80,25 @@ function LCslider(props) {
       </WellcomeBox>
       {isOpen && (
         <ArlamBox>
-          {joinARR[0] ? (
-            joinARR?.map((a, index) => {
-              return (
-                <React.Fragment key={index}>
-                  <ArrsmallBox
-                    onClick={() => {
-                      history.push(`/postdetail/${a?.postId}`);
-                    }}
-                  >
-                    <div> {<Image src={a?.userImg} size="30" />}</div>
-                    <Joinwho>
-                      {a?.nickName}님이 {a?.postTitle}방에 참여 하셨어요!
-                    </Joinwho>
-                  </ArrsmallBox>
-                </React.Fragment>
-              );
-            })
-          ) : (
-            <div>알람 음슴</div>
-          )}
+
+          {joinARR[0]? 
+          joinARR?.map((a, index) => {
+            if(index<6)return (
+              <React.Fragment key={index}>
+                <ArrsmallBox onClick={()=>{
+                  history.push(`/postdetail/${a?.postId}`)
+                }}>
+               
+                  <div> {<Image src={a?.userImg} size="30" />}</div>
+                  <Joinwho>
+                    {a?.nickName}님이 {a?.postTitle} 방에 참여 하셨어요!
+                  </Joinwho>
+                  
+                </ArrsmallBox>
+              </React.Fragment>
+            )
+          }) :<ArrsmallBox></ArrsmallBox>}
+
         </ArlamBox>
       )}
       {catepost.length === 0 ? (

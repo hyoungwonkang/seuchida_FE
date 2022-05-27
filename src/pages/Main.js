@@ -11,13 +11,13 @@ import io from "socket.io-client";
 import { RiMessage3Fill } from "react-icons/ri";
 import { IoIosArrowForward } from "react-icons/io";
 
-const token = localStorage.getItem("token");
-// const ENDPOINT = "https://seuchidabackend.shop";
-const socket =  io.connect("https://seuchidabackend.shop", {
-      auth: {
-        auth: token,
-      },
-    }); 
+// const token = localStorage.getItem("token");
+// // const ENDPOINT = "https://seuchidabackend.shop";
+// const socket =  io.connect("https://seuchidabackend.shop", {
+//       auth: {
+//         auth: token,
+//       },
+//     }); 
 
 const Main = () => {
 
@@ -175,7 +175,7 @@ const Main = () => {
         </Float>
         {/* 푸터 */}
       </Container>
-      <FooterMenu socket={socket} />
+      <FooterMenu />
     </>
   );
 };
