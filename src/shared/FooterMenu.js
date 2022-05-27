@@ -45,6 +45,7 @@ const FooterMenu = (props) => {
     })
     },[]);
 
+    //ㅠㅠㅠ
     React.useEffect(() => {
       const socket = io.connect("https://seuchidabackend.shop", {
           auth: {
