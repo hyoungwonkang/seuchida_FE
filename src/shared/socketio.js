@@ -11,7 +11,7 @@ const socket = io.connect("https://seuchidabackend.shop", {
 });
 
 export const initSocketConnection = () => {
-  if (socket) return;
+  if (socket || socket.connected === false) return;
   socket = io.connect("https://seuchidabackend.shop", {
     auth: {
       auth: token,
@@ -20,7 +20,7 @@ export const initSocketConnection = () => {
 };
 
 export const disconnectSocket = () => {
-  if (socket == null || socket.connected === false) {
+  if (socket == null ) {
     return;
   }
   socket.disconnect();
