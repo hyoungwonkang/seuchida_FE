@@ -32,18 +32,6 @@ const FooterMenu = (props) => {
   };
 
 
-
-
-    //ㅠㅠㅠ
-    // React.useEffect(() => {  
-    //   return ()=>{
-    //     socket.disconnect()
-    //   } 
-    //   },[]);
-  
-
-
-
   if (Chat) {
     return (
       <Btns>
