@@ -1,7 +1,7 @@
 import React from "react";
 import FooterMenu from "../shared/FooterMenu";
 import { useSelector, useDispatch } from "react-redux";
-import room, { actionCreators as roomCreators } from "../redux/modules/room";
+import { actionCreators as roomCreators } from "../redux/modules/room";
 import styled from "styled-components";
 import { history } from "../redux/configStore";
 import { Image, Grid, Text } from "../elements/Index";

@@ -6,13 +6,12 @@ import { io } from "socket.io-client";
 import { actionCreators as roomCreators } from "../redux/modules/room";
 import { useDispatch, useSelector } from "react-redux";
 
-
 const FooterMenu = (props) => {
   const history = useHistory();
   const { next, is_check, __onClick, Chat } = props;
-  const dispatch = useDispatch()
-  const chatalarm = useSelector(state=> state.room.alarm)
-  const mainalarm = useSelector(state=> state.room.mainarr)
+  const dispatch = useDispatch();
+  const chatalarm = useSelector((state) => state.room.alarm);
+  const mainalarm = useSelector((state) => state.room.mainarr);
 
   const readArlam = () => {
     dispatch(roomCreators.setalarm(false));
@@ -31,18 +30,12 @@ const FooterMenu = (props) => {
     history.push("/main");
   };
 
-
-
-
-    //ㅠㅠㅠ
-    // React.useEffect(() => {  
-    //   return ()=>{
-    //     socket.disconnect()
-    //   } 
-    //   },[]);
-  
-
-
+  //ㅠㅠㅠ
+  // React.useEffect(() => {
+  //   return ()=>{
+  //     socket.disconnect()
+  //   }
+  //   },[]);
 
   if (Chat) {
     return (
