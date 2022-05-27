@@ -15,7 +15,6 @@ function LCslider(props) {
   const joinARR = useSelector((state) => state?.room?.joinArr);
   const mainalarm = useSelector(state=> state.room.mainarr)
   const dispatch = useDispatch()
-  // const post = props.catepost;
   const [isOpen, setIsOpen] = useState(false);
   const [state, setState] = useState("");
 
@@ -26,7 +25,7 @@ function LCslider(props) {
 
   const ArlamCheck =() =>{
     dispatch(roomActions.mainArlam(false))
-    setIsOpen(true);
+    setIsOpen(!isOpen);
   }
 
   React.useEffect(() => {
@@ -83,7 +82,7 @@ function LCslider(props) {
         <ArlamBox>
           {joinARR[0]? 
           joinARR?.map((a, index) => {
-            return (
+            if(index<6)return (
               <React.Fragment key={index}>
                 <ArrsmallBox onClick={()=>{
                   history.push(`/postdetail/${a?.postId}`)
@@ -91,16 +90,16 @@ function LCslider(props) {
                
                   <div> {<Image src={a?.userImg} size="30" />}</div>
                   <Joinwho>
-                    {a?.nickName}님이 {a?.postTitle}방에 참여 하셨어요!
+                    {a?.nickName}님이 {a?.postTitle} 방에 참여 하셨어요!
                   </Joinwho>
                   
                 </ArrsmallBox>
               </React.Fragment>
             )
-          }) :<div>알람 음슴</div>}
+          }) :<ArrsmallBox></ArrsmallBox>}
         </ArlamBox>
       )}
-      {post.length === 0 ? (
+      {catepost.length === 0 ? (
         <Grid padding="0px 0px 40px 0px" column>
           <img src="./img/seuchin.png" style={{ margin: "40px 0px 0px 0px" }} />
           <Text bold margin="0px" color="#C4C4C4">
@@ -109,7 +108,7 @@ function LCslider(props) {
         </Grid>
       ) : (
         <Sliders {...settings} style={{ height: "270px" }}>
-          {post?.map((p, i) => {
+          {catepost?.map((p, i) => {
             if (i < 6)
               return (
                 <LiveCard
