@@ -128,6 +128,7 @@ function Chatex(props) {
     history.replace("/chatlist");
   };
 
+   // 안읽은 채팅 기록하기
   const BackRoom = () => {
     socket.emit("back", { roomId, userId: user.userId });
     history.goBack();
