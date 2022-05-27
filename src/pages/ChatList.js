@@ -84,7 +84,7 @@ const ChatList = () => {
                       </div>
                       {/* 알림과 방의 아이디가 일치하고 알람내용이 있을때  */}
                       <LastMsg>
-                        {room.roomId === alarm[index]?.room
+                        {room?.roomId === alarm[index]?.room
                           ? alarm?.msg
                           : last_chat[index]?.msg}
                       </LastMsg>
@@ -93,7 +93,7 @@ const ChatList = () => {
                   <div>
                     {/* 알림과 방의 아이디가 일치하고 알람내용의 시간비교  */}
                     {moment(
-                      room.roomId === alarm?.room
+                      room?.roomId === alarm?.room
                         ? alarm?.createdAt
                         : last_chat[index]?.createdAt
                     ).fromNow()}

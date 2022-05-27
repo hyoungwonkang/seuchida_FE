@@ -7,20 +7,19 @@ import { actionCreators as roomCreators } from "../redux/modules/room";
 import { useDispatch, useSelector } from "react-redux";
 
 const token = localStorage.getItem("token");
-        // const socket = io.connect("https://seuchidabackend.shop", {
-        //   auth: {
-        //     auth: token,
-        //   },
-        // });
+const socket = io.connect("https://seuchidabackend.shop", {
+  auth: {
+    auth: token,
+  },
+});
 
 const FooterMenu = (props) => {
-  let socket= io()
   const history = useHistory();
   const { next, is_check, __onClick, Chat } = props;
-
   const dispatch = useDispatch()
   const chatalarm = useSelector(state=> state.room.alarm)
   const mainalarm = useSelector(state=> state.room.mainarr)
+
   const readArlam = () => {
     dispatch(roomCreators.setalarm(false));
     localStorage.removeItem("main");
@@ -38,6 +37,7 @@ const FooterMenu = (props) => {
     history.push("/main");
   };
 
+
   React.useEffect(() => {
     socket?.on("alert", (data) => {
 
@@ -46,14 +46,10 @@ const FooterMenu = (props) => {
     },[]);
 
     //ㅠㅠㅠ
-    React.useEffect(() => {
-      const socket = io.connect("https://seuchidabackend.shop", {
-          auth: {
-            auth: token,
-          },
-        });
-      return ()=>socket.disconnect()
-      
+    React.useEffect(() => {  
+      return ()=>{
+        socket.disconnect()
+      } 
       },[]);
   
     React.useEffect(()=>{
