@@ -45,5 +45,5 @@ const Sliders = styled(Slider)`
   }
   .slick-slide {
     margin-right: 18px;
-  } */ */
+  } */ 
 `;
