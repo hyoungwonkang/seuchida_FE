@@ -375,9 +375,6 @@ const LiveBox = styled.div`
     margin-top: 16px;
   }
 `;
-const DetailMap = styled.div`
-  padding: 0px 24px 130px 24px;
-`;
 
 const EndBtn = styled.div`
   background-color: #0ed88b;

@@ -166,6 +166,7 @@ const OpenModal = styled.div`
   border-radius: 50px;
   margin-left: 40%;
   font-size: 14px;
+  cursor: pointer;
 `;
 
 const ResearchBtn = styled.div`
@@ -178,11 +179,5 @@ const ResearchBtn = styled.div`
   left: 42%;
   font-size: 14px;
   color: #c4c4c4;
-`;
-
-const MyLoca = styled.img`
-  position: fixed;
-  bottom: 95px;
-  z-index: 10;
-  margin-left: 85%;
+  cursor: pointer;
 `;

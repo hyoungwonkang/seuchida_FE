@@ -2,7 +2,6 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import axios from "axios";
 
-const token = localStorage.getItem("token");
 
 //Action
 const SET_POST = "SET_POST";
@@ -101,7 +100,7 @@ const getPostlistDB = () => {
         method: "get",
         url: `https://seuchidabackend.shop/api/nearPostList`,
         headers: {
-          authorization: `Bearer ${token}`,
+          authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }).then((response) => {
         console.log(response);
