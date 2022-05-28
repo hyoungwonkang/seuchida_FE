@@ -190,7 +190,7 @@ const Container = styled.div`
   border-top: 1px solid #e9e9e9;
   width: 100%;
   background-color: white;
-  max-width: 390px;
+  min-width: 390px;
   z-index: 5;
 `;
 
