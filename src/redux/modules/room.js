@@ -9,7 +9,6 @@ import axios from "axios";
 const SET_CHAT = "SET_CHAT";
 const SET_MEMBER = "SET_MEMBER";
 const SK_LOGIN = "SK_LOGIN";
-const SET_ALARM = "SET_ALARM";
 const JOIN_ARR = "JOIN_ARR"
 const MAIN_ARR = "MAIN_ARR"
 const DEL_ARR = "DEL_ARR"
@@ -21,7 +20,6 @@ const CLEAR_COUNT = "CLEAR_COUNT"
 const chatRoom = createAction(SET_CHAT, (chat_list) => ({ chat_list }));
 const chatMember = createAction(SET_MEMBER, (member) => ({ member }));
 const socketLogin = createAction(SK_LOGIN, (socket) => ({ socket }));
-// const setalarm = createAction(SET_ALARM, (alarm, mainarr) => ({ alarm,mainarr }));
 const joinArlam = createAction(JOIN_ARR, (join) => ({ join }));
 const mainArlam = createAction(MAIN_ARR, (main) => ({ main }));
 const deleteArr = createAction(DEL_ARR, (delete_arr) => ({ delete_arr}));
@@ -42,7 +40,6 @@ const initialState = {
   },
   joinArr:[],
   chatarr:[],
-  // alarm: false,
   mainarr:false,
   arrcount:0,
 };
@@ -156,10 +153,6 @@ export default handleActions(
       produce(state, (draft) => {
         draft.list = action.payload.member;
       }),
-    // [SET_ALARM]: (state, action) =>
-    //   produce(state, (draft) => {
-    //     draft.alarm = action.payload.alarm;
-    //   }),
     [MAIN_ARR]: (state, action) =>
       produce(state, (draft) => {
         draft.mainarr = action.payload.main;
@@ -203,7 +196,6 @@ const actionCreators = {
   roomDoneDB,
   joinCancleDB,
   socketLogin,
-  // setalarm,
   joinArlam,
   mainArlam,
   deleteArr,

@@ -64,7 +64,6 @@ function App() {
     React.useEffect(() => {
       socket?.on("alert", (data) => {
         dispatch(roomCreators.chattingArr(data))
-        // dispatch(roomCreators.setalarm(true))
       })
       },[]);
 

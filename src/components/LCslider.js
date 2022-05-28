@@ -15,7 +15,7 @@ function LCslider(props) {
   const { catepost } = props;
   const joinARR = useSelector((state) => state?.room?.joinArr);
 
-  const mainalarm = useSelector(state=> state.room.mainarr)
+  // const mainalarm = useSelector(state=> state.room.mainarr)
   const dispatch = useDispatch()
   const [isOpen, setIsOpen] = useState(false);
   const [state, setState] = useState("");

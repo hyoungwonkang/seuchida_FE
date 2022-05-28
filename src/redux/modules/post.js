@@ -10,7 +10,7 @@ const SET_REVIEW = "SET_REVIEW";
 const ADD_POST = "ADD_POST";
 
 //Action Creators
-const setReview = createAction(SET_REVIEW, (review_list) => ({ review_list }));
+
 const setPost = createAction(SET_POST, (post_list) => ({ post_list }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
 
@@ -112,43 +112,6 @@ const getPostlistDB = () => {
     }
   };
 };
-// const getOnePostDB = (postId) => {
-//   return async function (dispatch, getState) {
-//     try {
-//       await axios({
-//         method: "get",
-//         url: `https://seuchidabackend.shop/api/postDetail/${postId}`,
-//         headers: {
-//           authorization: `Bearer ${token}`,
-//         },
-//       }).then((response) => {
-//         console.log(response)
-//         dispatch(setPost(response.data.newPost));
-//       });
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   };
-// };
-
-// const getReviewlistDB = (pageNumber) => {
-//   return async function (dispatch, getState) {
-//     try {
-//       await axios({
-//         method: "get",
-//         url: `https://seuchidabackend.shop/api/reviewAll/${pageNumber}`,
-//         headers: {
-//           authorization: `Bearer ${token}`,
-//         },
-//       }).then((response) => {
-//         console.log(response);
-//         dispatch(setReview(response.data));
-//       });
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   };
-// };
 
 export default handleActions(
   {
@@ -173,7 +136,6 @@ const actionCreators = {
   setPost,
   getMainDB,
   getPostlistDB,
-  // getReviewlistDB,
   addPost,
   addPostDB,
 };

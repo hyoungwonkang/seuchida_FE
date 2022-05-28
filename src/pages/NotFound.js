@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Button, Text } from "../elements/Index";
+import { Grid } from "../elements/Index";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 

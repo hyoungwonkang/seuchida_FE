@@ -43,11 +43,9 @@ function Chatex(props) {
   };
   const openModal = () => {
     setcomModalOn(true);
-    // document.body.style.overflow ="hidden"
   };
   const closecomModal = (e) => {
     setcomModalOn(false);
-    // document.body.style.overflow ="unset"
   };
 
   const roomInfo = props?.location.state;

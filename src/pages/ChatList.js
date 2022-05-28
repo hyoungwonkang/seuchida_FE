@@ -1,13 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import FooterMenu from "../shared/FooterMenu";
 import { useSelector, useDispatch } from "react-redux";
-import room, { actionCreators as roomCreators } from "../redux/modules/room";
+import  { actionCreators as roomCreators } from "../redux/modules/room";
 import styled from "styled-components";
 import { history } from "../redux/configStore";
 import { Image, Grid, Text } from "../elements/Index";
 import moment from "moment";
 import "moment/locale/ko";
-import { RiPingPongFill } from "react-icons/ri";
 
 const ChatList = ({ socket }) => {
   const dispatch = useDispatch();
@@ -23,6 +22,7 @@ const ChatList = ({ socket }) => {
     dispatch(roomCreators.getchatRoomDB());
   }, []);
 
+  console.log(unreadChatlist)
 
 
   return (
@@ -33,6 +33,7 @@ const ChatList = ({ socket }) => {
           <img
             src="./img/seuchin.png"
             style={{ margin: "220px 0px 0px 0px" }}
+            alt="hi"
           />
           <Text bold margin="0px" color="#C4C4C4">
             아직 채팅방이 없어요!
@@ -45,9 +46,9 @@ const ChatList = ({ socket }) => {
         <Body>
           {room_list?.map((room, index) => {
             //이걸 왜 생각못했지?
-            const roomchat = alarm.filter((r) => r?.room === room?.roomId);
-            // const newa = unreadChatlist?.push(roomchat[index])
-            console.log(unreadChatlist,roomchat)
+    
+            const roomchat = (alarm.filter((r) => r?.room === room?.roomId))
+            console.log(roomchat)
             return (
               <ChatBox
                 key={`${room.roomId}+${index}`}
@@ -69,7 +70,7 @@ const ChatList = ({ socket }) => {
                       </div>
                       {/* 최신메세지 갱신  */}
                       <LastMsg>
-                        {roomchat[roomchat.length - 1]?.msg ||
+                      {roomchat[roomchat.length - 1]?.msg ||
                           last_chat[index]?.msg}
                       </LastMsg>
                     </div>
@@ -84,9 +85,9 @@ const ChatList = ({ socket }) => {
                       ).fromNow()}
                     </div>
               {/* 이전 채팅기록과 갱신되는 채팅수가 없을때만 null */}
-                { unreadChatlist[index].length + roomchat?.length!==0&&
+                {  roomchat?.length !==0 &&
                     <NewMsg>
-                      { unreadChatlist[index].length + roomchat?.length}     
+                      {  roomchat?.length}     
                       </NewMsg> }
                     
                   </div>
@@ -161,7 +162,7 @@ const ContentBox = styled.div`
 
 const NewMsg = styled.div`
   background-color: #ff6a52;
-  padding: 2px 4px;
+  padding: 0px 6px 0px 4px;
   font-size: 12px;
   align-items: center;
   text-align: center;
