@@ -61,18 +61,6 @@ const PostWrite_1 = (props) => {
     history.push("/postcategory");
   };
 
-  useEffect(() => {
-    if (postTitle?.length >= 15) {
-      setIsOpen2(true);
-    }
-  }, [postTitle]);
-
-  useEffect(() => {
-    if (postDesc?.length >= 200) {
-      setIsOpen3(true);
-    }
-  }, [postDesc]);
-
   //새로고침 시 작성 첫 번째 페이지로 이동
   if (document.readyState === "interactive") {
     //로컬 값 날림
