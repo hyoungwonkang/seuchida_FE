@@ -77,11 +77,11 @@ const DetailMap = styled.div`
 const Box = styled.div`
   position: absolute;
   padding: 5px;
-  top: -190px;
-  left: -80px;
+  top: -185px;
+  left: -78px;
   background-color: white;
-  width: 173px;
-  height: 126px;
+  padding: 15px 5px;
+  height: 100px;
   border-radius: 12px;
   z-index: 1000;
   box-shadow: 1px 2px 8px -2px;
@@ -94,37 +94,37 @@ const EventMarkerContainer = (props) => {
     {
       id: 1,
       level: 1,
-      image: <Image size={23} src="../img/badge/red.png" />,
+      image: <Image size={19} src="../img/badge/red.png" />,
     },
     {
       id: 2,
       level: 2,
-      image: <Image size={23} src="../img/badge/orange.png" />,
+      image: <Image size={19} src="../img/badge/orange.png" />,
     },
     {
       id: 3,
       level: 3,
-      image: <Image size={23} src="../img/badge/yellow.png" />,
+      image: <Image size={19} src="../img/badge/yellow.png" />,
     },
     {
       id: 4,
       level: 4,
-      image: <Image size={23} src="../img/badge/green.png" />,
+      image: <Image size={19} src="../img/badge/green.png" />,
     },
     {
       id: 5,
       level: 5,
-      image: <Image size={23} src="../img/badge/skyblue.png" />,
+      image: <Image size={19} src="../img/badge/skyblue.png" />,
     },
     {
       id: 6,
       level: 6,
-      image: <Image size={23} src="../img/badge/blue.png" />,
+      image: <Image size={19} src="../img/badge/blue.png" />,
     },
     {
       id: 7,
       level: 7,
-      image: <Image size={23} src="../img/badge/purple.png" />,
+      image: <Image size={19} src="../img/badge/purple.png" />,
     },
   ];
 
@@ -143,41 +143,37 @@ const EventMarkerContainer = (props) => {
         }}
       />
       <CustomOverlayMap
+      
         position={{ lat: props.latitude, lng: props.longitude }} // 마커를 표시할 위치
       >
         {isclick && (
           <Box>
-            <Grid
-              bg="white"
-              padding="5px"
-              br="10px"
-              width="173px"
-              height="126px"
+            <span style={{ float: "right", marginRight: "8px" }}>
+              <HiOutlineX size={17} onClick={() => setIsClicked(false)} />
+            </span>
+            <div
+              onClick={() => {
+                history.push(`/postdetail/${props._id}`);
+              }}
             >
-              <Grid row justify="right" height="15px">
-                <HiOutlineX size={20} onClick={() => setIsClicked(false)} />
-              </Grid>
-              <Grid
-                height="30px"
-                _onClick={() => {
-                  history.push(`/postdetail/${props._id}`);
-                }}
-              >
-                <Grid row>
-                  {level.map((v, i) => {
-                    if (v.level == props.level)
-                      return <span key={v.id}>{v.image}</span>;
-                    if (props.level >= 7)
-                      return <span key={v.id}>{v[6]?.image}</span>;
-                  })}
+              <RowBox>
+                <Image src={props.userImg}  />
+                <div style={{marginLeft:" 6px"}}>
+                  <Owner>{props.nickName} </Owner>
+                  <Status>
+                    {props.status === true ? "모집중" : "모집완료"}
+                  </Status>
+                </div>
+                {level.map((v, i) => {
+                  if (v.level == props.level)
+                    return <div key={v.id}>{v.image}</div>;
+                  if (props.level >= 7)
+                    return <div key={v.id}>{v[6]?.image}</div>;
+                })}
+              </RowBox>
+            </div>
 
-                  <Text size="16px" bold>
-                    {props.nickName}
-                  </Text>
-                </Grid>
-                <Desc>{props.postTitle}</Desc>
-              </Grid>
-            </Grid>
+            <Desc>{props.postTitle}</Desc>
           </Box>
         )}
       </CustomOverlayMap>
@@ -189,7 +185,27 @@ const Desc = styled.div`
   font-size: 14px;
   width: 140px;
   height: 60px;
-  padding: 10px 6px;
+  padding: 4px 6px;
+  font-weight: 600;
   overflow: hidden;
   text-overflow: ellipsis;
+  /* border-top: 1px solid #c4c4c4; */
+`;
+
+const RowBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  /* justify-content: space-between; */
+  padding: 8px;
+`;
+const Owner = styled.div`
+  font-size: 14px;
+  
+  line-height: 6px;
+  padding-top: 6px;
+`;
+
+const Status = styled.span`
+  font-size: 10px;
+  color: #c4c4c4;
 `;
