@@ -150,7 +150,7 @@ const Cate = styled.div`
   border: 1px solid #ddd;
   border-radius: 30px;
   font-size: 16px;
-  background: ${(props) => (props?.color ? "lightgreen" : "white")};
+  background: ${(props) => (props?.color ? "#0ED88B" : "white")};
   color: ${(props) => (props.color ? "white" : "black")};
 `;
 

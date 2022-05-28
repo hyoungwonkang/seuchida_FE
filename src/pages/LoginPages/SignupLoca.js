@@ -6,8 +6,10 @@ import { Grid, Text, Image, GoBack } from "../../elements/Index";
 import FooterMenu from "../../shared/FooterMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as userActions } from "../../redux/modules/user";
+import { useHistory } from "react-router-dom";
 
 const SignupLoca = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
 
   //작성||수정 구분
@@ -105,11 +107,15 @@ const SignupLoca = () => {
       {/* 동네 설정 */}
       <Grid height="auto" column margin="auto">
         <Grid row padding="0px 30px" height="auto" justify="space-between">
-          <Image src="./img/nowloca.png" size={16} />
-          <Text size="16px" margin="0px 80px 0px 0px" bold>
-            나의 동네
-          </Text>
-          <Text size="16px">{fullAddress}</Text>
+          <Grid row>
+            <Image src="./img/nowloca.png" size={16} />
+            <Text size="16px" bold>
+              나의 동네
+            </Text>
+          </Grid>
+          <Grid>
+            <Text size="16px">{fullAddress}</Text>
+          </Grid>
         </Grid>
 
         {/* 지도 */}

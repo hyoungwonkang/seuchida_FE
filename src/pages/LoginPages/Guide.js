@@ -21,20 +21,16 @@ function Guide() {
     <div>
       <Sliders {...settings} styled={{ height: "100px" }}>
         <div>
-          <Img alt="guide1" src="./img/guide/guide1.png" />
-          <Btn>다음</Btn>
+          <Img alt="guide1" src="/img/guide/guide1.png" />
         </div>
         <div>
           <Img alt="guide2" src="./img/guide/guide2.png" />
-          <Btn>다음</Btn>
         </div>
         <div>
           <Img alt="guide3" src="./img/guide/guide3.png" />
-          <Btn>다음</Btn>
         </div>
         <div>
           <Img alt="guide4" src="./img/guide/guide4.png" />
-          <Btn>다음</Btn>
         </div>
         <div>
           <Img alt="guide5" src="./img/guide/guide5.png" />
@@ -56,28 +52,15 @@ const Img = styled.img`
   width: 20vw;
 `;
 
-const Btn = styled.button`
-  min-width: 390px;
-  height: 74px;
-  position: absolute;
-  bottom: 5px;
-  color: white;
-  border: none;
-  background: #c4c4c4;
-  font-size: 16px;
-  /* background: red; */
-`;
-
 const LastBtn = styled.button`
   min-width: 390px;
-  height: 74px;
+  height: 70px;
   position: absolute;
   bottom: 5px;
   color: white;
   border: none;
   background: #5796f7;
   font-size: 16px;
-  /* background: red; */
 `;
 
 const Sliders = styled(Slider)`

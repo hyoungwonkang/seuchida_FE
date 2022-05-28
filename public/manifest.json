@@ -8,12 +8,12 @@
       "type": "image/x-icon"
     },
     {
-      "src": "app.png",
+      "src": "app192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "app.png",
+      "src": "app512.png",
       "type": "image/png",
       "sizes": "512x512"  
     }

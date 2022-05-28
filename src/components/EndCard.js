@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Grid, Image, Text } from "../elements/Index";
 import { history } from "../redux/configStore";
 import { FaPen } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 const EndCard = (props) => {

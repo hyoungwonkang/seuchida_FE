@@ -15,8 +15,7 @@ function LCslider(props) {
   const { catepost } = props;
   const joinARR = useSelector((state) => state?.room?.joinArr);
 
-  // const mainalarm = useSelector(state=> state.room.mainarr)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [state, setState] = useState("");
 
@@ -24,12 +23,10 @@ function LCslider(props) {
     setIsOpen(false);
   });
 
-
-  const ArlamCheck =() =>{
-    dispatch(roomActions.mainArlam(false))
+  const ArlamCheck = () => {
+    dispatch(roomActions.mainArlam(false));
     setIsOpen(!isOpen);
-  }
-
+  };
 
   React.useEffect(() => {
     if (catepost) {
@@ -63,7 +60,11 @@ function LCslider(props) {
           <Sports>{state}</Sports> 매칭이에요!
         </Wellcome>
 
-        {<Hey arr={joinARR[0]}><BsFillChatDotsFill/></Hey>}
+        {
+          <Hey arr={joinARR[0]}>
+            <BsFillChatDotsFill />
+          </Hey>
+        }
         <div>
           <img
             onClick={ArlamCheck}
@@ -81,33 +82,40 @@ function LCslider(props) {
       </WellcomeBox>
       {isOpen && (
         <ArlamBox>
-
-          {joinARR[0]? 
-          joinARR?.map((a, index) => {
-            if(index<7)return (
-              <React.Fragment key={index}>
-                <ArrsmallBox onClick={()=>{
-                  dispatch(roomActions.deleteArr(a.msgId))
-                  history.push(`/postdetail/${a?.postId}`)
-                }}>
-               
-                  <div> {<Image src={a?.userImg} size="30" />}</div>
-                  <Joinwho>
-                    {a?.nickName}님이 {a?.postTitle} 방에 참여 하셨어요!
-                  </Joinwho>
-                  
-                </ArrsmallBox>
-              </React.Fragment>
-            )
-          }) :<ArrsmallBox> <Joinwho>
-          새로운 알람이 없습니다!
-        </Joinwho></ArrsmallBox>}
-
+          {joinARR[0] ? (
+            joinARR?.map((a, index) => {
+              if (index < 7)
+                return (
+                  <React.Fragment key={index}>
+                    <ArrsmallBox
+                      onClick={() => {
+                        dispatch(roomActions.deleteArr(a.msgId));
+                        history.push(`/postdetail/${a?.postId}`);
+                      }}
+                    >
+                      <div> {<Image src={a?.userImg} size="30" />}</div>
+                      <Joinwho>
+                        {a?.nickName}님이 {a?.postTitle} 방에 참여 하셨어요!
+                      </Joinwho>
+                    </ArrsmallBox>
+                  </React.Fragment>
+                );
+            })
+          ) : (
+            <ArrsmallBox>
+              {" "}
+              <Joinwho>새로운 알람이 없습니다!</Joinwho>
+            </ArrsmallBox>
+          )}
         </ArlamBox>
       )}
       {catepost.length === 0 ? (
         <Grid padding="0px 0px 40px 0px" column>
-          <img src="./img/seuchin.png" style={{ margin: "40px 0px 0px 0px" }} />
+          <img
+            alt="seuchin"
+            src="./img/seuchin.png"
+            style={{ margin: "40px 0px 0px 0px" }}
+          />
           <Text bold margin="0px" color="#C4C4C4">
             카테고리에 해당하는 글이 없어요!
           </Text>
@@ -207,7 +215,7 @@ const ArrsmallBox = styled.div`
 const Hey = styled.span`
   z-index: 555;
 
-  color:   ${(props) => props.arr? " #ff6a52" :"#C4C4C4" };
+  color: ${(props) => (props.arr ? " #ff6a52" : "#C4C4C4")};
   height: 20px;
   bottom: 10px;
   float: right;

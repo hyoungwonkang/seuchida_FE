@@ -54,15 +54,10 @@ const Evaluation = () => {
   var [evalue, setEvalue] = useState(localevalue ? [...localevalue] : []);
   evalue.length = _postInfo?.length;
   const evalues = evalue.slice(0, otherId?.length);
- 
-
-  //획득 포인트
-  const point = evalue.filter((v) => v != undefined).length;
 
   //신고 대상 & 신고 내용 state
   const [report, setReport] = useState("");
   const [rUserId, setRUserId] = useState(localreport ? localreport : "");
-
 
   //후기 작성 & 다른 사람 평가
   const addReview = () => {

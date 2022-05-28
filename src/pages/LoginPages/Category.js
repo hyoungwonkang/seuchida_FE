@@ -7,6 +7,7 @@ import FooterMenu from "../../shared/FooterMenu";
 import { useHistory } from "react-router-dom";
 import Modal from "../../components/Modal/Modal"; //모달 창
 import ModalData from "../../components/Modal/ModalData";
+import { Redirect } from "react-router-dom";
 
 const Category = (props) => {
   const history = useHistory();
@@ -64,13 +65,9 @@ const Category = (props) => {
 
   //수정시, 유저의 이전 관심 태그 보여주기
   React.useEffect(() => {
-    // if (is_edit) {
     setUserInterest(
       localUserInterest ? localUserInterest : userInfo?.userInterest
     );
-    // } else {
-    //   setUserInterest(JSON.parse(localStorage.getItem("userInterest")));
-    // }
   }, [userInfo]);
 
   //모달 오픈 state
@@ -151,7 +148,7 @@ const Category = (props) => {
     window.onbeforeunload = function () {
       return "새로고침 경고";
     };
-    history.replace("/signuploca");
+    return <Redirect to="/signuploca" />;
   }
 
   return (
