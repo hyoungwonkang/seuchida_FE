@@ -20,7 +20,6 @@ const ChatMenu = ({ comModalOn, closecomModal, roomId, leaveRoom, socket }) => {
 
   React.useEffect(() => {
     socket.on("ban", (data) => {
-
       if (data === true) {
         setKick(true);
       }
@@ -54,10 +53,8 @@ const ChatMenu = ({ comModalOn, closecomModal, roomId, leaveRoom, socket }) => {
           <UserBox>{userMe?.nickName}</UserBox>
         </RowBox>
         {user_list?.map((user, index) => {
-          console.log(user);
           const banUser = () => {
             socket.emit("banUser", { userId: user.userId });
-            console.log('ddd',  user.userId)
             // window.location.href = "/main";
           };
           if (user.userId !== userMe.userId)

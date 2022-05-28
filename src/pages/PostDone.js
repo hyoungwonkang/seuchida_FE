@@ -1,12 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { useHistory } from "react-router-dom";
 import { Grid, Text } from "../elements/Index";
 import FooterMenu from "../shared/FooterMenu";
 
 const PostDone = () => {
   document.body.style.overscrollBehavior = "none";
-  const history = useHistory();
 
   // if (history.action === "POP") {
   //   window.location.href = "/main";

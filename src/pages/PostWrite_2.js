@@ -9,7 +9,7 @@ import { Redirect } from "react-router-dom";
 
 import { IconContext } from "react-icons";
 import { BsFillPeopleFill } from "react-icons/bs";
-import { MdEdit, MdRememberMe } from "react-icons/md";
+import { MdEdit } from "react-icons/md";
 import { AiOutlineMinusCircle } from "react-icons/ai";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 
@@ -48,26 +48,23 @@ const PostWrite_2 = (props) => {
   let [memberAge, setMemberAge] = useState("");
 
   //'직접입력' 시 나이를 조합합니다.
-  const [member, setMember] = useState({
-    fage: "",
-    lage: "",
-  });
-  let combine_member = member.fage + "~" + member.lage + "세";
+  let [memberFage, setMemberFage] = useState("");
+  let [memberLage, setMemberLage] = useState("");
 
-  const handleChange = (e) => {
-    setMember({
-      ...member,
-      [e.target.name]: e.target.value,
-    });
+  const handleChange1 = (e) => {
+    setMemberFage(e.target.value);
+  };
+
+  const handleChange2 = (e) => {
+    setMemberLage(e.target.value);
   };
 
   if (memberAge === "나이무관") {
-    member.fage = "나이가";
-    member.lage = "무관하다";
+    memberFage = "나이가";
+    memberLage = "무관하다";
   }
 
-  console.log(member.lage);
-  console.log(member.fage);
+  let combine_member = memberFage + "~" + memberLage + "세";
 
   // '직접입력' 시 조합된 나이로 보내줍니다.
   if (7 > combine_member.length) {
@@ -81,11 +78,11 @@ const PostWrite_2 = (props) => {
     }
     // 나이 이상한 값 체크
     if (
-      Number(member.lage) <= Number(member.fage) ||
-      member.fage === "0" ||
-      member.lage === "0" ||
-      Number(member.lage) >= 100 ||
-      Number(member.fage) >= 99
+      Number(memberLage) <= Number(memberFage) ||
+      memberFage === "0" ||
+      memberLage === "0" ||
+      Number(memberLage) >= 100 ||
+      Number(memberFage) >= 99
     ) {
       setIsOpen3(true);
     } else {
@@ -99,10 +96,10 @@ const PostWrite_2 = (props) => {
 
   // 뒤로가기 시에도 데이터를 유지합니다.
   useEffect(() => {
-    setMaxMember(window.localStorage.getItem("maxMember"));
-    setMemberGender(window.localStorage.getItem("memberGender"));
-    setMemberAge(window.localStorage.getItem("memberAge"));
-    setShowOptions(window.localStorage.getItem("showOptions"));
+    setMaxMember(localStorage.getItem("maxMember"));
+    setMemberGender(localStorage.getItem("memberGender"));
+    setMemberAge(localStorage.getItem("memberAge"));
+    setShowOptions(localStorage.getItem("showOptions"));
   }, []);
 
   //토글
@@ -116,14 +113,8 @@ const PostWrite_2 = (props) => {
   }
 
   const backEvent = () => {
-    localStorage.setItem("maxMember", maxMember);
-    localStorage.setItem("memberGender", memberGender);
-    localStorage.setItem("memberAge", memberAge);
-    localStorage.setItem("showOptions", showOptions);
     history.push("/postwrite1");
   };
-
-  // console.log(postCategory, postTitle, postDesc);
 
   //새로고침 시 작성 첫 번째 페이지로 이동
   if (document.readyState === "interactive") {
@@ -260,7 +251,7 @@ const PostWrite_2 = (props) => {
                       <RadioInput
                         type="radio"
                         name="state"
-                        value={member.fage + member.lage}
+                        value={memberFage + memberLage}
                       />{" "}
                       직접입력
                     </Grid>
@@ -269,8 +260,8 @@ const PostWrite_2 = (props) => {
                         <input
                           type="number"
                           name="fage"
-                          value={member.fage}
-                          onChange={handleChange}
+                          value={memberFage}
+                          onChange={handleChange1}
                           placeholder="시작 나이 ex) 20"
                           style={{
                             width: "136px",
@@ -294,8 +285,8 @@ const PostWrite_2 = (props) => {
                         <input
                           type="number"
                           name="lage"
-                          value={member.lage}
-                          onChange={handleChange}
+                          value={memberLage}
+                          onChange={handleChange2}
                           placeholder="끝 나이 ex) 29"
                           style={{
                             width: "136px",

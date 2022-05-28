@@ -58,8 +58,6 @@ const PostWrite_1 = (props) => {
   };
 
   const backEvent = () => {
-    localStorage.setItem("postTitle", postTitle);
-    localStorage.setItem("postDesc", postDesc);
     history.push("/postcategory");
   };
 

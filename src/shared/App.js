@@ -53,7 +53,6 @@ function App() {
   const dispatch = useDispatch();
   React.useEffect(() => {
     socket.on("joinPartyAlert", (data) => {
-      console.log(data);
       dispatch(roomCreators.joinArlam(data));
       dispatch(roomCreators.mainArlam(true));
     });
