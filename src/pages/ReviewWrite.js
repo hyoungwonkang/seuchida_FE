@@ -140,6 +140,7 @@ const ReviewWrite = (props) => {
             <FileUpload>
               <label htmlFor="image">
                 <Image
+                  cursor
                   shape="rectangle"
                   size={39}
                   position="relative"
