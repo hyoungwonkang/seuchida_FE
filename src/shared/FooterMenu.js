@@ -10,10 +10,8 @@ const FooterMenu = (props) => {
   const history = useHistory();
   const { next, is_check, __onClick, Chat } = props;
   const dispatch = useDispatch();
-
   const mainalarm = useSelector((state) => state.room.mainarr);
   const alarm = useSelector((state) => state.room.arrcount);
-
   const url = history.location.pathname;
   const readArlam = () => {
     // dispatch(roomCreators.setalarm(false));

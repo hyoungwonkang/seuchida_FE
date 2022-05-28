@@ -21,7 +21,7 @@ const EndCard = (props) => {
         <Text size="16px" bold color="#FF6B52" margin="0px 10px 0px 0px">
           · {props?.status === true ? "모집중" : "모집완료"}
         </Text>
-        <Text size="16px" bold>
+        <Text size="16px" bold el>
           {props?.postTitle}
         </Text>
       </Grid>

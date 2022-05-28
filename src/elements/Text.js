@@ -18,6 +18,7 @@ const Text = (props) => {
     position,
     br,
     zIndex,
+    el,
   } = props;
   const styles = {
     bold,
@@ -34,6 +35,7 @@ const Text = (props) => {
     position,
     br,
     zIndex,
+    el,
   };
   return (
     <React.Fragment>
@@ -66,6 +68,12 @@ const Textbox = styled.p`
   ${(props) =>
     props.br
       ? `border: 1px solid gray; border-radius: 20px; padding: 3px 5px;`
+      : ""};
+  ${(props) =>
+    props.el
+      ? `overflow: hidden; text-overflow: ellipsis; display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;`
       : ""};
 `;
 

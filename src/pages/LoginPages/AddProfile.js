@@ -204,15 +204,8 @@ const AddProfile = (props) => {
               </Text>
 
               {/* 푸터 */}
-              {/* <Link
-            to={{
-              state: {
-                profile,
-              },
-            }}
-          > */}
+
               <FooterMenu next text="다음" state={alert} />
-              {/* </Link> */}
 
               {/* 경고창 모달 */}
               <Modal open={isOpen}>

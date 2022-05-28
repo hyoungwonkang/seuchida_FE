@@ -1,7 +1,7 @@
 import React from "react";
 import FooterMenu from "../shared/FooterMenu";
 import { useSelector, useDispatch } from "react-redux";
-import  { actionCreators as roomCreators } from "../redux/modules/room";
+import { actionCreators as roomCreators } from "../redux/modules/room";
 import styled from "styled-components";
 import { history } from "../redux/configStore";
 import { Image, Grid, Text } from "../elements/Index";
@@ -21,8 +21,6 @@ const ChatList = ({ socket }) => {
   React.useEffect(() => {
     dispatch(roomCreators.getchatRoomDB());
   }, []);
-
-  console.log(unreadChatlist)
 
 
   return (
@@ -48,7 +46,6 @@ const ChatList = ({ socket }) => {
             //이걸 왜 생각못했지?
     
             const roomchat = (alarm.filter((r) => r?.room === room?.roomId))
-            console.log(roomchat)
             return (
               <ChatBox
                 key={`${room.roomId}+${index}`}

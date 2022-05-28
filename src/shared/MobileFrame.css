@@ -26,7 +26,6 @@
   background-color: #fff;
   box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.3);
   z-index: 999;
-  /* background-image: url("/img/appback.png"); */
 }
 
 @media screen and (max-width: 500px) {
