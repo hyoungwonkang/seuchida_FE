@@ -322,7 +322,7 @@ const PostWrite_4 = (props) => {
           id="map"
           style={{
             width: "100%",
-            height: "600px",
+            height: "100%",
             margin: "12px 0px",
           }}
         ></div>
