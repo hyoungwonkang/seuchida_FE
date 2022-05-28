@@ -3,17 +3,6 @@ import Picker from 'react-mobile-picker-scroll';
 import { Link } from 'react-router-dom';
 
 const Time = () => {
-  // const range = (start, end) => {
-  //   return Array(end - start + 1)
-  //     .fill()
-  //     .map((_, idx) => start + idx);
-  // };
-  // const getNumberOfperiod = () => {
-  //   const today = new Date();
-  //   const firstDayOfYear = new Date(today.getFullYear(), 0, 1); //=> 시간으로 바꿔
-  //   const pastDaysOfYear = (today - firstDayOfYear) / 86400000; //=> 10~50 분으로 바꿔
-  //   return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
-  // };
   const [optionGroups] = React.useState({
     AmPm: ["오전", "오후"],
     Hour: ["12", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"],

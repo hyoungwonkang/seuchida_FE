@@ -5,19 +5,9 @@ import FooterMenu from "../shared/FooterMenu";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as userActions } from "../redux/modules/user";
-import { actionCreators as roomActions } from "../redux/modules/room";
 import { history } from "../redux/configStore";
-import io from "socket.io-client";
 import { RiMessage3Fill } from "react-icons/ri";
 import { IoIosArrowForward } from "react-icons/io";
-
-// const token = localStorage.getItem("token");
-// // const ENDPOINT = "https://seuchidabackend.shop";
-// const socket =  io.connect("https://seuchidabackend.shop", {
-//       auth: {
-//         auth: token,
-//       },
-//     }); 
 
 const Main = () => {
 
@@ -44,13 +34,6 @@ const Main = () => {
   },[])
 
 
-  // React.useEffect(()=>{
-  //   socket.on("joinPartyAlert", (data) => {
-  //    console.log(data)
-  //    setMainalert((mainalert) => mainalert.concat(data));
-  //   }) 
-     
-  //   },[])
 
   React.useEffect(() => {
     if (navigator.geolocation) {

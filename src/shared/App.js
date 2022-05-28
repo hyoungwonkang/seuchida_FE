@@ -4,6 +4,9 @@ import GlobalStyle from "../elements/style/GlobalStyle";
 import { Route, Switch } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configStore";
+import { io } from "socket.io-client";
+import { useDispatch } from "react-redux";
+import { actionCreators as roomCreators } from "../redux/modules/room";
 
 import MobileFrame from "../shared/MoileFrame";
 import {
@@ -39,14 +42,18 @@ import {
   ChatList,
   NotFound,
 } from "../pages/Index";
-
+const token = localStorage.getItem("token");
+const socket = io.connect("https://seuchidabackend.shop", {
+  auth: {
+    auth: token,
+  },
+});
 function App() {
 
  
   const dispatch = useDispatch()
   React.useEffect(()=>{
     socket.on("joinPartyAlert", (data) => {
-      console.log(data)
       dispatch(roomCreators.joinArlam(data))
      dispatch(roomCreators.mainArlam(true))
     })       
@@ -54,7 +61,7 @@ function App() {
 
     React.useEffect(() => {
       socket?.on("alert", (data) => {
-        dispatch(roomCreators.setalarm(true))
+        dispatch(roomCreators.chattingArr(data))
       })
       },[]);
 
@@ -122,7 +129,7 @@ function App() {
                 <Route path="/postwrite3" exact component={PostWrite_3} />
                 <Route path="/postwrite4" exact component={PostWrite_4} />
                 <Route path="/postdone" exact component={PostDone} />
-                <Route path="/ChatList" exact component={ChatList} socket={socket} />
+                <Route path="/ChatList" exact component={ChatList} />
                 <Route path="/chatex/:roomId" exact component={Chatex} />
                 <Route>
                   <NotFound />

@@ -17,7 +17,6 @@ const AddProfile = (props) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [isOpen2, setIsOpen2] = React.useState(false);
   const userInfo = useSelector((state) => state.user.userInfo);
-  // console.log(userInfo);
 
   useEffect(() => {
     setPreview(userInfo?.userImg);

@@ -3,12 +3,11 @@ import styled from "styled-components";
 import { Card, KakaoMap } from "../components/index";
 import Modal from "../components/Modal/Modal"; //모달 창
 import ModalData from "../components/Modal/ModalData";
-import { Image, Button } from "../elements/Index";
+import { Image} from "../elements/Index";
 import { actionCreators as mypageActions } from "../redux/modules/mypage";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as roomActions } from "../redux/modules/room";
 import { actionCreators as userActions } from "../redux/modules/user";
-import { actionCreators as postActions } from "../redux/modules/post";
 import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 import FooterMenu from "../shared/FooterMenu";
@@ -126,10 +125,6 @@ const PostDetail = (props) => {
     });
   }, [update]);
 
-  // const joinParty = () => {
-  //   socket.emit("joinParty", { postId, userId : post.nowMember });
-  // };
-
   if (banUser?.length === 1) {
     window.alert("강퇴당함 ");
     history.push("/main");
@@ -229,7 +224,6 @@ const PostDetail = (props) => {
         </LiveBox>
 
         <KakaoMap {...post} />
-        {/* && userCheck[0]===false &&post.nowMember.length<=post.maxMember  */}
 
         {isMe === true || userCheck.length === 1 ? (
           <ButtonBox>

@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { Image } from "../elements/Index";
 import { history } from "../redux/configStore";
-import place from "../shared/ImgBox/place.png";
 import moment from "moment";
 import "moment/locale/ko";
 
@@ -105,17 +104,8 @@ const Container = styled.section`
 
 const Profile = styled.div`
   position: absolute;
-  /* width: 65px; */
-  /* height: 65px; */
-  /* border-radius: 65px; */
   z-index: 99;
-  /* background-color: white; */
-  /* margin-left: 60px; */
   top: 35px;
-  /* background-image: url(${(props) => props.src}); */
-  /* background-size: cover; */
-  /* background-repeat: no-repeat; */
-  /* background-position: center; */
 `;
 
 const LocaTime = styled.div`
@@ -162,9 +152,4 @@ const Desc = styled.div`
   word-wrap: break-word;
   line-height: 1.4em;
   height: 2.4em;
-`;
-
-const Line = styled.div`
-  border-top: 1px solid gray;
-  margin: 15px 0px;
 `;

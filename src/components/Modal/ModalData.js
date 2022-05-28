@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { HiOutlineX } from "react-icons/hi";
 
 const ModalData = (props) => {
-  console.log(props);
   const { Members, Alert, Check, Evaluate, text, onCheck, onClose } = props;
 
   //재확인 창
@@ -284,7 +283,6 @@ const SelectBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: left;
-  /* flex-wrap: wrap; */
 `;
 const Content = styled.div`
   display: flex;
@@ -298,10 +296,4 @@ const Select = styled.div`
   box-sizing: border-box;
   border: none;
   font-size: 16px;
-`;
-
-const Line = styled.hr`
-  width: "500px";
-  height: "50%";
-  border: 1px solid black;
 `;

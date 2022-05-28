@@ -3,25 +3,19 @@ import styled from "styled-components";
 import Image from "../elements/Image";
 import Modal from "../components/Modal/Modal"; //모달 창
 import FooterMenu from "../shared/FooterMenu";
-import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { BiDumbbell } from "react-icons/bi";
 import { MdPlace } from "react-icons/md";
 import GoBack from "../elements/GoBack";
 import { Grid, Text } from "../elements/Index";
-import ReviewCardD from "../components/ReviewCardD";
 import axios from "axios";
-
+import moment from "moment";
+import "moment/locale/ko";
 const ReviewList = () => {
-  const review = useSelector((state) => state.post.review);
-  console.log();
-  const dispatch = useDispatch();
   const params = useParams();
 
   const [postList, setPostList] = useState([]);
-  console.log(postList);
   const [pageNumber, setPageNumber] = useState(1);
-  console.log(pageNumber);
   const [isLoading, setIsLoading] = useState(true);
   const pageEnd = React.useRef(null);
 
@@ -116,12 +110,10 @@ const ReviewList = () => {
 
                   <User>
                     <Master>
-                      {review.nickName === "undefined"
-                        ? "탈퇴한 회원"
-                        : review.nickName}
+                      { review.nickName}
                     </Master>
                     <div style={{ color: "rgba(120, 120, 120, 1)" }}>
-                      {review.createdAt}
+                      {moment(review.createdAt).fromNow()}
                     </div>
                   </User>
                 </ProfileBox>
@@ -132,11 +124,11 @@ const ReviewList = () => {
                 <Info>
                   <div>
                     <MdPlace color="#787878" />
-                    <span>{review.spot}</span>
+                    <span style={{marginLeft:"5px"}}>{review.spot}</span>
                   </div>
                   <div>
                     <BiDumbbell color="#787878" />
-                    <span>{review.postCategory}</span>
+                    <span style={{marginLeft:"5px"}}>{review.postCategory}</span>
                   </div>
                 </Info>
               </div>
@@ -166,7 +158,7 @@ const Header = styled.div`
 `;
 
 const ProfileBox = styled.div`
-  padding: 24px 24px 10px 24px;
+  padding: 12px 24px 15px 24px;
   display: flex;
   flex-direction: row;
 `;
