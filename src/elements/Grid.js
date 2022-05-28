@@ -23,6 +23,7 @@ const Grid = (props) => {
     isFlex_end,
     shadow,
     stop,
+    bordernone,
   } = props;
 
   const styles = {
@@ -45,6 +46,7 @@ const Grid = (props) => {
     isFlex_end: isFlex_end,
     shadow: shadow,
     stop: stop,
+    bordernone: bordernone,
   };
 
   return (
@@ -91,6 +93,8 @@ const GridBox = styled.div`
   justify-content: ${(props) => props.justify};
   ${(props) => (props.center ? `text-align: center` : "")}
   border: ${(props) => props.border};
+  ${(props) =>
+    props.bordernone ? `border-right: none; border-left: none` : ""};
   border-bottom: ${(props) => props.border_bottom};
   border-radius: ${(props) => props.br};
   ${(props) => (props.bottom ? `bottom: 0px` : "")}

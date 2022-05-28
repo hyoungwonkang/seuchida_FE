@@ -22,7 +22,7 @@ const EditDone = () => {
     <>
       <Container>
         <Grid column padding="167px 0px 0px 0px">
-          <img src="./img/seuchin.png" />
+          <img alt="seuchin" src="./img/seuchin.png" />
           <Text size="24px" bold>
             프로필 수정이 <br />
             완료되었어요:)

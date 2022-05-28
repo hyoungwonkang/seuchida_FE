@@ -1,10 +1,51 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Text, Grid, Image } from "../../elements/Index";
 import styled from "styled-components";
 import { HiOutlineX } from "react-icons/hi";
 
 const ModalData = (props) => {
-  const { Members, Alert, Check, Evaluate, text, onCheck, onClose } = props;
+  const { Members, Alert, Check, Evaluate, text, onCheck, onClose, Survey } =
+    props;
+
+  if (Survey) {
+    return (
+      <div style={{ position: "absolute", transform: "translate(-50%, -50%)" }}>
+        {/* close버튼 */}
+        <Grid row justify="right" height="50px" position>
+          <HiOutlineX size={38} onClick={onClose} />
+        </Grid>
+        <BannerBtn
+          src="./img/bannerbutton.png"
+          onClick={() => {
+            onCheck();
+          }}
+        />
+
+        <img alt="banner" src="./img/banner.png" style={{ width: "320px" }} />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "right",
+            color: "white",
+          }}
+        >
+          <button
+            style={{
+              background: "transparent",
+              border: "none",
+              color: "white",
+            }}
+            onClick={() => {
+              props.nottoday();
+              onClose();
+            }}
+          >
+            오늘 하루 더 이상 보지 않기 X
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   //재확인 창
   if (Check) {
@@ -89,6 +130,9 @@ const ModalData = (props) => {
     return (
       <Grid width="342px" height="250px" padding="10px">
         <SelectBox>
+          <Text bold margin="10px 0px 10px 13px" size="16px">
+            어떤 점이 별로였나요?
+          </Text>
           {BadList.map((item) => {
             return (
               <Content key={item.id} row>
@@ -109,7 +153,7 @@ const ModalData = (props) => {
               </Content>
             );
           })}
-          <Grid row height="20px" justify="right" padding="20px 5px 0px 0px">
+          <Grid row height="20px" justify="right" padding="20px 5px 15px 0px">
             <Button
               is_close
               _onClick={() => {
@@ -296,4 +340,13 @@ const Select = styled.div`
   box-sizing: border-box;
   border: none;
   font-size: 16px;
+`;
+
+const BannerBtn = styled.img`
+  width: 150px;
+  background-image: url(".img/bannerbutton.png");
+  position: absolute;
+  bottom: 40px;
+  left: 90px;
+  cursor: pointer;
 `;

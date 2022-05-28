@@ -8,15 +8,19 @@ import { actionCreators as userActions } from "../redux/modules/user";
 import { history } from "../redux/configStore";
 import { RiMessage3Fill } from "react-icons/ri";
 import { IoIosArrowForward } from "react-icons/io";
+import Modal from "../components/Modal/Modal"; //모달 창
+import ModalData from "../components/Modal/ModalData";
 
 const Main = () => {
-
   const catepost = useSelector((state) => state.post.list.caPost);
   const post_list = useSelector((state) => state.post.list.nearPost);
   const review = useSelector((state) => state.post.list.filterRe);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   // const [mainalert, setMainalert] = React.useState([])
+  //모달
+  const [isOpen, setIsOpen] = React.useState(false);
+  const HAS_VISITED_BEFORE = localStorage.getItem("hasVisitedBefore");
   const [state, setState] = React.useState({
     center: {
       lat: 33.450701,
@@ -26,14 +30,26 @@ const Main = () => {
     isLoading: true,
   });
 
-  React.useEffect(()=>{
-    dispatch(userActions.isLoginDB());   
-  },[])
-  React.useEffect(()=>{
-    dispatch(postActions.getMainDB());    
-  },[])
+  //홍보 배너 띄우기
+  React.useEffect(() => {
+    if (HAS_VISITED_BEFORE && HAS_VISITED_BEFORE > new Date()) {
+      return;
+    }
+    if (!HAS_VISITED_BEFORE) setIsOpen(true);
+  }, []);
+  //오늘 하루 보지 않기
+  const nottoday = () => {
+    let expires = new Date();
+    expires = expires.setHours(expires.getHours() + 24);
+    localStorage.setItem("hasVisitedBefore", expires);
+  };
 
-
+  React.useEffect(() => {
+    dispatch(userActions.isLoginDB());
+  }, []);
+  React.useEffect(() => {
+    dispatch(postActions.getMainDB());
+  }, []);
 
   React.useEffect(() => {
     if (navigator.geolocation) {
@@ -102,7 +118,6 @@ const Main = () => {
         </ReviewBox>
 
         {/* 여기여기 붙어라 */}
-
         <TitleBox
           onClick={() => {
             history.push("/postlist");
@@ -130,10 +145,27 @@ const Main = () => {
             })}
           </CardBox>
         </ListBox>
+
         {/* 설문조사 작성 */}
-        <Survey onClick={handleClick}>
-          <RiMessage3Fill size={40} color="#FDE333" />
+        <Survey>
+          <RiMessage3Fill
+            size={40}
+            color="#FDE333"
+            onClick={() => {
+              setIsOpen(true);
+            }}
+          />
         </Survey>
+
+        <Modal open={isOpen}>
+          <ModalData
+            Survey
+            onClose={() => setIsOpen(false)}
+            onCheck={() => handleClick()}
+            nottoday={() => nottoday()}
+          />
+        </Modal>
+
         {/* 프로필 작성 */}
         <Float
           onClick={() => {
@@ -156,8 +188,8 @@ const Main = () => {
         >
           <img alt="plus" src="./img/addpost.png" width={64} />
         </Float>
-        {/* 푸터 */}
       </Container>
+      {/* 푸터 */}
       <FooterMenu />
     </>
   );

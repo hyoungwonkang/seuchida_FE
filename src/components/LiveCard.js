@@ -120,7 +120,6 @@ const Location = styled.div`
 `;
 
 const Box = styled.div`
-  /* border: 1px solid black; */
   margin-top: 20px;
   padding: 20px;
   width: 100%;

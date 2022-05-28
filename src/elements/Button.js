@@ -94,7 +94,6 @@ const ElButton = styled.button`
   ${(props) => (props.right ? `float: right` : "")}
 `;
 
-
 const DeleteButton = styled.button`
   width: 57px;
   height: 32px;

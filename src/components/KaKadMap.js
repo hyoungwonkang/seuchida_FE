@@ -2,7 +2,6 @@ import React from "react";
 import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
 import { Grid, Text, Image } from "../elements/Index";
 import styled from "styled-components";
-import { useMap, kakao } from "react-kakao-maps-sdk";
 import { HiOutlineX } from "react-icons/hi";
 import { history } from "../redux/configStore";
 
@@ -75,16 +74,9 @@ const DetailMap = styled.div`
   padding: 0px 24px 130px 24px;
 `;
 
-const Mebtn = styled.div`
-  background-color: black;
-  position: fixed;
-  bottom: 120px;
-  z-index: 99;
-`;
-
 const Box = styled.div`
   position: absolute;
-  padding: 10px;
+  padding: 5px;
   top: -190px;
   left: -80px;
   background-color: white;
@@ -99,13 +91,41 @@ const EventMarkerContainer = (props) => {
   const [isclick, setIsClicked] = React.useState(false);
 
   const level = [
-    { id: 1, level: 1, image: <Image src="../img/badge/red.png" /> },
-    { id: 2, level: 2, image: <Image src="../img/badge/orange.png" /> },
-    { id: 3, level: 3, image: <Image src="../img/badge/yellow.png" /> },
-    { id: 4, level: 4, image: <Image src="../img/badge/green.png" /> },
-    { id: 5, level: 5, image: <Image src="../img/badge/skyblue.png" /> },
-    { id: 6, level: 6, image: <Image src="../img/badge/blue.png" /> },
-    { id: 7, level: 7, image: <Image src="../img/badge/purple.png" /> },
+    {
+      id: 1,
+      level: 1,
+      image: <Image size={23} src="../img/badge/red.png" />,
+    },
+    {
+      id: 2,
+      level: 2,
+      image: <Image size={23} src="../img/badge/orange.png" />,
+    },
+    {
+      id: 3,
+      level: 3,
+      image: <Image size={23} src="../img/badge/yellow.png" />,
+    },
+    {
+      id: 4,
+      level: 4,
+      image: <Image size={23} src="../img/badge/green.png" />,
+    },
+    {
+      id: 5,
+      level: 5,
+      image: <Image size={23} src="../img/badge/skyblue.png" />,
+    },
+    {
+      id: 6,
+      level: 6,
+      image: <Image size={23} src="../img/badge/blue.png" />,
+    },
+    {
+      id: 7,
+      level: 7,
+      image: <Image size={23} src="../img/badge/purple.png" />,
+    },
   ];
 
   return (
@@ -150,11 +170,12 @@ const EventMarkerContainer = (props) => {
                     if (props.level >= 7)
                       return <span key={v.id}>{v[6]?.image}</span>;
                   })}
-                  <Text size="14px" bold>
+
+                  <Text size="16px" bold>
                     {props.nickName}
                   </Text>
                 </Grid>
-                <Desc>{props.postDesc}</Desc>
+                <Desc>{props.postTitle}</Desc>
               </Grid>
             </Grid>
           </Box>
@@ -165,17 +186,10 @@ const EventMarkerContainer = (props) => {
 };
 
 const Desc = styled.div`
-  font-size: 16px;
-  width: 120px;
+  font-size: 14px;
+  width: 140px;
   height: 60px;
   padding: 10px 6px;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  word-wrap: break-word;
-  line-height: 1.3em;
-  height: 2.6em;
-  color: #585858;
 `;

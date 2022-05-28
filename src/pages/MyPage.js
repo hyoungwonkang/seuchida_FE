@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import FooterMenu from "../shared/FooterMenu";
 import { ECslider } from "../components";
 import { Grid, Image, Text, Button } from "../elements/Index";
-import { BsFillBellFill } from "react-icons/bs";
 import { AiFillSetting } from "react-icons/ai";
 import { IoIosArrowForward } from "react-icons/io";
 import { history } from "../redux/configStore";
@@ -14,9 +13,7 @@ import { actionCreators as mypageActions } from "../redux/modules/mypage";
 import Modal from "../components/Modal/Modal"; //모달 창
 import ModalData from "../components/Modal/ModalData";
 
-
 const NameCard = () => {
-  
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -24,27 +21,24 @@ const NameCard = () => {
     dispatch(mypageActions.myExerciseDB());
   }, []);
 
-
   const userInfo = useSelector((state) => state.user.userInfo);
   const level = [
-    { id: 1, level: 1, image: <Image src="./img/badge/red.png" /> },
-    { id: 2, level: 2, image: <Image src="./img/badge/orange.png" /> },
-    { id: 3, level: 3, image: <Image src="./img/badge/yellow.png" /> },
-    { id: 4, level: 4, image: <Image src="./img/badge/green.png" /> },
-    { id: 5, level: 5, image: <Image src="./img/badge/skyblue.png" /> },
-    { id: 6, level: 6, image: <Image src="./img/badge/blue.png" /> },
-    { id: 7, level: 7, image: <Image src="./img/badge/purple.png" /> },
+    { id: 1, level: 1, image: <Image src="/img/badge/red.png" /> },
+    { id: 2, level: 2, image: <Image src="/img/badge/orange.png" /> },
+    { id: 3, level: 3, image: <Image src="/img/badge/yellow.png" /> },
+    { id: 4, level: 4, image: <Image src="/img/badge/green.png" /> },
+    { id: 5, level: 5, image: <Image src="/img/badge/skyblue.png" /> },
+    { id: 6, level: 6, image: <Image src="/img/badge/blue.png" /> },
+    { id: 7, level: 7, image: <Image src="/img/badge/purple.png" /> },
   ];
 
   return (
-
     <Grid column height="auto" margin="0px" bg="white">
       {/* 프로필 수정, 알람 */}
       <Grid row height="auto" margin="20px 0px 0px 0px" justify="right">
-        <BsFillBellFill size={24} style={{ marginRight: 8 }} />
         <AiFillSetting
           size={24}
-          style={{ marginRight: 15 }}
+          style={{ marginRight: 20 }}
           onClick={() => history.push("/signuploca")}
         />
       </Grid>
@@ -93,7 +87,6 @@ const MyPage = () => {
   const point = JSON.stringify(userInfo?.userEvalue);
 
   //모달창 state
-  const [isOpen, setIsOpen] = React.useState(false);
   const [isOpen2, setIsOpen2] = React.useState(false);
 
   //로그아웃
@@ -144,10 +137,8 @@ const MyPage = () => {
               if (v.level == userInfo.level) {
                 return v.color;
               }
-            })}
-             레벨까지
-             {10 - point?.charAt(point.length - 1)}
-            포인트
+            })}{" "}
+            레벨까지 {10 - point?.charAt(point.length - 1)}포인트
           </Text>
         )}
       </Grid>
@@ -180,7 +171,6 @@ const MyPage = () => {
         height="62px"
         margin="0px"
         padding="0px 20px"
-        border="1px solid #ddd"
         justify="space-between"
         _onClick={() => {
           history.push("/mypost");
@@ -197,6 +187,7 @@ const MyPage = () => {
         height="62px"
         padding="0px 20px"
         border="1px solid #ddd"
+        bordernone
         justify="space-between"
         _onClick={() => {
           history.push("/myreview");

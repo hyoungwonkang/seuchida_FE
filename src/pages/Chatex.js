@@ -12,7 +12,6 @@ import ChatMenu from "./ChatMenu";
 import { MdSend } from "react-icons/md";
 import { BsList } from "react-icons/bs";
 
-
 const token = localStorage.getItem("token");
 const socket = io.connect("https://seuchidabackend.shop", {
   auth: {
@@ -121,19 +120,31 @@ function Chatex(props) {
     },
     [message]
   );
+  //Enter치면 메세지 전송
+  useEffect(() => {
+    const press = (e) => {
+      if (e.key === "Enter") {
+        if (message) {
+          e.preventDefault();
+          socket.emit("chat", { roomId, msg: message, userId }, setMessage(""));
+        }
+      }
+    };
+    window.addEventListener("keydown", press);
+    return () => window.removeEventListener("keydown", press);
+  }, [message]);
+
   // 방 나가기
   const leaveRoom = () => {
     socket.emit("leave", { roomId });
     history.replace("/chatlist");
   };
 
-   // 안읽은 채팅 기록하기
+  // 안읽은 채팅 기록하기
   const BackRoom = () => {
     socket.emit("back", { roomId, userId: user.userId });
     history.goBack();
   };
-
-
 
   //앱에서 페이지 새로고침 막기
   document.body.style.overscrollBehavior = "none";
@@ -146,7 +157,6 @@ function Chatex(props) {
     };
     history.replace("/chatlist");
   }
-
 
   return (
     <>
@@ -227,6 +237,7 @@ function Chatex(props) {
       <Chatting>
         <div>
           <TextMsg
+            autoFocus
             value={message}
             placeholder="내용을 입력하세요."
             onChange={(e) => setMessage(e.target.value)}

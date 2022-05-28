@@ -7,7 +7,6 @@ import { useParams } from "react-router-dom";
 import { BiDumbbell } from "react-icons/bi";
 import { MdPlace } from "react-icons/md";
 import GoBack from "../elements/GoBack";
-import { Grid, Text } from "../elements/Index";
 import axios from "axios";
 import moment from "moment";
 import "moment/locale/ko";
@@ -40,7 +39,7 @@ const ReviewList = () => {
       },
     })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setIsLoading(false);
         setPostList((items) => [...items, ...res.data]);
       })
@@ -78,7 +77,7 @@ const ReviewList = () => {
       <Header>
         <GoBack text={"함께한 스친들의 후기"} path="/main"></GoBack>
       </Header>
-      {review_list.length === 0 ? (
+      {/* {review_list.length === 0 ? (
         <Grid padding="0px 0px 80px 0px" column height="auto">
           <img
             alt="seuchin"
@@ -92,59 +91,58 @@ const ReviewList = () => {
             지금 바로 후기를 쓰러 가볼까요?
           </Text>
         </Grid>
-      ) : (
-        <div style={{ margin: "0px 0px 80px 0px" }}>
-          {review_list?.map((review, index) => {
-            return (
-              <div key={review._id}>
-                {modalOn && <Modal />}
+      ) : ( */}
+      <div style={{ margin: "0px 0px 80px 0px" }}>
+        {review_list?.map((review, index) => {
+          return (
+            <div key={review._id}>
+              {modalOn && <Modal />}
 
-                <ProfileBox>
-                  <Image
-                    margin="5px 15px 0px 0px"
-                    shape="circle"
-                    src={review.userImg}
-                    size={36}
-                    _onClick={openModal}
-                  />
+              <ProfileBox>
+                <Image
+                  margin="5px 15px 0px 0px"
+                  shape="circle"
+                  src={review.userImg}
+                  size={36}
+                  _onClick={openModal}
+                />
 
-                  <User>
-                    <Master>
-                      { review.nickName}
-                    </Master>
-                    <div style={{ color: "rgba(120, 120, 120, 1)" }}>
-                      {moment(review.createdAt).fromNow()}
-                    </div>
-                  </User>
-                </ProfileBox>
-                {review.reviewImg ? (
-                  <Image shape="rectangle" size={390} src={review.reviewImg} />
-                ) : null}
-                <Desc>{review.content} </Desc>
-                <Info>
-                  <div>
-                    <MdPlace color="#787878" />
-                    <span style={{marginLeft:"5px"}}>{review.spot}</span>
+                <User>
+                  <Master>{review.nickName}</Master>
+                  <div style={{ color: "rgba(120, 120, 120, 1)" }}>
+                    {moment(review.createdAt).fromNow()}
                   </div>
-                  <div>
-                    <BiDumbbell color="#787878" />
-                    <span style={{marginLeft:"5px"}}>{review.postCategory}</span>
-                  </div>
-                </Info>
-              </div>
-            );
-          })}
-          <div ref={pageEnd} className="pageEnd">
-            {isLoading ? (
-              <Pos>
-                <Seuchin alt="loading" src="./img/loading.gif" width={130} />
-              </Pos>
-            ) : (
-              ""
-            )}
-          </div>
+                </User>
+              </ProfileBox>
+              {review.reviewImg ? (
+                <Image shape="rectangle" size={390} src={review.reviewImg} />
+              ) : null}
+              <Desc>{review.content} </Desc>
+              <Info>
+                <div>
+                  <MdPlace color="#787878" />
+                  <span style={{ marginLeft: "5px" }}>{review.spot}</span>
+                </div>
+                <div>
+                  <BiDumbbell color="#787878" />
+                  <span style={{ marginLeft: "5px" }}>
+                    {review.postCategory}
+                  </span>
+                </div>
+              </Info>
+            </div>
+          );
+        })}
+        <div ref={pageEnd} className="pageEnd">
+          {isLoading ? (
+            <Pos>
+              <Seuchin alt="loading" src="./img/loading.gif" width={130} />
+            </Pos>
+          ) : (
+            ""
+          )}
         </div>
-      )}
+      </div>
 
       <FooterMenu />
     </>
@@ -172,9 +170,6 @@ const Desc = styled.div`
   padding: 12px 24px;
 `;
 
-const Icon = styled.span`
-  margin-right: 8px;
-`;
 const Info = styled.div`
   display: flex;
   flex-direction: column;

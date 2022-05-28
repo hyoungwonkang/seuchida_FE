@@ -5,22 +5,24 @@ import { Grid } from "../../elements/Index";
 import { useHistory } from "react-router-dom";
 import { history } from "../../redux/configStore";
 
-
 const Login = (props) => {
   const history = useHistory();
   return (
     <Grid height="100vh" bg="#00D282">
       <Grid column>
-        {/* <Grid height="auto" column margin="250px 0px 50px 0px"> */}
         <Grid column width="200px" height="200px" margin="auto">
-          <img src="./img/login.png" style={{ margin: "150px 0px" }} />
+          <img
+            alt="login"
+            src="./img/login.png"
+            style={{ margin: "150px 0px" }}
+          />
         </Grid>
         <Around onClick={() => history.push("/guide")}>가이드</Around>
         <div style={{ margin: "30vh 0px 20px 0px" }}>
           <Akakao
             href={KAKAO_AUTH_URL}
             onClick={() => {
-              history.push("/main")
+              history.push("/main");
             }}
           >
             <img src="./img/kakao_login_medium_wide.png" alt="카카오로그인" />
@@ -28,7 +30,7 @@ const Login = (props) => {
         </div>
         <GoogleBtn
           onClick={() => {
-            history.push("/main")
+            history.push("/main");
           }}
         >
           <img src="./img/btn_google_light_normal_ios.svg" alt="구글로그인" />

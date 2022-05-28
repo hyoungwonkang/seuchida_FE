@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Image from "../elements/Image";
 import { history } from "../redux/configStore";
 import Modal from "../components/Modal/Modal"; //모달 창
@@ -21,7 +21,6 @@ const ChatMenu = ({ comModalOn, closecomModal, roomId, leaveRoom, socket }) => {
 
   React.useEffect(() => {
     socket.on("ban", (data) => {
-
       if (data === true) {
         setKick(true);
       }
@@ -163,8 +162,6 @@ const Menu = styled.div`
   padding: 20px;
  
 `;
-
-const KickBtn = styled.div``;
 
 const UserBox = styled.div`
   display: flex;
