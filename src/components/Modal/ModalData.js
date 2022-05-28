@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Text, Grid, Image } from "../../elements/Index";
 import styled from "styled-components";
-import { HiOutlineX, HiTranslate } from "react-icons/hi";
+import { HiOutlineX } from "react-icons/hi";
 
 const ModalData = (props) => {
   const { Members, Alert, Check, Evaluate, text, onCheck, onClose, Survey } =

@@ -32,18 +32,4 @@ function ECslider(props) {
 
 export default ECslider;
 
-const Sliders = styled(Slider)`
-  /* .slick-track {
-    /* height: auto; */
-  /* margin: -10px 0px 0px 0px; */
-  /* }
-  .slider {
-    position: relative;
-  }
-  .slider .slick-list {
-    margin: 0 5px;
-  }
-  .slick-slide {
-    margin-right: 18px;
-  } */
-`;
+const Sliders = styled(Slider)``;

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Card, KakaoMap } from "../components/index";
 import Modal from "../components/Modal/Modal"; //모달 창
 import ModalData from "../components/Modal/ModalData";
-import { Image, Button } from "../elements/Index";
+import { Image } from "../elements/Index";
 import { actionCreators as mypageActions } from "../redux/modules/mypage";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as roomActions } from "../redux/modules/room";

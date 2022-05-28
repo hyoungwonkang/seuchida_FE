@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import PostWrite_4 from '../pages/PostWrite_4';
+import React, { useState } from "react";
+import PostWrite_4 from "../pages/PostWrite_4";
 
 const SearchPlace = () => {
-  const [inputText, setInputText] = useState('');
-  const [place, setPlace] = useState('');
+  const [inputText, setInputText] = useState("");
+  const [place, setPlace] = useState("");
 
   const onChange = (e) => {
     setInputText(e.target.value);
@@ -12,18 +12,18 @@ const SearchPlace = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setPlace(inputText);
-    setInputText('');
+    setInputText("");
   };
 
   return (
     <>
-      <form className='inputForm' onSubmit={handleSubmit}>
+      <form className="inputForm" onSubmit={handleSubmit}>
         <input
-          placeholder='Search Place...'
+          placeholder="Search Place..."
           onChange={onChange}
           value={inputText}
         />
-        <button type='submit'>검색</button>
+        <button type="submit">검색</button>
       </form>
       <PostWrite_4 searchPlace={place} />
     </>

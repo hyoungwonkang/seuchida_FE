@@ -1,17 +1,13 @@
 import React, { useState } from "react";
 import { Card } from "../components/index";
-import { Grid, Text } from "../elements/Index";
 import styled from "styled-components";
 import FooterMenu from "../shared/FooterMenu";
 import GoBack from "../elements/GoBack";
-import { useSelector, useDispatch } from "react-redux";
-import { actionCreators as postActions } from "../redux/modules/post";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { IoMdTennisball } from "react-icons/io";
 import axios from "axios";
 
 const PostList = ({ list, params }) => {
-  const dispatch = useDispatch();
   const history = useHistory();
 
   // 포스트 목록
@@ -22,7 +18,7 @@ const PostList = ({ list, params }) => {
   const [pageNumber, setPageNumber] = useState(1);
   // console.log(pageNumber);
   const [isLoading, setIsLoading] = useState(true);
-  const [count, setCount] = useState("");
+  // const [count, setCount] = useState("");
   // console.log(count);
   const pageEnd = React.useRef(null);
 

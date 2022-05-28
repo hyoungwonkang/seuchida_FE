@@ -1,28 +1,26 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
-import Image from "../elements/Image";
+
 const ReviewCard = (props) => {
-const  {review,_onClick} = props
+  const { review, _onClick } = props;
   return (
     <Container onClick={_onClick}>
-     {/* top */}
+      {/* top */}
       <Box>
-      <ReviewImg src={review?.reviewImg} />
+        <ReviewImg src={review?.reviewImg} />
       </Box>
       <LocSports>
-       
-       {/* bottom */}
+        {/* bottom */}
         <BottomBox>
-        <Profile>
-          <ProfileImg src={review?.userImg} />
-          <User>{review?.nickName}</User>
-        </Profile>
-        <Desc>{review?.content}</Desc>
+          <Profile>
+            <ProfileImg src={review?.userImg} />
+            <User>{review?.nickName}</User>
+          </Profile>
+          <Desc>{review?.content}</Desc>
         </BottomBox>
       </LocSports>
     </Container>
-  ); 
+  );
 };
 
 export default ReviewCard;
@@ -37,16 +35,12 @@ const Container = styled.section`
 
 const Box = styled.div`
   align-items: center;
-  
+
   height: 130px;
 `;
 const BottomBox = styled.div`
   align-items: center;
   padding: 7px 20px;
-`;
-
-const SmallFont = styled.span`
-  font-size: 12px;
 `;
 
 const Profile = styled.div`
@@ -69,8 +63,8 @@ const ProfileImg = styled.div`
 const ReviewImg = styled.div`
   width: 208px;
   height: 130px;
- border-top-left-radius: 12px;
- border-top-right-radius: 12px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
   background-color: white;
   background-image: url(${(props) => props.src});
   background-size: cover;
@@ -91,6 +85,5 @@ const Desc = styled.div`
 `;
 
 const LocSports = styled.div`
-  border-top:1px solid #f5f5f5;
-
+  border-top: 1px solid #f5f5f5;
 `;

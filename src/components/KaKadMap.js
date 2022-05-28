@@ -2,7 +2,6 @@ import React from "react";
 import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
 import { Grid, Text, Image } from "../elements/Index";
 import styled from "styled-components";
-import { useMap, kakao } from "react-kakao-maps-sdk";
 import { HiOutlineX } from "react-icons/hi";
 import { history } from "../redux/configStore";
 
@@ -74,13 +73,6 @@ export default KakaoMap;
 
 const DetailMap = styled.div`
   padding: 0px 24px 130px 24px;
-`;
-
-const Mebtn = styled.div`
-  background-color: black;
-  position: fixed;
-  bottom: 120px;
-  z-index: 99;
 `;
 
 const Box = styled.div`
@@ -201,11 +193,4 @@ const Desc = styled.div`
   padding: 10px 6px;
   overflow: hidden;
   text-overflow: ellipsis;
-  /* display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  word-wrap: break-word;
-  line-height: 1.3em;
-  height: 2.6em;
-  color: #585858; */
 `;

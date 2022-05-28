@@ -6,7 +6,11 @@ const ReviewDone = () => {
   document.body.style.overscrollBehavior = "none";
   return (
     <Grid column padding="167px 0px 0px 0px" bg="white" height="auto">
-      <img src="./img/seuchin_yellow.png" style={{ width: "150px" }} />
+      <img
+        alt="seuchin"
+        src="./img/seuchin_yellow.png"
+        style={{ width: "150px" }}
+      />
       <Text size="24px" bold margin="0px">
         후기 작성이
       </Text>
