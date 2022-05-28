@@ -11,9 +11,9 @@ const ModalData = (props) => {
     return (
       <div style={{ position: "absolute", transform: "translate(-50%, -50%)" }}>
         {/* close버튼 */}
-        <Grid row justify="right" height="50px" position>
-          <HiOutlineX size={38} onClick={onClose} />
-        </Grid>
+        <Box>
+          <HiOutlineX size={30} onClick={onClose} />
+        </Box>
         <BannerBtn
           src="./img/bannerbutton.png"
           onClick={() => {
@@ -34,6 +34,7 @@ const ModalData = (props) => {
               background: "transparent",
               border: "none",
               color: "white",
+              cursor: "pointer",
             }}
             onClick={() => {
               props.nottoday();
@@ -63,7 +64,7 @@ const ModalData = (props) => {
           }}
         />
         <Grid row justify="center">
-          <Button is_close _onClick={onClose} margin="10px 38px 0px 0px">
+          <Button is_close cursor _onClick={onClose} margin="10px 38px 0px 0px">
             취소
           </Button>
           <div
@@ -79,6 +80,7 @@ const ModalData = (props) => {
           />
           <Button
             is_close
+            cursor
             _onClick={() => {
               onCheck();
               onClose();
@@ -110,7 +112,7 @@ const ModalData = (props) => {
             margin: "30px 0px 0px 0px",
           }}
         />
-        <Button is_close _onClick={onClose}>
+        <Button is_close _onClick={onClose} cursor>
           확인
         </Button>
       </Grid>
@@ -156,6 +158,7 @@ const ModalData = (props) => {
           <Grid row height="20px" justify="right" padding="20px 5px 15px 0px">
             <Button
               is_close
+              cursor
               _onClick={() => {
                 onClose();
               }}
@@ -164,6 +167,7 @@ const ModalData = (props) => {
             </Button>
             <Button
               is_close
+              cursor
               _onClick={() => {
                 props.rUserId(props.post.memberId);
                 onCheck();
@@ -193,8 +197,8 @@ const ModalData = (props) => {
     return (
       <Grid width="342px" height="356px" padding="20px">
         {/* close버튼 */}
-        <Grid row justify="right" height="30px">
-          <HiOutlineX size={35} onClick={onClose} />
+        <Grid row justify="right" height="30px" cursor>
+          <HiOutlineX size={35} onClick={onClose} cursor={"pointer"} />
         </Grid>
         {/* 프로필내용 */}
         <Grid column height="200px">
@@ -269,8 +273,8 @@ const ModalData = (props) => {
   return (
     <Grid width="342px" height="356px" padding="20px">
       {/* close버튼 */}
-      <Grid row justify="right" height="30px">
-        <HiOutlineX size={35} onClick={onClose} />
+      <Grid row justify="right" height="30px" cursor>
+        <HiOutlineX size={35} onClick={onClose} cursor={"pointer"} />
       </Grid>
 
       {/* 프로필내용 */}
@@ -348,5 +352,14 @@ const BannerBtn = styled.img`
   position: absolute;
   bottom: 40px;
   left: 90px;
+  cursor: pointer;
+`;
+
+const Box = styled.div`
+  display: flex;
+  flex-direction: row;
+  height: 50px;
+  position: absolute;
+  right: 3px;
   cursor: pointer;
 `;

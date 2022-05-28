@@ -152,6 +152,7 @@ const Cate = styled.div`
   font-size: 16px;
   background: ${(props) => (props?.color ? "#0ED88B" : "white")};
   color: ${(props) => (props.color ? "white" : "black")};
+  cursor: pointer;
 `;
 
 export default PostCategory;

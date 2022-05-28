@@ -10,7 +10,7 @@ const GoBack = (props) => {
   if (props.gback) {
     return (
       <>
-        <IoIosArrowBack size={32} onClick={props._onClick} />
+        <IoIosArrowBack cursor={"pointer"} size={32} onClick={props._onClick} />
       </>
     );
   }
@@ -21,6 +21,7 @@ const GoBack = (props) => {
       <>
         <Grid row padding="20px">
           <IoIosArrowBack
+            cursor={"pointer"}
             size={32}
             onClick={() => {
               history.push(props.path);
@@ -39,6 +40,7 @@ const GoBack = (props) => {
       <>
         <Grid row padding="20px">
           <IoIosArrowBack
+            cursor={"pointer"}
             size={32}
             onClick={() => {
               localStorage.removeItem("address");
@@ -70,6 +72,7 @@ const GoBack = (props) => {
     <>
       <Grid row padding="20px">
         <IoIosArrowBack
+          cursor={"pointer"}
           size={32}
           onClick={() => {
             history.push(props.path);
