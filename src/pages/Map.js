@@ -82,7 +82,7 @@ const Map = () => {
           <OpenModal onClick={() => setIsOpen(!isOpen)}>목록보기</OpenModal>
           {isOpen && (
             <Modal>
-              {post.map((p, i) => {
+              {post?.map((p, i) => {
                 return (
                   <Card
                     Map
@@ -166,6 +166,8 @@ const OpenModal = styled.div`
   border-radius: 50px;
   margin-left: 40%;
   font-size: 14px;
+  border: 2px solid #C4C4C4;
+  cursor: pointer;
 `;
 
 const ResearchBtn = styled.div`
@@ -175,14 +177,9 @@ const ResearchBtn = styled.div`
   padding: 8px 16px;
   border-radius: 50px;
   top: 175px;
-  left: 42%;
+  left: 41%;
   font-size: 14px;
   color: #c4c4c4;
-`;
-
-const MyLoca = styled.img`
-  position: fixed;
-  bottom: 95px;
-  z-index: 10;
-  margin-left: 85%;
+  border: 1px solid #C4C4C4;
+  cursor: pointer;
 `;

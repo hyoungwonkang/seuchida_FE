@@ -5,6 +5,8 @@ import Image from "../elements/Image";
 import { history } from "../redux/configStore";
 import Modal from "../components/Modal/Modal"; //모달 창
 import ModalData from "../components/Modal/ModalData";
+import { BiExit } from "react-icons/bi";
+
 
 const ChatMenu = ({ comModalOn, closecomModal, roomId, leaveRoom, socket }) => {
   const user_list = useSelector((state) => state.room.list.nowMember);
@@ -34,7 +36,7 @@ const ChatMenu = ({ comModalOn, closecomModal, roomId, leaveRoom, socket }) => {
     <Overlay comModalOn={comModalOn} onClick={closecomModal}>
       <Container onClick={(e) => e.stopPropagation()}>
         <Menu
-          style={{ marginTop: "40px" }}
+          style={{ marginTop: "40px", cursor: 'pointer', backgroundColor:"#E6E6E6" }}
           onClick={() => history.push(`/postdetail/${postId}`)}
         >
           게시글보기
@@ -73,7 +75,7 @@ const ChatMenu = ({ comModalOn, closecomModal, roomId, leaveRoom, socket }) => {
               </div>
             );
         })}
-        <OutChat onClick={leaveRoom}>채팅방 나가기</OutChat>
+        <OutChat onClick={leaveRoom}><BiExit size={36} color={'#505050'}/></OutChat>
         {/* 참여자 프로필 모달 */}
         <Modal open={isOpen}>
           <ModalData
@@ -152,11 +154,13 @@ const OutChat = styled.div`
   bottom: 0;
   right: 0;
   font-weight: 600;
+  cursor: pointer;
 `;
 const Menu = styled.div`
   font-size: 20px;
   font-weight: bold;
   padding: 20px;
+ 
 `;
 
 const UserBox = styled.div`

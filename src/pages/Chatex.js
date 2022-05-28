@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 import { history } from "../redux/configStore";
 import ChatMenu from "./ChatMenu";
 import { MdSend } from "react-icons/md";
+import { BsList } from "react-icons/bs";
 
 const token = localStorage.getItem("token");
 const socket = io.connect("https://seuchidabackend.shop", {
@@ -179,7 +180,7 @@ function Chatex(props) {
             </div>
           </RowBox>
 
-          <div onClick={openModal}>BUT</div>
+          <div style={{cursor:"pointer"}} onClick={openModal}><BsList size={30}/></div>
         </HeaderContents>
       </Header>
 
