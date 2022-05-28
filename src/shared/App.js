@@ -43,12 +43,10 @@ import {
   NotFound,
 } from "../pages/Index";
 const token = localStorage.getItem("token");
-const socket = io.connect("https://seuchidaback.link", {
+const socket = io.connect("https://seuchidabackend.shop", {
   auth: {
     auth: token,
   },
-  withCredentials: true,
-  transports: ['websocket']
 });
 
 
