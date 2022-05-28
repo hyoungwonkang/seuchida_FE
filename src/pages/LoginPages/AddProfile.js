@@ -90,21 +90,21 @@ const AddProfile = (props) => {
       localStorage.setItem("age", age);
       localStorage.setItem("content", content);
 
-      if (
-        profile === "" ||
-        nickName === "" ||
-        gender === "" ||
-        age === "" ||
-        content === ""
-      ) {
-        setIsOpen(true);
-      } else {
-        //로컬 값 저장
-        localStorage.setItem("nickName", nickName);
-        localStorage.setItem("gender", gender);
-        localStorage.setItem("age", age);
-        localStorage.setItem("content", content);
-      }
+      // if (
+      //   profile === "" ||
+      //   nickName === "" ||
+      //   gender === "" ||
+      //   age === "" ||
+      //   content === ""
+      // ) {
+      //   setIsOpen(true);
+      // } else {
+      //   //로컬 값 저장
+      //   localStorage.setItem("nickName", nickName);
+      //   localStorage.setItem("gender", gender);
+      //   localStorage.setItem("age", age);
+      //   localStorage.setItem("content", content);
+      // }
 
       //사진 추가
       if (profile === userInfo?.userImg) {
