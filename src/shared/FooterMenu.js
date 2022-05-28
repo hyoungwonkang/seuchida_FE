@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import { Button} from "../elements/Index";
+import { Button } from "../elements/Index";
 import { actionCreators as roomCreators } from "../redux/modules/room";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -45,6 +45,7 @@ const FooterMenu = (props) => {
     return (
       <Btns>
         <Button
+          cursor
           bg="white"
           color="#5796f7"
           br="1px solid #5796f7"
@@ -60,6 +61,7 @@ const FooterMenu = (props) => {
           참여취소
         </Button>
         <Button
+          cursor
           wd="150px"
           _onClick={() => {
             //페이지 이동
@@ -87,6 +89,7 @@ const FooterMenu = (props) => {
     return (
       <Btn>
         <Button
+          cursor
           _onClick={() => {
             //페이지 이동
             if (props.path) {
@@ -111,7 +114,7 @@ const FooterMenu = (props) => {
   if (is_check) {
     return (
       <Btn>
-        <Button bg="#c4c4c4" margin={"12px 0px 0px 0px"}>
+        <Button cursor bg="#c4c4c4" margin={"12px 0px 0px 0px"}>
           {props.text}
         </Button>
       </Btn>
@@ -145,9 +148,9 @@ const FooterMenu = (props) => {
           )}
         </Menu>
         <Menu onClick={readArlam}>
-          {alarm !==0  &&  (
+          {alarm !== 0 && (
             <NewArlam style={{ padding: "2px 8px", fontSize: "14px" }}>
-              { alarm}
+              {alarm}
             </NewArlam>
           )}
           {localStorage.getItem("chat") === "chat" ? (

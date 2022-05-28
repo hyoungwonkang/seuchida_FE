@@ -272,4 +272,5 @@ const Cate = styled.div`
   font-size: 16px;
   background: ${(props) => (props.click ? "#0ED88B" : "white")};
   color: ${(props) => (props.click ? "white" : "black")};
+  cursor: pointer;
 `;

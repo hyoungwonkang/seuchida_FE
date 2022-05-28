@@ -163,6 +163,7 @@ const PostDetail = (props) => {
       <Container>
         <ProfileBox>
           <Image
+            cursor
             margin="0px 15px 0px 0px"
             shape="circle"
             src={post.userImg}
@@ -200,6 +201,7 @@ const PostDetail = (props) => {
               return (
                 <div key={m + i}>
                   <Image
+                    cursor
                     shape="circle"
                     src={m.memberImg}
                     size={40}
@@ -364,6 +366,7 @@ const DelBtn = styled.div`
   font-size: 16px;
   font-weight: 700;
   margin: 5px 0px 0px 12px;
+  cursor: pointer;
 `;
 
 const LiveBox = styled.div`
@@ -385,4 +388,5 @@ const EndBtn = styled.div`
   margin: 0px;
   border-radius: 5px;
   height: 22px;
+  cursor: pointer;
 `;

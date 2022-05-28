@@ -152,7 +152,11 @@ const EditProfile = (props) => {
               />
               <FileUpload>
                 <label htmlFor="image">
-                  <AiFillPlusCircle size={32} color="#5796F7" />
+                  <AiFillPlusCircle
+                    cursor={"pointer"}
+                    size={32}
+                    color="#5796F7"
+                  />
                 </label>
                 <input
                   type="file"

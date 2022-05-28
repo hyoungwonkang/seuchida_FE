@@ -24,6 +24,7 @@ const Grid = (props) => {
     shadow,
     stop,
     bordernone,
+    cursor,
   } = props;
 
   const styles = {
@@ -47,6 +48,7 @@ const Grid = (props) => {
     shadow: shadow,
     stop: stop,
     bordernone: bordernone,
+    cursor: cursor,
   };
 
   return (
@@ -105,6 +107,7 @@ const GridBox = styled.div`
       ? `display: flex; align-items: center; justify-content: end;`
       : null}
   ${(props) => (props.stop ? `overscroll-behavior: none` : "")}
+  cursor: ${(props) => props.cursor};
 `;
 
 export default Grid;
