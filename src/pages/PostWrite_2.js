@@ -95,7 +95,6 @@ const PostWrite_2 = (props) => {
       ele.value = ele.value.replace(regExp, "");
     }
   };
-  // console.log(postCategory, postTitle, postDesc);
 
   // 뒤로가기 시에도 데이터를 유지합니다.
   useEffect(() => {

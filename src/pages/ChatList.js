@@ -13,9 +13,9 @@ const ChatList = ({ socket }) => {
 
   const room_list = useSelector((state) => state.room?.list?.chattingRoom);
   const last_chat = useSelector((state) => state.room?.list?.lastChatting);
-  const unreadChatlist = useSelector(
-    (state) => state.room?.list?.unreadChatlist
-  );
+  // const unreadChatlist = useSelector(
+  //   (state) => state.room?.list?.unreadChatlist
+  // );  나중에 추가해야될 부분 ( 이전 채팅 기록 )
   const alarm = useSelector((state) => state.room.chatarr);
 
   React.useEffect(() => {

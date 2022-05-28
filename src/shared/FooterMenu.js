@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import { Button, Image } from "../elements/Index";
-import { io } from "socket.io-client";
+import { Button} from "../elements/Index";
 import { actionCreators as roomCreators } from "../redux/modules/room";
 import { useDispatch, useSelector } from "react-redux";
 

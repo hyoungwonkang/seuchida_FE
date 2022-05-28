@@ -20,7 +20,6 @@ const ReviewWrite = (props) => {
   }, []);
 
   //이미지 가져오기
-  // const photo = useSelector((state) => state.mypage.reviewImg);
   const postInfo = useSelector((state) => state.mypage.myPostOne);
   const postId = props.match.params.postId;
 

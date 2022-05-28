@@ -85,7 +85,6 @@ const PostCategory = (props) => {
         <Grid height="auto" column margin="40px 0px 0px 0px">
           <CateBox>
             {CategoryList.map((item) => {
-              // console.log(item);
               return (
                 <div key={item.id}>
                   <input

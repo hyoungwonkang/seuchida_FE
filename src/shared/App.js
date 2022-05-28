@@ -4,6 +4,9 @@ import GlobalStyle from "../elements/style/GlobalStyle";
 import { Route, Switch } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configStore";
+import { io } from "socket.io-client";
+import { useDispatch } from "react-redux";
+import { actionCreators as roomCreators } from "../redux/modules/room";
 
 import MobileFrame from "../shared/MoileFrame";
 import {
@@ -39,14 +42,18 @@ import {
   ChatList,
   NotFound,
 } from "../pages/Index";
-
+const token = localStorage.getItem("token");
+const socket = io.connect("https://seuchidabackend.shop", {
+  auth: {
+    auth: token,
+  },
+});
 function App() {
 
  
   const dispatch = useDispatch()
   React.useEffect(()=>{
     socket.on("joinPartyAlert", (data) => {
-      console.log(data)
       dispatch(roomCreators.joinArlam(data))
      dispatch(roomCreators.mainArlam(true))
     })       
