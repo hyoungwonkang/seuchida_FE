@@ -5,9 +5,10 @@ import { Route, Switch } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configStore";
 import { io } from "socket.io-client";
-import MobileFrame from "../shared/MoileFrame";
 import { useDispatch } from "react-redux";
 import { actionCreators as roomCreators } from "../redux/modules/room";
+
+import MobileFrame from "../shared/MoileFrame";
 import {
   Guide,
   Login,
@@ -42,28 +43,26 @@ import {
   NotFound,
 } from "../pages/Index";
 const token = localStorage.getItem("token");
-const socket = io.connect("https://seuchidaback.link", {
+const socket = io.connect("https://seuchidabackend.shop", {
   auth: {
     auth: token,
   },
-  withCredentials: true,
-  transports: ['websocket']
 });
 
 function App() {
-  const dispatch = useDispatch();
-  React.useEffect(() => {
+  const dispatch = useDispatch()
+  React.useEffect(()=>{
     socket.on("joinPartyAlert", (data) => {
-      dispatch(roomCreators.joinArlam(data));
-      dispatch(roomCreators.mainArlam(true));
-    });
-  }, []);
+      dispatch(roomCreators.joinArlam(data))
+     dispatch(roomCreators.mainArlam(true))
+    })       
+    },[])
 
-  React.useEffect(() => {
-    socket?.on("alert", (data) => {
-      dispatch(roomCreators.chattingArr(data));
-    });
-  }, []);
+    React.useEffect(() => {
+      socket?.on("alert", (data) => {
+        dispatch(roomCreators.chattingArr(data))
+      })
+      },[]);
 
   return (
     <>
@@ -156,7 +155,6 @@ const WebView = styled.div`
   height: 100vh;
   background-image: url("/img/background.png");
   background-size: cover;
-  /* overflow: hidden; */
   position: absolute;
   top: 0;
   right: 0;
@@ -168,7 +166,6 @@ const Loading = styled.div`
   width: 100%;
   height: 100%;
   max-width: 390px;
-  /* padding: 300px 0px; */
   margin: auto;
   display: flex;
   flex-direction: column;

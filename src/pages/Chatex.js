@@ -92,6 +92,20 @@ function Chatex(props) {
     });
   }, []);
 
+    //Enter치면 메세지 전송
+    useEffect(() => {
+      const press = (e) => {
+        if (e.key === "Enter") {
+          if (message) {
+            e.preventDefault();
+            socket.emit("chat", { roomId, msg: message, userId }, setMessage(""));
+          }
+        }
+      };
+      window.addEventListener("keydown", press);
+      return () => window.removeEventListener("keydown", press);
+    }, [message]);
+    
   //채팅 오면 스크롤 하단으로 내리기
   useEffect(() => {
     scrollToBottom();
