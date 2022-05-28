@@ -42,11 +42,14 @@ import {
   NotFound,
 } from "../pages/Index";
 const token = localStorage.getItem("token");
-const socket = io.connect("https://seuchidabackend.shop", {
+const socket = io.connect("https://seuchidaback.link", {
   auth: {
     auth: token,
   },
+  withCredentials: true,
+  transports: ['websocket']
 });
+
 function App() {
   const dispatch = useDispatch();
   React.useEffect(() => {
