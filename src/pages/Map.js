@@ -168,6 +168,7 @@ const OpenModal = styled.div`
   font-size: 14px;
   border: 2px solid #C4C4C4;
   cursor: pointer;
+
 `;
 
 const ResearchBtn = styled.div`

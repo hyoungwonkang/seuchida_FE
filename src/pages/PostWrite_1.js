@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import FooterMenu from "../shared/FooterMenu";
@@ -15,8 +15,6 @@ const PostWrite_1 = (props) => {
 
   //모달 오픈 state
   const [isOpen, setIsOpen] = useState(false);
-  const [isOpen2, setIsOpen2] = useState(false);
-  const [isOpen3, setIsOpen3] = useState(false);
 
   //제목과 설명 state
   // 뒤로가기 시에도 데이터를 유지합니다.
@@ -60,18 +58,6 @@ const PostWrite_1 = (props) => {
   const backEvent = () => {
     history.push("/postcategory");
   };
-
-  useEffect(() => {
-    if (postTitle?.length >= 15) {
-      setIsOpen2(true);
-    }
-  }, [postTitle]);
-
-  useEffect(() => {
-    if (postDesc?.length >= 200) {
-      setIsOpen3(true);
-    }
-  }, [postDesc]);
 
   //새로고침 시 작성 첫 번째 페이지로 이동
   if (document.readyState === "interactive") {
@@ -153,20 +139,6 @@ const PostWrite_1 = (props) => {
           Alert
           text="내용을 모두 입력해주세요"
           onClose={() => setIsOpen(false)}
-        />
-      </Modal>
-      <Modal open={isOpen2}>
-        <ModalData
-          Alert
-          text="15자 이하만 가능해요"
-          onClose={() => setIsOpen2(false)}
-        />
-      </Modal>
-      <Modal open={isOpen3}>
-        <ModalData
-          Alert
-          text="200자 이하만 가능해요"
-          onClose={() => setIsOpen3(false)}
         />
       </Modal>
     </div>

@@ -15,7 +15,6 @@ import GoBack from "../elements/GoBack";
 import { io } from "socket.io-client";
 
 const token = localStorage.getItem("token");
-// const ENDPOINT = "https://seuchidabackend.shop";
 const socket = io.connect("https://seuchidabackend.shop", {
   auth: {
     auth: token,

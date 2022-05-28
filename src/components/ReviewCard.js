@@ -80,8 +80,16 @@ const User = styled.span`
 
 const Desc = styled.div`
   margin-top: 8px;
-  line-height: 21px;
+
   font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* 라인수 */
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+  line-height: 1.3em;
+  height: 2.4em;
 `;
 
 const LocSports = styled.div`

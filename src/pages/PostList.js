@@ -103,7 +103,7 @@ const PostList = ({ list, params }) => {
           <GoBack
             gback
             _onClick={() => {
-              window.location.href = "/main";
+              history.push(`/main`);
             }}
           />
         </Gback>

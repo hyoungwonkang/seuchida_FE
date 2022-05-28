@@ -12,6 +12,7 @@ import ChatMenu from "./ChatMenu";
 import { MdSend } from "react-icons/md";
 import { BsList } from "react-icons/bs";
 
+
 const token = localStorage.getItem("token");
 const socket = io.connect("https://seuchidabackend.shop", {
   auth: {
@@ -91,6 +92,20 @@ function Chatex(props) {
     });
   }, []);
 
+    //Enter치면 메세지 전송
+    useEffect(() => {
+      const press = (e) => {
+        if (e.key === "Enter") {
+          if (message) {
+            e.preventDefault();
+            socket.emit("chat", { roomId, msg: message, userId }, setMessage(""));
+          }
+        }
+      };
+      window.addEventListener("keydown", press);
+      return () => window.removeEventListener("keydown", press);
+    }, [message]);
+    
   //채팅 오면 스크롤 하단으로 내리기
   useEffect(() => {
     scrollToBottom();
@@ -120,31 +135,19 @@ function Chatex(props) {
     },
     [message]
   );
-  //Enter치면 메세지 전송
-  useEffect(() => {
-    const press = (e) => {
-      if (e.key === "Enter") {
-        if (message) {
-          e.preventDefault();
-          socket.emit("chat", { roomId, msg: message, userId }, setMessage(""));
-        }
-      }
-    };
-    window.addEventListener("keydown", press);
-    return () => window.removeEventListener("keydown", press);
-  }, [message]);
-
   // 방 나가기
   const leaveRoom = () => {
     socket.emit("leave", { roomId });
     history.replace("/chatlist");
   };
 
-  // 안읽은 채팅 기록하기
+   // 안읽은 채팅 기록하기
   const BackRoom = () => {
     socket.emit("back", { roomId, userId: user.userId });
     history.goBack();
   };
+
+
 
   //앱에서 페이지 새로고침 막기
   document.body.style.overscrollBehavior = "none";
@@ -157,6 +160,7 @@ function Chatex(props) {
     };
     history.replace("/chatlist");
   }
+
 
   return (
     <>
@@ -172,15 +176,15 @@ function Chatex(props) {
         <HeaderContents>
           <RowBox>
             <GoBack gback _onClick={BackRoom} />
-            <div style={{ margin: "3px 0px 0px 10px" }}>
+            <ChatTitle style={{ margin: "3px 0px 0px 10px" }}>
               {roomInfo?.postTitle}
-            </div>
+            </ChatTitle>
             <div style={{ margin: "3px 0px 0px 15px", color: "#C4C4C4" }}>
               {nowM}/{roomInfo?.maxMember}
             </div>
           </RowBox>
 
-          <div style={{cursor:"pointer"}} onClick={openModal}><BsList size={30}/></div>
+          <div style={{cursor:"pointer",paddingTop:"3px"}} onClick={openModal}><BsList size={30}/></div>
         </HeaderContents>
       </Header>
 
@@ -237,10 +241,11 @@ function Chatex(props) {
       <Chatting>
         <div>
           <TextMsg
-            autoFocus
             value={message}
             placeholder="내용을 입력하세요."
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={(e) => {if (e.target.value?.length >= 150) {
+              window.alert("150자 이상 입력 불가능 합니다")
+            }setMessage(e.target.value)}}
             onkeyup="enterkey()"
           />
 
@@ -262,6 +267,22 @@ const Header = styled.div`
   background-color: white;
   width: 100%;
 `;
+
+const ChatTitle = styled.span`
+  font-weight: bold;
+  margin-right: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 라인수 */
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+  line-height: 1.3em;
+  height: 1.3em;
+  width: 200px;
+  
+`;
+
 
 const HeaderContents = styled.div`
   display: flex;

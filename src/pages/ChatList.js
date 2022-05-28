@@ -61,10 +61,11 @@ const ChatList = ({ socket }) => {
                   <ChatTitleBox>
                     <Image src={room?.ownerImg} size={50} />
                     <div style={{ marginLeft: "10px" }}>
-                      <div style={{ marginBottom: "5px" }}>
-                        <ChatTitle>{room?.postTitle} </ChatTitle>
+                      <div style={{ marginBottom: "5px",display:"flex" }}>
+                        <ChatTitle>{room?.postTitle}  </ChatTitle>
                         <UserCount> {room?.nowMember?.length}</UserCount>
                       </div>
+                       
                       {/* 최신메세지 갱신  */}
                       <LastMsg>
                       {roomchat[roomchat.length - 1]?.msg ||
@@ -122,11 +123,22 @@ const ChatBox = styled.div`
   height: 90px;
   width: 100%;
   border-top: 1px solid #e6e6e6;
+  
 `;
 
 const ChatTitle = styled.span`
   font-weight: bold;
   margin-right: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 라인수 */
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+  line-height: 1.3em;
+  height: 1.3em;
+  width: 200px;
+  
 `;
 
 const UserCount = styled.span`
