@@ -34,9 +34,10 @@ const NameCard = () => {
 
   return (
     <Grid column height="auto" margin="0px" bg="white">
-      {/* 프로필 수정, 알람 */}
+      {/* 프로필 수정 */}
       <Grid row height="auto" margin="20px 0px 0px 0px" justify="right">
         <AiFillSetting
+          cursor={"pointer"}
           size={24}
           style={{ marginRight: 20 }}
           onClick={() => history.push("/signuploca")}
@@ -81,7 +82,6 @@ const NameCard = () => {
 };
 
 const MyPage = () => {
-  const dispatch = useDispatch();
   const myExercise = useSelector((state) => state.mypage.myExercise);
   const userInfo = useSelector((state) => state.user.userInfo);
   const point = JSON.stringify(userInfo?.userEvalue);
@@ -166,6 +166,7 @@ const MyPage = () => {
 
       {/* 내가 만든 목록 */}
       <Grid
+        cursor="pointer"
         row
         bg="white"
         height="62px"
@@ -179,9 +180,10 @@ const MyPage = () => {
         <Text size="16px" bold>
           내가 만든 모임
         </Text>
-        <IoIosArrowForward size={30} />
+        <IoIosArrowForward size={30} cursor={"pointer"} />
       </Grid>
       <Grid
+        cursor="pointer"
         row
         bg="white"
         height="62px"
@@ -196,7 +198,7 @@ const MyPage = () => {
         <Text size="16px" bold>
           내가 쓴 후기
         </Text>
-        <IoIosArrowForward size={30} />
+        <IoIosArrowForward size={30} cursor={"pointer"} />
       </Grid>
 
       <Grid
@@ -205,17 +207,13 @@ const MyPage = () => {
         justify="space-between"
         bg="white"
       >
-        <Button
-          wd="342px"
-          bg="#fff"
-          br="1px solid #C4C4C4"
-          color=" #C4C4C4"
-          _onClick={() => {
+        <Btn
+          onClick={() => {
             setIsOpen2(true);
           }}
         >
           로그아웃
-        </Button>
+        </Btn>
       </Grid>
 
       {/* 로그아웃 경고창 모달 */}
@@ -268,4 +266,14 @@ const Cate = styled.div`
   font-size: 16px;
   background: ${(props) => (props.click ? "#0ED88B" : "white")};
   color: ${(props) => (props.click ? "white" : "black")};
+`;
+
+const Btn = styled.button`
+  width: 342px;
+  height: 54px;
+  background: #fff;
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
+  color: #c4c4c4;
+  cursor: pointer;
 `;

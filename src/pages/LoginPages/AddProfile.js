@@ -159,6 +159,7 @@ const AddProfile = (props) => {
             <Grid height="auto" column margin="30px 0px">
               {/* 프로필 이미지 */}
               <Image
+                cursor
                 size={80}
                 position="relative"
                 alt="profile"
@@ -172,7 +173,11 @@ const AddProfile = (props) => {
               />
               <FileUpload>
                 <label htmlFor="image">
-                  <AiFillPlusCircle size={32} color="#5796F7" />
+                  <AiFillPlusCircle
+                    size={32}
+                    color="#5796F7"
+                    cursor={"pointer"}
+                  />
                 </label>
                 <input
                   type="file"

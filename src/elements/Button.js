@@ -19,6 +19,7 @@ const Button = (props) => {
     border_right,
     color,
     br,
+    cursor,
   } = props;
 
   const styles = {
@@ -33,6 +34,7 @@ const Button = (props) => {
     br: br,
     border_right: border_right,
     color: color,
+    cursor: cursor,
   };
 
   if (is_delete) {
@@ -92,6 +94,7 @@ const ElButton = styled.button`
   border-radius: 5px;
   ${(props) => (props.margin ? `margin: ${props.margin};` : "")}
   ${(props) => (props.right ? `float: right` : "")}
+  ${(props) => (props.cursor ? `cursor: pointer` : "")}
 `;
 
 const DeleteButton = styled.button`
@@ -106,6 +109,7 @@ const DeleteButton = styled.button`
   left: 320px;
   text-align: center;
   border: none;
+  ${(props) => (props.cursor ? `cursor: pointer` : "")}
 `;
 
 const CloseButton = styled.button`
@@ -118,6 +122,7 @@ const CloseButton = styled.button`
   border: none;
   ${(props) => (props.margin ? `margin: ${props.margin};` : "")};
   border-right: ${(props) => props.border_right};
+  ${(props) => (props.cursor ? `cursor: pointer` : "")}
 `;
 
 export default Button;

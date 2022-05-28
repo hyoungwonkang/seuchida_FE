@@ -411,16 +411,12 @@ const BoldTitler = styled.span`
 const BoldTitleel = styled.span`
   font-weight: bold;
   font-size: 17px;
-  /* margin-right: 15px; */
-  width: 220px;
+  width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 1; /* 라인수 */
   -webkit-box-orient: vertical;
-  /* word-wrap: break-word; */
-  /* line-height: 1.3em;
-  height: 2.4em; */
   color: #585858;
 `;
 

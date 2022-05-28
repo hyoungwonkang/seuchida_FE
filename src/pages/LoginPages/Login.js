@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { KAKAO_AUTH_URL, GOOGLE_AUTH_URL } from "../../shared/OAuth";
 import { Grid } from "../../elements/Index";
 import { useHistory } from "react-router-dom";
-import { history } from "../../redux/configStore";
 
 const Login = (props) => {
   const history = useHistory();
@@ -12,9 +11,9 @@ const Login = (props) => {
       <Grid column>
         <Grid column width="200px" height="200px" margin="auto">
           <img
-            alt="login"
             src="./img/login.png"
             style={{ margin: "150px 0px" }}
+            alt="로그인 이미지"
           />
         </Grid>
         <Around onClick={() => history.push("/guide")}>가이드</Around>

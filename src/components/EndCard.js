@@ -56,7 +56,7 @@ const EndCard = (props) => {
         {props?.status === true ? (
           ""
         ) : (
-          <Grid row padding="0px 0px 0px 80px">
+          <Grid row padding="0px 0px 0px 80px" cursor>
             <FaPen
               color="#C4C4C4"
               size={14}
