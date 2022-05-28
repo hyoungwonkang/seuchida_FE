@@ -7,40 +7,21 @@ import { history } from "../redux/configStore";
 import { Image, Grid, Text } from "../elements/Index";
 import moment from "moment";
 import "moment/locale/ko";
-import { io } from "socket.io-client";
 
-const token = localStorage.getItem("token");
-const socket = io.connect("https://seuchidabackend.shop", {
-  auth: {
-    auth: token,
-  },
-});
-
-const ChatList = () => {
+const ChatList = ({ socket }) => {
   const dispatch = useDispatch();
 
   const room_list = useSelector((state) => state.room?.list?.chattingRoom);
   const last_chat = useSelector((state) => state.room?.list?.lastChatting);
-  const unreadChatlist = useSelector(
-    (state) => state.room?.list?.unreadChatlist
-  );
-
-  const [alarm, setAlarm] = React.useState();
+  // const unreadChatlist = useSelector(
+  //   (state) => state.room?.list?.unreadChatlist
+  // );  나중에 추가해야될 부분 ( 이전 채팅 기록 )
+  const alarm = useSelector((state) => state.room.chatarr);
 
   React.useEffect(() => {
     dispatch(roomCreators.getchatRoomDB());
   }, []);
 
-  // React.useEffect(() => {
-  //   socket?.emit("login");
-  // }, []);
-
-  React.useEffect(() => {
-    socket?.on("alert", (data) => {
-      setAlarm(data);
-      // setAlarm((alarm) => alarm.concat(data));
-    });
-  }, []);
 
   return (
     <>
@@ -50,21 +31,26 @@ const ChatList = () => {
           <img
             src="./img/seuchin.png"
             style={{ margin: "220px 0px 0px 0px" }}
+            alt="hi"
           />
           <Text bold margin="0px" color="#C4C4C4">
             아직 채팅방이 없어요!
           </Text>
           <Text bold margin="0px" color="#C4C4C4">
-            지금 바로 새 글을 쓰러 가볼까요?
+            모임에 참여후 채팅으로 이야기해요!
           </Text>
         </Grid>
       ) : (
         <Body>
           {room_list?.map((room, index) => {
+            //이걸 왜 생각못했지?
+    
+            const roomchat = (alarm.filter((r) => r?.room === room?.roomId))
             return (
               <ChatBox
                 key={`${room.roomId}+${index}`}
                 onClick={() => {
+                  dispatch(roomCreators.deleteNewChat(room.roomId))
                   history.push({
                     pathname: `/chatex/${room.roomId}`,
                     state: { ...room },
@@ -77,26 +63,30 @@ const ChatList = () => {
                     <div style={{ marginLeft: "10px" }}>
                       <div style={{ marginBottom: "5px" }}>
                         <ChatTitle>{room?.postTitle} </ChatTitle>
-                        {/* 알람 length 더해보기. 하나는 state 하나는 일반 되나 ? +alarm.length 
-                      되긴되는데 룸아이디로 비교를 어케하냐 ??...*/}
-                        <div>{unreadChatlist[index].length}</div>
-                        {/* <UserCount> {room?.nowMember?.length}</UserCount> */}
+                        <UserCount> {room?.nowMember?.length}</UserCount>
                       </div>
-                      {/* 알림과 방의 아이디가 일치하고 알람내용이 있을때  */}
+                      {/* 최신메세지 갱신  */}
                       <LastMsg>
-                        {room?.roomId === alarm?.room
-                          ? alarm?.msg
-                          : last_chat[index]?.msg}
+                      {roomchat[roomchat.length - 1]?.msg ||
+                          last_chat[index]?.msg}
                       </LastMsg>
                     </div>
                   </ChatTitleBox>
+
                   <div>
-                    {/* 알림과 방의 아이디가 일치하고 알람내용의 시간비교  */}
-                    {moment(
-                      room?.roomId === alarm?.room
-                        ? alarm?.createdAt
-                        : last_chat[index]?.createdAt
-                    ).fromNow()}
+                    <div>
+                      {/* 최신메세지 시간 갱신 */}
+                      {moment(
+                        roomchat[roomchat.length - 1]?.createdAt ||
+                          last_chat[index]?.createdAt
+                      ).fromNow()}
+                    </div>
+              {/* 이전 채팅기록과 갱신되는 채팅수가 없을때만 null */}
+                {  roomchat?.length !==0 &&
+                    <NewMsg>
+                      {  roomchat?.length}     
+                      </NewMsg> }
+                    
                   </div>
                 </ContentBox>
               </ChatBox>
@@ -168,12 +158,13 @@ const ContentBox = styled.div`
 `;
 
 const NewMsg = styled.div`
-  background-color: #fe3c30;
-  height: 18px;
-  width: 18px;
-  font-size: 14px;
+  background-color: #ff6a52;
+  padding: 0px 6px 0px 4px;
+  font-size: 12px;
   align-items: center;
   text-align: center;
   border-radius: 30px;
   color: white;
+  float: right;
+  margin-top: 5px;
 `;

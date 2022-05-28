@@ -1,7 +1,6 @@
-import React, { useRef } from "react";
+import React from "react";
 import styled, { keyframes } from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
-import { actionCreators as roomActions } from "../redux/modules/room";
+import {  useSelector } from "react-redux";
 import Image from "../elements/Image";
 import { history } from "../redux/configStore";
 import Modal from "../components/Modal/Modal"; //모달 창
@@ -54,11 +53,8 @@ const ChatMenu = ({ comModalOn, closecomModal, roomId, leaveRoom, socket }) => {
           <UserBox>{userMe?.nickName}</UserBox>
         </RowBox>
         {user_list?.map((user, index) => {
-          console.log(user);
           const banUser = () => {
             socket.emit("banUser", { userId: user.userId });
-            console.log('ddd',  user.userId)
-            // window.location.href = "/main";
           };
           if (user.userId !== userMe.userId)
             return (

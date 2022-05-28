@@ -43,11 +43,9 @@ function Chatex(props) {
   };
   const openModal = () => {
     setcomModalOn(true);
-    // document.body.style.overflow ="hidden"
   };
   const closecomModal = (e) => {
     setcomModalOn(false);
-    // document.body.style.overflow ="unset"
   };
 
   const roomInfo = props?.location.state;
@@ -128,10 +126,12 @@ function Chatex(props) {
     history.replace("/chatlist");
   };
 
+   // 안읽은 채팅 기록하기
   const BackRoom = () => {
     socket.emit("back", { roomId, userId: user.userId });
     history.goBack();
   };
+
 
 
   //앱에서 페이지 새로고침 막기
@@ -229,6 +229,7 @@ function Chatex(props) {
             value={message}
             placeholder="내용을 입력하세요."
             onChange={(e) => setMessage(e.target.value)}
+            onkeyup="enterkey()"
           />
 
           <Send onClick={sendMessage}>

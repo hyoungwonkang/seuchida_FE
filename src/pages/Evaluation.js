@@ -21,7 +21,6 @@ const Evaluation = () => {
   //ReviewWrite로
   const postInfo = useSelector((state) => state.mypage.myPostOne);
   const postId = postInfo?.postId;
-  console.log(postId);
   const photo = useSelector((state) => state.mypage.reviewImg);
   const review = localStorage.getItem("review");
 
@@ -54,9 +53,8 @@ const Evaluation = () => {
   //다른 사람 평가
   var [evalue, setEvalue] = useState(localevalue ? [...localevalue] : []);
   evalue.length = _postInfo?.length;
-  // console.log(evalue);
   const evalues = evalue.slice(0, otherId?.length);
-  console.log(evalues);
+ 
 
   //획득 포인트
   const point = evalue.filter((v) => v != undefined).length;
@@ -64,7 +62,7 @@ const Evaluation = () => {
   //신고 대상 & 신고 내용 state
   const [report, setReport] = useState("");
   const [rUserId, setRUserId] = useState(localreport ? localreport : "");
-  console.log(rUserId);
+
 
   //후기 작성 & 다른 사람 평가
   const addReview = () => {

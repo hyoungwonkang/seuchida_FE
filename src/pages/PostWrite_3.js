@@ -194,18 +194,6 @@ const PostWrite_3 = (props) => {
     window.localStorage.setItem("showTime", showTime);
   }, [showTime]);
 
-  // console.log(address);
-  // console.log(datemate);
-  // console.log(latitude);
-  // console.log(longitude);
-  // console.log(maxMember);
-  // console.log(memberAge);
-  // console.log(memberGender);
-  // console.log(postCategory);
-  // console.log(postDesc);
-  // console.log(postTitle);
-  // console.log(spot);
-  // console.log(valueGroups);
 
   //새로고침 시 작성 첫 번째 페이지로 이동
   if (document.readyState === "interactive") {

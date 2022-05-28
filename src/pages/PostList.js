@@ -4,23 +4,16 @@ import { Grid, Text } from "../elements/Index";
 import styled from "styled-components";
 import FooterMenu from "../shared/FooterMenu";
 import GoBack from "../elements/GoBack";
-import { useSelector, useDispatch } from "react-redux";
-import { actionCreators as postActions } from "../redux/modules/post";
 import { useHistory } from "react-router-dom";
-import { IoMdTennisball } from "react-icons/io";
 import axios from "axios";
 
 const PostList = ({ list, params }) => {
-  const dispatch = useDispatch();
   const history = useHistory();
 
   // 포스트 목록
-  const post_list = useSelector((state) => state.post.list.nearPosts);
 
   const [postList, setPostList] = useState([]);
-  console.log(postList);
   const [pageNumber, setPageNumber] = useState(1);
-  console.log(pageNumber);
   const [isLoading, setIsLoading] = useState(true);
   const pageEnd = React.useRef(null);
 
@@ -128,6 +121,7 @@ const PostList = ({ list, params }) => {
           <img
             src="./img/seuchin.png"
             style={{ margin: "220px 0px 0px 0px" }}
+            alt="hid"
           />
           <Text bold margin="0px" color="#C4C4C4">
             아직 글이 없어요!

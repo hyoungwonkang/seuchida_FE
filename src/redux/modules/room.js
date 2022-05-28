@@ -3,24 +3,29 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer"; //불변성관리
 import axios from "axios";
 
-const token = localStorage.getItem("token");
+// const token = localStorage.getItem("token");
 //Actions
 
 const SET_CHAT = "SET_CHAT";
 const SET_MEMBER = "SET_MEMBER";
 const SK_LOGIN = "SK_LOGIN";
-const SET_ALARM = "SET_ALARM";
 const JOIN_ARR = "JOIN_ARR"
 const MAIN_ARR = "MAIN_ARR"
-
+const DEL_ARR = "DEL_ARR"
+const CHAT_ARR = "CHAT_ARR"
+const DEL_NEWCHAT = "DEL_NEWCHAT"
+const CLEAR_COUNT = "CLEAR_COUNT"
 //Action Creators
 
 const chatRoom = createAction(SET_CHAT, (chat_list) => ({ chat_list }));
 const chatMember = createAction(SET_MEMBER, (member) => ({ member }));
 const socketLogin = createAction(SK_LOGIN, (socket) => ({ socket }));
-const setalarm = createAction(SET_ALARM, (alarm, mainarr) => ({ alarm,mainarr }));
 const joinArlam = createAction(JOIN_ARR, (join) => ({ join }));
 const mainArlam = createAction(MAIN_ARR, (main) => ({ main }));
+const deleteArr = createAction(DEL_ARR, (delete_arr) => ({ delete_arr}));
+const chattingArr = createAction(CHAT_ARR, (chatting) => ({ chatting}));
+const deleteNewChat = createAction(DEL_NEWCHAT, (delete_newchat) => ({ delete_newchat}));
+const clearcount = createAction(CLEAR_COUNT, (clear) => ({ clear}));
 
 
 //initialState (default props 같은 것, 기본값)
@@ -34,9 +39,9 @@ const initialState = {
     unreadChatlist: [],
   },
   joinArr:[],
-  socket: false,
-  alarm: false,
+  chatarr:[],
   mainarr:false,
+  arrcount:0,
 };
 
 //middleware
@@ -49,7 +54,7 @@ const joinRoomDB = (roomId, postId) => {
         url: `https://seuchidabackend.shop/api/postPush/${roomId}`,
 
         headers: {
-          authorization: `Bearer ${token}`,
+          authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }).then((response) => {
         console.log(response);
@@ -67,7 +72,7 @@ const joinCancleDB = (roomId, postId) => {
         method: "get",
         url: `https://seuchidabackend.shop/api/postPushCancle/${roomId}`,
         headers: {
-          authorization: `Bearer ${token}`,
+          authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }).then((response) => {
         console.log(response.data.postInfo);
@@ -86,7 +91,7 @@ const getchatRoomDB = () => {
         method: "get",
         url: `https://seuchidabackend.shop/api/chatting`,
         headers: {
-          authorization: `Bearer ${token}`,
+          authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }).then((response) => {
         console.log(response);
@@ -104,7 +109,7 @@ const getchatMemberDB = (roomId) => {
         method: "get",
         url: `https://seuchidabackend.shop/api/chatUserList/${roomId}`,
         headers: {
-          authorization: `Bearer ${token}`,
+          authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }).then((response) => {
         console.log(response.data);
@@ -123,7 +128,7 @@ const roomDoneDB = (postId) => {
         method: "get",
         url: `https://seuchidabackend.shop/api/complete/${postId}`,
         headers: {
-          authorization: `Bearer ${token}`,
+          authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }).then((response) => {
         console.log(response.data);
@@ -134,6 +139,7 @@ const roomDoneDB = (postId) => {
     }
   };
 };
+
 
 
 //reducer
@@ -147,24 +153,35 @@ export default handleActions(
       produce(state, (draft) => {
         draft.list = action.payload.member;
       }),
-
-    [SK_LOGIN]: (state, action) =>
-      produce(state, (draft) => {
-        draft.socket = action.payload.socket === true;
-      }),
-    [SET_ALARM]: (state, action) =>
-      produce(state, (draft) => {
-        draft.alarm = action.payload.alarm;
-      }),
     [MAIN_ARR]: (state, action) =>
       produce(state, (draft) => {
         draft.mainarr = action.payload.main;
       }),
+    [CLEAR_COUNT]: (state, action) =>
+      produce(state, (draft) => {
+        draft.arrcount = action.payload.clear;
+      }),
+    
     [JOIN_ARR]: (state, action) =>
       produce(state, (draft) => {
         draft.joinArr.push(action.payload.join);
       }),
-
+    [CHAT_ARR]: (state, action) =>
+      produce(state, (draft) => {
+        draft.chatarr.push(action.payload.chatting);
+        draft.arrcount = draft.arrcount+1
+      }),
+    [DEL_ARR]: (state, action) =>
+      produce(state, (draft) => {
+        draft.joinArr = draft.joinArr.filter(
+        (msg) => msg.msgId !== action.payload.delete_arr)
+      }),
+    [DEL_NEWCHAT]: (state, action) =>
+      produce(state, (draft) => {
+        draft.chatarr = draft.chatarr.filter(
+        (msg) => msg.room !== action.payload.delete_newchat)
+      }),
+    
   },
   initialState
 );
@@ -179,9 +196,12 @@ const actionCreators = {
   roomDoneDB,
   joinCancleDB,
   socketLogin,
-  setalarm,
   joinArlam,
   mainArlam,
+  deleteArr,
+  chattingArr,
+  deleteNewChat,
+  clearcount,
 };
 
 export { actionCreators };

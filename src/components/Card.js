@@ -303,11 +303,6 @@ const TitleBox = styled.div`
   padding: 0px 24px;
 `;
 
-const Desc = styled.div`
-  font-size: 17px;
-  padding-top: 4px;
-  height: 60px;
-`;
 const DetailDesc = styled.div`
   font-size: 17px;
   padding-top: 4px;

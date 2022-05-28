@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import { Button, Image } from "../elements/Index";
-import { io } from "socket.io-client";
+import { Button} from "../elements/Index";
 import { actionCreators as roomCreators } from "../redux/modules/room";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -10,11 +9,11 @@ const FooterMenu = (props) => {
   const history = useHistory();
   const { next, is_check, __onClick, Chat } = props;
   const dispatch = useDispatch();
-  const chatalarm = useSelector((state) => state.room.alarm);
   const mainalarm = useSelector((state) => state.room.mainarr);
-
+  const alarm = useSelector((state) => state.room.arrcount);
+  const url = history.location.pathname;
   const readArlam = () => {
-    dispatch(roomCreators.setalarm(false));
+    // dispatch(roomCreators.setalarm(false));
     localStorage.removeItem("main");
     localStorage.removeItem("map");
     localStorage.setItem("chat", "chat");
@@ -30,12 +29,17 @@ const FooterMenu = (props) => {
     history.push("/main");
   };
 
-  //ㅠㅠㅠ
-  // React.useEffect(() => {
-  //   return ()=>{
-  //     socket.disconnect()
-  //   }
-  //   },[]);
+  React.useEffect(() => {
+    if (url === "/main") {
+      dispatch(roomCreators.mainArlam(false));
+    }
+  }, [mainalarm]);
+
+  React.useEffect(() => {
+    if (url === "/chatlist") {
+      dispatch(roomCreators.clearcount(0));
+    }
+  }, [alarm]);
 
   if (Chat) {
     return (
@@ -141,7 +145,11 @@ const FooterMenu = (props) => {
           )}
         </Menu>
         <Menu onClick={readArlam}>
-          {chatalarm && <NewArlam>new</NewArlam>}
+          {alarm !==0  &&  (
+            <NewArlam style={{ padding: "2px 8px", fontSize: "14px" }}>
+              { alarm}
+            </NewArlam>
+          )}
           {localStorage.getItem("chat") === "chat" ? (
             <img alt="chat" src="/img/footer/chatg.png" />
           ) : (
