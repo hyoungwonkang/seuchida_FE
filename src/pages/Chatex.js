@@ -162,11 +162,11 @@ function Chatex(props) {
         <HeaderContents>
           <RowBox>
             <GoBack gback _onClick={BackRoom} />
-            <div style={{ margin: "3px 0px 0px 10px" }}>
+            <ChatTitle style={{ margin: "3px 0px 0px 10px" }}>
               {roomInfo?.postTitle}
+            </ChatTitle>
             <div style={{ margin: "3px 0px 0px 15px", color: "#C4C4C4" }}>
               {nowM}/{roomInfo?.maxMember}
-            </div>
             </div>
           </RowBox>
 
@@ -229,7 +229,9 @@ function Chatex(props) {
           <TextMsg
             value={message}
             placeholder="내용을 입력하세요."
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={(e) => {if (e.target.value?.length >= 150) {
+              window.alert("150자 이상 입력 불가능 합니다")
+            }setMessage(e.target.value)}}
             onkeyup="enterkey()"
           />
 
@@ -251,6 +253,22 @@ const Header = styled.div`
   background-color: white;
   width: 100%;
 `;
+
+const ChatTitle = styled.span`
+  font-weight: bold;
+  margin-right: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 라인수 */
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+  line-height: 1.3em;
+  height: 1.3em;
+  width: 200px;
+  
+`;
+
 
 const HeaderContents = styled.div`
   display: flex;
