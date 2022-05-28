@@ -53,7 +53,6 @@ const ChatMenu = ({ comModalOn, closecomModal, roomId, leaveRoom, socket }) => {
           <UserBox>{userMe?.nickName}</UserBox>
         </RowBox>
         {user_list?.map((user, index) => {
-          console.log(user);
           const banUser = () => {
             socket.emit("banUser", { userId: user.userId });
           };
