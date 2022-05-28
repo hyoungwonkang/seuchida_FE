@@ -194,6 +194,9 @@ const PostWrite_3 = (props) => {
     window.localStorage.setItem("showTime", showTime);
   }, [showTime]);
 
+  const backEvent = () => {
+    history.push("/postwrite2");
+  };
 
   //새로고침 시 작성 첫 번째 페이지로 이동
   if (document.readyState === "interactive") {
@@ -221,7 +224,7 @@ const PostWrite_3 = (props) => {
   return (
     <>
       <Container>
-        <GoBack postBack text="모임 만들기" path="/postwrite2" />
+        <GoBack postBack text="모임 만들기" state={backEvent} />
         <Grid margin="24px 0px 40px 0px">
           <ProgressBar>
             <HighLight width={(count / 3) * 100 + "%"} />
@@ -252,14 +255,17 @@ const PostWrite_3 = (props) => {
                         onClick={() => setShowDate(dayDate)}
                         style={{
                           fontSize: "16px",
+                          cursor: "pointer",
                         }}
                       >
                         확인
                       </div>
                     ) : showDate ? (
-                      showDate
+                      <div style={{ cursor: "pointer" }}>{showDate}</div>
                     ) : (
-                      <div style={{ color: "#C4C4C4" }}>조건 선택</div>
+                      <div style={{ color: "#C4C4C4", cursor: "pointer" }}>
+                        조건 선택
+                      </div>
                     )}
                   </div>
                 </Grid>
@@ -303,14 +309,17 @@ const PostWrite_3 = (props) => {
                     }}
                     style={{
                       fontSize: "16px",
+                      cursor: "pointer",
                     }}
                   >
                     확인
                   </div>
                 ) : showTime ? (
-                  showTime
+                  <div style={{ cursor: "pointer" }}>{showTime}</div>
                 ) : (
-                  <div style={{ color: "#C4C4C4" }}>조건 선택</div>
+                  <div style={{ color: "#C4C4C4", cursor: "pointer" }}>
+                    조건 선택
+                  </div>
                 )}
               </div>
             </Grid>
@@ -347,6 +356,7 @@ const PostWrite_3 = (props) => {
                 style={{
                   color: "#C4C4C4",
                   textDecorationLine: "none",
+                  cursor: "pointer",
                 }}
               >
                 조건 선택
@@ -358,6 +368,7 @@ const PostWrite_3 = (props) => {
                 }}
                 style={{
                   color: "black",
+                  cursor: "pointer",
                 }}
               >
                 {spot}

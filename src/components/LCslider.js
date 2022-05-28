@@ -14,8 +14,7 @@ import { BsFillChatDotsFill } from "react-icons/bs";
 function LCslider(props) {
   const { catepost } = props;
   const joinARR = useSelector((state) => state?.room?.joinArr);
-
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const [isOpen, setIsOpen] = useState(false);
   const [state, setState] = useState("");
 
@@ -72,10 +71,9 @@ function LCslider(props) {
             src="../img/mainseuchin.png"
             style={{
               margin: "5px 0px 0px 0px",
-              // padding: "30px 0px 0px 30px",
-              // position: "fixed",
               width: "90px",
               height: "95px",
+              cursor: "pointer"
             }}
           />
         </div>
@@ -214,8 +212,8 @@ const ArrsmallBox = styled.div`
 
 const Hey = styled.span`
   z-index: 555;
-
-  color: ${(props) => (props.arr ? " #ff6a52" : "#C4C4C4")};
+  cursor: pointer;
+  color:   ${(props) => props.arr? " #ff6a52" :"#C4C4C4" };
   height: 20px;
   bottom: 10px;
   float: right;

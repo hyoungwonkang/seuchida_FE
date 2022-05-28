@@ -23,7 +23,9 @@ const GoBack = (props) => {
           <IoIosArrowBack
             size={32}
             onClick={() => {
-              history.push(props.path);
+              if (props.state) {
+                return props.state();
+              }
             }}
           />
           <Text size="20px" position margin="0px 0px 0px 40px" bold>

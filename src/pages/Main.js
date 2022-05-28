@@ -108,7 +108,7 @@ const Main = () => {
               history.push("/reviewlist/1");
             }}
           >
-            <Title>함께한 스친들의 후기</Title>{" "}
+            <Title>함께한 스친들의 후기</Title>
             <Title>
               <IoIosArrowForward size={30} />
             </Title>
@@ -233,6 +233,7 @@ const Title = styled.div`
   font-size: 24px;
   font-weight: 700;
   padding: 25px 25px 20px 25px;
+  cursor: pointer;
 `;
 //-- 여기여기 붙어라
 

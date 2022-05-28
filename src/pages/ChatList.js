@@ -25,7 +25,7 @@ const ChatList = ({ socket }) => {
 
   return (
     <>
-      <Header>채팅</Header>
+      <Header>채팅 리스트</Header>
       {room_list?.length === 0 ? (
         <Grid padding="0px 0px 80px 0px" column height="auto">
           <img
@@ -108,13 +108,14 @@ const Header = styled.div`
   position: fixed;
   font-weight: bold;
   font-size: 20px;
-  padding: 24px 24px 0px 24px;
+  padding: 28px 28px 0px 24px;
   background-color: white;
   width: 100%;
 `;
 
 const Body = styled.div`
   margin: 76px 0px;
+  cursor: pointer;
 `;
 
 const ChatBox = styled.div`
