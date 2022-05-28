@@ -164,7 +164,7 @@ const PostWrite_2 = (props) => {
                 <IconContext.Provider
                   value={{ color: "#DDDDDD", size: "28px" }}
                 >
-                  <AiOutlineMinusCircle />
+                  <AiOutlineMinusCircle cursor={"pointer"} />
                 </IconContext.Provider>
               </div>
               <Grid margin="0px 0px 6px 0px">
@@ -175,7 +175,7 @@ const PostWrite_2 = (props) => {
                 <IconContext.Provider
                   value={{ color: "#DDDDDD", size: "28px" }}
                 >
-                  <AiOutlinePlusCircle />
+                  <AiOutlinePlusCircle cursor={"pointer"} />
                 </IconContext.Provider>
               </div>
             </Grid>
@@ -192,18 +192,24 @@ const PostWrite_2 = (props) => {
             {show ? (
               <div
                 onClick={() => setShowOptions(memberGender + `, ` + memberAge)}
-                style={{ color: "#000000" }}
+                style={{ color: "#000000", cursor: "pointer" }}
               >
                 확인
               </div>
             ) : showOptions ? (
               showOptions === localStorage.getItem("showOptions") ? (
-                memberGender + `, ` + localStorage.getItem("memberAge")
+                <div style={{ cursor: "pointer" }}>
+                  {memberGender + `, ` + localStorage.getItem("memberAge")}
+                </div>
               ) : (
-                memberGender + `, ` + memberAge
+                <div style={{ cursor: "pointer" }}>
+                  {memberGender + `, ` + memberAge}
+                </div>
               )
             ) : (
-              <div style={{ color: "#C4C4C4" }}>조건 선택</div>
+              <div style={{ color: "#C4C4C4", cursor: "pointer" }}>
+                조건 선택
+              </div>
             )}
           </Grid>
         </Grid>
@@ -392,6 +398,8 @@ const RadioInput = styled.input`
 
   position: relative;
   top: 4px;
+
+  cursor: pointer;
 
   :checked {
     border: 5px solid #5796f7;

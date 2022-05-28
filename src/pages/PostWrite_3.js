@@ -268,14 +268,17 @@ const PostWrite_3 = (props) => {
                         onClick={() => setShowDate(dayDate)}
                         style={{
                           fontSize: "16px",
+                          cursor: "pointer",
                         }}
                       >
                         확인
                       </div>
                     ) : showDate ? (
-                      showDate
+                      <div style={{ cursor: "pointer" }}>{showDate}</div>
                     ) : (
-                      <div style={{ color: "#C4C4C4" }}>조건 선택</div>
+                      <div style={{ color: "#C4C4C4", cursor: "pointer" }}>
+                        조건 선택
+                      </div>
                     )}
                   </div>
                 </Grid>
@@ -319,14 +322,17 @@ const PostWrite_3 = (props) => {
                     }}
                     style={{
                       fontSize: "16px",
+                      cursor: "pointer",
                     }}
                   >
                     확인
                   </div>
                 ) : showTime ? (
-                  showTime
+                  <div style={{ cursor: "pointer" }}>{showTime}</div>
                 ) : (
-                  <div style={{ color: "#C4C4C4" }}>조건 선택</div>
+                  <div style={{ color: "#C4C4C4", cursor: "pointer" }}>
+                    조건 선택
+                  </div>
                 )}
               </div>
             </Grid>
@@ -363,6 +369,7 @@ const PostWrite_3 = (props) => {
                 style={{
                   color: "#C4C4C4",
                   textDecorationLine: "none",
+                  cursor: "pointer",
                 }}
               >
                 조건 선택
@@ -374,6 +381,7 @@ const PostWrite_3 = (props) => {
                 }}
                 style={{
                   color: "black",
+                  cursor: "pointer",
                 }}
               >
                 {spot}
