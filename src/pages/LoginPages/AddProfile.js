@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Grid, Image, Input, Text, GoBack } from "../../elements/Index";
 import { actionCreators as userActions } from "../../redux/modules/user";
 import { useHistory } from "react-router-dom";
@@ -17,8 +17,6 @@ const AddProfile = (props) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [isOpen2, setIsOpen2] = React.useState(false);
   const [isOpen3, setIsOpen3] = React.useState(false);
-
-  const userInfo = useSelector((state) => state.user.userInfo);
 
   //로컬값 불러오기
   const photo = localStorage.getItem("profile");
@@ -145,13 +143,7 @@ const AddProfile = (props) => {
                   cursor
                   size={80}
                   alt="profile"
-                  src={
-                    preview
-                      ? preview
-                      : userInfo?.userImg
-                      ? userInfo?.userImg
-                      : "/img/profile.png"
-                  }
+                  src={preview ? preview : photo ? photo : "/img/profile.png"}
                 />
                 <FileUpload>
                   <label htmlFor="image">
