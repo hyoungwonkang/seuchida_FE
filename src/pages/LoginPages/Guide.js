@@ -49,7 +49,7 @@ const Img = styled.img`
   min-width: 390px;
   min-height: 800px;
   height: 100vh;
-  width: 20vw;
+  width: 100%;
 `;
 
 const LastBtn = styled.button`

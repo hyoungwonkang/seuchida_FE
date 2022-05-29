@@ -35,7 +35,7 @@ const NameCard = () => {
   return (
     <Grid column height="auto" margin="0px" bg="white">
       {/* 프로필 수정 */}
-      <Grid row height="auto" margin="20px 0px 0px 0px" justify="right">
+      <Grid row height="auto" padding="20px 0px 0px 0px" justify="right">
         <AiFillSetting
           cursor={"pointer"}
           size={24}
@@ -202,8 +202,8 @@ const MyPage = () => {
       </Grid>
 
       <Grid
+        column
         padding="100px 20px 120px 20px"
-        row
         justify="space-between"
         bg="white"
       >

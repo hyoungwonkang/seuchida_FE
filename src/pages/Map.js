@@ -119,7 +119,7 @@ const Header = styled.div`
   width: 100%;
   height: 150px;
   box-sizing: border-box;
-  max-width: 390px;
+  min-width: 390px;
   padding: 24px;
   position: fixed;
   top: 0;
@@ -166,9 +166,8 @@ const OpenModal = styled.div`
   border-radius: 50px;
   margin-left: 40%;
   font-size: 14px;
-  border: 2px solid #C4C4C4;
+  border: 2px solid #c4c4c4;
   cursor: pointer;
-
 `;
 
 const ResearchBtn = styled.div`
@@ -181,6 +180,6 @@ const ResearchBtn = styled.div`
   left: 41%;
   font-size: 14px;
   color: #c4c4c4;
-  border: 1px solid #C4C4C4;
+  border: 1px solid #c4c4c4;
   cursor: pointer;
 `;
