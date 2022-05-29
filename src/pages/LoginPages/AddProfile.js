@@ -116,25 +116,25 @@ const AddProfile = (props) => {
     }
   }, [content, nickName]);
 
-  //앱에서 페이지 새로고침 막기
-  document.body.style.overscrollBehavior = "none";
+  // //앱에서 페이지 새로고침 막기
+  // document.body.style.overscrollBehavior = "none";
 
-  //새로고침 시 작성 첫 번째 페이지로 이동
-  if (document.readyState === "interactive") {
-    //로컬 값 날림
-    localStorage.removeItem("profile");
-    localStorage.removeItem("address");
-    localStorage.removeItem("nickName");
-    localStorage.removeItem("gender");
-    localStorage.removeItem("age");
-    localStorage.removeItem("content");
-    localStorage.removeItem("userInterest");
-    //새로고침 경고
-    window.onbeforeunload = function () {
-      return "새로고침 경고";
-    };
-    history.replace("/signuploca");
-  }
+  // //새로고침 시 작성 첫 번째 페이지로 이동
+  // if (document.readyState === "interactive") {
+  //   //로컬 값 날림
+  //   localStorage.removeItem("profile");
+  //   localStorage.removeItem("address");
+  //   localStorage.removeItem("nickName");
+  //   localStorage.removeItem("gender");
+  //   localStorage.removeItem("age");
+  //   localStorage.removeItem("content");
+  //   localStorage.removeItem("userInterest");
+  //   //새로고침 경고
+  //   window.onbeforeunload = function () {
+  //     return "새로고침 경고";
+  //   };
+  //   history.replace("/signuploca");
+  // }
 
   return (
     <>
@@ -155,7 +155,7 @@ const AddProfile = (props) => {
                     ? preview
                     : userInfo?.userImg
                     ? userInfo?.userImg
-                    : "./img/profile.png"
+                    : "/img/profile.png"
                 }
               />
               <FileUpload>
