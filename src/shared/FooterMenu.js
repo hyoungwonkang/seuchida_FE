@@ -207,7 +207,7 @@ const Menu = styled.div`
 `;
 
 const Btn = styled.div`
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   height: 100px;
@@ -235,7 +235,7 @@ const NewArlam = styled.div`
 `;
 
 const Btns = styled.div`
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   height: 100px;
@@ -243,7 +243,7 @@ const Btns = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 0px 0px 0px 40px;
+  justify-content: center;
   margin: auto;
   background-color: white;
   box-shadow: 0px -2px 4px 2.5px #ddd;
