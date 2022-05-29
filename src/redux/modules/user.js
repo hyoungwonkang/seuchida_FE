@@ -46,7 +46,6 @@ const kakaoLogin = (code) => {
     await axios
       .get(`https://seuchidabackend.shop/oauth/callback/kakao?code=${code}`)
       .then((res) => {
-        console.log(res);
         const token = res.data.user.token;
         const userInfo = res.data.user.userInfo;
         // decode the logged in user
@@ -65,7 +64,6 @@ const kakaoLogin = (code) => {
         localStorage.setItem("token", token); //token을 local에 저장합니다
 
         dispatch(logIn(decode_token, userInfo));
-        console.log("로그인 확인");
         if (!userInfo.userInterest[0]) {
           history.replace("/signupdone");
         } else {
@@ -85,7 +83,6 @@ const googleLogin = (code) => {
     await axios
       .get(`https://seuchidabackend.shop/oauth/callback/google/?code=${code}`) //승인된 자바스크립트 원본?
       .then((res) => {
-        console.log(res);
         const token = res.data.user.token;
         const userInfo = res.data.user.userInfo;
         // // decode the logged in user
@@ -104,7 +101,6 @@ const googleLogin = (code) => {
         localStorage.setItem("token", token); //token을 local에 저장합니다
 
         dispatch(logIn(decode_token, userInfo));
-        console.log("로그인 확인");
         if (!userInfo.userInterest[0]) {
           history.replace("/signupdone");
         } else {
@@ -246,7 +242,6 @@ export default handleActions(
         draft.token = action.payload.token;
         draft.userInfo = action.payload.user;
         draft.is_login = true;
-        console.log(draft.token);
       }),
     [LOG_OUT]: (state, action) => produce(state, (draft) => {}),
     [GET_USER]: (state, action) =>

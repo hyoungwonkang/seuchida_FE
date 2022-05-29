@@ -89,7 +89,7 @@ const AddProfile = (props) => {
       localStorage.setItem("age", age);
       localStorage.setItem("content", content);
       //사진 추가
-      if (profile === userInfo?.userImg) {
+      if (profile === photo) {
         history.push("/category");
       } else {
         const formData = new FormData();
