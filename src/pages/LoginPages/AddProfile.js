@@ -180,6 +180,7 @@ const AddProfile = (props) => {
 
               {/* 닉네임 */}
               <Input
+                margin="50px 0px 0px 0px"
                 height="56px"
                 type="text"
                 placeholder="닉네임"
@@ -267,8 +268,11 @@ const Container = styled.div`
   padding-top: 0px;
 `;
 
+const ImgBox = styled.div`
+  position: "relative";
+`;
+
 const FileUpload = styled.div`
-  margin: 0px 0px 50px 0px;
   label {
     position: absolute;
     top: 150px;
@@ -320,7 +324,4 @@ const Age = styled.input`
   padding: 12px 10px;
 `;
 
-const ImgBox = styled.div`
-  position: "relative";
-`;
 export default AddProfile;

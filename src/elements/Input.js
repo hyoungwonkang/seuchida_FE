@@ -120,6 +120,7 @@ const ElInput = styled.input`
   box-sizing: border-box;
   font-size: ${(props) => props.size};
   font-weight: ${(props) => props.bold};
+  margin: ${(props) => props.margin};
 `;
 
 const ElChatName = styled.input`
