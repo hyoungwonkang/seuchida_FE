@@ -35,7 +35,6 @@ const AddProfile = (props) => {
   const [profile, setProfile] = useState(
     userInfo.userImg ? userInfo.userImg : ""
   );
-  console.log(profile);
 
   const [nickName, setNickName] = useState(localStorage.getItem("nickName"));
   const [gender, setGender] = useState(localStorage.getItem("gender"));
@@ -145,36 +144,39 @@ const AddProfile = (props) => {
           <Grid column height="650px">
             <Grid height="auto" column margin="30px 0px">
               {/* 프로필 이미지 */}
-              <Image
-                cursor
-                size={80}
-                position="relative"
-                alt="profile"
-                src={
-                  preview
-                    ? preview
-                    : userInfo?.userImg
-                    ? userInfo?.userImg
-                    : "/img/profile.png"
-                }
-              />
-              <FileUpload>
-                <label htmlFor="image">
-                  <AiFillPlusCircle
-                    size={32}
-                    color="#5796F7"
-                    cursor={"pointer"}
-                  />
-                </label>
-                <input
-                  type="file"
-                  id="image"
-                  onChange={(e) => {
-                    selectPreview(e);
-                    selectImage(e);
-                  }}
+              <ImgBox>
+                <Image
+                  cursor
+                  size={80}
+                  alt="profile"
+                  src={
+                    preview
+                      ? preview
+                      : userInfo?.userImg
+                      ? userInfo?.userImg
+                      : "/img/profile.png"
+                  }
                 />
-              </FileUpload>
+                <FileUpload>
+                  <label htmlFor="image">
+                    {/* <div> */}
+                    <AiFillPlusCircle
+                      size={32}
+                      color="#5796F7"
+                      cursor={"pointer"}
+                    />
+                    {/* </div> */}
+                  </label>
+                  <input
+                    type="file"
+                    id="image"
+                    onChange={(e) => {
+                      selectPreview(e);
+                      selectImage(e);
+                    }}
+                  />
+                </FileUpload>
+              </ImgBox>
 
               {/* 닉네임 */}
               <Input
@@ -283,6 +285,7 @@ const FileUpload = styled.div`
     border: 0;
   }
 `;
+
 const Option = styled.div`
   display: flex;
   flex-direction: row;
@@ -317,4 +320,7 @@ const Age = styled.input`
   padding: 12px 10px;
 `;
 
+const ImgBox = styled.div`
+  position: "relative";
+`;
 export default AddProfile;

@@ -24,16 +24,16 @@ function Guide() {
           <Img alt="guide1" src="/img/guide/guide1.png" />
         </div>
         <div>
-          <Img alt="guide2" src="./img/guide/guide2.png" />
+          <Img alt="guide2" src="/img/guide/guide2.png" />
         </div>
         <div>
-          <Img alt="guide3" src="./img/guide/guide3.png" />
+          <Img alt="guide3" src="/img/guide/guide3.png" />
         </div>
         <div>
-          <Img alt="guide4" src="./img/guide/guide4.png" />
+          <Img alt="guide4" src="/img/guide/guide4.png" />
         </div>
         <div>
-          <Img alt="guide5" src="./img/guide/guide5.png" />
+          <Img alt="guide5" src="/img/guide/guide5.png" />
           <LastBtn onClick={() => history.push("/")}>
             로그인 하여 시작하기
           </LastBtn>

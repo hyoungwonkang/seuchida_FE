@@ -11,8 +11,8 @@ const Header = ({ children }) => {
 export default Header;
 
 const Container = styled.div`
-  min-width: 390px;
-  width: 100%;
+  min-width: 420px;
+  width: 390px;
   height: 112px;
   position: fixed;
   top: 0;
