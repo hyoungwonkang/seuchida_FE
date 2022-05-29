@@ -147,7 +147,6 @@ const Sliders = styled(Slider)`
 `;
 
 const WellcomeBox = styled.div`
-  width: 390px;
   max-width: 420px;
   font-size: 24px;
   padding: 40px 24px 30px 24px;
