@@ -21,7 +21,7 @@ const Login = (props) => {
           <Akakao
             href={KAKAO_AUTH_URL}
             onClick={() => {
-              history.push("/main");
+              history.push("/sigupdone");
             }}
           >
             <img src="./img/kakao_login_medium_wide.png" alt="카카오로그인" />
@@ -29,7 +29,7 @@ const Login = (props) => {
         </div>
         <GoogleBtn
           onClick={() => {
-            history.push("/main");
+            history.push("/signupdone");
           }}
         >
           <img src="./img/btn_google_light_normal_ios.svg" alt="구글로그인" />

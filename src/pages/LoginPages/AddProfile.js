@@ -29,12 +29,8 @@ const AddProfile = (props) => {
   }, [photo]);
 
   //입력값 state
-  const [preview, setPreview] = useState(
-    userInfo.userImg ? userInfo.userImg : ""
-  );
-  const [profile, setProfile] = useState(
-    userInfo.userImg ? userInfo.userImg : ""
-  );
+  const [preview, setPreview] = useState("");
+  const [profile, setProfile] = useState("");
 
   const [nickName, setNickName] = useState(localStorage.getItem("nickName"));
   const [gender, setGender] = useState(localStorage.getItem("gender"));
@@ -184,7 +180,6 @@ const AddProfile = (props) => {
                 height="56px"
                 type="text"
                 placeholder="닉네임"
-                pattern="/[^ㄱ-ㅎ가-힣]/g"
                 _onChange={selectNickName}
                 value={nickName || ""}
               />
@@ -205,7 +200,6 @@ const AddProfile = (props) => {
                     type="number"
                     placeholder="나이"
                     onChange={selectAge}
-                    pattern="/[ㄱ-ㅎ가-힣]/g"
                     value={age || ""}
                     min="0"
                   />

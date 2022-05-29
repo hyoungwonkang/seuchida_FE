@@ -14,13 +14,12 @@ const Category = (props) => {
   const dispatch = useDispatch();
 
   //AddProfile에서 받은 값
-  const userInf = useSelector((state) => state);
-  console.log(userInf);
   const address = localStorage.getItem("address");
   const nickName = localStorage.getItem("nickName");
   const gender = localStorage.getItem("gender");
   const age = localStorage.getItem("age");
   const content = localStorage.getItem("content");
+  console.log(address, nickName, gender, age, content);
 
   //카테고리 리스트
   const CategoryList = [
@@ -95,7 +94,7 @@ const Category = (props) => {
 
   //프로필 추가
   const addProfile = () => {
-    if (userInterest.length === 0) {
+    if (userInterest?.length === 0) {
       setIsOpen2(true);
     } else {
       dispatch(
