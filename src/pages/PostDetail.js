@@ -268,9 +268,15 @@ const PostDetail = (props) => {
           //참여중이 아니거나 모집중일경우 참여하기 버튼
           userCheck.length === 0 &&
           post.status === true && (
-            <ButtonBox onClick={() => setIsOpen4(true)}>
-              <FooterMenu next text={"참여하기"}></FooterMenu>
-            </ButtonBox>
+            // <ButtonBox onClick={() => setIsOpen4(true)}>
+            <FooterMenu
+              next
+              text={"참여하기"}
+              event={() => {
+                setIsOpen4(true);
+              }}
+            ></FooterMenu>
+            // </ButtonBox>
           )
         )}
       </Container>
@@ -349,7 +355,7 @@ const Header = styled.div`
 
 const ButtonBox = styled.div`
   height: 91px;
-  border-top: 2px solid E3E3E3;
+  border-top: 2px solid #e3e3e3;
   align-items: center;
   display: flex;
   justify-content: center;

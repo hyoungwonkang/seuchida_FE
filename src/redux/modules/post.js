@@ -2,7 +2,6 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import axios from "axios";
 
-
 //Action
 const SET_POST = "SET_POST";
 const SET_REVIEW = "SET_REVIEW";
@@ -61,10 +60,7 @@ const addPostDB = (
       },
     })
       .then((res) => {
-        console.log(res);
-
         dispatch(addPost());
-        console.log("게시물 등록 성공");
         history.push("/postdone");
       })
       .catch((err) => {
@@ -84,7 +80,6 @@ const getMainDB = () => {
           authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }).then((response) => {
-        console.log(response);
         dispatch(setPost(response.data));
       });
     } catch (err) {
@@ -103,7 +98,6 @@ const getPostlistDB = () => {
           authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }).then((response) => {
-        console.log(response);
         dispatch(setPost(response.data));
       });
     } catch (err) {

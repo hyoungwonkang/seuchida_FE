@@ -58,7 +58,6 @@ const joinRoomDB = (roomId, postId) => {
           authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }).then((response) => {
-        console.log(response);
         dispatch(chatMember(response.data.postInfo));
       });
     } catch (err) {
@@ -76,7 +75,6 @@ const joinCancleDB = (roomId, postId) => {
           authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }).then((response) => {
-        console.log(response.data.postInfo);
         dispatch(chatMember(response.data.postInfo));
       });
     } catch (err) {
@@ -95,7 +93,6 @@ const getchatRoomDB = () => {
           authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }).then((response) => {
-        console.log(response);
         dispatch(chatRoom(response.data));
       });
     } catch (err) {
@@ -113,7 +110,6 @@ const getchatMemberDB = (roomId) => {
           authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }).then((response) => {
-        console.log(response.data);
         dispatch(chatRoom(response.data));
       });
     } catch (err) {
@@ -132,7 +128,6 @@ const roomDoneDB = (postId) => {
           authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }).then((response) => {
-        console.log(response.data);
         dispatch(chatMember(response.data.postInfo));
       });
     } catch (err) {

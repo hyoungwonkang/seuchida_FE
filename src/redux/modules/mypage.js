@@ -118,7 +118,6 @@ const myPostOneDB = (postId) => {
       },
     })
       .then((res) => {
-        console.log(res.data.post);
         const postOne = res.data.post;
         dispatch(myPostOne(postOne));
       })
@@ -148,7 +147,6 @@ const addReviewDB = (review, reviewImg, otherId, evalue, postId) => {
       .then((res) => {
         const addreview = res.data.reviewList;
         dispatch(addReview(addreview));
-        console.log("addReview에 성공했습니다.", res);
       })
       .catch((err) => {
         console.log("addReview에 실패했습니다.", err);
@@ -193,9 +191,7 @@ const addReportDB = (rUserId, report) => {
         "Content-Type": `application/json`,
       },
     })
-      .then((res) => {
-        console.log("addReport에 성공했습니다.", res);
-      })
+      .then((res) => {})
       .catch((err) => {
         console.log("addReport에 실패했습니다.", err);
       });
@@ -215,7 +211,6 @@ const deletePostDB = (roomId) => {
       },
     })
       .then((res) => {
-        console.log("삭제 성공", res);
         history.replace("/main");
       })
       .catch((err) => {
@@ -235,9 +230,7 @@ const signDownDB = () => {
         "Content-Type": `application/json`,
       },
     })
-      .then((res) => {
-        console.log("signDown에 성공했습니다.", res);
-      })
+      .then((res) => {})
       .catch((err) => {
         console.log("signDown에 실패했습니다.", err);
       });

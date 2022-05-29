@@ -131,7 +131,6 @@ const isLoginDB = () => {
       },
     })
       .then((res) => {
-        console.log(res);
         const userInfo = res.data.myPage[0];
         dispatch(getUser(userInfo));
       })
@@ -161,8 +160,6 @@ const addUserDB = (nickName, gender, age, content, address, userInterest) => {
       },
     })
       .then((res) => {
-        console.log("회원가입 성공");
-        // dispatch(addUser(res.data))
         history.replace("/done");
       })
       .catch((error) => {
@@ -184,7 +181,6 @@ const addPhotoDB = (formData) => {
       },
     })
       .then((res) => {
-        console.log("사진 추가 성공", res);
         dispatch(addPhoto(res.data.userImg));
       })
       .catch((error) => {
@@ -213,8 +209,6 @@ const editUserDB = (nickName, gender, age, content, address, userInterest) => {
       },
     })
       .then((res) => {
-        console.log("프로필 사진 수정 성공", res);
-        // dispatch(editUser(res.data));
         history.replace("/editdone");
       })
       .catch((error) => {
@@ -236,7 +230,6 @@ const editPhotoDB = (formData) => {
       },
     })
       .then((res) => {
-        console.log("사진편집 성공", res);
         dispatch(editPhoto(res.data.newUserImg));
       })
       .catch((error) => {

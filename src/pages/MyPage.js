@@ -144,12 +144,7 @@ const MyPage = () => {
       </Grid>
 
       {/* 후기 남기기 */}
-      <Grid
-        padding="10px 24px"
-        margin="0px 10px 0px 0px"
-        bg="white"
-        height="300px"
-      >
+      <Grid padding="10px 24px" margin="0px 10px 0px 0px" bg="white" column>
         <Grid row height="70px">
           <RiBarChartFill color="#FF6B52" />
           <Text size="16px" bold>
@@ -165,40 +160,41 @@ const MyPage = () => {
       </Grid>
 
       {/* 내가 만든 목록 */}
-      <Grid
-        cursor="pointer"
-        row
-        bg="white"
-        height="62px"
-        margin="0px"
-        padding="0px 20px"
-        justify="space-between"
-        _onClick={() => {
-          history.push("/mypost");
-        }}
-      >
-        <Text size="16px" bold>
-          내가 만든 모임
-        </Text>
-        <IoIosArrowForward size={30} cursor={"pointer"} />
-      </Grid>
-      <Grid
-        cursor="pointer"
-        row
-        bg="white"
-        height="62px"
-        padding="0px 20px"
-        border="1px solid #ddd"
-        bordernone
-        justify="space-between"
-        _onClick={() => {
-          history.push("/myreview");
-        }}
-      >
-        <Text size="16px" bold>
-          내가 쓴 후기
-        </Text>
-        <IoIosArrowForward size={30} cursor={"pointer"} />
+      <Grid column padding="20px 0px">
+        <Grid
+          cursor="pointer"
+          row
+          bg="white"
+          height="62px"
+          padding="0px 20px"
+          justify="space-between"
+          _onClick={() => {
+            history.push("/mypost");
+          }}
+        >
+          <Text size="16px" bold>
+            내가 만든 모임
+          </Text>
+          <IoIosArrowForward size={30} cursor={"pointer"} />
+        </Grid>
+        <Grid
+          cursor="pointer"
+          row
+          bg="white"
+          height="62px"
+          padding="0px 20px"
+          border="1px solid #ddd"
+          bordernone
+          justify="space-between"
+          _onClick={() => {
+            history.push("/myreview");
+          }}
+        >
+          <Text size="16px" bold>
+            내가 쓴 후기
+          </Text>
+          <IoIosArrowForward size={30} cursor={"pointer"} />
+        </Grid>
       </Grid>
 
       <Grid

@@ -4,13 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as userActions } from "../../redux/modules/user";
 import { Grid, Text, GoBack } from "../../elements/Index";
 import FooterMenu from "../../shared/FooterMenu";
-import { useHistory } from "react-router-dom";
 import Modal from "../../components/Modal/Modal"; //모달 창
 import ModalData from "../../components/Modal/ModalData";
 import { Redirect } from "react-router-dom";
 
 const Category = (props) => {
-  const history = useHistory();
   const dispatch = useDispatch();
 
   //AddProfile에서 받은 값
@@ -19,7 +17,6 @@ const Category = (props) => {
   const gender = localStorage.getItem("gender");
   const age = localStorage.getItem("age");
   const content = localStorage.getItem("content");
-  console.log(address, nickName, gender, age, content);
 
   //카테고리 리스트
   const CategoryList = [
