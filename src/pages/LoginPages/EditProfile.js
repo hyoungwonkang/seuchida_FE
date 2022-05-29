@@ -144,29 +144,31 @@ const EditProfile = (props) => {
           <Grid column height="650px">
             <Grid height="auto" column margin="30px 0px">
               {/* 프로필 이미지 */}
-              <Image
-                size={80}
-                position="relative"
-                alt="profile"
-                src={preview ? preview : userInfo.userImg}
-              />
-              <FileUpload>
-                <label htmlFor="image">
-                  <AiFillPlusCircle
-                    cursor={"pointer"}
-                    size={32}
-                    color="#5796F7"
-                  />
-                </label>
-                <input
-                  type="file"
-                  id="image"
-                  onChange={(e) => {
-                    selectPreview(e);
-                    selectImage(e);
-                  }}
+              <ImgBox>
+                <Image
+                  size={80}
+                  position="relative"
+                  alt="profile"
+                  src={preview ? preview : userInfo.userImg}
                 />
-              </FileUpload>
+                <FileUpload>
+                  <label htmlFor="image">
+                    <AiFillPlusCircle
+                      cursor={"pointer"}
+                      size={32}
+                      color="#5796F7"
+                    />
+                  </label>
+                  <input
+                    type="file"
+                    id="image"
+                    onChange={(e) => {
+                      selectPreview(e);
+                      selectImage(e);
+                    }}
+                  />
+                </FileUpload>
+              </ImgBox>
 
               {/* 닉네임 */}
               <Input
@@ -306,4 +308,8 @@ const Age = styled.input`
   border-radius: 5px;
   border: 1px solid #ddd;
   padding: 12px 10px;
+`;
+
+const ImgBox = styled.div`
+  position: "relative";
 `;
