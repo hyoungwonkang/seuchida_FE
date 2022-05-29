@@ -14,6 +14,8 @@ const Category = (props) => {
   const dispatch = useDispatch();
 
   //AddProfile에서 받은 값
+  const userInf = useSelector((state) => state);
+  console.log(userInf);
   const address = localStorage.getItem("address");
   const nickName = localStorage.getItem("nickName");
   const gender = localStorage.getItem("gender");
@@ -61,6 +63,7 @@ const Category = (props) => {
   }, []);
 
   //로컬 값 가져오기
+  localStorage.setItem("profile", userInfo?.userImg);
   const localUserInterest = JSON.parse(localStorage.getItem("userInterest"));
 
   //수정시, 유저의 이전 관심 태그 보여주기

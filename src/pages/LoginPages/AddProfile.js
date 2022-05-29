@@ -20,10 +20,13 @@ const AddProfile = (props) => {
 
   const userInfo = useSelector((state) => state.user.userInfo);
 
+  //로컬값 불러오기
+  const photo = localStorage.getItem("profile");
+
   useEffect(() => {
-    setPreview(userInfo?.userImg);
-    setProfile(userInfo?.userImg);
-  }, [userInfo?.userImg]);
+    setPreview(photo ? photo : "");
+    setProfile(photo ? photo : "");
+  }, [photo]);
 
   //입력값 state
   const [preview, setPreview] = useState(
@@ -32,6 +35,7 @@ const AddProfile = (props) => {
   const [profile, setProfile] = useState(
     userInfo.userImg ? userInfo.userImg : ""
   );
+  console.log(profile);
 
   const [nickName, setNickName] = useState(localStorage.getItem("nickName"));
   const [gender, setGender] = useState(localStorage.getItem("gender"));
@@ -76,7 +80,7 @@ const AddProfile = (props) => {
   //빈값 유효성 검사
   const alert = (e) => {
     if (
-      profile === null ||
+      profile === "" ||
       nickName === null ||
       gender === null ||
       age === null ||
@@ -89,23 +93,6 @@ const AddProfile = (props) => {
       localStorage.setItem("gender", gender);
       localStorage.setItem("age", age);
       localStorage.setItem("content", content);
-
-      if (
-        profile === "" ||
-        nickName === "" ||
-        gender === "" ||
-        age === "" ||
-        content === ""
-      ) {
-        setIsOpen(true);
-      } else {
-        //로컬 값 저장
-        localStorage.setItem("nickName", nickName);
-        localStorage.setItem("gender", gender);
-        localStorage.setItem("age", age);
-        localStorage.setItem("content", content);
-      }
-
       //사진 추가
       if (profile === userInfo?.userImg) {
         history.push("/category");
