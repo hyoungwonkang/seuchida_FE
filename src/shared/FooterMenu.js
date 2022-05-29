@@ -218,8 +218,8 @@ const Btn = styled.div`
   margin: auto;
   background-color: white;
   box-shadow: 0px -2px 4px 2.5px #ddd;
+  width: 100%;
   min-width: 390px;
-  max-width: 420px;
   z-index: 5;
 `;
 
@@ -247,7 +247,7 @@ const Btns = styled.div`
   margin: auto;
   background-color: white;
   box-shadow: 0px -2px 4px 2.5px #ddd;
+  width: 100%;
   min-width: 390px;
-  max-width: 420px;
   z-index: 5;
 `;
