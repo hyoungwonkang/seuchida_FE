@@ -59,8 +59,7 @@ const Category = (props) => {
   }, []);
 
   //로컬 값 가져오기
-  const a = localStorage.setItem("profile", userInfo?.userImg);
-  console.log(a);
+  localStorage.setItem("profile", userInfo?.userImg);
   const localUserInterest = JSON.parse(localStorage.getItem("userInterest"));
 
   //수정시, 유저의 이전 관심 태그 보여주기
