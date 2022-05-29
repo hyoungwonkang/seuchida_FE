@@ -147,7 +147,6 @@ const EditProfile = (props) => {
               <ImgBox>
                 <Image
                   size={80}
-                  position="relative"
                   alt="profile"
                   src={preview ? preview : userInfo.userImg}
                 />
