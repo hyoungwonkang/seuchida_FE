@@ -9,6 +9,7 @@ import FooterMenu from "../../shared/FooterMenu";
 import Modal from "../../components/Modal/Modal"; //모달 창
 import ModalData from "../../components/Modal/ModalData";
 import { AiFillPlusCircle } from "react-icons/ai";
+import { Redirect } from "react-router-dom";
 
 const EditProfile = (props) => {
   const history = useHistory();
@@ -132,7 +133,7 @@ const EditProfile = (props) => {
     window.onbeforeunload = function () {
       return "새로고침 경고";
     };
-    history.replace("/signuploca");
+    return <Redirect to="/signuploca" />;
   }
 
   return (

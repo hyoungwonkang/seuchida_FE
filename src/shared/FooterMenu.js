@@ -217,7 +217,7 @@ const Btn = styled.div`
   align-items: center;
   margin: auto;
   background-color: white;
-  box-shadow: 0px -2px 4px 2.5px #ddd;
+  box-shadow: 0px 0px 5px 2px #ddd;
   width: 100%;
   min-width: 390px;
   z-index: 5;
@@ -246,7 +246,7 @@ const Btns = styled.div`
   justify-content: center;
   margin: auto;
   background-color: white;
-  box-shadow: 0px -2px 4px 2.5px #ddd;
+  box-shadow: 0px 0px 5px 2px #ddd;
   width: 100%;
   min-width: 390px;
   z-index: 5;

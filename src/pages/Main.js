@@ -199,7 +199,6 @@ export default Main;
 
 const Container = styled.section`
   background-color: #e9e9e9;
-  /* padding: 0px 20px; */
 `;
 
 //라이브 카드

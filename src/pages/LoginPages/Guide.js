@@ -35,7 +35,7 @@ function Guide() {
         <div>
           <Img alt="guide5" src="/img/guide/guide5.png" />
           <LastBtn onClick={() => history.push("/")}>
-            로그인 하여 시작하기
+            로그인 하고 시작하기
           </LastBtn>
         </div>
       </Sliders>
@@ -53,14 +53,15 @@ const Img = styled.img`
 `;
 
 const LastBtn = styled.button`
-  min-width: 390px;
-  height: 70px;
-  position: absolute;
+  min-width: 420px;
+  height: 74px;
+  position: fixed;
   bottom: 5px;
   color: white;
   border: none;
   background: #5796f7;
   font-size: 16px;
+  cursor: pointer;
 `;
 
 const Sliders = styled(Slider)`

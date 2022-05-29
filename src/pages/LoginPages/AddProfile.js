@@ -8,6 +8,7 @@ import FooterMenu from "../../shared/FooterMenu";
 import Modal from "../../components/Modal/Modal"; //모달 창
 import ModalData from "../../components/Modal/ModalData";
 import { AiFillPlusCircle } from "react-icons/ai";
+import { Redirect } from "react-router-dom";
 
 const AddProfile = (props) => {
   const history = useHistory();
@@ -101,11 +102,11 @@ const AddProfile = (props) => {
 
   //글자수 100글자 제한
   useEffect(() => {
-    if (nickName?.length >= 8) {
-      setIsOpen3(true);
-    }
     if (content?.length >= 100) {
       setIsOpen2(true);
+    }
+    if (nickName?.length >= 8) {
+      setIsOpen3(true);
     }
   }, [content, nickName]);
 
@@ -126,7 +127,7 @@ const AddProfile = (props) => {
     window.onbeforeunload = function () {
       return "새로고침 경고";
     };
-    history.replace("/signuploca");
+    return <Redirect to="/signuploca" />;
   }
 
   return (
@@ -222,7 +223,19 @@ const AddProfile = (props) => {
                 <ModalData
                   Alert
                   onClose={() => setIsOpen(false)}
-                  text="내용을 모두 입력해 주세요!"
+                  text={
+                    profile === ""
+                      ? "프로필 사진을 넣어 주세요!"
+                      : nickName === null
+                      ? "닉네임을 입력해 주세요!"
+                      : gender === null
+                      ? "성별을 선택해 주세요!"
+                      : age === null
+                      ? "나이를 입력해 주세요!"
+                      : content === null
+                      ? "자기 소개를 작성해 주세요!"
+                      : ""
+                  }
                 />
               </Modal>
 
@@ -234,7 +247,7 @@ const AddProfile = (props) => {
                   text="100글자 이하로 작성해주세요!"
                 />
               </Modal>
-              {/* 글자수 모달(닉네임) */}
+              {/* 글자수 모달*/}
               <Modal open={isOpen3}>
                 <ModalData
                   Alert
