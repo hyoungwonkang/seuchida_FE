@@ -191,11 +191,10 @@ const AddProfile = (props) => {
                 {/* 나이 */}
                 <div>
                   <Age
-                    type="number"
+                    type="text"
                     placeholder="나이"
                     onChange={selectAge}
                     value={age || ""}
-                    min="0"
                   />
                 </div>
               </Option>
