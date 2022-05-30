@@ -66,6 +66,7 @@ const MyPost = () => {
         {myPostList.length === 0 ? (
           <Grid padding="0px 0px 80px 0px" column>
             <img
+              alt="seuchin"
               src="./img/seuchin.png"
               style={{ margin: "150px 0px 0px 0px" }}
             />

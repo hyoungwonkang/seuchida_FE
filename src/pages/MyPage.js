@@ -33,7 +33,7 @@ const NameCard = () => {
   ];
 
   return (
-    <Grid column height="auto" margin="0px" bg="white">
+    <Grid column height="auto" margin="0px" bg="white" paddin="0px 10px">
       {/* 프로필 수정 */}
       <Grid row height="auto" padding="20px 5px 0px 5px" justify="right">
         <AiFillSetting
