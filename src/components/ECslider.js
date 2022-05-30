@@ -4,8 +4,10 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import EndCard from "./EndCard";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 
 function ECslider(props) {
+  const history = useHistory();
   const myEx = props?.myExercise;
 
   const settings = {
@@ -15,7 +17,6 @@ function ECslider(props) {
     slidesToShow: 1,
     slidesToScroll: 1,
     variableWidth: true,
-    centerMode: true,
   };
 
   if (!myEx) return;
@@ -24,7 +25,16 @@ function ECslider(props) {
     <Sliders {...settings} style={{ height: "180px" }}>
       {myEx?.map((p, i) => {
         if (i < 5) {
-          return <EndCard {...p} key={p?.id} _onClick={props._onClick} />;
+          return (
+            <EndCard
+              {...p}
+              key={p?.id}
+              _onClick={props._onClick}
+              onClick={() => {
+                history.push(`/postdetail/${p._id}`);
+              }}
+            />
+          );
         }
       })}
     </Sliders>

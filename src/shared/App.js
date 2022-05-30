@@ -50,19 +50,19 @@ const socket = io.connect("https://seuchidabackend.shop", {
 });
 
 function App() {
-  const dispatch = useDispatch()
-  React.useEffect(()=>{
+  const dispatch = useDispatch();
+  React.useEffect(() => {
     socket.on("joinPartyAlert", (data) => {
-      dispatch(roomCreators.joinArlam(data))
-     dispatch(roomCreators.mainArlam(true))
-    })       
-    },[])
+      dispatch(roomCreators.joinArlam(data));
+      dispatch(roomCreators.mainArlam(true));
+    });
+  }, []);
 
-    React.useEffect(() => {
-      socket?.on("alert", (data) => {
-        dispatch(roomCreators.chattingArr(data))
-      })
-      },[]);
+  React.useEffect(() => {
+    socket?.on("alert", (data) => {
+      dispatch(roomCreators.chattingArr(data));
+    });
+  }, []);
 
   return (
     <>

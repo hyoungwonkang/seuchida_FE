@@ -51,9 +51,9 @@ function LCslider(props) {
 
   const _settings = {
     className: "center",
-    centerMode: false,
+    centerMode: true,
     infinite: true,
-    centerPadding: "20px",
+    centerPadding: "50px",
     slidesToShow: 1,
     slidesToScroll: 1,
     variableWidth: true,
@@ -129,7 +129,7 @@ function LCslider(props) {
             카테고리에 해당하는 글이 없어요!
           </Text>
         </Grid>
-      ) : catepost.length <= 1 ? (
+      ) : catepost.length === 1 ? (
         <Sliders {..._settings} style={{ height: "270px" }}>
           {catepost?.map((p, i) => {
             if (i < 6)
