@@ -4,7 +4,6 @@ import styled from "styled-components";
 import FooterMenu from "../shared/FooterMenu";
 import GoBack from "../elements/GoBack";
 import { useHistory } from "react-router-dom";
-import { Grid, Text } from "../elements/Index";
 import axios from "axios";
 
 const PostList = ({ list, params }) => {
@@ -58,45 +57,23 @@ const PostList = ({ list, params }) => {
     }
   }, []);
 
-  const ShowTown = () => {
-    React.useEffect(() => {
-      setIsLoading(true);
-      axios({
-        method: "get",
-        url: `https://seuchidabackend.shop/api/nearPostList/${pageNumber}`,
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
+  React.useEffect(() => {
+    setIsLoading(true);
+    axios({
+      method: "get",
+      url: `https://seuchidabackend.shop/api/nearPostList/${pageNumber}`,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((res) => {
+        setIsLoading(false);
+        setPostList((items) => [...items, ...res.data.nearPosts]);
       })
-        .then((res) => {
-          setIsLoading(false);
-          setPostList((items) => [...items, ...res.data.nearPosts]);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }, [pageNumber]);
-  };
-
-  const ShowWhole = () => {
-    React.useEffect(() => {
-      setIsLoading(true);
-      axios({
-        method: "get",
-        url: `https://seuchidabackend.shop/api/wholePostList/`,
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
-        .then((res) => {
-          setIsLoading(false);
-          setPostList((items) => [...items, ...res.data.wholePosts]);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }, []);
-  };
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [pageNumber]);
 
   //무한 스크롤
   const onIntersect = (entries) => {
@@ -135,22 +112,6 @@ const PostList = ({ list, params }) => {
         </HeadContents>
       </Header>
       <ListBox>
-        <Grid padding="10px 24px 10px 10px" isFlex_end>
-          <RadioInput
-            type="radio"
-            name="region"
-            value="town"
-            onClick={ShowTown}
-          />
-          <Text margin="10px 0px 0px 0px">동네보기</Text>
-          <RadioInput
-            type="radio"
-            name="region"
-            value="whole"
-            onClick={ShowWhole}
-          />
-          <Text margin="10px 0px 0px 0px">전체보기</Text>
-        </Grid>
         {postList?.map((p, i) => {
           return (
             <Card
@@ -210,26 +171,4 @@ const Pos = styled.div`
 
 const Seuchin = styled.img`
   width: 100px;
-`;
-
-const RadioInput = styled.input`
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-
-  border: 2px solid #999;
-  margin-right: 5px;
-
-  position: relative;
-  top: 4px;
-
-  cursor: pointer;
-
-  :checked {
-    border: 5px solid #5796f7;
-  }
 `;
