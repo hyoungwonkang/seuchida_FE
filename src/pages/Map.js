@@ -23,7 +23,7 @@ const Map = () => {
   const researchMap = () => {
     axios({
       method: "get",
-      url: `https://seuchidabackend.shop/api/nearPostList`,
+      url: `https://seuchidaback.link/api/nearPostList`,
       headers: {
         authorization: `Bearer ${token}`,
       },
@@ -42,6 +42,7 @@ const Map = () => {
       navigator.geolocation.getCurrentPosition(resolve, reject);
     });
   };
+
   const getCoordinate = async () => {
     if (navigator.geolocation) {
       const position = await getPos();

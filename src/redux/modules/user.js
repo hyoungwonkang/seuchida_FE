@@ -44,7 +44,7 @@ const initialState = {
 const kakaoLogin = (code) => {
   return async function (dispatch, getState, { history }) {
     await axios
-      .get(`https://seuchidabackend.shop/oauth/callback/kakao?code=${code}`)
+      .get(`https://seuchidaback.link/oauth/callback/kakao?code=${code}`)
       .then((res) => {
         const token = res.data.user.token;
         const userInfo = res.data.user.userInfo;
@@ -81,7 +81,7 @@ const kakaoLogin = (code) => {
 const googleLogin = (code) => {
   return async function (dispatch, getState, { history }) {
     await axios
-      .get(`https://seuchidabackend.shop/oauth/callback/google/?code=${code}`) //승인된 자바스크립트 원본?
+      .get(`https://seuchidaback.link/oauth/callback/google/?code=${code}`) //승인된 자바스크립트 원본?
       .then((res) => {
         const token = res.data.user.token;
         const userInfo = res.data.user.userInfo;
@@ -120,7 +120,7 @@ const isLoginDB = () => {
   return (dispatch, getState, { history }) => {
     axios({
       method: "get",
-      url: "https://seuchidabackend.shop/api/myPage",
+      url: "https://seuchidaback.link/api/myPage",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": `application/json`,
@@ -141,7 +141,7 @@ const addUserDB = (nickName, gender, age, content, address, userInterest) => {
   return function (dispatch, getState, { history }) {
     axios({
       method: "post",
-      url: "https://seuchidabackend.shop/oauth/signup",
+      url: "https://seuchidaback.link/oauth/signup",
       data: JSON.stringify({
         nickName: nickName,
         userGender: gender,
@@ -169,7 +169,7 @@ const addPhotoDB = (formData) => {
   return function (dispatch, getState, { history }) {
     axios({
       method: "post",
-      url: "https://seuchidabackend.shop/oauth/signUpImg",
+      url: "https://seuchidaback.link/oauth/signUpImg",
       data: formData,
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -190,7 +190,7 @@ const editUserDB = (nickName, gender, age, content, address, userInterest) => {
   return async function (dispatch, getState, { history }) {
     await axios({
       method: "post",
-      url: "https://seuchidabackend.shop/api/myPage/update", //주소확인필요
+      url: "https://seuchidaback.link/api/myPage/update", //주소확인필요
       data: JSON.stringify({
         nickName: nickName,
         userGender: gender,
@@ -218,7 +218,7 @@ const editPhotoDB = (formData) => {
   return function (dispatch, getState, { history }) {
     axios({
       method: "post",
-      url: "https://seuchidabackend.shop/api/myPage/updateImg",
+      url: "https://seuchidaback.link/api/myPage/updateImg",
       data: formData,
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,

@@ -83,7 +83,7 @@ const EditProfile = (props) => {
   };
   const selectAge = (e) => {
     //글 수 제한
-    if (e.target.value.length >= 4) {
+    if (e.target.value.length >= 3) {
       e.target.value = e.target.value.substr(0, 3);
     }
     setAge(e.target.value.replace(onlyNum, ""));

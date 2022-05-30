@@ -15,7 +15,9 @@ import GoBack from "../elements/GoBack";
 import { io } from "socket.io-client";
 
 const token = localStorage.getItem("token");
-const socket = io.connect("https://seuchidabackend.shop", {
+const socket = io.connect("https://seuchidaback.link:443", {
+  transports: ["websocket"],
+  // withCredentials: true,
   auth: {
     auth: token,
   },
@@ -115,7 +117,7 @@ const PostDetail = (props) => {
   React.useEffect(() => {
     axios({
       method: "get",
-      url: `https://seuchidabackend.shop/api/postDetail/${params.postId}`,
+      url: `https://seuchidaback.link/api/postDetail/${params.postId}`,
       headers: {
         authorization: `Bearer ${token}`,
       },

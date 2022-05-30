@@ -61,7 +61,7 @@ const PostList = ({ list, params }) => {
     setIsLoading(true);
     axios({
       method: "get",
-      url: `https://seuchidabackend.shop/api/nearPostList/${pageNumber}`,
+      url: `https://seuchidaback.link/api/nearPostList/${pageNumber}`,
       headers: {
         authorization: `Bearer ${localStorage.getItem("token")}`,
       },

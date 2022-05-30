@@ -48,7 +48,7 @@ const myExerciseDB = () => {
   return async (dispatch, getState, { history }) => {
     await axios({
       method: "get",
-      url: "https://seuchidabackend.shop/api/myPage/myExercise",
+      url: "https://seuchidaback.link/api/myPage/myExercise",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": `application/json`,
@@ -69,7 +69,7 @@ const myPostDB = () => {
   return async (dispatch, getState, { history }) => {
     await axios({
       method: "get",
-      url: "https://seuchidabackend.shop/api/myPage/post",
+      url: "https://seuchidaback.link/api/myPage/post",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": `application/json`,
@@ -90,7 +90,7 @@ const myReviewDB = () => {
   return async (dispatch, getState, { history }) => {
     await axios({
       method: "get",
-      url: "https://seuchidabackend.shop/api/myPage/myReview",
+      url: "https://seuchidaback.link/api/myPage/myReview",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": `application/json`,
@@ -111,7 +111,7 @@ const myPostOneDB = (postId) => {
   return async (dispatch, getState, { history }) => {
     await axios({
       method: "get",
-      url: `https://seuchidabackend.shop/api/reviewPost/${postId}`,
+      url: `https://seuchidaback.link/api/reviewPost/${postId}`,
       headers: {
         "Content-Type": `multipart/form-data;`,
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -132,7 +132,7 @@ const addReviewDB = (review, reviewImg, otherId, evalue, postId) => {
   return async (dispatch, getState, { history }) => {
     await axios({
       method: "post",
-      url: `https://seuchidabackend.shop/api/review/${postId}`,
+      url: `https://seuchidaback.link/api/review/${postId}`,
       data: JSON.stringify({
         content: review,
         image: reviewImg,
@@ -159,7 +159,7 @@ const addPhotoDB = (formData) => {
   return async (dispatch, getState, { history }) => {
     await axios({
       method: "post",
-      url: `https://seuchidabackend.shop/api/reviewImg `,
+      url: `https://seuchidaback.link/api/reviewImg `,
       data: formData,
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -181,7 +181,7 @@ const addReportDB = (rUserId, report) => {
   return async (dispatch, getState, { history }) => {
     await axios({
       method: "post",
-      url: `https://seuchidabackend.shop/api/report`,
+      url: `https://seuchidaback.link/api/report`,
       data: JSON.stringify({
         userId: rUserId,
         content: report,
@@ -203,7 +203,7 @@ const deletePostDB = (roomId) => {
   return async function (dispatch, getState, { history }) {
     await axios({
       method: "delete",
-      url: `https://seuchidabackend.shop/api/postDelete/${roomId}`,
+      url: `https://seuchidaback.link/api/postDelete/${roomId}`,
       data: { roomId },
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -224,7 +224,7 @@ const signDownDB = () => {
   return async (dispatch, getState, { history }) => {
     await axios({
       method: "delete",
-      url: `https://seuchidabackend.shop/oauth/signDown`,
+      url: `https://seuchidaback.link/oauth/signDown`,
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": `application/json`,
