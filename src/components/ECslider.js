@@ -22,7 +22,7 @@ function ECslider(props) {
   if (!myEx) return;
 
   return (
-    <Sliders {...settings} style={{ height: "180px", padding: "0px 10px" }}>
+    <Sliders {...settings} style={{ height: "180px" }}>
       {myEx?.map((p, i) => {
         if (i < 5) {
           return (
