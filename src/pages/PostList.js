@@ -108,7 +108,7 @@ const PostList = ({ list, params }) => {
           />
         </Gback>
         <HeadContents>
-          <div> 여기여기 붙어라</div>
+          <div> 여기여기 붙어라 </div>
         </HeadContents>
       </Header>
       <ListBox>
@@ -132,7 +132,6 @@ const PostList = ({ list, params }) => {
           )}
         </div>
       </ListBox>
-
       <FooterMenu />
     </>
   );
