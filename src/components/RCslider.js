@@ -13,6 +13,7 @@ function RCslider(props) {
     slidesToScroll: 1,
     variableWidth: true,
   };
+
   return (
     <Slider {...settings} style={{ padding: "0px 15px", height: "240px" }}>
       {review?.map((review, index) => {
