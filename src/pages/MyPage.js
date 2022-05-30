@@ -35,7 +35,7 @@ const NameCard = () => {
   return (
     <Grid column height="auto" margin="0px" bg="white">
       {/* 프로필 수정 */}
-      <Grid row height="auto" padding="20px 0px 0px 0px" justify="right">
+      <Grid row height="auto" padding="20px 5px 0px 5px" justify="right">
         <AiFillSetting
           cursor={"pointer"}
           size={24}
@@ -144,7 +144,7 @@ const MyPage = () => {
       </Grid>
 
       {/* 후기 남기기 */}
-      <Grid padding="10px 24px" margin="0px 10px 0px 0px" bg="white" column>
+      <Grid padding="10px 24px" margin="0px 10px 0px 0px" bg="white">
         <Grid row height="70px">
           <RiBarChartFill color="#FF6B52" />
           <Text size="16px" bold>
@@ -166,7 +166,7 @@ const MyPage = () => {
           row
           bg="white"
           height="62px"
-          padding="0px 20px"
+          padding="0px 30px"
           justify="space-between"
           _onClick={() => {
             history.push("/mypost");
@@ -182,7 +182,7 @@ const MyPage = () => {
           row
           bg="white"
           height="62px"
-          padding="0px 20px"
+          padding="0px 30px"
           border="1px solid #ddd"
           bordernone
           justify="space-between"

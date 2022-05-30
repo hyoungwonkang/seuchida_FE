@@ -50,7 +50,7 @@ const Category = (props) => {
 
   //작성 || 수정 구분
   const userInfo = useSelector((state) => state.user.userInfo);
-  const edit = useSelector((state) => state.user?.userInfo.address);
+  const edit = useSelector((state) => state.user?.userInfo.nickName);
   const is_edit = edit ? true : false;
 
   //유저 정보
