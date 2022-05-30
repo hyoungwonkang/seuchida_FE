@@ -58,9 +58,9 @@ const EditProfile = (props) => {
   localStorage.setItem("content", content);
 
   //특수 문자 제한
-  const notNum = /[^ㄱ-ㅎ가-힣a-z0-9]/gi;
+  const notNum = /[^.ㄱ-ㅎ가-힣a-z0-9]/gi;
   const onlyNum = /[^0-9]/gi;
-  const notSpecial = /[^/!/~/./,\sㄱ-ㅎ가-힣a-z0-9]/gi;
+  const notSpecial = /[^!~.,\sㄱ-ㅎ가-힣a-z0-9]/gi;
 
   //입력값 가져오기
   const selectPreview = (e) => {
