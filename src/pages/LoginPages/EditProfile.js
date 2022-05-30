@@ -58,7 +58,7 @@ const EditProfile = (props) => {
   localStorage.setItem("content", content);
 
   //특수 문자 제한
-  const notNum = /[^.ㄱ-ㅎ가-힣a-z0-9]/gi;
+  const notNum = /[^·ㄱ-ㅎ가-힣a-z0-9]/gi;
   const onlyNum = /[^0-9]/gi;
   const notSpecial = /[^!~.,\sㄱ-ㅎ가-힣a-z0-9]/gi;
 
@@ -83,7 +83,7 @@ const EditProfile = (props) => {
   };
   const selectAge = (e) => {
     //글 수 제한
-    if (e.target.value.length >= 3) {
+    if (e.target.value.length >= 4) {
       e.target.value = e.target.value.substr(0, 3);
     }
     setAge(e.target.value.replace(onlyNum, ""));
