@@ -5,7 +5,6 @@ import { FaPen } from "react-icons/fa";
 import styled from "styled-components";
 
 const EndCard = (props) => {
-  console.log(props);
   if (!props) return;
 
   return (
