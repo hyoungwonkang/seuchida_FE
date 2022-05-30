@@ -29,7 +29,7 @@ function ECslider(props) {
             <EndCard
               {...p}
               key={p?.id}
-              onClick={() => {
+              _onClick={() => {
                 history.push(`/postdetail/${p._id}`);
               }}
             />

@@ -42,7 +42,7 @@ function LCslider(props) {
     className: "center",
     centerMode: true,
     infinite: true,
-    centerPadding: catepost?.length === 1 ? "150px" : "0px",
+    centerPadding: catepost?.length === 1 ? "80px" : "0px",
     slidesToShow: 1,
     slidesToScroll: 1,
     variableWidth: true,

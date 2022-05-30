@@ -5,6 +5,7 @@ import { FaPen } from "react-icons/fa";
 import styled from "styled-components";
 
 const EndCard = (props) => {
+  console.log(props);
   if (!props) return;
 
   return (
@@ -15,6 +16,7 @@ const EndCard = (props) => {
       br="12px"
       padding="8px 20px"
       bg="white"
+      _onClick={props._onClick}
     >
       <Grid row height="auto">
         <Text size="16px" bold color="#FF6B52" margin="0px 10px 0px 0px">

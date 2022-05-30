@@ -206,6 +206,8 @@ const TopLive = styled.section`
   max-height: 60vh;
   min-height: 450px;
   background-color: #f8f8fa;
+  display: flex;
+  flex-direction: column;
 `;
 
 // 여기여기 붙어라
