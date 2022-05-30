@@ -5,12 +5,14 @@
 
 
 <p align='center'>
-  <img src='https://img.shields.io/badge/React-ES6-yellow?logo=javascript'/>
+  <img src='https://img.shields.io/badge/React-v18.0.0-blue?logo=React'/>
+  <img src='https://img.shields.io/badge/Redux-v4.2.0-white?logo=Redux'/>
+  <img src='https://img.shields.io/badge/Axios-v0.27.1-red?logo=axios'/>
+  <img src='https://img.shields.io/badge/StyledComponents-v5.3.5-pink?logo=StyledComponents'/>
   <img src='https://img.shields.io/badge/Javascript-ES6-yellow?logo=javascript'/>
-  <img src='https://img.shields.io/badge/Node.js-v16.14.2-green?logo=Node.js'/>
-  <img src='https://img.shields.io/badge/prettier-v2.5.1-pink?logo=prettier'/>
   <img src='https://img.shields.io/badge/socket.io-v4.4.1-white?logo=Socket.io'/>
   <img src="https://img.shields.io/badge/Json Web Token-v8.5.1-8a8a8a?logo=JSON Web Tokens&logoColor=white" />
+  <img src='https://img.shields.io/badge/ReactRouter-v5.2.1-red?logo=ReactRouter'/>
   </br></br>
   Deploy
   </br></br>
