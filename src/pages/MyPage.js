@@ -33,7 +33,7 @@ const NameCard = () => {
   ];
 
   return (
-    <Grid column height="auto" margin="0px" bg="white" paddin="0px 10px">
+    <Grid column height="auto" margin="0px" bg="white">
       {/* 프로필 수정 */}
       <Grid row height="auto" padding="20px 5px 0px 5px" justify="right">
         <AiFillSetting
@@ -67,7 +67,13 @@ const NameCard = () => {
       </Grid>
 
       {/* 유저 관심사 */}
-      <Grid row height="auto" margin="8px 0px 16px 0px" justify="center">
+      <Grid
+        row
+        height="auto"
+        margin="8px 0px 16px 0px"
+        justify="center"
+        padding="0px 5px"
+      >
         {userInfo.userInterest?.map((v, i) => {
           return <Cate key={v + i}>{v}</Cate>;
         })}

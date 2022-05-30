@@ -211,7 +211,8 @@ const TopLive = styled.section`
 // 여기여기 붙어라
 const ListBox = styled.section`
   background-color: white;
-  padding-bottom: 80px;
+  /* padding-bottom: 80px; */
+  padding: 0px 10px 80px 10px;
 `;
 
 const CardBox = styled.div`
@@ -232,7 +233,7 @@ const TitleBox = styled.div`
 const Title = styled.div`
   font-size: 24px;
   font-weight: 700;
-  padding: 25px 25px 20px 25px;
+  padding: 25px 28px 20px 28px;
   cursor: pointer;
 `;
 //-- 여기여기 붙어라

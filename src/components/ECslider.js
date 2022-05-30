@@ -16,7 +16,6 @@ function ECslider(props) {
     slidesToScroll: 1,
     variableWidth: true,
     centerMode: true,
-    centerPadding: "10px",
   };
 
   if (!myEx) return;
