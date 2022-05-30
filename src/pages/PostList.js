@@ -166,7 +166,7 @@ const PostList = ({ list, params }) => {
         <div ref={pageEnd} className="pageEnd">
           {isLoading && (
             <Pos>
-              {/* <Seuchin alt="loading" src="./img/loading.gif" width={130} /> */}
+              <Seuchin alt="loading" src="./img/loading.gif" width={130} />
             </Pos>
           )}
         </div>
