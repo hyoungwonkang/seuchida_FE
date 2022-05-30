@@ -17,20 +17,20 @@ function ECslider(props) {
     slidesToShow: 1,
     slidesToScroll: 1,
     variableWidth: true,
+    centerMode: true,
   };
 
   if (!myEx) return;
 
   return (
-    <Sliders {...settings} style={{ height: "180px" }}>
+    <Sliders {...settings} style={{ height: "180px", padding: "0px 10px" }}>
       {myEx?.map((p, i) => {
         if (i < 5) {
           return (
             <EndCard
               {...p}
               key={p?.id}
-              _onClick={props._onClick}
-              onClick={() => {
+              _onClick={() => {
                 history.push(`/postdetail/${p._id}`);
               }}
             />

@@ -53,7 +53,7 @@ function LCslider(props) {
     className: "center",
     centerMode: true,
     infinite: true,
-    centerPadding: "50px",
+    centerPadding: "100px",
     slidesToShow: 1,
     slidesToScroll: 1,
     variableWidth: true,
