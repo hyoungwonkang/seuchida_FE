@@ -58,6 +58,7 @@ const EditProfile = (props) => {
 
   //특수 문자 제한
   const notNum = /[^ㄱ-ㅎ가-힣a-z0-9]/gi;
+  const onlyNum = /[^0-9]/gi;
   const notSpecial = /[^/!/~/./,\sㄱ-ㅎ가-힣a-z0-9]/gi;
 
   //입력값 가져오기
@@ -80,7 +81,7 @@ const EditProfile = (props) => {
     setGender(e.target.value);
   };
   const selectAge = (e) => {
-    setAge(e.target.value);
+    setAge(e.target.value.replace(onlyNum, ""));
   };
   const selectContent = (e) => {
     if (e.target.value.length >= 100) {
@@ -196,7 +197,6 @@ const EditProfile = (props) => {
                     type="number"
                     placeholder="나이"
                     onChange={selectAge}
-                    pattern="/[^ㄱ-ㅎ가-힣]/g"
                     value={age || ""}
                     min="0"
                   />

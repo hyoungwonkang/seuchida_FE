@@ -6,7 +6,7 @@ import FooterMenu from "../shared/FooterMenu";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as mypageActions } from "../redux/modules/mypage";
 import GoBack from "../elements/GoBack";
-import { Grid, Image, Text } from "../elements/Index";
+import { Grid, Text } from "../elements/Index";
 import PostDetail from "./PostDetail";
 
 const MyPost = () => {

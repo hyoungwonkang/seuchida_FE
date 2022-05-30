@@ -38,6 +38,7 @@ const AddProfile = (props) => {
 
   //특수 문자 제한
   const notNum = /[^/.ㄱ-ㅎ가-힣a-z0-9]/gi;
+  const onlyNum = /[^0-9]/gi;
   const notSpecial = /[^/!/~/./,\sㄱ-ㅎ가-힣a-z0-9]/gi;
 
   const selectPreview = (e) => {
@@ -61,7 +62,7 @@ const AddProfile = (props) => {
   };
 
   const selectAge = (e) => {
-    setAge(e.target.value);
+    setAge(e.target.value.replace(onlyNum, ""));
   };
 
   const selectContent = (e) => {
