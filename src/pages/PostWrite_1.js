@@ -22,7 +22,7 @@ const PostWrite_1 = (props) => {
   let [postDesc, setPostDesc] = useState(localStorage.getItem("postDesc"));
 
   //특수문자 제한
-  const notSpecial = /^[^/!/~/.\sㄱ-ㅎ가-힣a-z0-9]/gi;
+  const notSpecial = /[^/!/~/.\sㄱ-ㅎ가-힣a-z0-9]/gi;
 
   const selectPostTitle = (e) => {
     if (e.target.value?.length >= 15) {
