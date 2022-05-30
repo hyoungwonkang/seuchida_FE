@@ -18,6 +18,7 @@ const AddProfile = (props) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [isOpen2, setIsOpen2] = React.useState(false);
   const [isOpen3, setIsOpen3] = React.useState(false);
+  const [isOpen4, setIsOpen4] = React.useState(false);
 
   //로컬값 불러오기
   const photo = localStorage.getItem("profile");
@@ -62,6 +63,10 @@ const AddProfile = (props) => {
   };
 
   const selectAge = (e) => {
+    //글 수 제한
+    if (e.target.value.length >= 3) {
+      e.target.value = e.target.value.substr(0, 3);
+    }
     setAge(e.target.value.replace(onlyNum, ""));
   };
 
@@ -109,7 +114,10 @@ const AddProfile = (props) => {
     if (nickName?.length >= 8) {
       setIsOpen3(true);
     }
-  }, [content, nickName]);
+    if (age?.length >= 3) {
+      setIsOpen4(true);
+    }
+  }, [content, nickName, age]);
 
   //앱에서 페이지 새로고침 막기
   document.body.style.overscrollBehavior = "none";
@@ -253,6 +261,14 @@ const AddProfile = (props) => {
                   Alert
                   onClose={() => setIsOpen3(false)}
                   text="8글자 이하로 작성해주세요!"
+                />
+              </Modal>
+              {/* 글자수 모달*/}
+              <Modal open={isOpen4}>
+                <ModalData
+                  Alert
+                  onClose={() => setIsOpen4(false)}
+                  text="3글자 이하로 작성해주세요!"
                 />
               </Modal>
             </Grid>

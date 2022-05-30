@@ -41,6 +41,7 @@ const EditProfile = (props) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [isOpen2, setIsOpen2] = React.useState(false);
   const [isOpen3, setIsOpen3] = React.useState(false);
+  const [isOpen4, setIsOpen4] = React.useState(false);
 
   //입력값 state
   const [preview, setPreview] = useState("");
@@ -81,6 +82,10 @@ const EditProfile = (props) => {
     setGender(e.target.value);
   };
   const selectAge = (e) => {
+    //글 수 제한
+    if (e.target.value.length >= 3) {
+      e.target.value = e.target.value.substr(0, 3);
+    }
     setAge(e.target.value.replace(onlyNum, ""));
   };
   const selectContent = (e) => {
@@ -111,13 +116,16 @@ const EditProfile = (props) => {
 
   //글자수 100글자 제한
   useEffect(() => {
-    if (nickName?.length >= 8) {
-      setIsOpen3(true);
-    }
     if (content?.length >= 100) {
       setIsOpen2(true);
     }
-  }, [content, nickName]);
+    if (nickName?.length >= 8) {
+      setIsOpen3(true);
+    }
+    if (age?.length >= 3) {
+      setIsOpen4(true);
+    }
+  }, [content, nickName, age]);
 
   //앱에서 페이지 새로고침 막기
   document.body.style.overscrollBehavior = "none";
@@ -243,6 +251,14 @@ const EditProfile = (props) => {
                   Alert
                   onClose={() => setIsOpen3(false)}
                   text="8글자 이하로 작성해주세요!"
+                />
+              </Modal>
+              {/* 글자수 모달(나이)*/}
+              <Modal open={isOpen4}>
+                <ModalData
+                  Alert
+                  onClose={() => setIsOpen4(false)}
+                  text="3글자 이하로 작성해주세요!"
                 />
               </Modal>
             </Grid>
