@@ -10,7 +10,7 @@ const EndCard = (props) => {
   return (
     <Grid
       border="1px solid #ddd"
-      width="342px"
+      width="100%"
       height="168px"
       br="12px"
       padding="8px 20px"

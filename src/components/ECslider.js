@@ -17,7 +17,6 @@ function ECslider(props) {
     slidesToShow: 1,
     slidesToScroll: 1,
     variableWidth: true,
-    centerMode: true,
   };
 
   if (!myEx) return;
@@ -30,7 +29,7 @@ function ECslider(props) {
             <EndCard
               {...p}
               key={p?.id}
-              _onClick={() => {
+              onClick={() => {
                 history.push(`/postdetail/${p._id}`);
               }}
             />

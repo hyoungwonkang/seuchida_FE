@@ -42,18 +42,7 @@ function LCslider(props) {
     className: "center",
     centerMode: true,
     infinite: true,
-    centerPadding: "0px",
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    variableWidth: true,
-    beforeChange: (current, next) => setState(next),
-  };
-
-  const _settings = {
-    className: "center",
-    centerMode: true,
-    infinite: true,
-    centerPadding: "100px",
+    centerPadding: catepost?.length === 1 ? "150px" : "0px",
     slidesToShow: 1,
     slidesToScroll: 1,
     variableWidth: true,
@@ -129,20 +118,6 @@ function LCslider(props) {
             카테고리에 해당하는 글이 없어요!
           </Text>
         </Grid>
-      ) : catepost.length === 1 ? (
-        <Sliders {..._settings} style={{ height: "270px" }}>
-          {catepost?.map((p, i) => {
-            if (i < 6)
-              return (
-                <LiveCard
-                  {...p}
-                  key={p.id}
-                  center={props.center}
-                  _onClick={props._onClick}
-                />
-              );
-          })}
-        </Sliders>
       ) : (
         <Sliders {...settings} style={{ height: "270px" }}>
           {catepost?.map((p, i) => {
