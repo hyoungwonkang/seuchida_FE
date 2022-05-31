@@ -4,6 +4,7 @@ import styled from "styled-components";
 import FooterMenu from "../shared/FooterMenu";
 import GoBack from "../elements/GoBack";
 import { useHistory } from "react-router-dom";
+import { Grid } from "../elements/Index";
 import axios from "axios";
 
 const PostList = ({ list, params }) => {
@@ -11,7 +12,9 @@ const PostList = ({ list, params }) => {
 
   // 포스트 목록
 
-  const [postList, setPostList] = useState([]);
+  let [postList, setPostList] = useState([]);
+  let [firstList, setFirstList] = useState([]);
+  const [showWhole, setShowWhole] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const pageEnd = React.useRef(null);
@@ -57,23 +60,49 @@ const PostList = ({ list, params }) => {
     }
   }, []);
 
+  const ShowTown = () => {
+    // window.location.hret = "/postlist";
+    setShowWhole(false);
+    setPageNumber(1);
+    setPostList([]);
+  };
+
   React.useEffect(() => {
     setIsLoading(true);
-    axios({
-      method: "get",
-      url: `https://seuchidaback.link/api/nearPostList/${pageNumber}`,
-      headers: {
-        authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    })
-      .then((res) => {
-        setIsLoading(false);
-        setPostList((items) => [...items, ...res.data.nearPosts]);
+    if (showWhole === true) {
+      axios({
+        method: "get",
+        url: `https://seuchidabackend.shop/api/wholePostList/${pageNumber}`,
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
       })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then((res) => {
+          setIsLoading(false);
+          setPostList((items) => [...items, ...res.data.wholePosts]);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      axios({
+        method: "get",
+        url: `https://seuchidabackend.shop/api/nearPostList/${pageNumber}`,
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+        .then((res) => {
+          setIsLoading(false);
+          setPostList((items) => [...items, ...res.data.nearPosts]);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }, [pageNumber]);
+  console.log(pageNumber);
+  console.log(postList);
 
   //무한 스크롤
   const onIntersect = (entries) => {
@@ -112,11 +141,38 @@ const PostList = ({ list, params }) => {
         </HeadContents>
       </Header>
       <ListBox>
+        <Grid padding="10px 24px 10px 10px" isFlex_end>
+          <RadioInput
+            type="radio"
+            name="region"
+            id="w"
+            onClick={() => {
+              setShowWhole(true);
+            }}
+          />
+          <label style={{ cursor: "pointer" }} htmlFor="w">
+            <WholeText color={showWhole}>전체보기</WholeText>
+          </label>
+          &nbsp;&nbsp;
+          <div
+            style={{
+              color: "#c4c4c4",
+              fontSize: "16px",
+              padding: "0px 0px 1.5px 0px",
+            }}
+          >
+            |
+          </div>
+          <RadioInput type="radio" name="region" id="t" onClick={ShowTown} />
+          <label style={{ cursor: "pointer" }} htmlFor="t">
+            <TownText color={showWhole}>동네보기</TownText>
+          </label>
+        </Grid>
         {postList?.map((p, i) => {
           return (
             <Card
               {...p}
-              key={p.id}
+              key={new Date() * Math.random()}
               center={state.center}
               _onClick={() => {
                 history.push(`/postdetail/${p._id}`);
@@ -171,4 +227,26 @@ const Pos = styled.div`
 
 const Seuchin = styled.img`
   width: 100px;
+`;
+
+const RadioInput = styled.input`
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  opacity: 0;
+
+  cursor: pointer;
+  :checked {
+    /* background-color: #c4c4c4; */
+    color: #c4c4c4;
+  }
+`;
+
+const WholeText = styled.div`
+  color: ${(props) => (props.color ? "#000" : "#C4c4c4")};
+`;
+
+const TownText = styled.div`
+  color: ${(props) => (props.color === false ? "#000" : "#C4c4c4")};
 `;
