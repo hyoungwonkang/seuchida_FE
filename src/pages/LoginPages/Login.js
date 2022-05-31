@@ -15,6 +15,7 @@ const Login = (props) => {
             style={{ margin: "150px 0px" }}
             alt="로그인 이미지"
             width={"120%"}
+            height={"100%"}
           />
         </Grid>
         <Around onClick={() => history.push("/guide")}>가이드</Around>
@@ -24,6 +25,7 @@ const Login = (props) => {
               src="./img/kakao_login_medium_wide.png"
               alt="카카오로그인"
               width={"100%"}
+              height={"100%"}
             />
           </Akakao>
         </div>
@@ -32,6 +34,7 @@ const Login = (props) => {
             src="./img/btn_google_light_normal_ios.svg"
             alt="구글로그인"
             width={"100%"}
+            height={"100%"}
           />
           <Agoogle href={GOOGLE_AUTH_URL}>구글 로그인</Agoogle>
         </GoogleBtn>

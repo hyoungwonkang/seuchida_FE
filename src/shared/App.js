@@ -43,7 +43,7 @@ import {
   NotFound,
 } from "../pages/Index";
 const token = localStorage.getItem("token");
-const socket = io.connect("https://seuchidaback.link:443", {
+const socket = io.connect("https://seuchidabackend.shop", {
   transports: ["websocket"],
   auth: {
     auth: token,
@@ -154,7 +154,7 @@ const Wrapper = styled.div`
 const WebView = styled.div`
   width: 100vw;
   height: 100vh;
-  background-image: url("/img/background.jpg");
+  background-image: url("/img/background.png");
   background-size: cover;
   position: absolute;
   top: 0;

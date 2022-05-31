@@ -38,9 +38,10 @@ const AddProfile = (props) => {
   const [content, setContent] = useState(localStorage.getItem("content"));
 
   //특수 문자 제한
-  const notNum = /[^·ㄱ-ㅎ가-힣a-z0-9]/gi;
+  const notNum = /[^·ㄱ-ㅎ가-힣a-z0-9ㆍ ᆢ]/gi;
+  // \\u318D\\u119E\\u11A2\\u2022\\u2025a\\u00B7\\uFE55
   const onlyNum = /[^0-9]/gi;
-  const notSpecial = /[^!~.,\sㄱ-ㅎ가 -힣a-z0-9]/gi;
+  const notSpecial = /[^!~.,\sㄱ-ㅎ가 -힣a-z0-9ㆍ ᆢ]/gi;
 
   const selectPreview = (e) => {
     setPreview(window.webkitURL.createObjectURL(e.target.files[0]));
