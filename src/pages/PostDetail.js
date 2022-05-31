@@ -15,7 +15,7 @@ import GoBack from "../elements/GoBack";
 import { io } from "socket.io-client";
 
 const token = localStorage.getItem("token");
-const socket = io.connect("https://seuchidaback.link:443", {
+const socket = io.connect("https://seuchidabackend.shop", {
   transports: ["websocket"],
   auth: {
     auth: token,

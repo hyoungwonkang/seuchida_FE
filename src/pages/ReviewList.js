@@ -33,7 +33,7 @@ const ReviewList = () => {
     setIsLoading(true);
     axios({
       method: "get",
-      url: `https://seuchidaback.link/api/reviewAll/${pageNumber}`,
+      url: `https://seuchidabackend.shop/api/reviewAll/${pageNumber}`,
       headers: {
         authorization: `Bearer ${localStorage.getItem("token")}`,
       },
