@@ -24,18 +24,18 @@ function Guide() {
           <Img alt="guide1" src="/img/guide/guide1.png" />
         </div>
         <div>
-          <Img alt="guide2" src="./img/guide/guide2.png" />
+          <Img alt="guide2" src="/img/guide/guide2.png" />
         </div>
         <div>
-          <Img alt="guide3" src="./img/guide/guide3.png" />
+          <Img alt="guide3" src="/img/guide/guide3.png" />
         </div>
         <div>
-          <Img alt="guide4" src="./img/guide/guide4.png" />
+          <Img alt="guide4" src="/img/guide/guide4.png" />
         </div>
         <div>
-          <Img alt="guide5" src="./img/guide/guide5.png" />
+          <Img alt="guide5" src="/img/guide/guide5.png" />
           <LastBtn onClick={() => history.push("/")}>
-            로그인 하여 시작하기
+            로그인 하고 시작하기
           </LastBtn>
         </div>
       </Sliders>
@@ -49,18 +49,19 @@ const Img = styled.img`
   min-width: 390px;
   min-height: 800px;
   height: 100vh;
-  width: 20vw;
+  width: 100%;
 `;
 
 const LastBtn = styled.button`
-  min-width: 390px;
-  height: 70px;
-  position: absolute;
+  min-width: 420px;
+  height: 74px;
+  position: fixed;
   bottom: 5px;
   color: white;
   border: none;
   background: #5796f7;
   font-size: 16px;
+  cursor: pointer;
 `;
 
 const Sliders = styled(Slider)`

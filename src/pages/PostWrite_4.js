@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, Grid } from "../elements/Index";
+import { Text, Grid, GoBack } from "../elements/Index";
 import { useHistory, Link } from "react-router-dom";
 import styled from "styled-components";
 import FooterMenu from "../shared/FooterMenu";
@@ -282,11 +282,16 @@ const PostWrite_4 = (props) => {
     };
     return <Redirect to="/postcategory" />;
   }
+  
+  const backEvent = () => {
+    history.push("/postwrite3");
+  };
 
   return (
     <>
       <Container>
         {/* 검색 */}
+        <GoBack postBack text="모임 만들기" state={backEvent} />
         <Grid margin="12px 0px 0px 0px" padding="0px 0px 0px 24px">
           <form className="inputForm" onSubmit={handleSubmit}>
             <SearchContainer>
@@ -322,7 +327,7 @@ const PostWrite_4 = (props) => {
           id="map"
           style={{
             width: "100%",
-            height: "600px",
+            height: "800px",
             margin: "12px 0px",
           }}
         ></div>

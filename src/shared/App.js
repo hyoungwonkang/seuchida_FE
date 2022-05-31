@@ -43,27 +43,29 @@ import {
   NotFound,
 } from "../pages/Index";
 const token = localStorage.getItem("token");
+
 const socket = io.connect("https://seuchidabackend.shop", {
   transport:['websocket'],
+
   auth: {
     auth: token,
   },
 });
 
 function App() {
-  const dispatch = useDispatch()
-  React.useEffect(()=>{
+  const dispatch = useDispatch();
+  React.useEffect(() => {
     socket.on("joinPartyAlert", (data) => {
-      dispatch(roomCreators.joinArlam(data))
-     dispatch(roomCreators.mainArlam(true))
-    })       
-    },[])
+      dispatch(roomCreators.joinArlam(data));
+      dispatch(roomCreators.mainArlam(true));
+    });
+  }, []);
 
-    React.useEffect(() => {
-      socket?.on("alert", (data) => {
-        dispatch(roomCreators.chattingArr(data))
-      })
-      },[]);
+  React.useEffect(() => {
+    socket?.on("alert", (data) => {
+      dispatch(roomCreators.chattingArr(data));
+    });
+  }, []);
 
   return (
     <>

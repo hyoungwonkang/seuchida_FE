@@ -9,6 +9,7 @@ const Done = () => {
 
   // 로컬 지우기
   const remove = () => {
+    localStorage.removeItem("profile");
     localStorage.removeItem("address");
     localStorage.removeItem("nickName");
     localStorage.removeItem("gender");
@@ -20,7 +21,7 @@ const Done = () => {
 
   return (
     <Grid column padding="167px 0px 0px 0px" height="auto">
-      <img alt="seuchin" src="./img/seuchin.png" />
+      <img alt="seuchin" src="/img/seuchin.png" />
       <Text size="24px" bold>
         프로필 작성이 <br />
         완료되었어요:)

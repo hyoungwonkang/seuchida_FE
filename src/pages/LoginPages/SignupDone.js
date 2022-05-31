@@ -8,6 +8,7 @@ const SignupDone = () => {
   return (
     <Grid column height="750px">
       <Grid height="auto" column margin="auto">
+        <img alt="seuchin" src="/img/seuchin.png" />
         <Text size="24px" bold margin="0px">
           회원가입이
         </Text>

@@ -108,7 +108,7 @@ const SignupLoca = () => {
       <Grid height="auto" column margin="auto">
         <Grid row padding="0px 30px" height="auto" justify="space-between">
           <Grid row>
-            <Image src="./img/nowloca.png" size={16} />
+            <Image src="/img/nowloca.png" size={16} />
             <Text size="16px" bold>
               나의 동네
             </Text>

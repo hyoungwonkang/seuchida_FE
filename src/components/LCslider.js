@@ -14,7 +14,7 @@ import { BsFillChatDotsFill } from "react-icons/bs";
 function LCslider(props) {
   const { catepost } = props;
   const joinARR = useSelector((state) => state?.room?.joinArr);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [state, setState] = useState("");
 
@@ -42,7 +42,7 @@ function LCslider(props) {
     className: "center",
     centerMode: true,
     infinite: true,
-    centerPadding: "0px",
+    centerPadding: catepost?.length === 1 ? "80px" : "0px",
     slidesToShow: 1,
     slidesToScroll: 1,
     variableWidth: true,
@@ -73,7 +73,7 @@ function LCslider(props) {
               margin: "5px 0px 0px 0px",
               width: "90px",
               height: "95px",
-              cursor: "pointer"
+              cursor: "pointer",
             }}
           />
         </div>
@@ -147,7 +147,7 @@ const Sliders = styled(Slider)`
 `;
 
 const WellcomeBox = styled.div`
-  width: 390px;
+  max-width: 420px;
   font-size: 24px;
   padding: 40px 24px 30px 24px;
   background-color: #0ed88b;
@@ -213,7 +213,7 @@ const ArrsmallBox = styled.div`
 const Hey = styled.span`
   z-index: 555;
   cursor: pointer;
-  color:   ${(props) => props.arr? " #ff6a52" :"#C4C4C4" };
+  color: ${(props) => (props.arr ? " #ff6a52" : "#C4C4C4")};
   height: 20px;
   bottom: 10px;
   float: right;

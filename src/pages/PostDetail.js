@@ -17,6 +17,7 @@ import { io } from "socket.io-client";
 const token = localStorage.getItem("token");
 const socket = io.connect("https://seuchidabackend.shop", {
   transport:['websocket'],
+
   auth: {
     auth: token,
   },
@@ -116,7 +117,7 @@ const PostDetail = (props) => {
   React.useEffect(() => {
     axios({
       method: "get",
-      url: `https://seuchidabackend.shop/api/postDetail/${params.postId}`,
+      url: `https://seuchidaback.link/api/postDetail/${params.postId}`,
       headers: {
         authorization: `Bearer ${token}`,
       },
@@ -228,7 +229,8 @@ const PostDetail = (props) => {
         <KakaoMap {...post} />
 
         {isMe === true || userCheck.length === 1 ? (
-          <ButtonBox>
+          // <ButtonBox>
+          <>
             {/* 참여취소 + 채팅하기 */}
             {!isMe && userCheck.length === 1 ? (
               <FooterMenu
@@ -256,22 +258,29 @@ const PostDetail = (props) => {
                 }}
               ></FooterMenu>
             )}
-          </ButtonBox>
-        ) : // 방장이고 참여자일때 채팅하기 버튼
+          </>
+        ) : // </ButtonBox>
+        // 방장이고 참여자일때 채팅하기 버튼
 
         post.status === false || post.nowMember.length === post.maxMember ? (
-          <ButtonBox>
-            <FooterMenu is_check text={"참여불가"}></FooterMenu>
-          </ButtonBox>
+          // <ButtonBox>
+          <FooterMenu is_check text={"참여불가"}></FooterMenu>
         ) : (
+          // </ButtonBox>
           // 모집이 완료되었거나 참여자가 최대인원과 같으면 참여불가 버튼
 
           //참여중이 아니거나 모집중일경우 참여하기 버튼
           userCheck.length === 0 &&
           post.status === true && (
-            <ButtonBox onClick={() => setIsOpen4(true)}>
-              <FooterMenu next text={"참여하기"}></FooterMenu>
-            </ButtonBox>
+            // <ButtonBox onClick={() => setIsOpen4(true)}>
+            <FooterMenu
+              next
+              text={"참여하기"}
+              event={() => {
+                setIsOpen4(true);
+              }}
+            ></FooterMenu>
+            // </ButtonBox>
           )
         )}
       </Container>
@@ -350,7 +359,7 @@ const Header = styled.div`
 
 const ButtonBox = styled.div`
   height: 91px;
-  border-top: 2px solid E3E3E3;
+  border-top: 2px solid #e3e3e3;
   align-items: center;
   display: flex;
   justify-content: center;
