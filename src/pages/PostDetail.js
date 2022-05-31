@@ -17,7 +17,6 @@ import { io } from "socket.io-client";
 const token = localStorage.getItem("token");
 const socket = io.connect("https://seuchidaback.link:443", {
   transports: ["websocket"],
-  // withCredentials: true,
   auth: {
     auth: token,
   },
