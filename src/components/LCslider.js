@@ -68,7 +68,7 @@ function LCslider(props) {
           <img
             onClick={ArlamCheck}
             alt="point"
-            src="../img/mainseuchin.png"
+            src="../img/seuchin_yellow.png"
             style={{
               margin: "5px 0px 0px 0px",
               width: "90px",

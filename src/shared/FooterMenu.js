@@ -6,7 +6,6 @@ import { actionCreators as roomCreators } from "../redux/modules/room";
 import { useDispatch, useSelector } from "react-redux";
 import {
   BsChatSquareDots,
-  BsChatDots,
   BsEmojiSmile,
   BsGeoAlt,
   BsHouse,

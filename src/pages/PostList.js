@@ -13,7 +13,6 @@ const PostList = ({ list, params }) => {
   // 포스트 목록
 
   let [postList, setPostList] = useState([]);
-  let [firstList, setFirstList] = useState([]);
   const [showWhole, setShowWhole] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
@@ -101,8 +100,6 @@ const PostList = ({ list, params }) => {
         });
     }
   }, [pageNumber]);
-  console.log(pageNumber);
-  console.log(postList);
 
   //무한 스크롤
   const onIntersect = (entries) => {
