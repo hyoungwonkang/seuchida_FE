@@ -9,6 +9,7 @@ const EditDone = () => {
 
   // 로컬 지우기
   const remove = () => {
+    localStorage.removeItem("profile");
     localStorage.removeItem("address");
     localStorage.removeItem("nickName");
     localStorage.removeItem("gender");

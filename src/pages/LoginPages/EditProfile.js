@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { Grid, Image, Input, Text, GoBack } from "../../elements/Index";
 import { actionCreators as userActions } from "../../redux/modules/user";
 import { useHistory } from "react-router-dom";
@@ -133,6 +132,7 @@ const EditProfile = (props) => {
   //새로고침 시 작성 첫 번째 페이지로 이동
   if (document.readyState === "interactive") {
     //로컬 값 날림
+    localStorage.removeItem("profile");
     localStorage.removeItem("address");
     localStorage.removeItem("nickName");
     localStorage.removeItem("gender");

@@ -110,7 +110,6 @@ const getchatMemberDB = (roomId) => {
           authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }).then((response) => {
-        console.log(response);
         dispatch(chatRoom(response.data));
       });
     } catch (err) {

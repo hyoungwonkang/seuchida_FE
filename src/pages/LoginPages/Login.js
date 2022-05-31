@@ -14,16 +14,25 @@ const Login = (props) => {
             src="./img/login.png"
             style={{ margin: "150px 0px" }}
             alt="로그인 이미지"
+            width={"120%"}
           />
         </Grid>
         <Around onClick={() => history.push("/guide")}>가이드</Around>
         <div style={{ margin: "30vh 0px 20px 0px" }}>
           <Akakao href={KAKAO_AUTH_URL}>
-            <img src="./img/kakao_login_medium_wide.png" alt="카카오로그인" />
+            <img
+              src="./img/kakao_login_medium_wide.png"
+              alt="카카오로그인"
+              width={"100%"}
+            />
           </Akakao>
         </div>
         <GoogleBtn>
-          <img src="./img/btn_google_light_normal_ios.svg" alt="구글로그인" />
+          <img
+            src="./img/btn_google_light_normal_ios.svg"
+            alt="구글로그인"
+            width={"100%"}
+          />
           <Agoogle href={GOOGLE_AUTH_URL}>구글 로그인</Agoogle>
         </GoogleBtn>
         {/* </Grid> */}

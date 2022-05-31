@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Text, Grid, GoBack } from "../elements/Index";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import FooterMenu from "../shared/FooterMenu";
 import Modal from "../components/Modal/Modal";
@@ -10,20 +10,12 @@ import { Redirect } from "react-router-dom";
 import { IconContext } from "react-icons";
 import { FaMapMarkerAlt } from "react-icons/fa";
 
-// 지도에서 위치찍어서 포스트 올리기!
 const PostWrite_4 = (props) => {
   document.body.style.overscrollBehavior = "none";
   const history = useHistory();
 
   //모달 오픈 state
   const [isOpen, setIsOpen] = React.useState(false);
-
-  const memberAge = props?.location?.state?.memberAge;
-  const memberGender = props?.location?.state?.memberGender;
-  const maxMember = props?.location?.state?.maxMember;
-  const postCategory = props?.location?.state?.postCategory;
-  const postTitle = props?.location?.state?.postTitle;
-  const postDesc = props?.location?.state?.postDesc;
 
   const { kakao } = window;
 
@@ -51,7 +43,6 @@ const PostWrite_4 = (props) => {
   };
 
   useEffect(() => {
-    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
     navigator.geolocation.getCurrentPosition((pos) => {
       const lat = pos.coords.latitude; // 위도
       const lng = pos.coords.longitude; // 경도
@@ -85,10 +76,9 @@ const PostWrite_4 = (props) => {
       const marker = new kakao.maps.Marker({
           position: markerPosition,
           image: markerImage,
-        }), // 클릭한 위치를 표시할 마커입니다
-        infowindow = new kakao.maps.InfoWindow({ zindex: 1 }); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
+        }),
+        infowindow = new kakao.maps.InfoWindow({ zindex: 1 });
 
-      // 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
       kakao.maps.event.addListener(map, "click", function (mouseEvent) {
         searchDetailAddrFromCoords(
           mouseEvent.latLng,
@@ -115,13 +105,11 @@ const PostWrite_4 = (props) => {
                 detailAddr +
                 "</div>";
 
-              // 마커를 클릭한 위치에 표시합니다
               let la = mouseEvent.latLng.Ma;
               let lo = mouseEvent.latLng.La;
               marker.setPosition(mouseEvent.latLng);
               marker.setMap(map);
 
-              // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
               infowindow.setContent(content);
               infowindow.open(map, marker);
               setAddress(home); //state값 넘겨주기
@@ -146,20 +134,14 @@ const PostWrite_4 = (props) => {
       ////////////////////////////////////////////////////////////////////////////////////////////////////
       //검색
 
-      // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
       let infowindow_search = new kakao.maps.InfoWindow({ zIndex: 1 });
-      // 장소 검색 객체를 생성합니다
       let ps_search = new kakao.maps.services.Places();
-      // 키워드로 장소를 검색합니다
       if (searchPlace === "") {
         searchPlace = " ";
       }
       ps_search.keywordSearch(searchPlace, placesSearchCB);
-      // 키워드 검색 완료 시 호출되는 콜백함수 입니다
       function placesSearchCB(data, status, pagination) {
         if (status === kakao.maps.services.Status.OK) {
-          // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-          // LatLngBounds 객체에 좌표를 추가합니다
           let bounds = new kakao.maps.LatLngBounds();
 
           for (let i = 0; i < data.length; i++) {
@@ -167,20 +149,16 @@ const PostWrite_4 = (props) => {
             bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
           }
 
-          // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
           map.setBounds(bounds);
         }
       }
-      // 지도에 마커를 표시하는 함수입니다
       function displayMarker(place) {
-        // 마커를 생성하고 지도에 표시합니다
         let marker_search = new kakao.maps.Marker({
           map: map,
           image: markerImage,
           position: new kakao.maps.LatLng(place.y, place.x),
         });
 
-        // 마커에 클릭이벤트를 등록합니다
         kakao.maps.event.addListener(marker_search, "click", function () {
           // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
           infowindow_search.setContent(
@@ -282,7 +260,7 @@ const PostWrite_4 = (props) => {
     };
     return <Redirect to="/postcategory" />;
   }
-  
+
   const backEvent = () => {
     history.push("/postwrite3");
   };
@@ -331,24 +309,7 @@ const PostWrite_4 = (props) => {
             margin: "12px 0px",
           }}
         ></div>
-        <Link
-          to={{
-            state: {
-              maxMember,
-              memberAge,
-              memberGender,
-              postCategory,
-              postDesc,
-              postTitle,
-              address,
-              latitude,
-              longitude,
-              spot,
-            },
-          }}
-        >
-          <FooterMenu next text="확인" state={check} />
-        </Link>
+        <FooterMenu next text="확인" state={check} />
         {/* 경고창 모달 */}
         <Modal open={isOpen}>
           <ModalData
