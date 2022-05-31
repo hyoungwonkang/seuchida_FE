@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
-import styled from "styled-components";
 import axios from "axios";
 import { Grid, Text, Image, GoBack } from "../../elements/Index";
 import FooterMenu from "../../shared/FooterMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as userActions } from "../../redux/modules/user";
 import { useHistory } from "react-router-dom";
+import Modal from "../../components/Modal/Modal"; //모달 창
+import ModalData from "../../components/Modal/ModalData";
+import { IoMdRefresh } from "react-icons/io";
 
 const SignupLoca = () => {
   const history = useHistory();
@@ -21,6 +23,9 @@ const SignupLoca = () => {
     dispatch(userActions.isLoginDB());
   }, []);
 
+  //모달 오픈 state
+  const [isOpen, setIsOpen] = React.useState(false);
+
   const [address, setAddress] = useState("");
   const [fullAddress, setFullAddress] = useState();
   const [state, setState] = useState({
@@ -31,9 +36,6 @@ const SignupLoca = () => {
     errMsg: null,
     isLoading: true,
   });
-
-  //로컬 값 저장
-  localStorage.setItem("address", address);
 
   //뒤로가기 시 로컬 값 삭제
   const remove = () => {
@@ -96,8 +98,19 @@ const SignupLoca = () => {
     }
   }, []);
 
+  //빈값 유효성 검사
+  const alert = (e) => {
+    if (address === "" || null) {
+      setIsOpen(true);
+    } else {
+      //로컬 값 저장
+      localStorage.setItem("address", address);
+      history.push("/addprofile");
+    }
+  };
+
   return (
-    <Grid column height="700px" bg="white">
+    <Grid column height="auto" bg="white">
       {is_edit ? (
         <GoBack text="동네 설정하기" path="/mypage" remove={remove} />
       ) : (
@@ -125,7 +138,6 @@ const SignupLoca = () => {
           style={{
             width: "337px",
             height: "311px",
-            margin: "0px 0px 300px 0px",
           }}
           level={3}
         >
@@ -144,11 +156,32 @@ const SignupLoca = () => {
           )}
         </Map>
 
+        {/* 새로고침 */}
+        <Grid padding="10px 30px" height="auto" justify="right" row>
+          <IoMdRefresh
+            color="black"
+            size={30}
+            cursor={"pointer"}
+            onClick={() => {
+              window.location.reload();
+            }}
+          />
+        </Grid>
+
+        {/* 경고창 모달 */}
+        <Modal open={isOpen}>
+          <ModalData
+            Alert
+            onClose={() => setIsOpen(false)}
+            text="위치 허용을 해주세요:)"
+          />
+        </Modal>
+
         {/* 푸터*/}
         {is_edit ? (
           <FooterMenu next text="다음" path="/editprofile" />
         ) : (
-          <FooterMenu next text="다음" path="/addprofile" />
+          <FooterMenu next text="다음" event={alert} />
         )}
       </Grid>
     </Grid>
@@ -156,7 +189,3 @@ const SignupLoca = () => {
 };
 
 export default SignupLoca;
-
-const MsgBox = styled.div`
-  padding: 5px;
-`;

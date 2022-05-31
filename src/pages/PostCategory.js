@@ -118,9 +118,9 @@ const PostCategory = (props) => {
                 </div>
               );
             })}
-            {/* <Link to={{ state: { postCategory } }}> */}
+            {/* 푸터 */}
             <FooterMenu next text="다음" state={check} />
-            {/* </Link> */}
+
             {/* 경고창 모달 */}
             <Modal open={isOpen}>
               <ModalData

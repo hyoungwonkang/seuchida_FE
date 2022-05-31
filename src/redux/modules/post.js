@@ -40,7 +40,7 @@ const addPostDB = (
   return async function (dispatch, getState, { history }) {
     await axios({
       method: "post",
-      url: "https://seuchidaback.link/api/postWrite",
+      url: "https://seuchidabackend.shop/api/postWrite",
       data: JSON.stringify({
         address: address,
         datemate: datemate,
@@ -75,7 +75,7 @@ const getMainDB = () => {
     try {
       await axios({
         method: "get",
-        url: `https://seuchidaback.link/api/postList`,
+        url: `https://seuchidabackend.shop/api/postList`,
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -93,7 +93,7 @@ const getPostlistDB = () => {
     try {
       await axios({
         method: "get",
-        url: `https://seuchidaback.link/api/nearPostList`,
+        url: `https://seuchidabackend.shop/api/nearPostList`,
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
         },
