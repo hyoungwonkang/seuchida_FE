@@ -20,14 +20,15 @@ const Map = () => {
     isLoading: true,
   });
 
-  const researchMap = () => {
-    axios({
+  const researchMap = async () => {
+    await axios({
       method: "get",
       url: `https://seuchidabackend.shop/api/nearPostList`,
       headers: {
         authorization: `Bearer ${token}`,
       },
     }).then((response) => {
+      console.log(response)
       setPost(response.data.nearPosts);
     });
   };
@@ -36,7 +37,7 @@ const Map = () => {
     researchMap();
   }, []);
 
-  //비동기처리 마스터하자 ...
+  //비동기, 동기처리 마스터하자 ...
   const getPos = () => {
     return new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(resolve, reject);

@@ -5,7 +5,7 @@ import { Route, Switch } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configStore";
 import { io } from "socket.io-client";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as roomCreators } from "../redux/modules/room";
 
 import MobileFrame from "../shared/MoileFrame";
@@ -51,6 +51,8 @@ const socket = io.connect("https://seuchidabackend.shop", {
 });
 
 function App() {
+  // const prevMsg = useSelector((state) =>state.room?.list?.unreadChatlist)
+  // console.log(prevMsg.length)
   const dispatch = useDispatch()
   React.useEffect(()=>{
     socket.on("joinPartyAlert", (data) => {
