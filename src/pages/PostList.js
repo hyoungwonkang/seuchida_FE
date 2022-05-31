@@ -72,7 +72,7 @@ const PostList = ({ list, params }) => {
     if (showWhole === true) {
       axios({
         method: "get",
-        url: `https://seuchidabackend.shop/api/wholePostList/${pageNumber}`,
+        url: `https://seuchidaback.link/api/wholePostList/${pageNumber}`,
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -87,7 +87,7 @@ const PostList = ({ list, params }) => {
     } else {
       axios({
         method: "get",
-        url: `https://seuchidabackend.shop/api/nearPostList/${pageNumber}`,
+        url: `https://seuchidaback.link/api/nearPostList/${pageNumber}`,
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
         },

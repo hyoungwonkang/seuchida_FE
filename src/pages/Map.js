@@ -19,7 +19,6 @@ const Map = () => {
     errMsg: null,
     isLoading: true,
   });
-
   const researchMap = () => {
     axios({
       method: "get",

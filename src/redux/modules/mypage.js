@@ -159,7 +159,7 @@ const addPhotoDB = (formData) => {
   return async (dispatch, getState, { history }) => {
     await axios({
       method: "post",
-      url: `https://seuchidaback.link/api/reviewImg `,
+      url: `https://seuchidaback.link/api/reviewImg`,
       data: formData,
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
