@@ -13,8 +13,8 @@ import { MdSend } from "react-icons/md";
 import { BsList } from "react-icons/bs";
 
 const token = localStorage.getItem("token");
-const socket = io.connect("https://seuchidaback.link:443", {
-  transports: ["websocket"],
+const socket = io.connect("https://seuchidabackend.shop", {
+  transport:['websocket'],
   auth: {
     auth: token,
   },
@@ -193,7 +193,8 @@ function Chatex(props) {
       <Body ref={chattingBox}>
         {/* 이전 채팅  */}
         {chatlist.map((prevChat, index) => {
-          return prevChat.name === "System" ? null : prevChat.name ===
+          return prevChat.name === "System" ? null :
+           prevChat.name ===
             user.nickName ? (
             <IsMe key={`${prevChat.createdAt}+${index}`}>
               <TextBoxMe>{prevChat.msg}</TextBoxMe>
