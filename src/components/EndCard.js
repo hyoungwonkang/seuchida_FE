@@ -61,11 +61,17 @@ const EndCard = (props) => {
             <FaPen
               color="#C4C4C4"
               size={14}
-              onClick={() => history.push(`/reviewwrite/${props.postId}`)}
+              onClick={(e) => {
+                e.stopPropagation();
+                history.push(`/reviewwrite/${props.postId}`);
+              }}
             />
             <Text
               size="12px"
-              _onClick={() => history.push(`/reviewwrite/${props.postId}`)}
+              _onClick={(e) => {
+                e.stopPropagation();
+                history.push(`/reviewwrite/${props.postId}`);
+              }}
               post={props.PostId}
             >
               후기 작성하기
