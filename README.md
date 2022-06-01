@@ -60,7 +60,7 @@
 | styled-component | 컴포넌트 스타일링 |
 | moment | 현재 시간 핸들링 |
 | react-slick | 슬라이드에 사용 |
-| react-pwa-install | 슬라이드에 사용 |
+| react-pwa-install | 웹 앱 구현 |
 | browser-image-compression | 이미지 리사이징 |
   
 ## 🚨 트러블 슈팅
