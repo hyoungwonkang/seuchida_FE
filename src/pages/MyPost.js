@@ -6,7 +6,7 @@ import FooterMenu from "../shared/FooterMenu";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as mypageActions } from "../redux/modules/mypage";
 import GoBack from "../elements/GoBack";
-import { Grid, Image, Text } from "../elements/Index";
+import { Grid, Text } from "../elements/Index";
 import PostDetail from "./PostDetail";
 
 const MyPost = () => {
@@ -66,6 +66,7 @@ const MyPost = () => {
         {myPostList.length === 0 ? (
           <Grid padding="0px 0px 80px 0px" column>
             <img
+              alt="seuchin"
               src="./img/seuchin.png"
               style={{ margin: "150px 0px 0px 0px" }}
             />

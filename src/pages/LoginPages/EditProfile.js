@@ -9,6 +9,7 @@ import FooterMenu from "../../shared/FooterMenu";
 import Modal from "../../components/Modal/Modal"; //모달 창
 import ModalData from "../../components/Modal/ModalData";
 import { AiFillPlusCircle } from "react-icons/ai";
+import { Redirect } from "react-router-dom";
 
 const EditProfile = (props) => {
   const history = useHistory();
@@ -40,6 +41,7 @@ const EditProfile = (props) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [isOpen2, setIsOpen2] = React.useState(false);
   const [isOpen3, setIsOpen3] = React.useState(false);
+  const [isOpen4, setIsOpen4] = React.useState(false);
 
   //입력값 state
   const [preview, setPreview] = useState("");
@@ -56,8 +58,9 @@ const EditProfile = (props) => {
   localStorage.setItem("content", content);
 
   //특수 문자 제한
-  const notNum = /[^ㄱ-ㅎ가-힣a-z0-9]/gi;
-  const notSpecial = /[^/!/~/./,\sㄱ-ㅎ가-힣a-z0-9]/gi;
+  const notNum = /[^·ㄱ-ㅎ가-힣a-z0-9]/gi;
+  const onlyNum = /[^0-9]/gi;
+  const notSpecial = /[^!~.,\sㄱ-ㅎ가-힣a-z0-9]/gi;
 
   //입력값 가져오기
   const selectPreview = (e) => {
@@ -79,7 +82,11 @@ const EditProfile = (props) => {
     setGender(e.target.value);
   };
   const selectAge = (e) => {
-    setAge(e.target.value);
+    //글 수 제한
+    if (e.target.value.length >= 3) {
+      e.target.value = e.target.value.substr(0, 3);
+    }
+    setAge(e.target.value.replace(onlyNum, ""));
   };
   const selectContent = (e) => {
     if (e.target.value.length >= 100) {
@@ -109,13 +116,16 @@ const EditProfile = (props) => {
 
   //글자수 100글자 제한
   useEffect(() => {
-    if (nickName?.length >= 8) {
-      setIsOpen3(true);
-    }
     if (content?.length >= 100) {
       setIsOpen2(true);
     }
-  }, [content, nickName]);
+    if (nickName?.length >= 8) {
+      setIsOpen3(true);
+    }
+    if (age?.length >= 3) {
+      setIsOpen4(true);
+    }
+  }, [content, nickName, age]);
 
   //앱에서 페이지 새로고침 막기
   document.body.style.overscrollBehavior = "none";
@@ -132,7 +142,7 @@ const EditProfile = (props) => {
     window.onbeforeunload = function () {
       return "새로고침 경고";
     };
-    history.replace("/signuploca");
+    return <Redirect to="/signuploca" />;
   }
 
   return (
@@ -144,32 +154,34 @@ const EditProfile = (props) => {
           <Grid column height="650px">
             <Grid height="auto" column margin="30px 0px">
               {/* 프로필 이미지 */}
-              <Image
-                size={80}
-                position="relative"
-                alt="profile"
-                src={preview ? preview : userInfo.userImg}
-              />
-              <FileUpload>
-                <label htmlFor="image">
-                  <AiFillPlusCircle
-                    cursor={"pointer"}
-                    size={32}
-                    color="#5796F7"
-                  />
-                </label>
-                <input
-                  type="file"
-                  id="image"
-                  onChange={(e) => {
-                    selectPreview(e);
-                    selectImage(e);
-                  }}
+              <ImgBox>
+                <Image
+                  size={80}
+                  alt="profile"
+                  src={preview ? preview : userInfo.userImg}
                 />
-              </FileUpload>
+                <FileUpload>
+                  <label htmlFor="image">
+                    <AiFillPlusCircle
+                      cursor={"pointer"}
+                      size={32}
+                      color="#5796F7"
+                    />
+                  </label>
+                  <input
+                    type="file"
+                    id="image"
+                    onChange={(e) => {
+                      selectPreview(e);
+                      selectImage(e);
+                    }}
+                  />
+                </FileUpload>
+              </ImgBox>
 
               {/* 닉네임 */}
               <Input
+                margin="50px 0px 0px 0px"
                 height="56px"
                 type="text"
                 placeholder="닉네임"
@@ -190,12 +202,10 @@ const EditProfile = (props) => {
                 {/* 나이 */}
                 <div>
                   <Age
-                    type="number"
+                    type="text"
                     placeholder="나이"
                     onChange={selectAge}
-                    pattern="/[^ㄱ-ㅎ가-힣]/g"
                     value={age || ""}
-                    min="0"
                   />
                 </div>
               </Option>
@@ -243,6 +253,14 @@ const EditProfile = (props) => {
                   text="8글자 이하로 작성해주세요!"
                 />
               </Modal>
+              {/* 글자수 모달(나이)*/}
+              <Modal open={isOpen4}>
+                <ModalData
+                  Alert
+                  onClose={() => setIsOpen4(false)}
+                  text="3글자 이하로 작성해주세요!"
+                />
+              </Modal>
             </Grid>
           </Grid>
         </Grid>
@@ -252,8 +270,11 @@ const EditProfile = (props) => {
 };
 export default EditProfile;
 
+const ImgBox = styled.div`
+  position: "relative";
+`;
+
 const FileUpload = styled.div`
-  margin: 0px 0px 50px 0px;
   label {
     position: absolute;
     top: 150px;

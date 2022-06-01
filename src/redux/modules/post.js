@@ -2,7 +2,6 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import axios from "axios";
 
-
 //Action
 const SET_POST = "SET_POST";
 const SET_REVIEW = "SET_REVIEW";
@@ -41,7 +40,7 @@ const addPostDB = (
   return async function (dispatch, getState, { history }) {
     await axios({
       method: "post",
-      url: "https://seuchidabackend.shop/api/postWrite",
+      url: "https://seuchidaback.link/api/postWrite",
       data: JSON.stringify({
         address: address,
         datemate: datemate,
@@ -61,10 +60,7 @@ const addPostDB = (
       },
     })
       .then((res) => {
-        console.log(res);
-
         dispatch(addPost());
-        console.log("게시물 등록 성공");
         history.push("/postdone");
       })
       .catch((err) => {
@@ -79,12 +75,11 @@ const getMainDB = () => {
     try {
       await axios({
         method: "get",
-        url: `https://seuchidabackend.shop/api/postList`,
+        url: `https://seuchidaback.link/api/postList`,
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }).then((response) => {
-        console.log(response);
         dispatch(setPost(response.data));
       });
     } catch (err) {
@@ -98,12 +93,11 @@ const getPostlistDB = () => {
     try {
       await axios({
         method: "get",
-        url: `https://seuchidabackend.shop/api/nearPostList`,
+        url: `https://seuchidaback.link/api/nearPostList`,
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }).then((response) => {
-        console.log(response);
         dispatch(setPost(response.data));
       });
     } catch (err) {

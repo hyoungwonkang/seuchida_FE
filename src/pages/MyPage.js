@@ -35,7 +35,7 @@ const NameCard = () => {
   return (
     <Grid column height="auto" margin="0px" bg="white">
       {/* 프로필 수정 */}
-      <Grid row height="auto" margin="20px 0px 0px 0px" justify="right">
+      <Grid row height="auto" padding="20px 5px 0px 5px" justify="right">
         <AiFillSetting
           cursor={"pointer"}
           size={24}
@@ -67,7 +67,13 @@ const NameCard = () => {
       </Grid>
 
       {/* 유저 관심사 */}
-      <Grid row height="auto" margin="8px 0px 16px 0px" justify="center">
+      <Grid
+        row
+        height="auto"
+        margin="8px 0px 16px 0px"
+        justify="center"
+        padding="0px 5px"
+      >
         {userInfo.userInterest?.map((v, i) => {
           return <Cate key={v + i}>{v}</Cate>;
         })}
@@ -144,12 +150,7 @@ const MyPage = () => {
       </Grid>
 
       {/* 후기 남기기 */}
-      <Grid
-        padding="10px 24px"
-        margin="0px 10px 0px 0px"
-        bg="white"
-        height="300px"
-      >
+      <Grid padding="10px 24px" margin="0px 10px 0px 0px" bg="white">
         <Grid row height="70px">
           <RiBarChartFill color="#FF6B52" />
           <Text size="16px" bold>
@@ -165,45 +166,46 @@ const MyPage = () => {
       </Grid>
 
       {/* 내가 만든 목록 */}
-      <Grid
-        cursor="pointer"
-        row
-        bg="white"
-        height="62px"
-        margin="0px"
-        padding="0px 20px"
-        justify="space-between"
-        _onClick={() => {
-          history.push("/mypost");
-        }}
-      >
-        <Text size="16px" bold>
-          내가 만든 모임
-        </Text>
-        <IoIosArrowForward size={30} cursor={"pointer"} />
-      </Grid>
-      <Grid
-        cursor="pointer"
-        row
-        bg="white"
-        height="62px"
-        padding="0px 20px"
-        border="1px solid #ddd"
-        bordernone
-        justify="space-between"
-        _onClick={() => {
-          history.push("/myreview");
-        }}
-      >
-        <Text size="16px" bold>
-          내가 쓴 후기
-        </Text>
-        <IoIosArrowForward size={30} cursor={"pointer"} />
+      <Grid column padding="20px 0px">
+        <Grid
+          cursor="pointer"
+          row
+          bg="white"
+          height="62px"
+          padding="0px 30px"
+          justify="space-between"
+          _onClick={() => {
+            history.push("/mypost");
+          }}
+        >
+          <Text size="16px" bold>
+            내가 만든 모임
+          </Text>
+          <IoIosArrowForward size={30} cursor={"pointer"} />
+        </Grid>
+        <Grid
+          cursor="pointer"
+          row
+          bg="white"
+          height="62px"
+          padding="0px 30px"
+          border="1px solid #ddd"
+          bordernone
+          justify="space-between"
+          _onClick={() => {
+            history.push("/myreview");
+          }}
+        >
+          <Text size="16px" bold>
+            내가 쓴 후기
+          </Text>
+          <IoIosArrowForward size={30} cursor={"pointer"} />
+        </Grid>
       </Grid>
 
       <Grid
+        column
         padding="100px 20px 120px 20px"
-        row
         justify="space-between"
         bg="white"
       >

@@ -4,13 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as userActions } from "../../redux/modules/user";
 import { Grid, Text, GoBack } from "../../elements/Index";
 import FooterMenu from "../../shared/FooterMenu";
-import { useHistory } from "react-router-dom";
 import Modal from "../../components/Modal/Modal"; //모달 창
 import ModalData from "../../components/Modal/ModalData";
 import { Redirect } from "react-router-dom";
 
 const Category = (props) => {
-  const history = useHistory();
   const dispatch = useDispatch();
 
   //AddProfile에서 받은 값
@@ -52,7 +50,7 @@ const Category = (props) => {
 
   //작성 || 수정 구분
   const userInfo = useSelector((state) => state.user.userInfo);
-  const edit = useSelector((state) => state.user?.userInfo.address);
+  const edit = useSelector((state) => state.user?.userInfo.nickName);
   const is_edit = edit ? true : false;
 
   //유저 정보
@@ -61,6 +59,7 @@ const Category = (props) => {
   }, []);
 
   //로컬 값 가져오기
+  localStorage.setItem("profile", userInfo?.userImg);
   const localUserInterest = JSON.parse(localStorage.getItem("userInterest"));
 
   //수정시, 유저의 이전 관심 태그 보여주기
@@ -92,7 +91,7 @@ const Category = (props) => {
 
   //프로필 추가
   const addProfile = () => {
-    if (userInterest.length === 0) {
+    if (userInterest?.length === 0) {
       setIsOpen2(true);
     } else {
       dispatch(
