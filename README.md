@@ -7,6 +7,8 @@
 - 사이트 바로가기 : https://seuchida.shop
 - 발표 영상 :
 
+<br>
+
 ## 🎉 스치다 서비스 소개
 
 ### 시연 영상
@@ -19,6 +21,7 @@
 ### 2. 혼자하기 힘든 운동들도 스치다를 통해 같이 운동할 수 있습니다!
 <details> <summary>운동 종목과 운동할 장소, 시간을 정해서 같이 운동할 사람을 모집할 수 있습니다.</summary> <img width='25%' src='https://practice2082.s3.ap-northeast-2.amazonaws.com/%EB%A6%AC%EB%93%9C%EB%AF%B8+%EC%9D%B4%EB%AF%B8%EC%A7%802.png'> </details>
 
+<br>
 
 ## 🏛 서비스 아키텍처   
 
