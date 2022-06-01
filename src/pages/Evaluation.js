@@ -23,6 +23,7 @@ const Evaluation = () => {
   const postId = postInfo?.postId;
   const photo = useSelector((state) => state.mypage.reviewImg);
   const review = localStorage.getItem("review");
+  const successReport = useSelector((state) => state.mypage.report);
 
   //로컬 이미지 저장
   localStorage.setItem("reviewImg", photo);
@@ -58,6 +59,7 @@ const Evaluation = () => {
   //신고 대상 & 신고 내용 state
   const [report, setReport] = useState("");
   const [rUserId, setRUserId] = useState(localreport ? localreport : "");
+
   //후기 작성 & 다른 사람 평가
   const addReview = () => {
     //유효성 검사
@@ -84,7 +86,7 @@ const Evaluation = () => {
   //로컬 값 저장
   const remove = () => {
     localStorage.setItem("otherId", JSON.stringify(otherId));
-    localStorage.setItem("evalue", JSON.stringify(evalue));
+    localStorage.setItem("evalue", JSON.stringify(evalues));
     localStorage.setItem("report", JSON.stringify(rUserId));
     history.push(`reviewwrite/${postId}`);
   };
@@ -186,9 +188,15 @@ const Evaluation = () => {
                         setIsOpen2(true);
                         setModalData(m);
                       }}
-                      report={rUserId === otherId[i] ? true : false}
+                      report={
+                        rUserId === otherId[i] && successReport === "success"
+                          ? true
+                          : false
+                      }
                     >
-                      {rUserId === otherId[i] ? "신고 완료" : "신고 하기"}
+                      {rUserId === otherId[i] && successReport === "success"
+                        ? "신고 완료"
+                        : "신고 하기"}
                     </Report>
                   </Grid>
                 </Grid>

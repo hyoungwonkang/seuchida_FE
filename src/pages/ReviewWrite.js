@@ -10,6 +10,7 @@ import { BiDumbbell } from "react-icons/bi";
 import { actionCreators as mypageActions } from "../redux/modules/mypage";
 import Modal from "../components/Modal/Modal"; //모달 창
 import ModalData from "../components/Modal/ModalData";
+import imageCompression from "browser-image-compression";
 
 const ReviewWrite = (props) => {
   const history = useHistory();
@@ -45,12 +46,28 @@ const ReviewWrite = (props) => {
   //특수 문자 제한
   const notSpecial = /[^/!/~/./,\sㄱ-ㅎ가-힣a-z0-9]/gi;
 
-  const selectPreview = (e) => {
-    setPreview(window.webkitURL.createObjectURL(e.target.files[0]));
-  };
+  //이미지 리사이징
+  const handleFileOnChange = async (e) => {
+    let file = e.target.files[0]; // 입력받은 file객체
 
-  const selectImage = (e) => {
-    setReviewImg(e.target.files[0]);
+    // 이미지 resize 옵션 설정 (최대 width을 100px로 지정)
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 500,
+    };
+
+    try {
+      const compressedFile = await imageCompression(file, options);
+      setReviewImg(compressedFile);
+
+      // resize된 이미지의 url을 받아 fileUrl에 저장
+      const promise = imageCompression.getDataUrlFromFile(compressedFile);
+      promise.then((result) => {
+        setPreview(result);
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const writeReview = (e) => {
@@ -151,7 +168,7 @@ const ReviewWrite = (props) => {
                       ? preview
                       : localreviewImg
                       ? localreviewImg
-                      : "../img/addimage.png"
+                      : "/img/addimage.png"
                   }
                 />
               </label>
@@ -159,8 +176,7 @@ const ReviewWrite = (props) => {
                 type="file"
                 id="image"
                 onChange={(e) => {
-                  selectPreview(e);
-                  selectImage(e);
+                  handleFileOnChange(e);
                 }}
               />
             </FileUpload>
