@@ -20,43 +20,87 @@
   
 </p>
 
-## 바로가기
+## 📍 바로가기
 - 사이트 바로가기 : https://seuchida.shop
-- 발표 영상 : 
+- 발표 영상 :
 
 ## 🎉 스치다 서비스 소개
 
 ### 시연 영상
-
+- 영상 링크 : https://www.youtube.com/watch?v=FU58mt06fc4
 
 ### 1. 우리 동네 스포츠 친구찾기 서비스
-<details> <summary>실시간 위치기반 서비스로 현재 내 위치를 기준으로 주변 운동친구들을 찾아주는 서비스입니다!</summary> <div markdown="1"> <img width='25%' src='https://practice2082.s3.ap-northeast-2.amazonaws.com/%EB%A6%AC%EB%93%9C%EB%AF%B8+%EC%9D%B4%EB%AF%B8%EC%A7%801.png'> </div> </details>
+  <details> <summary>실시간 위치기반 서비스로 현재 내 위치를 기준으로 주변 운동친구들을 찾아주는 서비스입니다!</summary> <div markdown="1"> <img width='25%' src='https://practice2082.s3.ap-northeast-2.amazonaws.com/%EB%A6%AC%EB%93%9C%EB%AF%B8+%EC%9D%B4%EB%AF%B8%EC%A7%801.png'> </div>   </details>
 
 
 ### 2. 혼자하기 힘든 운동들도 스치다를 통해 같이 운동할 수 있습니다!
 <details> <summary>운동 종목과 운동할 장소, 시간을 정해서 같이 운동할 사람을 모집할 수 있습니다.</summary> <img width='25%' src='https://practice2082.s3.ap-northeast-2.amazonaws.com/%EB%A6%AC%EB%93%9C%EB%AF%B8+%EC%9D%B4%EB%AF%B8%EC%A7%802.png'> </details>
 
 
-## 서비스 아키텍처   
+## 🏛 서비스 아키텍처   
 
 ![서비스 아키텍처 (2)](https://practice2082.s3.ap-northeast-2.amazonaws.com/%EC%95%84%ED%82%A4%ED%83%9D%EC%B3%90%EC%9D%B4%EB%AF%B8%EC%A7%80.png)
 
-## 트러블 슈팅 & 기술적 도전
+## 💠 기술스택
+<br>
+<p align="center">
+<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
+  <img src="https://img.shields.io/badge/github actions-2088FF?style=for-the-badge&logo=github actions&logoColor=white">
+<img src="https://img.shields.io/badge/slick-1572B6?style=for-the-badge&logo=slick&logoColor=white">
+<img src="https://img.shields.io/badge/pwa-1572B6?style=for-the-badge&logo=pwa&logoColor=white">
+<br>
+<img src="https://img.shields.io/badge/html-E34F26?style=for-the-badge&logo=html5&logoColor=white">
+<img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white">
+<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
+<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=black">
+<img src="https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=Redux&logoColor=white">
+<br>
+<img src="https://img.shields.io/badge/Socket.io-010101?style=for-the-badge&logo=Socket.io&logoColor=white">
+<img src="https://img.shields.io/badge/CloudFront-D05C4B?style=for-the-badge&logo=CloudFront&logoColor=white">
+<img src="https://img.shields.io/badge/Route53-E68B49?style=for-the-badge&logo=Route53s&logoColor=white">
+<img src="https://img.shields.io/badge/S3-569A31?style=for-the-badge&logo=S3&logoColor=white">
+<img src="https://img.shields.io/badge/styledcomponents-569A31?style=for-the-badge&logo=styledcomponents&logoColor=white">
+<br>
+<br>
+<br>
+ 
+## 🚨 트러블 슈팅
+
+### 1. 소셜 로그인 이슈
+> <details>
+>  <summary>(1) 구글 로그인 시 Auth URI와 callback URI 설정 문제</summary>
+> <br>  
+>  카카오 로그인과는 다르게 구글 Userinfo의 스코프를 callback URI와 겹치지 않게 해야했습니다. 그리하여 callback URI의 끝나는 부분에 ‘/’를 주어 구분함으로서 해결 할 수 있었습니다. 또한 백엔드와의 토큰값을 주고받는 과정에서 발생한 mismatch uri를 없애기 위해 백엔드와 지속적으로 uri를 수정하여 맞춰봤습니다.
+>  </details>
+> <details>
+>  <summary>(2) 배포 후 일반 유저가 구글 로그인을 할 수 있는지 파악이 안된 문제</summary>
+> <br>  
+>  테스트유저 외의 일반유저도 로그인을 할 수 있게 앱 게시 허가를 받아야 했습니다. 하지만 구글과 컨택 메일을 주고 받으며 충족요건을 채우는데는 시간적인 한계가 있었습니다. 그리하여 테스트 모드만으로도 일반 유저가 사용할 수 있나 시험해본 결과 앱 게시를 안 해도 로그인을 사용 할 수 있게 된 것을 발견하여 그대로 진행 할 수 있었습니다.
+> </details>
+
+### 2. 지도맵 구현 이슈
+> <details>
+>  <summary>지도맵에 마커표시+지도검색 혼합기능 구현 문제</summary>
+> <br>  
+>  지도에 직접 장소를 표시할 수 있는 기능과 검색을 통해 나오는 장소가 나오게 하는 기능을 동시에 구현하기에는 리액트용 sdk 패키지로는 한계가 있었습니다. 그리하여 현재위치 지도와 검색 후 보여주는 지도를 웹용 라이브러리로 구현하고 검색 지도에도 직접 마커를 표시할 수 있게 구현하였습니다.
+> </details>
 
 
-### Front-End
-
-
+<br>
 
 ## 📌 팀원소개
-### 프론트엔드
-- 이태훈 : 실시간 위치 기반 지도 서비스, 채팅, 채팅알람, 채팅방 강퇴, 게시글 참여알람, 게시글리스트 및 후기리스트 불러오기, 게시글 디테일 페이지 불러오기 (참여,모집완료,참여취소)
-- 강형원 : 게시글 작성(장소-실시간 위치 기반, 검색), 소셜 로그인(구글, 카카오), https 연결, CI/CD, 게시글 보안, 
-- 최정원 : 게시글 삭제, 프로필 작성/수정, 마이페이지(레벨업 기능), 후기 작성&다른 사람 평가, 무한스크롤, 레이지로딩 
-### 백엔드
-- 신상렬 : 채팅, 채팅알람, 강퇴, 참여알람, kakao소셜로그인, 회원가입, AWS S3이미지 업로드, 유저평가, 신고기능, 무한스크롤 적용
-- 윤영수 : ec2 서버 세팅 & 배포,api 설계 및 개발, db 설계 google소셜로그인,CICD 적용 게시판, 리뷰 
-- 김연유 : 마이페이지, 프로필 수정, CI/CD
-### 디자이너
-- 장유진
-- 이수림 
+
+
+
+| Name     | GitHub                             | Position  |
+| -------- | ---------------------------------- | --------- |
+| 이태훈🔰   | https://github.com/hoontail          | 프론트엔드 |
+| 강형원   | https://github.com/hyoungwonkang           | 프론트엔드 |
+| 최정원   | https://github.com/carrot31       | 프론트엔드 |
+| 신상렬🔰   | https://github.com/gofl26        | 백엔드     |
+| 윤영수   | https://github.com/tayyoon         | 백엔드     |
+| 김연유   |  https://github.com/gitmackenzie      | 백엔드     |
+| 장유진   | https://www.notion.so/Eugene-e1d9ac3124fe426ab29ce979daa88907                                  | 디자인     |
+| 이수림   | -                                   | 디자인     |
+
+<br />
