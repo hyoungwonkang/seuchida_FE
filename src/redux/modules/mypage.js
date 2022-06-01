@@ -12,6 +12,7 @@ const MY_REVIEW = "MY_REVIEW";
 const MY_POSTONE = "MY_POSTONE";
 const ADD_REVIEW = "ADD_REVIEW";
 const REVIEW_PHOTO = "REVIEW_PHOTO";
+const ADD_REPORT = "ADD_REPORT";
 
 //Action Creators
 
@@ -31,6 +32,9 @@ const addReview = createAction(ADD_REVIEW, (addreview) => ({
 const addPhoto = createAction(REVIEW_PHOTO, (image) => ({
   image,
 }));
+const addReport = createAction(ADD_REPORT, (report) => ({
+  report,
+}));
 
 //initialState (default props 같은 것, 기본값)
 const initialState = {
@@ -39,6 +43,7 @@ const initialState = {
   myPostOne: "",
   myReview: "",
   reviewImg: "",
+  report: "",
 };
 
 //Middleware
@@ -190,7 +195,9 @@ const addReportDB = (rUserId, report) => {
         "Content-Type": `application/json`,
       },
     })
-      .then((res) => {})
+      .then((res) => {
+        dispatch(addReport(res.data.result));
+      })
       .catch((err) => {
         console.log("addReport에 실패했습니다.", err);
       });
@@ -264,6 +271,10 @@ export default handleActions(
         draft.myExercise = draft.myExercise.filter(
           (p) => p.postId !== action.payload.addreview.postId
         );
+      }),
+    [ADD_REPORT]: (state, action) =>
+      produce(state, (draft) => {
+        draft.report = action.payload.report;
       }),
   },
   initialState

@@ -9,6 +9,7 @@ import Modal from "../../components/Modal/Modal"; //모달 창
 import ModalData from "../../components/Modal/ModalData";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { Redirect } from "react-router-dom";
+import imageCompression from "browser-image-compression";
 
 const AddProfile = (props) => {
   const history = useHistory();
@@ -31,6 +32,7 @@ const AddProfile = (props) => {
   //입력값 state
   const [preview, setPreview] = useState("");
   const [profile, setProfile] = useState("");
+  console.log(preview, profile);
 
   const [nickName, setNickName] = useState(localStorage.getItem("nickName"));
   const [gender, setGender] = useState(localStorage.getItem("gender"));
@@ -39,16 +41,31 @@ const AddProfile = (props) => {
 
   //특수 문자 제한
   const notNum = /[^·ㄱ-ㅎ가-힣a-z0-9ㆍ ᆢ]/gi;
-  // \\u318D\\u119E\\u11A2\\u2022\\u2025a\\u00B7\\uFE55
   const onlyNum = /[^0-9]/gi;
   const notSpecial = /[^!~.,\sㄱ-ㅎ가 -힣a-z0-9ㆍ ᆢ]/gi;
 
-  const selectPreview = (e) => {
-    setPreview(window.webkitURL.createObjectURL(e.target.files[0]));
-  };
+  //이미지 리사이징
+  const handleFileOnChange = async (e) => {
+    let file = e.target.files[0]; // 입력받은 file객체
 
-  const selectImage = (e) => {
-    setProfile(e.target.files[0]);
+    // 이미지 resize 옵션 설정 (최대 width을 100px로 지정)
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 500,
+    };
+
+    try {
+      const compressedFile = await imageCompression(file, options);
+      setProfile(compressedFile);
+
+      // resize된 이미지의 url을 받아 fileUrl에 저장
+      const promise = imageCompression.getDataUrlFromFile(compressedFile);
+      promise.then((result) => {
+        setPreview(result);
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const selectNickName = (e) => {
@@ -170,8 +187,7 @@ const AddProfile = (props) => {
                     type="file"
                     id="image"
                     onChange={(e) => {
-                      selectPreview(e);
-                      selectImage(e);
+                      handleFileOnChange(e);
                     }}
                   />
                 </FileUpload>
