@@ -39,7 +39,7 @@
 
 ## 🏛 서비스 아키텍처   
 
-![서비스 아키텍처 (2)](https://practice2082.s3.ap-northeast-2.amazonaws.com/%EC%95%84%ED%82%A4%ED%83%9D%EC%B3%90%EC%9D%B4%EB%AF%B8%EC%A7%80.png)
+![서비스 아키텍처 (2)](https://practice2082.s3.ap-northeast-2.amazonaws.com/%EC%95%84%ED%82%A4%ED%85%8D%EC%B3%90+final.png)
 
 ## 💠 기술스택
 <br>
