@@ -34,6 +34,7 @@
   <img src="https://img.shields.io/badge/github actions-2088FF?style=for-the-badge&logo=github actions&logoColor=white">
 <img src="https://img.shields.io/badge/slick-1572B6?style=for-the-badge&logo=slick&logoColor=white">
 <img src="https://img.shields.io/badge/pwa-1572B6?style=for-the-badge&logo=pwa&logoColor=white">
+<img src="https://img.shields.io/badge/Axios-pink?style=for-the-badge&logo=Axios&logoColor=black">
 <br>
 <img src="https://img.shields.io/badge/html-E34F26?style=for-the-badge&logo=html5&logoColor=white">
 <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white">
@@ -49,7 +50,19 @@
 <br>
 <br>
 <br>
- 
+
+| Library | Appliance |
+| --- | --- |
+| axios | 서버 통신 |
+| redux-thunk | 상태관리, 미들웨어 |
+| connected-react-router | history 객체 관리 |
+| socket.io-client | 실시간 채팅 및 알람 |  
+| styled-component | 컴포넌트 스타일링 |
+| moment | 현재 시간 핸들링 |
+| react-slick | 슬라이드에 사용 |
+| react-pwa-install | 슬라이드에 사용 |
+| browser-image-compression | 이미지 리사이징 |
+  
 ## 🚨 트러블 슈팅
 
 ### 1. 소셜 로그인 이슈
