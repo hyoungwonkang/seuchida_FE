@@ -3,23 +3,6 @@
 
 
 
-
-<p align='center'>
-  <img src='https://img.shields.io/badge/React-v18.0.0-blue?logo=React'/>
-  <img src='https://img.shields.io/badge/Redux-v4.2.0-white?logo=Redux'/>
-  <img src='https://img.shields.io/badge/ReactRouter-v5.2.1-green?logo=ReactRouter'/>
-  <img src='https://img.shields.io/badge/Axios-v0.27.1-red?logo=Axios'/>
-  <img src='https://img.shields.io/badge/StyledComponents-v5.3.5-pink?logo=StyledComponents'/>
-  <img src='https://img.shields.io/badge/Javascript-ES6-yellow?logo=javascript'/>
-  <img src='https://img.shields.io/badge/socket.io-v4.5.0-white?logo=Socket.io'/>
-  <img src="https://img.shields.io/badge/Json Web Token-v8.5.1-8a8a8a?logo=JSON Web Tokens&logoColor=white" />
-  </br></br>
-  Deploy
-  </br></br>
-  <img src="https://img.shields.io/badge/Git hub-000000?logo=Github&logoColor=white" />
-  
-</p>
-
 ## 📍 바로가기
 - 사이트 바로가기 : https://seuchida.shop
 - 발표 영상 :
