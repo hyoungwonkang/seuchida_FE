@@ -87,7 +87,7 @@ const Around = styled.button`
   border: none;
   border-radius: 5px;
   color: white;
-  font-size: 24px;
+  font-size: 22px;
   font-weight: bold;
   cursor: pointer;
   img {
