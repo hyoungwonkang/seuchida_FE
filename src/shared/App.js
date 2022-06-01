@@ -46,7 +46,7 @@ import {
 const token = localStorage.getItem("token");
 
 const socket = io.connect("https://seuchidabackend.shop", {
-  transport:['websocket'],
+  transport: ["websocket"],
 
   auth: {
     auth: token,

@@ -4,6 +4,14 @@ import { useHistory } from "react-router-dom";
 import { Button } from "../elements/Index";
 import { actionCreators as roomCreators } from "../redux/modules/room";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  BsChatSquareDots,
+  BsChatDots,
+  BsEmojiSmile,
+  BsGeoAlt,
+  BsHouse,
+} from "react-icons/bs";
+import { Grid, Text } from "../elements/Index";
 
 const FooterMenu = (props) => {
   const history = useHistory();
@@ -127,9 +135,19 @@ const FooterMenu = (props) => {
         <Menu onClick={readMain}>
           {mainalarm && <NewArlam>new</NewArlam>}
           {localStorage.getItem("main") === "main" ? (
-            <img alt="home" src="/img/footer/homeg.png" />
+            <Grid column>
+              <BsHouse size={30} color="#0ED88B" />
+              <Text margin="0px" color="#0ED88B">
+                홈
+              </Text>
+            </Grid>
           ) : (
-            <img alt="home" src="/img/footer/home.png" />
+            <Grid column>
+              <BsHouse size={30} color="#787878" />
+              <Text margin="0px" color="#787878">
+                홈
+              </Text>
+            </Grid>
           )}
         </Menu>
         <Menu
@@ -142,9 +160,19 @@ const FooterMenu = (props) => {
           }}
         >
           {localStorage.getItem("map") === "map" ? (
-            <img alt="around" src="/img/footer/aroundg.png" />
+            <Grid column>
+              <BsGeoAlt size={30} color="#0ED88B" />
+              <Text margin="0px" color="#0ED88B">
+                내주변
+              </Text>
+            </Grid>
           ) : (
-            <img alt="around" src="/img/footer/around.png" />
+            <Grid column>
+              <BsGeoAlt size={30} color="#787878" />
+              <Text margin="0px" color="#787878">
+                내주변
+              </Text>
+            </Grid>
           )}
         </Menu>
         <Menu onClick={readArlam}>
@@ -154,9 +182,19 @@ const FooterMenu = (props) => {
             </NewArlam>
           )}
           {localStorage.getItem("chat") === "chat" ? (
-            <img alt="chat" src="/img/footer/chatg.png" />
+            <Grid column>
+              <BsChatSquareDots size={30} color="#0ED88B" />
+              <Text margin="0px" color="#0ED88B">
+                채팅
+              </Text>
+            </Grid>
           ) : (
-            <img alt="chat" src="/img/footer/chat.png" />
+            <Grid column>
+              <BsChatSquareDots size={30} color="#787878" />
+              <Text margin="0px" color="#787878">
+                채팅
+              </Text>
+            </Grid>
           )}
         </Menu>
         <Menu
@@ -169,9 +207,19 @@ const FooterMenu = (props) => {
           }}
         >
           {localStorage.getItem("mypage") === "mypage" ? (
-            <img alt="profile" src="/img/footer/smileg.png" />
+            <Grid column>
+              <BsEmojiSmile size={30} color="#0ED88B" />
+              <Text margin="0px" color="#0ED88B">
+                프로필
+              </Text>
+            </Grid>
           ) : (
-            <img alt="profile" src="/img/footer/smile.png" />
+            <Grid column>
+              <BsEmojiSmile size={30} color="#787878" />
+              <Text margin="0px" color="#787878">
+                프로필
+              </Text>
+            </Grid>
           )}
         </Menu>
       </MenuBox>

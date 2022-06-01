@@ -19,11 +19,11 @@ const Map = () => {
     errMsg: null,
     isLoading: true,
   });
-
-  const researchMap = async () => {
-    await axios({
+  
+  const researchMap = () => {
+    axios({
       method: "get",
-      url: `https://seuchidaback.link/api/nearPostList`,
+      url: `https://seuchidabackend.shop/api/nearPostList`,
       headers: {
         authorization: `Bearer ${token}`,
       },

@@ -18,20 +18,11 @@ const Login = (props) => {
         </Grid>
         <Around onClick={() => history.push("/guide")}>가이드</Around>
         <div style={{ margin: "30vh 0px 20px 0px" }}>
-          <Akakao
-            href={KAKAO_AUTH_URL}
-            onClick={() => {
-              history.push("/sigupdone");
-            }}
-          >
+          <Akakao href={KAKAO_AUTH_URL}>
             <img src="./img/kakao_login_medium_wide.png" alt="카카오로그인" />
           </Akakao>
         </div>
-        <GoogleBtn
-          onClick={() => {
-            history.push("/signupdone");
-          }}
-        >
+        <GoogleBtn>
           <img src="./img/btn_google_light_normal_ios.svg" alt="구글로그인" />
           <Agoogle href={GOOGLE_AUTH_URL}>구글 로그인</Agoogle>
         </GoogleBtn>
