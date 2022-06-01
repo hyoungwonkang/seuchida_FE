@@ -116,6 +116,7 @@ function Chatex(props) {
   useEffect(() => {
     socket.on("chatlist", (data) => {
       setChatlist(data);
+      console.log(chatlist)
     });
   }, [chatlist]);
 
