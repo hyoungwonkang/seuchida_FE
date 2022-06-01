@@ -14,28 +14,26 @@ function Guide() {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    variableWidth: true,
+    // variableWidth: true,
   };
 
   return (
     <div>
-      <Sliders {...settings} styled={{ height: "100px" }}>
+      <Sliders {...settings} styled={{ height: "auto" }}>
+        <Img alt="guide1" src="/img/guide/guide1_big.png" />
+
+        <Img alt="guide2" src="/img/guide/guide2_big.png" />
+
+        <Img alt="guide3" src="/img/guide/guide3_big.png" />
+
+        <Img alt="guide4" src="/img/guide/guide4_big.png" />
+
         <div>
-          <Img alt="guide1" src="/img/guide/guide1.png" />
-        </div>
-        <div>
-          <Img alt="guide2" src="/img/guide/guide2.png" />
-        </div>
-        <div>
-          <Img alt="guide3" src="/img/guide/guide3.png" />
-        </div>
-        <div>
-          <Img alt="guide4" src="/img/guide/guide4.png" />
-        </div>
-        <div>
-          <Img alt="guide5" src="/img/guide/guide5.png" />
+          <ImgLast alt="guide5" src="/img/guide/guide5_big.png" />
           <LastBtn onClick={() => history.push("/")}>
-            로그인 하고 시작하기
+            <span style={{ margin: "0px 20px 0px 0px" }}>
+              로그인 하고 시작하기
+            </span>
           </LastBtn>
         </div>
       </Sliders>
@@ -52,9 +50,16 @@ const Img = styled.img`
   width: 100%;
 `;
 
+const ImgLast = styled.img`
+  min-width: 390px;
+  min-height: 800px;
+  width: 100%;
+  height: calc(100vh-74px);
+`;
+
 const LastBtn = styled.button`
   min-width: 420px;
-  height: 74px;
+  height: 80px;
   position: fixed;
   bottom: 5px;
   color: white;
