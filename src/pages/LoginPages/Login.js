@@ -14,28 +14,28 @@ const Login = (props) => {
             src="./img/login.png"
             style={{ margin: "150px 0px" }}
             alt="로그인 이미지"
-            width={"120%"}
-            height={"100%"}
           />
         </Grid>
-        <Around onClick={() => history.push("/guide")}>가이드</Around>
+        <Around onClick={() => history.push("/guide")}>
+          가이드
+          {/* <img src="./img/seuchin.png" alt="스친이" /> */}
+        </Around>
         <div style={{ margin: "30vh 0px 20px 0px" }}>
-          <Akakao href={KAKAO_AUTH_URL}>
-            <img
-              src="./img/kakao_login_medium_wide.png"
-              alt="카카오로그인"
-              width={"100%"}
-              height={"100%"}
-            />
+          <Akakao
+            href={KAKAO_AUTH_URL}
+            onClick={() => {
+              history.push("/sigupdone");
+            }}
+          >
+            <img src="./img/kakao_login_medium_wide.png" alt="카카오로그인" />
           </Akakao>
         </div>
-        <GoogleBtn>
-          <img
-            src="./img/btn_google_light_normal_ios.svg"
-            alt="구글로그인"
-            width={"100%"}
-            height={"100%"}
-          />
+        <GoogleBtn
+          onClick={() => {
+            history.push("/signupdone");
+          }}
+        >
+          <img src="./img/btn_google_light_normal_ios.svg" alt="구글로그인" />
           <Agoogle href={GOOGLE_AUTH_URL}>구글 로그인</Agoogle>
         </GoogleBtn>
         {/* </Grid> */}
@@ -79,11 +79,18 @@ const GoogleBtn = styled.button`
 `;
 
 const Around = styled.button`
-  min-width: "100px";
-  height: 30px;
-  margin: 120px 0px -20px 0px;
+  min-width: 100px;
+  width: 80px;
+  height: 35px;
+  margin: 130px 0px -40px 0px;
   background: #1aec9c;
   border: none;
   border-radius: 5px;
   color: white;
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+  img {
+    width: 50px;
+  }
 `;
