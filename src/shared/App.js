@@ -42,6 +42,7 @@ import {
   ChatList,
   NotFound,
 } from "../pages/Index";
+
 const token = localStorage.getItem("token");
 const socket = io.connect("https://seuchidabackend.shop", {
   transport:['websocket'],
@@ -54,6 +55,7 @@ function App() {
   // const prevMsg = useSelector((state) =>state.room?.list?.unreadChatlist)
   // console.log(prevMsg.length)
   const dispatch = useDispatch()
+  
   React.useEffect(()=>{
     socket.on("joinPartyAlert", (data) => {
       dispatch(roomCreators.joinArlam(data))
