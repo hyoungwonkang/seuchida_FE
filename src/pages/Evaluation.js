@@ -58,7 +58,6 @@ const Evaluation = () => {
   //신고 대상 & 신고 내용 state
   const [report, setReport] = useState("");
   const [rUserId, setRUserId] = useState(localreport ? localreport : "");
-
   //후기 작성 & 다른 사람 평가
   const addReview = () => {
     //유효성 검사
@@ -72,7 +71,7 @@ const Evaluation = () => {
     localStorage.removeItem("evalue");
     localStorage.removeItem("report");
     dispatch(
-      mypageActions.addReviewDB(review, reviewImg, otherId, evalue, postId)
+      mypageActions.addReviewDB(review, reviewImg, otherId, evalues, postId)
     );
     history.push("/reviewdone");
   };

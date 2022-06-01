@@ -169,7 +169,6 @@ const addPhotoDB = (formData) => {
       .then((res) => {
         const image = res.data.image;
         dispatch(addPhoto(image));
-        console.log("사진추가에 성공했습니다.", res);
       })
       .catch((err) => {
         console.log("사진추가에 실패했습니다.", err);
