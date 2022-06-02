@@ -39,7 +39,7 @@ const PostDetail = (props) => {
   const params = useParams();
   const postOwner = post?.userId;
   const isMe = userId === postOwner ? true : false;
-  console.log(params)
+
   //강퇴당한유저 킥 데이터가 이상하게 배열로 2겹임 ..
   const banUser = post?.banUserList?.filter((u) => u.includes(userId));
   const postId = params.postId; //게시물 번호(룸 아이디)
