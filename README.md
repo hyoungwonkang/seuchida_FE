@@ -126,6 +126,23 @@
     - ![image](https://user-images.githubusercontent.com/100031041/171617947-228b2f65-8904-420a-96e7-9548e8768fec.png)
 
  </details>
+  
+  ### 2. 실시간 채팅 알람
+ <details>
+  <summary>모든 페이지 실시간 채팅 알람</summary>
+  
+  * 문제 상황
+    - 알람 수신을 위해 첫 렌더링 화면에서 소켓을 연결하였으나
+   
+      리렌더링 시 클라이언트와 서버간 중첩연결로 데이터가 늘어나는 문제 발생.
+  * 해결 방안
+    - 메인 페이지 컴포넌트가 아닌 최상위 컴포넌트인 App.js에서 소켓 연결 후, 수신되는 데이터는 Redux로 관리.
+  * 의견 조율 및 결정
+    - 위 해결방안을 적용하여 새로고침 후에도 모든 페이지에서 실시간 알람을 수신 가능.
+   <div markdown="1">
+    <img width='25%' src="https://user-images.githubusercontent.com/101075382/171623433-dc7d041a-e0cb-4e04-947e-31a433a0ae70.PNG">
+    <img width='25%' src="https://user-images.githubusercontent.com/101075382/171623493-115843b2-9d6c-4598-b424-5161bcf62d5d.PNG">
+ </details>
 
 
 <br>
