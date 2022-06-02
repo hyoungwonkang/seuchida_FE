@@ -6,10 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { history } from "../redux/configStore";
-import { RiMessage3Fill } from "react-icons/ri";
 import { IoIosArrowForward } from "react-icons/io";
-import Modal from "../components/Modal/Modal"; //모달 창
-import ModalData from "../components/Modal/ModalData";
 import { useParams } from "react-router-dom";
 
 const Main = () => {
@@ -18,11 +15,9 @@ const Main = () => {
   const review = useSelector((state) => state.post.list.filterRe);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
- 
+
   // const [mainalert, setMainalert] = React.useState([])
-  //모달
-  const [isOpen, setIsOpen] = React.useState(false);
-  const HAS_VISITED_BEFORE = localStorage.getItem("hasVisitedBefore");
+
   const [state, setState] = React.useState({
     center: {
       lat: 33.450701,
@@ -31,20 +26,6 @@ const Main = () => {
     errMsg: null,
     isLoading: true,
   });
-
-  //홍보 배너 띄우기
-  React.useEffect(() => {
-    if (HAS_VISITED_BEFORE && HAS_VISITED_BEFORE > new Date()) {
-      return;
-    }
-    if (!HAS_VISITED_BEFORE) setIsOpen(true);
-  }, []);
-  //오늘 하루 보지 않기
-  const nottoday = () => {
-    let expires = new Date();
-    expires = expires.setHours(expires.getHours() + 24);
-    localStorage.setItem("hasVisitedBefore", expires);
-  };
 
   React.useEffect(() => {
     dispatch(userActions.isLoginDB());
@@ -83,13 +64,6 @@ const Main = () => {
       }));
     }
   }, [state.isLoading === true]);
-
-  //설문조사 페이지 이동
-  const handleClick = () => {
-    window.open(
-      "https://docs.google.com/forms/d/e/1FAIpQLSeLKcVwZ_TWWJ6hM22CjiAnrih9mjNboEFVN_RW1nLzIQMWNg/viewform?usp=sf_link"
-    );
-  };
 
   return (
     <>
@@ -147,26 +121,6 @@ const Main = () => {
             })}
           </CardBox>
         </ListBox>
-
-        {/* 설문조사 작성 */}
-        <Survey>
-          <RiMessage3Fill
-            size={40}
-            color="#FDE333"
-            onClick={() => {
-              setIsOpen(true);
-            }}
-          />
-        </Survey>
-
-        <Modal open={isOpen}>
-          <ModalData
-            Survey
-            onClose={() => setIsOpen(false)}
-            onCheck={() => handleClick()}
-            nottoday={() => nottoday()}
-          />
-        </Modal>
 
         {/* 프로필 작성 */}
         <Float
@@ -246,16 +200,6 @@ const Title = styled.div`
 
 const ReviewBox = styled.section`
   background-color: white;
-`;
-
-const Survey = styled.button`
-  position: absolute;
-  bottom: 170px;
-  right: 23px;
-  background: transparent;
-  border: none;
-  z-index: 1000;
-  cursor: pointer;
 `;
 
 const Float = styled.button`
