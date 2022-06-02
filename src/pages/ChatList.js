@@ -15,8 +15,10 @@ const ChatList = ({ socket }) => {
   const last_chat = useSelector((state) => state.room?.list?.lastChatting);
   // const unreadChatlist = useSelector(
   //   (state) => state.room?.list?.unreadChatlist
-  // );  나중에 추가해야될 부분 ( 이전 채팅 기록 )
+  // );  
+  // 나중에 추가해야될 부분 ( 이전 채팅 기록 )
   const alarm = useSelector((state) => state.room.chatarr);
+ 
 
   React.useEffect(() => {
     dispatch(roomCreators.getchatRoomDB());
@@ -44,8 +46,8 @@ const ChatList = ({ socket }) => {
         <Body>
           {room_list?.map((room, index) => {
             //이걸 왜 생각못했지?
-    
             const roomchat = (alarm.filter((r) => r?.room === room?.roomId))
+       
             return (
               <ChatBox
                 key={`${room.roomId}+${index}`}
@@ -61,7 +63,7 @@ const ChatList = ({ socket }) => {
                   <ChatTitleBox>
                     <Image src={room?.ownerImg} size={50} />
                     <div style={{ marginLeft: "10px" }}>
-                      <div style={{ marginBottom: "5px",display:"flex" }}>
+                      <div style={{ marginBottom: "5px",display:"flex", }}>
                         <ChatTitle>{room?.postTitle}  </ChatTitle>
                         <UserCount> {room?.nowMember?.length}</UserCount>
                       </div>
@@ -75,7 +77,7 @@ const ChatList = ({ socket }) => {
                   </ChatTitleBox>
 
                   <div>
-                    <div>
+                    <div style={{fontSize:"13px"}}>
                       {/* 최신메세지 시간 갱신 */}
                       {moment(
                         roomchat[roomchat.length - 1]?.createdAt ||
@@ -83,8 +85,10 @@ const ChatList = ({ socket }) => {
                       ).fromNow()}
                     </div>
               {/* 이전 채팅기록과 갱신되는 채팅수가 없을때만 null */}
-                {  roomchat?.length !==0 &&
+                {  
+                roomchat?.length !==0 &&
                     <NewMsg>
+                      {/* unreadChatlist[index].length + */}
                       {  roomchat?.length}     
                       </NewMsg> }
                     

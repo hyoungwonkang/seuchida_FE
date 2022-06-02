@@ -13,8 +13,8 @@ import { MdSend } from "react-icons/md";
 import { BsList } from "react-icons/bs";
 
 const token = localStorage.getItem("token");
-const socket = io.connect("https://seuchidaback.link:443", {
-  transports: ["websocket"],
+const socket = io.connect("https://seuchidabackend.shop", {
+  transport: ["websocket"],
   auth: {
     auth: token,
   },
@@ -116,7 +116,7 @@ function Chatex(props) {
     socket.on("chatlist", (data) => {
       setChatlist(data);
     });
-  }, [chatlist]);
+  }, []);
 
   //메세지 전송
   //userId는 방마다 참여중인 유저리스트 ( 나 제외

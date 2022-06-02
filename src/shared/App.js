@@ -5,7 +5,7 @@ import { Route, Switch } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configStore";
 import { io } from "socket.io-client";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as roomCreators } from "../redux/modules/room";
 
 import MobileFrame from "../shared/MoileFrame";
@@ -42,9 +42,12 @@ import {
   ChatList,
   NotFound,
 } from "../pages/Index";
+
 const token = localStorage.getItem("token");
-const socket = io.connect("https://seuchidaback.link:443", {
-  transports: ["websocket"],
+
+const socket = io.connect("https://seuchidabackend.shop", {
+  transport: ["websocket"],
+
   auth: {
     auth: token,
   },

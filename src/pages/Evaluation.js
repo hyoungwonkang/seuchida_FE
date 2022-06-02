@@ -59,7 +59,6 @@ const Evaluation = () => {
   //신고 대상 & 신고 내용 state
   const [report, setReport] = useState("");
   const [rUserId, setRUserId] = useState(localreport ? localreport : "");
-
   //후기 작성 & 다른 사람 평가
   const addReview = () => {
     //유효성 검사

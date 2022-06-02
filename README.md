@@ -12,14 +12,40 @@
 ## 🎉 스치다 서비스 소개
 
 ### 시연 영상
-- 영상 링크 : https://www.youtube.com/watch?v=FU58mt06fc4
+- 영상 링크 : https://youtu.be/Fzj9-vATgEY
 
 ### 1. 우리 동네 스포츠 친구찾기 서비스
-  <details> <summary>실시간 위치기반 서비스로 현재 내 위치를 기준으로 주변 운동친구들을 찾아주는 서비스입니다!</summary> <div markdown="1"> <img width='25%' src='https://practice2082.s3.ap-northeast-2.amazonaws.com/%EB%A6%AC%EB%93%9C%EB%AF%B8+%EC%9D%B4%EB%AF%B8%EC%A7%801.png'> </div>   </details>
+  <details> <summary>실시간 위치기반 서비스로 현재 내 위치를 기준으로 주변 운동친구들을 찾아주는 서비스입니다!</summary> <div markdown="1"> 
+  <img width='25%' src='https://ifh.cc/g/0BVNnz.jpg'>
+  <img width='25%' src='https://ifh.cc/g/x3TpPz.png'> 
+  </div>
+  </details>
 
 
 ### 2. 혼자하기 힘든 운동들도 스치다를 통해 같이 운동할 수 있습니다!
-<details> <summary>운동 종목과 운동할 장소, 시간을 정해서 같이 운동할 사람을 모집할 수 있습니다.</summary> <img width='25%' src='https://practice2082.s3.ap-northeast-2.amazonaws.com/%EB%A6%AC%EB%93%9C%EB%AF%B8+%EC%9D%B4%EB%AF%B8%EC%A7%802.png'> </details>
+  <details> <summary>운동 종목과 운동할 장소, 시간을 정해서 같이 운동할 사람을 모집할 수 있습니다.</summary> <div markdown="1">
+  <img width='25%' src='https://ifh.cc/g/lBD0pN.png'> 
+  <img width='25%' src='https://user-images.githubusercontent.com/101075382/171531965-6519294c-8a8d-40d1-a687-f524551e4aec.JPG'> 
+  <img width='25%' src='https://user-images.githubusercontent.com/101075382/171533020-78f53e3d-2acd-49a3-80cc-c70789f3751f.png'> 
+  </div> 
+  </details>
+
+
+### 3. 작성 후기 수 및 다른 사람 평가 기준 레벨업 시스템
+  <details> <summary>후기를 다른 유저와 공유하고 포인트를 쌓아 레벨업을 할 수 있습니다.</summary> <div markdown="1">
+  <img width='25%' src='https://user-images.githubusercontent.com/101075382/171525541-5f198111-ae51-4160-8a15-63d9c14b4b72.png'>
+  <img width='25%' src='https://user-images.githubusercontent.com/101075382/171525884-aef1d9ed-9e32-4511-ac0e-0723f4189760.png'> 
+  <img width='25%' src='https://user-images.githubusercontent.com/101075382/171526094-3973a079-f78f-4fbf-8550-ad75e3253f8f.png'> 
+  </div> 
+  </details>
+  
+### 4. 게시글 페이지 별 실시간 채팅 및 알람 기능 구현
+  <details> <summary>함께 운동하고 싶은 유저와 모임 약속, 강퇴, 알람 기능까지 이용할 수 있습니다.</summary> <div markdown="1">
+  <img width='25%' src='https://user-images.githubusercontent.com/101075382/171526375-417493e3-425b-475b-91ac-4006f8fb7e66.png'>
+  <img width='25%' src='https://user-images.githubusercontent.com/101075382/171526408-e310bedf-6311-4960-8c9f-546707f258f8.png'> 
+  <img width='25%' src='https://user-images.githubusercontent.com/101075382/171526426-6e0c0197-03a3-497a-b6f1-bf450800d543.png'> 
+  </div> 
+  </details>
 
 <br>
 
@@ -69,37 +95,30 @@
  <details>
   <summary> 구글 로그인 시 callback URI 설정 문제</summary>
    
-  * 문제 상황 
-    - 카카오 로그인과는 다르게 구글 Userinfo의 스코프를 callback URI와 이어지지 않게 해야했습니다.(ex. google/callbackuserinfo)
-  * 해결 방안
-    - 그리하여 callback URI의 끝나는 부분에 ‘/’를 주어 구분함으로서 해결 할 수 있었습니다.
-  * 의견 조율 및 결정
-    - 백엔드와의 토큰값을 주고받는 과정에서 발생한 mismatch uri를 확인해 가며 수정을 하는 것이 필요하다고 상의했습니다.
+   * 문제 상황 
+     - 서버와 callback URI 오류
+   * 해결 방안
+     - callback URI 재설정
+     - 구글 Userinfo의 스코프를 callback URI와 이어지지 않게 하기.(ex. google/callbackuserinfo)
+   * 의견 조율 및 결정
+     - 재설정 후에도 안되는 것으로 의견 조율. mismatch uri 오류 확인 후 callback URI의 끝나는 부분에 ‘/’를 주어 둘을 구분함으로서 해결.
+
  </details>
  <details>
   <summary> 배포 후 구글 로그인 이용 문제</summary>
   
-  * 문제 상황
-    - 테스트유저 외의 일반유저도 로그인을 할 수 있게 앱 게시 허가를 받아야 했습니다. 하지만 구글과 컨택 메일을 주고 받으며 충족요건을 채우는데는 시간적인 한계가 있었습니다.(2주)
-  * 해결 방안
-    - 그리하여 테스트 모드만으로도 일반 유저가 사용할 수 있나 시험해 본 결과 앱 게시를 안 해도 로그인을 사용 할 수 있게 된 것을 발견하여 그대로 진행 할 수 있었습니다.
-  * 의견 조율 및 결정
-    - 테스트 모드로는 배포 할 수 없을 것으로 판단하여 일반 로그인으로 대체하자고 의견을 모았으나 테스트모드도 가능하여 그대로 진행했습니다.
- </details>
+   * 문제 상황
+     - 배포 후 로그인 이용 제한
+   * 해결 방안
+     - 테스트 모드에서 앱 게시로 설정
+     - 앱 게시 후 구글 허가를 위한 이메일 컨택
+     - 테스트 모드 유지
+   * 의견 조율 및 결정
+     - 구글 허가를 위한 시간은 2주가량 소요. 시간적 여유가 없기에 테스트 모드로 일반 유저가 로그인 할 수 있나 확인 결과 가능하여 테스트 모드로 유지. 
 
-### 2. 지도맵 구현
- <details>
-  <summary>지도맵 마커표시+지도검색 혼합기능 구현 문제</summary>
-  
-  * 문제 상황
-    - 지도에 직접 장소를 표시할 수 있는 기능과 검색을 통해 나오는 장소가 나오게 하는 기능을 동시에 구현하기에는 리액트용 sdk 패키지로는 한계가 있었습니다.
-  * 해결 방안
-    - 그리하여 현재위치 지도와 검색 후 보여주는 지도를 웹용 라이브러리로 구현하고 검색 지도에도 직접 마커를 표시할 수 있게 구현하였습니다.
-  * 의견 조율 및 결정
-    - 리액트용 sdk 패키지와 웹용 라이브러리를 혼합하여 구현하는 시도가 있었고 그 결과 어려움이 있어서 더 복잡하지만 기능 구현을 할 수 있는 웹용 라이브러리만 쓰기도 결정하였습니다.
  </details>
   
-### 3. 로딩 속도 최적화 
+### 2. 로딩 속도 최적화 
  <details>
   <summary>페이지 로딩 속도 최적화</summary>
   
@@ -113,7 +132,7 @@
     - 불필요한 코드 정리 
   * 의견 조율 및 결정
     - 위 5가지 해결방안(코드 스플리팅, 레이지 로딩, 이미지 압축, 웹폰트 최적화, 코드 정리) 모두 적용하여 로딩 속도 현저히 상승. 
-    - 웹 : <img src="https://ifh.cc/g/fj6pHq.png"> / 모바일 : <img src="https://ifh.cc/g/xnr5cY.png">
+    - 웹 : <img src="https://ifh.cc/g/pZcSr1.png"> / 모바일 : <img src="https://ifh.cc/g/bPqrzH.png">
  </details>
  <details>
   <summary>이미지 리사이징</summary>
