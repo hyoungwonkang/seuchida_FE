@@ -42,7 +42,6 @@ import {
   ChatList,
   NotFound,
 } from "../pages/Index";
-import { useParams } from "react-router-dom";
 
 const token = localStorage.getItem("token");
 
@@ -55,7 +54,6 @@ const socket = io.connect("https://seuchidabackend.shop", {
 });
 
 function App() {
-  const params = useParams()
   const dispatch = useDispatch();
   React.useEffect(() => {
     socket.on("joinPartyAlert", (data) => {
@@ -65,10 +63,9 @@ function App() {
   }, []);
 
   React.useEffect(() => {
-    if(!params.roomId)
-   { socket?.on("alert", (data) => {
+    socket?.on("alert", (data) => {
       dispatch(roomCreators.chattingArr(data));
-    });
+    );
   }}, []);
 
   return (
