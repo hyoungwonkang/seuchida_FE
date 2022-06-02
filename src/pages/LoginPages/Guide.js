@@ -21,16 +21,16 @@ function Guide() {
   return (
     <div>
       <Sliders {...settings} styled={{ height: "auto" }}>
-        <Img alt="guide1" src="/img/guide/guide1_big.png" />
+        <Img alt="guide1" src="/img/guide/guide1_big2.png" />
 
-        <Img alt="guide2" src="/img/guide/guide2_big.png" />
+        <Img alt="guide2" src="/img/guide/guide2_big2.png" />
 
-        <Img alt="guide3" src="/img/guide/guide3_big.png" />
+        <Img alt="guide3" src="/img/guide/guide3_big2.png" />
 
-        <Img alt="guide4" src="/img/guide/guide4_big.png" />
+        <Img alt="guide4" src="/img/guide/guide4_big2.png" />
 
         <div>
-          <ImgLast alt="guide5" src="/img/guide/guide5_big.png" />
+          <ImgLast alt="guide5" src="/img/guide/guide5_big2.png" />
           <LastBtn onClick={() => history.push("/")}>
             <span style={{ margin: "0px 20px 0px 0px" }}>
               로그인 하고 시작하기

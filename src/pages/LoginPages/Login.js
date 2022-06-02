@@ -74,10 +74,10 @@ const Around = styled.button`
   width: 80px;
   height: 35px;
   margin: 130px 0px -40px 0px;
-  background: #1aec9c;
+  background: white;
   border: none;
   border-radius: 5px;
-  color: white;
+  color: #1aec9c;
   font-size: 22px;
   font-weight: bold;
   cursor: pointer;
