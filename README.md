@@ -24,7 +24,7 @@
 
 ### 2. 혼자하기 힘든 운동들도 스치다를 통해 같이 운동할 수 있습니다!
   <details> <summary>운동 종목과 운동할 장소, 시간을 정해서 같이 운동할 사람을 모집할 수 있습니다.</summary> <div markdown="1">
-  <img width='25%' src='https://ifh.cc/g/lBD0pN.png'> 
+  <img width='25%' src='https://user-images.githubusercontent.com/101075382/171587157-f7fe62b1-62aa-44b7-ac2a-c6a7eb8097f5.png'> 
   <img width='25%' src='https://user-images.githubusercontent.com/101075382/171531965-6519294c-8a8d-40d1-a687-f524551e4aec.JPG'> 
   <img width='25%' src='https://user-images.githubusercontent.com/101075382/171533020-78f53e3d-2acd-49a3-80cc-c70789f3751f.png'> 
   </div> 
@@ -35,7 +35,7 @@
   <details> <summary>후기를 다른 유저와 공유하고 포인트를 쌓아 레벨업을 할 수 있습니다.</summary> <div markdown="1">
   <img width='25%' src='https://user-images.githubusercontent.com/101075382/171525541-5f198111-ae51-4160-8a15-63d9c14b4b72.png'>
   <img width='25%' src='https://user-images.githubusercontent.com/101075382/171525884-aef1d9ed-9e32-4511-ac0e-0723f4189760.png'> 
-  <img width='25%' src='https://user-images.githubusercontent.com/101075382/171526094-3973a079-f78f-4fbf-8550-ad75e3253f8f.png'> 
+  <img width='25%' src='https://user-images.githubusercontent.com/101075382/171586838-8a294396-145d-457a-991f-8d43af970369.png'> 
   </div> 
   </details>
   
@@ -51,7 +51,7 @@
 
 ## 🏛 서비스 아키텍처   
 
-![서비스 아키텍처 (2)](https://practice2082.s3.ap-northeast-2.amazonaws.com/%EC%95%84%ED%82%A4%ED%85%8D%EC%B3%90+final.png)
+![서비스 아키텍처 (2)](https://user-images.githubusercontent.com/101075382/171594436-c20d9b32-aef0-4d34-b7aa-4ae6c9445b7a.png)
 
 ## 💠 기술스택
 <br>
