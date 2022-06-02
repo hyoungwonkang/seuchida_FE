@@ -115,9 +115,8 @@ function Chatex(props) {
   useEffect(() => {
     socket.on("chatlist", (data) => {
       setChatlist(data);
-      console.log(chatlist)
     });
-  }, [chatlist]);
+  }, []);
 
   //메세지 전송
   //userId는 방마다 참여중인 유저리스트 ( 나 제외
