@@ -5,14 +5,14 @@
 
 ## 📍 바로가기
 - 사이트 바로가기 : https://seuchida.shop
-- 발표 영상 :
+- 발표 영상 : https://youtu.be/KUxPjKCmbxM
 
 <br>
 
 ## 🎉 스치다 서비스 소개
 
 ### 시연 영상
-- 영상 링크 : https://youtu.be/Fzj9-vATgEY
+- 영상 링크 : 
 
 ### 1. 우리 동네 스포츠 친구찾기 서비스
   <details> <summary>실시간 위치기반 서비스로 현재 내 위치를 기준으로 주변 운동친구들을 찾아주는 서비스입니다!</summary> <div markdown="1"> 
