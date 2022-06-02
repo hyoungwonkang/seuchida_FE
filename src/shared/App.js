@@ -42,7 +42,6 @@ import {
   ChatList,
   NotFound,
 } from "../pages/Index";
-
 const token = localStorage.getItem("token");
 
 const socket = io.connect("https://seuchidabackend.shop", {
@@ -65,8 +64,9 @@ function App() {
   React.useEffect(() => {
     socket?.on("alert", (data) => {
       dispatch(roomCreators.chattingArr(data));
-    );
-  }}, []);
+    });
+  }, []);
+
 
   return (
     <>
