@@ -18,7 +18,7 @@ const ChatList = ({ socket }) => {
   // );  
   // 나중에 추가해야될 부분 ( 이전 채팅 기록 )
   const alarm = useSelector((state) => state.room.chatarr);
-
+ 
 
   React.useEffect(() => {
     dispatch(roomCreators.getchatRoomDB());

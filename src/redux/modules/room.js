@@ -29,6 +29,7 @@ const deleteNewChat = createAction(DEL_NEWCHAT, (delete_newchat) => ({
 }));
 const clearcount = createAction(CLEAR_COUNT, (clear) => ({ clear }));
 
+
 //initialState (default props 같은 것, 기본값)
 
 const initialState = {
