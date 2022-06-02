@@ -113,6 +113,7 @@
     - 불필요한 코드 정리 
   * 의견 조율 및 결정
     - 위 5가지 해결방안(코드 스플리팅, 레이지 로딩, 이미지 압축, 웹폰트 최적화, 코드 정리) 모두 적용하여 로딩 속도 현저히 상승. 
+    - 웹 : <img src="https://ifh.cc/g/fj6pHq.png"> / 모바일 : <img src="https://ifh.cc/g/xnr5cY.png">
  </details>
  <details>
   <summary>이미지 리사이징</summary>
@@ -123,7 +124,9 @@
     - 레이지 로딩 
     - 이미지 압축(browser-image-compression) 
   * 의견 조율 및 결정 
-    - 앞서 적용시킨 레이지 로딩에도 불구하고 문제상황 해결 안됨 => 라이브러리(browser-image-compression)를 적용해 업로드 시의 이미지를 압축하였고 이전 대비 문제 상황 개선    
+    - 앞서 적용시킨 레이지 로딩에도 불구하고 문제상황 해결 안됨 => 라이브러리(browser-image-compression)를 적용해 업로드 시의 이미지를 압축하였고 이전 대비 문제 상황 개선  
+    - 적용 전: <img src="https://ifh.cc/g/X67w2T.png">
+    - 적용 후: <img src="https://ifh.cc/g/2skngC.png">
  </details>
 
 
