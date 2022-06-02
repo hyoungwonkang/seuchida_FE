@@ -91,34 +91,8 @@
   
 ## 🚨 트러블 슈팅
 
-### 1. 소셜 로그인
- <details>
-  <summary> 구글 로그인 시 callback URI 설정 문제</summary>
-   
-   * 문제 상황 
-     - 서버와 callback URI 오류
-   * 해결 방안
-     - callback URI 재설정
-     - 구글 Userinfo의 스코프를 callback URI와 이어지지 않게 하기.(ex. google/callbackuserinfo)
-   * 의견 조율 및 결정
-     - 재설정 후에도 안되는 것으로 의견 조율. mismatch uri 오류 확인 후 callback URI의 끝나는 부분에 ‘/’를 주어 둘을 구분함으로서 해결.
-
- </details>
- <details>
-  <summary> 배포 후 구글 로그인 이용 문제</summary>
   
-   * 문제 상황
-     - 배포 후 로그인 이용 제한
-   * 해결 방안
-     - 테스트 모드에서 앱 게시로 설정
-     - 앱 게시 후 구글 허가를 위한 이메일 컨택
-     - 테스트 모드 유지
-   * 의견 조율 및 결정
-     - 구글 허가를 위한 시간은 2주가량 소요. 시간적 여유가 없기에 테스트 모드로 일반 유저가 로그인 할 수 있나 확인 결과 가능하여 테스트 모드로 유지. 
-
- </details>
-  
-### 2. 로딩 속도 최적화 
+### 1. 로딩 속도 최적화 
  <details>
   <summary>페이지 로딩 속도 최적화</summary>
   
