@@ -124,7 +124,7 @@
     - 이미지 압축(browser-image-compression) 
   * 의견 조율 및 결정 
     - 앞서 적용시킨 레이지 로딩에도 불구하고 문제상황 해결 안됨 => 라이브러리(browser-image-compression)를 적용해 업로드 시의 이미지를 압축하였고 이전 대비 문제 상황 개선  
-    - <img src="https://ifh.cc/g/2skngC.png">
+    - <img src="https://ifh.cc/g/X67w2T.png"><img src="https://ifh.cc/g/2skngC.png">
  </details>
 
 
