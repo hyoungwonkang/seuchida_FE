@@ -53,7 +53,7 @@ const joinRoomDB = (roomId, postId) => {
     try {
       await axios({
         method: "get",
-        url: `https://seuchidabackend.shop/api/postPush/${roomId}`,
+        url: `https://https://seuchidaback.link/api/postPush/${roomId}`,
 
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -71,7 +71,7 @@ const joinCancleDB = (roomId, postId) => {
     try {
       await axios({
         method: "get",
-        url: `https://seuchidabackend.shop/api/postPushCancle/${roomId}`,
+        url: `https://https://seuchidaback.link/api/postPushCancle/${roomId}`,
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -89,7 +89,7 @@ const getchatRoomDB = () => {
     try {
       await axios({
         method: "get",
-        url: `https://seuchidabackend.shop/api/chatting`,
+        url: `https://https://seuchidaback.link/api/chatting`,
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -106,7 +106,7 @@ const getchatMemberDB = (roomId) => {
     try {
       await axios({
         method: "get",
-        url: `https://seuchidabackend.shop/api/chatUserList/${roomId}`,
+        url: `https://https://seuchidaback.link/api/chatUserList/${roomId}`,
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -125,7 +125,7 @@ const roomDoneDB = (postId) => {
     try {
       await axios({
         method: "get",
-        url: `https://seuchidabackend.shop/api/complete/${postId}`,
+        url: `https://https://seuchidaback.link/api/complete/${postId}`,
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
         },
