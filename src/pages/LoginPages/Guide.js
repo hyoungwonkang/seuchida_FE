@@ -60,7 +60,7 @@ const ImgLast = styled.img`
 
 const LastBtn = styled.button`
   min-width: 420px;
-  height: 80px;
+  height: 74px;
   position: fixed;
   bottom: 5px;
   color: white;
