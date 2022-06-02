@@ -117,14 +117,15 @@
   <summary>이미지 리사이징</summary>
    
   * 문제 상황 
-    - 페이지 로딩 시 이미지가 천천히 뜨는 현상 발생 
+    - 이미지가 포함된 게시글 혹은 프로필사진 로드 시, 이미지가 천천히 뜨는 현상 발생
   * 해결 방안 
-    - 레이지 로딩 
-    - 이미지 압축(browser-image-compression) 
+    - 업로드 시 이미지 압축
   * 의견 조율 및 결정 
     - 앞서 적용시킨 레이지 로딩에도 불구하고 문제상황 해결 안됨 => 라이브러리(browser-image-compression)를 적용해 업로드 시의 이미지를 압축하였고 이전 대비 문제 상황 개선  
-    - 적용 전: <img src="https://ifh.cc/g/X67w2T.png">
-    - 적용 후: <img src="https://ifh.cc/g/2skngC.png">
+    - 적용 전: ![image](https://user-images.githubusercontent.com/100031041/171617856-32442bc2-9cb4-46f0-95de-61cf91823859.png)
+    - 적용 후: ![image](https://user-images.githubusercontent.com/100031041/171617867-9fc95f61-57e0-4c87-a3ee-c18940223e24.png)
+    - ![image](https://user-images.githubusercontent.com/100031041/171617947-228b2f65-8904-420a-96e7-9548e8768fec.png)
+
  </details>
 
 
