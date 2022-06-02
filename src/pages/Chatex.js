@@ -22,7 +22,7 @@ const socket = io.connect("https://seuchidabackend.shop", {
 function Chatex(props) {
   const params = useParams();
   const dispatch = useDispatch();
-  const user_list = useSelector((state) => state.room.list.nowMember);
+  const user_list = useSelector((state) => state.room?.list?.nowMember);
   const user = useSelector((state) => state.user.userInfo);
   const roomId = params.roomId;
   const [message, setMessage] = useState("");
