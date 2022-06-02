@@ -12,10 +12,8 @@ const Login = (props) => {
         <Grid column width="200px" height="200px" margin="auto">
           <img
             src="./img/login.png"
-            style={{ margin: "150px 0px" }}
+            style={{ margin: "150px 0px", width: "120%", height: "100%" }}
             alt="로그인 이미지"
-            width={"120%"}
-            height={"100%"}
           />
         </Grid>
         <Around onClick={() => history.push("/guide")}>가이드</Around>
@@ -24,8 +22,7 @@ const Login = (props) => {
             <img
               src="./img/kakao_login_medium_wide.png"
               alt="카카오로그인"
-              width={"100%"}
-              height={"100%"}
+              style={{ width: "100%", height: "100%" }}
             />
           </Akakao>
         </div>
