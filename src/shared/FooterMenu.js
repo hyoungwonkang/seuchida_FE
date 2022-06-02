@@ -21,18 +21,12 @@ const FooterMenu = (props) => {
   const url = history.location.pathname;
   const readArlam = () => {
     // dispatch(roomCreators.setalarm(false));
-    localStorage.removeItem("main");
-    localStorage.removeItem("map");
-    localStorage.setItem("chat", "chat");
-    localStorage.removeItem("mypage");
+
     history.push("/chatlist");
   };
   const readMain = () => {
     dispatch(roomCreators.mainArlam(false));
-    localStorage.setItem("main", "main");
-    localStorage.removeItem("map");
-    localStorage.removeItem("chat");
-    localStorage.removeItem("mypage");
+
     history.push("/main");
   };
 
@@ -133,7 +127,7 @@ const FooterMenu = (props) => {
       <MenuBox>
         <Menu onClick={readMain}>
           {mainalarm && <NewArlam>new</NewArlam>}
-          {localStorage.getItem("main") === "main" ? (
+          {url === "/main" ? (
             <Grid column>
               <BsHouse size={30} color="#0ED88B" />
               <Text margin="0px" color="#0ED88B">
@@ -151,14 +145,10 @@ const FooterMenu = (props) => {
         </Menu>
         <Menu
           onClick={() => {
-            localStorage.removeItem("main");
-            localStorage.setItem("map", "map");
-            localStorage.removeItem("chat");
-            localStorage.removeItem("mypage");
             history.push("/map");
           }}
         >
-          {localStorage.getItem("map") === "map" ? (
+          {url === "/map" ? (
             <Grid column>
               <BsGeoAlt size={30} color="#0ED88B" />
               <Text margin="0px" color="#0ED88B">
@@ -180,7 +170,7 @@ const FooterMenu = (props) => {
               {alarm}
             </NewArlam>
           )}
-          {localStorage.getItem("chat") === "chat" ? (
+          {url === "/chatlist" ? (
             <Grid column>
               <BsChatSquareDots size={30} color="#0ED88B" />
               <Text margin="0px" color="#0ED88B">
@@ -198,14 +188,10 @@ const FooterMenu = (props) => {
         </Menu>
         <Menu
           onClick={(e) => {
-            localStorage.removeItem("main");
-            localStorage.removeItem("map");
-            localStorage.removeItem("chat");
-            localStorage.setItem("mypage", "mypage");
             history.push("/mypage");
           }}
         >
-          {localStorage.getItem("mypage") === "mypage" ? (
+          {url === "/mypage" ? (
             <Grid column>
               <BsEmojiSmile size={30} color="#0ED88B" />
               <Text margin="0px" color="#0ED88B">

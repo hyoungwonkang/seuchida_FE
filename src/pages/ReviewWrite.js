@@ -44,7 +44,7 @@ const ReviewWrite = (props) => {
   const [review, setReview] = useState("");
 
   //특수 문자 제한
-  const notSpecial = /[^/!/~/./,\sㄱ-ㅎ가-힣a-z0-9]/gi;
+  const notSpecial = /[^!~.,\sㄱ-ㅎ가 -힣a-z0-9ㆍ ᆢ]/gi;
 
   //이미지 리사이징
   const handleFileOnChange = async (e) => {
