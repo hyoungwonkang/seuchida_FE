@@ -42,6 +42,7 @@ const ReviewWrite = (props) => {
   const [preview, setPreview] = useState("");
   const [reviewImg, setReviewImg] = useState("");
   const [review, setReview] = useState("");
+  console.log(reviewImg);
 
   //특수 문자 제한
   const notSpecial = /[^/!/~/./,\sㄱ-ㅎ가-힣a-z0-9]/gi;
