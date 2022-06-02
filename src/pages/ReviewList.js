@@ -17,6 +17,7 @@ const ReviewList = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const pageEnd = React.useRef(null);
+  console.log(pageNumber);
 
   const review_list = [
     ...postList.filter((d) => d._id === params.reviewId),
@@ -39,6 +40,7 @@ const ReviewList = () => {
       },
     })
       .then((res) => {
+        console.log(res);
         setIsLoading(false);
         setPostList((items) => [...items, ...res.data]);
       })
@@ -47,7 +49,7 @@ const ReviewList = () => {
       });
   }, [pageNumber]);
 
-  //무한 스크롤(entries: 관찰 대상의 리스트)
+  //무한 스크롤
   const onIntersect = (entries) => {
     entries.forEach((element) => {
       if (element.isIntersecting) {
@@ -57,16 +59,14 @@ const ReviewList = () => {
   };
 
   React.useEffect(() => {
-    if (review_list.length > 0) {
-      const options = {
-        root: null,
-        rootMargin: "0px",
-        threshold: 0.25,
-      };
-      const observer = new IntersectionObserver(onIntersect, options);
-      observer.observe(pageEnd.current);
-      return () => observer.disconnect();
-    }
+    const options = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.25,
+    };
+    const observer = new IntersectionObserver(onIntersect, options);
+    observer.observe(pageEnd.current);
+    return () => observer.disconnect();
   }, [pageEnd]);
 
   if (!review_list) return;
@@ -76,21 +76,6 @@ const ReviewList = () => {
       <Header>
         <GoBack text={"함께한 스친들의 후기"} path="/main"></GoBack>
       </Header>
-      {/* {review_list.length === 0 ? (
-        <Grid padding="0px 0px 80px 0px" column height="auto">
-          <img
-            alt="seuchin"
-            src="/img/seuchin.png"
-            style={{ margin: "150px 0px 0px 0px" }}
-          />
-          <Text bold margin="0px" color="#C4C4C4">
-            아직 쓴 후기가 없어요!
-          </Text>
-          <Text bold margin="0px" color="#C4C4C4">
-            지금 바로 후기를 쓰러 가볼까요?
-          </Text>
-        </Grid>
-      ) : ( */}
       <div style={{ margin: "0px 0px 80px 0px" }}>
         {review_list?.map((review, index) => {
           return (

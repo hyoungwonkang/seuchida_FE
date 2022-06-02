@@ -19,7 +19,7 @@ const Map = () => {
     errMsg: null,
     isLoading: true,
   });
-  
+
   const researchMap = () => {
     axios({
       method: "get",
@@ -28,7 +28,6 @@ const Map = () => {
         authorization: `Bearer ${token}`,
       },
     }).then((response) => {
-      console.log(response)
       setPost(response.data.nearPosts);
     });
   };

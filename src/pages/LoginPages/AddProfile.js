@@ -32,7 +32,6 @@ const AddProfile = (props) => {
   //입력값 state
   const [preview, setPreview] = useState("");
   const [profile, setProfile] = useState("");
- 
 
   const [nickName, setNickName] = useState(localStorage.getItem("nickName"));
   const [gender, setGender] = useState(localStorage.getItem("gender"));
