@@ -47,6 +47,10 @@ const ReviewWrite = (props) => {
   //특수 문자 제한
   const notSpecial = /[^/!/~/./,\sㄱ-ㅎ가-힣a-z0-9]/gi;
 
+  const selectImage = (e) => {
+    setReviewImg(e.target.files[0]);
+  };
+
   //이미지 리사이징
   const handleFileOnChange = async (e) => {
     let file = e.target.files[0]; // 입력받은 file객체
@@ -177,7 +181,8 @@ const ReviewWrite = (props) => {
                 type="file"
                 id="image"
                 onChange={(e) => {
-                  handleFileOnChange(e);
+                  selectImage(e);
+                  // handleFileOnChange(e);
                 }}
               />
             </FileUpload>
