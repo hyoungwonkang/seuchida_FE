@@ -62,7 +62,7 @@ const LastBtn = styled.button`
   min-width: 390px;
   height: 74px;
   position: fixed;
-  bottom: 5px;
+  bottom: 0px;
   color: white;
   border: none;
   background: #5796f7;
