@@ -40,15 +40,14 @@ const AddProfile = (props) => {
   const [content, setContent] = useState(localStorage.getItem("content"));
 
   //특수 문자 제한
-  const notNum = /[^·ㄱ-ㅎ가-힣a-z0-9ㆍ ᆢ]/gi;
+  const notNum = /[^ㄱ-ㅎ가-힣a-z0-9ㆍ ᆢ]/gi;
   const onlyNum = /[^0-9]/gi;
   const notSpecial = /[^!~.,\sㄱ-ㅎ가 -힣a-z0-9ㆍ ᆢ]/gi;
 
   //이미지 리사이징
   const handleFileOnChange = async (e) => {
-    let file = e.target.files[0]; // 입력받은 file객체
+    let file = e.target.files[0];
 
-    // 이미지 resize 옵션 설정 (최대 width을 100px로 지정)
     const options = {
       maxSizeMB: 1,
       maxWidthOrHeight: 500,
@@ -58,7 +57,6 @@ const AddProfile = (props) => {
       const compressedFile = await imageCompression(file, options);
       setProfile(compressedFile);
 
-      // resize된 이미지의 url을 받아 fileUrl에 저장
       const promise = imageCompression.getDataUrlFromFile(compressedFile);
       promise.then((result) => {
         setPreview(result);

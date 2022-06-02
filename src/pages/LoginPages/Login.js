@@ -12,33 +12,24 @@ const Login = (props) => {
         <Grid column width="200px" height="200px" margin="auto">
           <img
             src="./img/login.png"
-            style={{ margin: "150px 0px" }}
+            style={{ margin: "150px 0px", width: "120%", height: "100%" }}
             alt="로그인 이미지"
           />
         </Grid>
-        <Around onClick={() => history.push("/guide")}>
-          가이드
-          {/* <img src="./img/seuchin.png" alt="스친이" /> */}
-        </Around>
+        <Around onClick={() => history.push("/guide")}>가이드</Around>
         <div style={{ margin: "30vh 0px 20px 0px" }}>
-          <Akakao
-            href={KAKAO_AUTH_URL}
-            onClick={() => {
-              history.push("/sigupdone");
-            }}
-          >
-            <img src="./img/kakao_login_medium_wide.png" alt="카카오로그인" />
+          <Akakao href={KAKAO_AUTH_URL}>
+            <img
+              src="./img/kakao_login_medium_wide.png"
+              alt="카카오로그인"
+              style={{ width: "100%", height: "100%" }}
+            />
           </Akakao>
         </div>
-        <GoogleBtn
-          onClick={() => {
-            history.push("/signupdone");
-          }}
-        >
+        <GoogleBtn>
           <img src="./img/btn_google_light_normal_ios.svg" alt="구글로그인" />
           <Agoogle href={GOOGLE_AUTH_URL}>구글 로그인</Agoogle>
         </GoogleBtn>
-        {/* </Grid> */}
       </Grid>
     </Grid>
   );
