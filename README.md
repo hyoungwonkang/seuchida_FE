@@ -24,7 +24,7 @@
 
 ### 2. 혼자하기 힘든 운동들도 스치다를 통해 같이 운동할 수 있습니다!
   <details> <summary>운동 종목과 운동할 장소, 시간을 정해서 같이 운동할 사람을 모집할 수 있습니다.</summary> <div markdown="1">
-  <img width='25%' src='https://ifh.cc/g/lBD0pN.png'> 
+  <img width='25%' src='https://user-images.githubusercontent.com/101075382/171587157-f7fe62b1-62aa-44b7-ac2a-c6a7eb8097f5.png'> 
   <img width='25%' src='https://user-images.githubusercontent.com/101075382/171531965-6519294c-8a8d-40d1-a687-f524551e4aec.JPG'> 
   <img width='25%' src='https://user-images.githubusercontent.com/101075382/171533020-78f53e3d-2acd-49a3-80cc-c70789f3751f.png'> 
   </div> 
@@ -35,7 +35,7 @@
   <details> <summary>후기를 다른 유저와 공유하고 포인트를 쌓아 레벨업을 할 수 있습니다.</summary> <div markdown="1">
   <img width='25%' src='https://user-images.githubusercontent.com/101075382/171525541-5f198111-ae51-4160-8a15-63d9c14b4b72.png'>
   <img width='25%' src='https://user-images.githubusercontent.com/101075382/171525884-aef1d9ed-9e32-4511-ac0e-0723f4189760.png'> 
-  <img width='25%' src='https://user-images.githubusercontent.com/101075382/171526094-3973a079-f78f-4fbf-8550-ad75e3253f8f.png'> 
+  <img width='25%' src='https://user-images.githubusercontent.com/101075382/171586838-8a294396-145d-457a-991f-8d43af970369.png'> 
   </div> 
   </details>
   
@@ -51,7 +51,7 @@
 
 ## 🏛 서비스 아키텍처   
 
-![서비스 아키텍처 (2)](https://practice2082.s3.ap-northeast-2.amazonaws.com/%EC%95%84%ED%82%A4%ED%85%8D%EC%B3%90+final.png)
+![서비스 아키텍처 (2)](https://user-images.githubusercontent.com/101075382/171594436-c20d9b32-aef0-4d34-b7aa-4ae6c9445b7a.png)
 
 ## 💠 기술스택
 <br>
@@ -91,39 +91,13 @@
   
 ## 🚨 트러블 슈팅
 
-### 1. 소셜 로그인
- <details>
-  <summary> 구글 로그인 시 callback URI 설정 문제</summary>
-   
-   * 문제 상황 
-     - 서버와 callback URI 오류
-   * 해결 방안
-     - callback URI 재설정
-     - 구글 Userinfo의 스코프를 callback URI와 이어지지 않게 하기.(ex. google/callbackuserinfo)
-   * 의견 조율 및 결정
-     - 재설정 후에도 안되는 것으로 의견 조율. mismatch uri 오류 확인 후 callback URI의 끝나는 부분에 ‘/’를 주어 둘을 구분함으로서 해결.
-
- </details>
- <details>
-  <summary> 배포 후 구글 로그인 이용 문제</summary>
   
-   * 문제 상황
-     - 배포 후 로그인 이용 제한
-   * 해결 방안
-     - 테스트 모드에서 앱 게시로 설정
-     - 앱 게시 후 구글 허가를 위한 이메일 컨택
-     - 테스트 모드 유지
-   * 의견 조율 및 결정
-     - 구글 허가를 위한 시간은 2주가량 소요. 시간적 여유가 없기에 테스트 모드로 일반 유저가 로그인 할 수 있나 확인 결과 가능하여 테스트 모드로 유지. 
-
- </details>
-  
-### 2. 로딩 속도 최적화 
+### 1. 로딩 속도 최적화 
  <details>
-  <summary>페이지 로딩 속도 최적화</summary>
+  <summary>페이지 로딩 최적화</summary>
   
   * 문제 상황
-    - 페이지 로딩 속도가 느려 화면이 천천히 뜸 
+    - 페이지 로딩이 느려 화면이 늦게 뜨는 현상 발생 
   * 해결 방안
     - 코드 분할
     - 레이지 로딩 
@@ -132,20 +106,25 @@
     - 불필요한 코드 정리 
   * 의견 조율 및 결정
     - 위 5가지 해결방안(코드 스플리팅, 레이지 로딩, 이미지 압축, 웹폰트 최적화, 코드 정리) 모두 적용하여 로딩 속도 현저히 상승. 
-    - 웹 : <img src="https://ifh.cc/g/pZcSr1.png"> / 모바일 : <img src="https://ifh.cc/g/bPqrzH.png">
+    - 적용 전: ![image](https://user-images.githubusercontent.com/100031041/171617385-5eed8aaa-25ed-474b-899b-1cb603a83ae2.png) 
+    - 적용 후: ![image](https://user-images.githubusercontent.com/100031041/171617412-f5eff2d7-be16-4469-b09f-12a86e505408.png)
+    - ![image](https://user-images.githubusercontent.com/100031041/171617501-fd8da0e5-85a9-4470-a965-f60a413ccb33.png)
+    - ![image](https://user-images.githubusercontent.com/100031041/171617522-84d41f5a-0100-4c87-a96e-31bc6b7b2b7d.png)
+
+
  </details>
  <details>
   <summary>이미지 리사이징</summary>
    
   * 문제 상황 
-    - 페이지 로딩 시 이미지가 천천히 뜨는 현상 발생 
+    - 이미지가 포함된 게시글 혹은 프로필사진 로드 시, 이미지가 천천히 뜨는 현상 발생
   * 해결 방안 
-    - 레이지 로딩 
-    - 이미지 압축(browser-image-compression) 
+    - 업로드 시 이미지 압축
   * 의견 조율 및 결정 
     - 앞서 적용시킨 레이지 로딩에도 불구하고 문제상황 해결 안됨 => 라이브러리(browser-image-compression)를 적용해 업로드 시의 이미지를 압축하였고 이전 대비 문제 상황 개선  
-    - 적용 전: <img src="https://ifh.cc/g/X67w2T.png">
-    - 적용 후: <img src="https://ifh.cc/g/2skngC.png">
+    - ![image](https://user-images.githubusercontent.com/100031041/171618012-25beb2a9-628f-4e54-88b7-3e23021ce1e6.png)
+    - ![image](https://user-images.githubusercontent.com/100031041/171617947-228b2f65-8904-420a-96e7-9548e8768fec.png)
+
  </details>
 
 
