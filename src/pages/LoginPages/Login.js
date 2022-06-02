@@ -30,8 +30,7 @@ const Login = (props) => {
           <img
             src="./img/btn_google_light_normal_ios.svg"
             alt="구글로그인"
-            width={"100%"}
-            height={"100%"}
+            style={{ width: "100%", height: "100%" }}
           />
           <Agoogle href={GOOGLE_AUTH_URL}>구글 로그인</Agoogle>
         </GoogleBtn>
