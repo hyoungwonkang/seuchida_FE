@@ -10,6 +10,7 @@ import { RiMessage3Fill } from "react-icons/ri";
 import { IoIosArrowForward } from "react-icons/io";
 import Modal from "../components/Modal/Modal"; //모달 창
 import ModalData from "../components/Modal/ModalData";
+import { useParams } from "react-router-dom";
 
 const Main = () => {
   const catepost = useSelector((state) => state.post.list.caPost);
@@ -17,6 +18,7 @@ const Main = () => {
   const review = useSelector((state) => state.post.list.filterRe);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+ 
   // const [mainalert, setMainalert] = React.useState([])
   //모달
   const [isOpen, setIsOpen] = React.useState(false);
