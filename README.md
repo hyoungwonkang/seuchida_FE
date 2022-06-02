@@ -113,8 +113,7 @@
     - 불필요한 코드 정리 
   * 의견 조율 및 결정
     - 위 5가지 해결방안(코드 스플리팅, 레이지 로딩, 이미지 압축, 웹폰트 최적화, 코드 정리) 모두 적용하여 로딩 속도 현저히 상승. 
-    - 웹 : <img src="https://ifh.cc/g/pZcSr1.png">
-    - 모바일 : <img src="https://ifh.cc/g/bPqrzH.png">
+    - 웹 : <img src="https://ifh.cc/g/pZcSr1.png"> / 모바일 : <img src="https://ifh.cc/g/bPqrzH.png">
  </details>
  <details>
   <summary>이미지 리사이징</summary>
