@@ -47,6 +47,10 @@ const ReviewWrite = (props) => {
   //특수 문자 제한
   const notSpecial = /[^/!/~/./,\sㄱ-ㅎ가-힣a-z0-9]/gi;
 
+  const selectPreview = (e) => {
+    setPreview(window.webkitURL.createObjectURL(e.target.files[0]));
+  };
+
   const selectImage = (e) => {
     setReviewImg(e.target.files[0]);
   };
@@ -181,6 +185,7 @@ const ReviewWrite = (props) => {
                 type="file"
                 id="image"
                 onChange={(e) => {
+                  selectPreview(e);
                   selectImage(e);
                   // handleFileOnChange(e);
                 }}
