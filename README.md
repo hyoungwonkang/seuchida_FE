@@ -94,10 +94,10 @@
   
 ### 1. 로딩 속도 최적화 
  <details>
-  <summary>페이지 로딩 속도 최적화</summary>
+  <summary>페이지 로딩 최적화</summary>
   
   * 문제 상황
-    - 페이지 로딩 속도가 느려 화면이 천천히 뜸 
+    - 페이지 로딩이 느려 화면이 늦게 뜨는 현상 발생 
   * 해결 방안
     - 코드 분할
     - 레이지 로딩 
@@ -106,7 +106,12 @@
     - 불필요한 코드 정리 
   * 의견 조율 및 결정
     - 위 5가지 해결방안(코드 스플리팅, 레이지 로딩, 이미지 압축, 웹폰트 최적화, 코드 정리) 모두 적용하여 로딩 속도 현저히 상승. 
-    - 웹 : <img src="https://ifh.cc/g/pZcSr1.png"> / 모바일 : <img src="https://ifh.cc/g/bPqrzH.png">
+    - 적용 전: ![image](https://user-images.githubusercontent.com/100031041/171617385-5eed8aaa-25ed-474b-899b-1cb603a83ae2.png) 
+    - 적용 후: ![image](https://user-images.githubusercontent.com/100031041/171617412-f5eff2d7-be16-4469-b09f-12a86e505408.png)
+    - ![image](https://user-images.githubusercontent.com/100031041/171617501-fd8da0e5-85a9-4470-a965-f60a413ccb33.png)
+    - ![image](https://user-images.githubusercontent.com/100031041/171617522-84d41f5a-0100-4c87-a96e-31bc6b7b2b7d.png)
+
+
  </details>
  <details>
   <summary>이미지 리사이징</summary>
