@@ -59,7 +59,7 @@ const ImgLast = styled.img`
 `;
 
 const LastBtn = styled.button`
-  min-width: 420px;
+  min-width: 390px;
   height: 74px;
   position: fixed;
   bottom: 5px;
