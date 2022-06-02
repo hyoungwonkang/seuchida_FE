@@ -69,9 +69,8 @@ const EndCard = (props) => {
             <Text
               size="12px"
               _onClick={(e) => {
-                e.stopPropagation();
-                history.push(`/reviewwrite/${props.postId}`);
-              }}
+                e.stopPropagation()
+                history.push(`/reviewwrite/${props.postId}`)}}
               post={props.PostId}
             >
               후기 작성하기

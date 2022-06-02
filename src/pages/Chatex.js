@@ -13,8 +13,8 @@ import { MdSend } from "react-icons/md";
 import { BsList } from "react-icons/bs";
 
 const token = localStorage.getItem("token");
-const socket = io.connect("https://seuchidaback.link:443", {
-  transports: ["websocket"],
+const socket = io.connect("https://seuchidabackend.shop", {
+  transport: ["websocket"],
   auth: {
     auth: token,
   },
@@ -115,6 +115,7 @@ function Chatex(props) {
   useEffect(() => {
     socket.on("chatlist", (data) => {
       setChatlist(data);
+      console.log(chatlist)
     });
   }, [chatlist]);
 
