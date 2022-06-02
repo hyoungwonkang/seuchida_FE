@@ -109,6 +109,16 @@ const SignupLoca = () => {
     }
   };
 
+  const editAlert = () => {
+    if (address === "" || null) {
+      setIsOpen(true);
+    } else {
+      //로컬 값 저장
+      localStorage.setItem("address", address);
+      history.push("/editprofile");
+    }
+  };
+
   return (
     <Grid column height="auto" bg="white">
       {is_edit ? (
@@ -179,7 +189,7 @@ const SignupLoca = () => {
 
         {/* 푸터*/}
         {is_edit ? (
-          <FooterMenu next text="다음" path="/editprofile" />
+          <FooterMenu next text="다음" event={editAlert} />
         ) : (
           <FooterMenu next text="다음" event={alert} />
         )}

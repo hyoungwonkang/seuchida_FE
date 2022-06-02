@@ -12,6 +12,7 @@ const MY_REVIEW = "MY_REVIEW";
 const MY_POSTONE = "MY_POSTONE";
 const ADD_REVIEW = "ADD_REVIEW";
 const REVIEW_PHOTO = "REVIEW_PHOTO";
+const ADD_REPORT = "ADD_REPORT";
 
 //Action Creators
 
@@ -31,6 +32,9 @@ const addReview = createAction(ADD_REVIEW, (addreview) => ({
 const addPhoto = createAction(REVIEW_PHOTO, (image) => ({
   image,
 }));
+const addReport = createAction(ADD_REPORT, (report) => ({
+  report,
+}));
 
 //initialState (default props 같은 것, 기본값)
 const initialState = {
@@ -39,6 +43,7 @@ const initialState = {
   myPostOne: "",
   myReview: "",
   reviewImg: "",
+  report: "",
 };
 
 //Middleware
@@ -48,7 +53,7 @@ const myExerciseDB = () => {
   return async (dispatch, getState, { history }) => {
     await axios({
       method: "get",
-      url: "https://https://seuchidaback.link/api/myPage/myExercise",
+      url: "https://seuchidaback.link/api/myPage/myExercise",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": `application/json`,
@@ -69,7 +74,7 @@ const myPostDB = () => {
   return async (dispatch, getState, { history }) => {
     await axios({
       method: "get",
-      url: "https://https://seuchidaback.link/api/myPage/post",
+      url: "https://seuchidaback.link/api/myPage/post",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": `application/json`,
@@ -90,7 +95,7 @@ const myReviewDB = () => {
   return async (dispatch, getState, { history }) => {
     await axios({
       method: "get",
-      url: "https://https://seuchidaback.link/api/myPage/myReview",
+      url: "https://seuchidaback.link/api/myPage/myReview",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": `application/json`,
@@ -111,7 +116,7 @@ const myPostOneDB = (postId) => {
   return async (dispatch, getState, { history }) => {
     await axios({
       method: "get",
-      url: `https://https://seuchidaback.link/api/reviewPost/${postId}`,
+      url: `https://seuchidaback.link/api/reviewPost/${postId}`,
       headers: {
         "Content-Type": `multipart/form-data;`,
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -132,7 +137,7 @@ const addReviewDB = (review, reviewImg, otherId, evalue, postId) => {
   return async (dispatch, getState, { history }) => {
     await axios({
       method: "post",
-      url: `https://https://seuchidaback.link/api/review/${postId}`,
+      url: `https://seuchidaback.link/api/review/${postId}`,
       data: JSON.stringify({
         content: review,
         image: reviewImg,
@@ -159,7 +164,7 @@ const addPhotoDB = (formData) => {
   return async (dispatch, getState, { history }) => {
     await axios({
       method: "post",
-      url: `https://https://seuchidaback.link/api/reviewImg`,
+      url: `https://seuchidaback.link/api/reviewImg`,
       data: formData,
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -169,7 +174,6 @@ const addPhotoDB = (formData) => {
       .then((res) => {
         const image = res.data.image;
         dispatch(addPhoto(image));
-        console.log("사진추가에 성공했습니다.", res);
       })
       .catch((err) => {
         console.log("사진추가에 실패했습니다.", err);
@@ -181,7 +185,7 @@ const addReportDB = (rUserId, report) => {
   return async (dispatch, getState, { history }) => {
     await axios({
       method: "post",
-      url: `https://https://seuchidaback.link/api/report`,
+      url: `https://seuchidaback.link/api/report`,
       data: JSON.stringify({
         userId: rUserId,
         content: report,
@@ -191,7 +195,9 @@ const addReportDB = (rUserId, report) => {
         "Content-Type": `application/json`,
       },
     })
-      .then((res) => {})
+      .then((res) => {
+        dispatch(addReport(res.data.result));
+      })
       .catch((err) => {
         console.log("addReport에 실패했습니다.", err);
       });
@@ -203,7 +209,7 @@ const deletePostDB = (roomId) => {
   return async function (dispatch, getState, { history }) {
     await axios({
       method: "delete",
-      url: `https://https://seuchidaback.link/api/postDelete/${roomId}`,
+      url: `https://seuchidaback.link/api/postDelete/${roomId}`,
       data: { roomId },
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -224,7 +230,7 @@ const signDownDB = () => {
   return async (dispatch, getState, { history }) => {
     await axios({
       method: "delete",
-      url: `https://https://seuchidaback.link/oauth/signDown`,
+      url: `https://seuchidaback.link/oauth/signDown`,
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": `application/json`,
@@ -265,6 +271,10 @@ export default handleActions(
         draft.myExercise = draft.myExercise.filter(
           (p) => p.postId !== action.payload.addreview.postId
         );
+      }),
+    [ADD_REPORT]: (state, action) =>
+      produce(state, (draft) => {
+        draft.report = action.payload.report;
       }),
   },
   initialState

@@ -23,7 +23,7 @@ const Map = () => {
   const researchMap = () => {
     axios({
       method: "get",
-      url: `https://seuchidabackend.shop/api/nearPostList`,
+      url: `https://seuchidaback.link/api/nearPostList`,
       headers: {
         authorization: `Bearer ${token}`,
       },

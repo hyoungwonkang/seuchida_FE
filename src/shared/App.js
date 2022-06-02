@@ -157,7 +157,7 @@ const Wrapper = styled.div`
 const WebView = styled.div`
   width: 100vw;
   height: 100vh;
-  background-image: url("/img/background.png");
+  background-image: url("/img/background.jpg");
   background-size: cover;
   position: absolute;
   top: 0;

@@ -61,9 +61,10 @@ const EndCard = (props) => {
             <FaPen
               color="#C4C4C4"
               size={14}
-              onClick={(e) =>
-                {e.stopPropagation() 
-                history.push(`/reviewwrite/${props.postId}`)}}
+              onClick={(e) => {
+                e.stopPropagation();
+                history.push(`/reviewwrite/${props.postId}`);
+              }}
             />
             <Text
               size="12px"

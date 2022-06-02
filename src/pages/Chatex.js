@@ -102,8 +102,8 @@ function Chatex(props) {
         }
       }
     };
-    window.addEventListener("keydown", press);
-    return () => window.removeEventListener("keydown", press);
+    window.addEventListener("keyup", press);
+    return () => window.removeEventListener("keyup", press);
   }, [message]);
 
   //채팅 오면 스크롤 하단으로 내리기
