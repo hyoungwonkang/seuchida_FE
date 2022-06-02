@@ -122,8 +122,7 @@
     - 업로드 시 이미지 압축
   * 의견 조율 및 결정 
     - 앞서 적용시킨 레이지 로딩에도 불구하고 문제상황 해결 안됨 => 라이브러리(browser-image-compression)를 적용해 업로드 시의 이미지를 압축하였고 이전 대비 문제 상황 개선  
-    - 적용 전: ![image](https://user-images.githubusercontent.com/100031041/171617856-32442bc2-9cb4-46f0-95de-61cf91823859.png)
-    - 적용 후: ![image](https://user-images.githubusercontent.com/100031041/171617867-9fc95f61-57e0-4c87-a3ee-c18940223e24.png)
+    - ![image](https://user-images.githubusercontent.com/100031041/171618012-25beb2a9-628f-4e54-88b7-3e23021ce1e6.png)
     - ![image](https://user-images.githubusercontent.com/100031041/171617947-228b2f65-8904-420a-96e7-9548e8768fec.png)
 
  </details>
