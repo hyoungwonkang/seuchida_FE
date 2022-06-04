@@ -40,7 +40,7 @@
   </details>
   
 ### 4. 게시글 페이지 별 실시간 채팅 및 알람 기능 구현
-  <details> <summary>함께 운동하고 싶은 유저와 모임 약속, 강퇴, 알람 기능까지 이용할 수 있습니다.</summary> <div markdown="1">
+  <details> <summary>함께 운동하고 싶은 유저와 모임 약속, 강퇴, 알람 기능까지 실시간으로 이용할 수 있습니다.</summary> <div markdown="1">
   <img width='25%' src='https://user-images.githubusercontent.com/101075382/171526375-417493e3-425b-475b-91ac-4006f8fb7e66.png'>
   <img width='25%' src='https://user-images.githubusercontent.com/101075382/171526408-e310bedf-6311-4960-8c9f-546707f258f8.png'> 
   <img width='25%' src='https://user-images.githubusercontent.com/101075382/171526426-6e0c0197-03a3-497a-b6f1-bf450800d543.png'> 
