@@ -35,7 +35,7 @@
   <details> <summary>후기를 다른 유저와 공유하고 포인트를 쌓아 레벨업을 할 수 있습니다.</summary> <div markdown="1">
   <img width='25%' src='https://user-images.githubusercontent.com/101075382/171525541-5f198111-ae51-4160-8a15-63d9c14b4b72.png'>
   <img width='25%' src='https://user-images.githubusercontent.com/101075382/171525884-aef1d9ed-9e32-4511-ac0e-0723f4189760.png'> 
-  <img width='25%' src='https://user-images.githubusercontent.com/101075382/171586838-8a294396-145d-457a-991f-8d43af970369.png'> 
+  <img width='25%' src='https://user-images.githubusercontent.com/101075382/171997934-2f71c6f7-ec37-450e-b339-fbfbfac943d4.png'> 
   </div> 
   </details>
   
