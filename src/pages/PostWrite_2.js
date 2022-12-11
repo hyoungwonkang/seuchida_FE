@@ -14,8 +14,10 @@ import { AiOutlineMinusCircle } from "react-icons/ai";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 
 const PostWrite_2 = (props) => {
-  document.body.style.overscrollBehavior = "none";
   const history = useHistory();
+
+  //앱에서 페이지 새로고침 막기
+  document.body.style.overscrollBehavior = "none";
 
   //모달 오픈 state
   const [isOpen, setIsOpen] = useState(false);
@@ -72,6 +74,13 @@ const PostWrite_2 = (props) => {
   }
 
   const AgeCompare = () => {
+    //확인 안 누르고 다음 누를 때
+    if (showOptions === "") {
+      console.log(showOptions, "여기");
+      console.log(memberGender);
+      console.log(memberAge);
+      setShowOptions(memberGender + `, ` + memberAge);
+    }
     //유효성 검사
     if (memberGender === "" || memberAge === "" || !showOptions) {
       setIsOpen(true);
