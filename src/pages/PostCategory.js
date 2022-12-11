@@ -44,17 +44,11 @@ const PostCategory = (props) => {
   ];
 
   // 데이터를 넣을 빈배열
-  const [postCate, setPostCate] = useState("");
-  let postCategory = postCate;
-
+  const [postCategory, setPostCate] = useState("");
   // 뒤로가기 시에도 데이터를 유지합니다.
   useEffect(() => {
     setPostCate(window.localStorage.getItem("postCategory"));
   }, []);
-
-  useEffect(() => {
-    window.localStorage.setItem("postCategory", postCategory);
-  }, [postCategory]);
 
   //유효성 검사
   const check = () => {
@@ -111,7 +105,7 @@ const PostCategory = (props) => {
                     }}
                   />
                   <label htmlFor={item.id}>
-                    <Cate color={+postCate?.includes(item.data)}>
+                    <Cate color={+postCategory?.includes(item.data)}>
                       {item.data}
                     </Cate>
                   </label>

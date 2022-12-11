@@ -22,21 +22,20 @@ const PostWrite_1 = (props) => {
   let [postDesc, setPostDesc] = useState(localStorage.getItem("postDesc"));
 
   //특수문자 제한
-    const notSpecial = /[^!?~.,\sㄱ-ㅎ가 -힣a-z0-9ㆍ ᆢ]/gi;
-
+  const notSpecial = /[^!?~.,\sㄱ-ㅎ가 -힣a-z0-9ㆍ ᆢ]/gi;
 
   const selectPostTitle = (e) => {
     if (e.target.value?.length >= 15) {
       e.target.value = e.target.value.substr(0, 15);
     }
-    setPostTitle(e.target.value.replace(notSpecial));
+    setPostTitle(e.target.value.replace(notSpecial, ""));
   };
 
   const selectPostDesc = (e) => {
     if (e.target.value?.length >= 200) {
       e.target.value = e.target.value.substr(0, 200);
     }
-    setPostDesc(e.target.value.replace(notSpecial));
+    setPostDesc(e.target.value.replace(notSpecial, ""));
   };
 
   //프로그레스바
